@@ -249,6 +249,7 @@ exclude:
   - _pages/profiles.md
   - _pages/projects.md
   - _pages/cv.md
+  - _posts/*
   - purgecss.config.js
   - README.md
   - readme_preview/
