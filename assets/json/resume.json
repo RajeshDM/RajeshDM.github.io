@@ -1,200 +1,180 @@
+
 {
-  "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
-    "image": "",
-    "email": "albert@einstein.de",
-    "phone": "(912) 123-4567",
-    "url": "https://alshedivat.github.io/al-folio/",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
-    "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
-      "countryCode": "US",
-      "region": "California"
+    "basics": {
+      "name": "Rajesh D. Mangannavar",
+      "label": "Computer Science Researcher",
+      "email": "rajeshdm9@gmail.com",
+      "phone": "541-908-9645",
+      "url": "",
+      "summary": "To leverage my expertise in sequential decision-making, planning, reinforcement learning, and graph neural networks to develop intelligent agents with common sense behavior, contributing to the advancement of artificial intelligence and its real-world applications",
+      "location": {
+        "city": "Oregon",
+        "countryCode": "US",
+        "region": "USA"
+      },
+      "profiles": [
+        {
+          "network": "LinkedIn",
+          "username": "RajeshDM",
+          "url": "linkedin.com/RajeshDM"
+        },
+        {
+          "network": "GitHub",
+          "username": "RajeshDM",
+          "url": "github.com/RajeshDM"
+        }
+      ]
     },
-    "profiles": [
+    "work": [
       {
-        "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "name": "Oregon State University",
+        "position": "Graduate Research Assistant",
+        "startDate": "2019-09",
+        "endDate": "Present",
+        "summary": "Research in AI, focusing on intelligent agents and machine learning",
+        "highlights": [
+          "Developed an agent for object retrieval in AI2Thor with 91% success rate over 5000 scenes",
+          "Implemented hierarchical POMDP techniques for environment mapping",
+          "Developed GNN-based planning model with 5x speedups in 4/8 domains",
+          "Led core algorithm development while mentoring 5 team members"
+        ]
+      },
+      {
+        "name": "Oregon State University",
+        "position": "Teaching Assistant",
+        "startDate": "2021-04",
+        "endDate": "2024-06",
+        "summary": "Teaching assistant for multiple courses",
+        "highlights": [
+          "TA for AI531 (Artificial Intelligence)",
+          "TA for CS271 (Computer Architecture and Assembly Language)",
+          "Assisted in grading, conducting tests, and held office hours"
+        ]
+      },
+      {
+        "name": "CISCO",
+        "position": "Software Engineer",
+        "startDate": "2018-08",
+        "endDate": "2019-09",
+        "summary": "Worked on IOS XR security and NLP applications",
+        "highlights": [
+          "Improved router security through secure workflow implementation",
+          "Developed NLP solutions for command line interface",
+          "Implemented reinforcement learning for continuous model improvement"
+        ]
+      },
+      {
+        "name": "IIIT Bangalore",
+        "position": "Teaching Assistant",
+        "startDate": "2018-01",
+        "endDate": "2018-06",
+        "summary": "TA for Text Processing and Information Retrieval course"
+      }
+    ],
+    "education": [
+      {
+        "institution": "Oregon State University",
+        "area": "Computer Science and Artificial Intelligence",
+        "studyType": "PhD - Dual major",
+        "startDate": "2019-09",
+        "endDate": "Present",
+        "score": "3.82",
+        "highlights": ["Advisor: Dr. Prasad Tadepalli"]
+      },
+      {
+        "institution": "International Institute of Information Technology, Bangalore (IIITB)",
+        "area": "Theoretical Computer Science",
+        "studyType": "Integrated M.Tech",
+        "startDate": "2013-08",
+        "endDate": "2018-07",
+        "score": "3.64"
+      }
+    ],
+    "publications": [
+      {
+        "name": "Learning agents with prioritization and parameter noise in continuous state and action space",
+        "publisher": "Advances in Neural Networks–ISNN 2019",
+        "releaseDate": "2019-07",
+        "url": "",
+        "summary": "Novel reinforcement learning algorithm merging DQN and DDPG with prioritized learning"
+      },
+      {
+        "name": "Using FMEA and game theory for security models and analysis of cyber-physical systems",
+        "publisher": "International Conference of Communications security and Information",
+        "releaseDate": "2018",
+        "url": "",
+        "summary": "Novel mathematical model and game-theoretic approach for cyber-physical systems security"
+      }
+    ],
+    "awards": [
+      {
+        "title": "Ag Aid Hackathon Winner",
+        "date": "2023",
+        "awarder": "OSU",
+        "summary": "Won the Water challenge"
+      },
+      {
+        "title": "Dean's Merit List",
+        "date": "2018-06",
+        "awarder": "IIIT Bangalore"
+      },
+      {
+        "title": "Hack.Bangalore Second Runner-up",
+        "date": "2016",
+        "awarder": "Mercedes-Benz Research and Development India",
+        "summary": "Idea presented at Mobile World Congress (MWC), Barcelona"
+      },
+      {
+        "title": "DreamWorks Hackathon First Prize",
+        "date": "2015-07",
+        "awarder": "IIITB"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Programming Languages",
+        "keywords": ["Python", "C/C++", "Java", "Assembly", "MATLAB", "R"]
+      },
+      {
+        "name": "Frameworks",
+        "keywords": ["PyTorch", "PyTorch Geometric", "AI2Thor", "Habitat", "TensorFlow", "POMDP-py", "PDDL"]
+      },
+      {
+        "name": "AI Techniques",
+        "keywords": ["Graph Neural Networks", "Reinforcement Learning", "Diffusion Models", "CNNs", "XGBoost", "POMDPs", "Task and Motion Planning"]
+      }
+    ],
+    "projects": [
+      {
+        "name": "Denoising Diffusion Probabilistic Models",
+        "startDate": "2023-10",
+        "endDate": "2024-03",
+        "summary": "Developed diffusion models for path generation in cluttered environments",
+        "highlights": [
+          "80% accuracy in path generation",
+          "3x speed improvement over RRT for long paths"
+        ]
+      },
+      {
+        "name": "Convolutional Neural Networks Optimization",
+        "startDate": "2020-01",
+        "endDate": "2020-04",
+        "summary": "Implemented efficient CNN architectures",
+        "highlights": [
+          "Implemented 2x2 convolutional kernels",
+          "Reduced FLOPs by 50% in Resnet-50 C2sp model"
+        ]
+      },
+      {
+        "name": "Ag Aid Hackathon Project",
+        "startDate": "2023-01",
+        "endDate": "2023-01",
+        "summary": "ML solution for precipitation forecasting",
+        "highlights": [
+          "75% accuracy on temporal data",
+          "84% accuracy on spatial data",
+          "Used XGBoost and extensive feature engineering"
+        ]
       }
     ]
-  },
-  "work": [
-    {
-      "name": "Institute for Advanced Study, Princeton University",
-      "position": "Professor of Theoretical Physics",
-      "url": "https://example.com",
-      "startDate": "1933-01-01",
-      "endDate": "1955-01-01",
-      "summary": "Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.",
-      "highlights": ["Relativity"]
-    }
-  ],
-  "volunteer": [
-    {
-      "organization": "People's Climate March",
-      "location": "Zurich, Switzerland",
-      "position": "Lead Organizer",
-      "url": "https://example.com",
-      "startDate": "2014-04-01",
-      "endDate": "2015-07-01",
-      "summary": "Lead organizer for the New York City branch of the People's Climate March, the largest climate march in history.",
-      "highlights": ["Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march.", "Men of the year 2014 by Time magazine"]
-    }
-  ],
-  "education": [
-    {
-      "institution": "University of Zurich, Zurich, Switzerland",
-      "location": "Zurich, Switzerland",
-      "url": "https://www.uzh.ch/",
-      "area": "Software Development",
-      "studyType": "PhD",
-      "startDate": "1905-01-01",
-      "endDate": "1905-01-01",
-      "score": "10",
-      "courses": ["Theory of Relativity"]
-    }
-  ],
-  "awards": [
-    {
-      "title": "Nobel Prize in Physics",
-      "date": "1921-11-01",
-      "awarder": "Royal Swedish Academy of Sciences",
-      "url": "https://www.nobelprize.org/prizes/physics/1921/einstein/biographical/",
-      "summary": "The Nobel Prizes are five separate prizes that, according to Alfred Nobel's will of 1895, are awarded to 'those who, during the preceding year, have conferred the greatest benefit to humankind.'"
-    }
-  ],
-  "certificates": [
-    {
-      "name": "Machine Learning",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "url": "https://example.com",
-      "icon": "fa-solid fa-location-dot"
-    },
-    {
-      "name": "Quantum Computing",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "url": "https://example.com",
-      "icon": "fa-solid fa-tag"
-    },
-    {
-      "name": "Quantum Information",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "url": "https://example.com",
-      "icon": "fa-solid fa-envelope"
-    },
-    {
-      "name": "Quantum Cryptography",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "url": "https://example.com",
-      "icon": "fa-solid fa-hashtag"
-    },
-    {
-      "name": "Quantum Communication",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "url": "https://example.com",
-      "icon": "fa-solid fa-calendar"
-    },
-    {
-      "name": "Quantum Teleportation",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "url": "https://example.com",
-      "icon": "fa-solid fa-clipboard-check"
-    }
-  ],
-  "publications": [
-    {
-      "name": "Zur Elektrody/namik bewegter Körper",
-      "publisher": "Annalen der Physik",
-      "releaseDate": "1905-06-30",
-      "url": "https://en.wikisource.org/wiki/Translation:On_the_Electrodynamics_of_Moving_Bodies",
-      "summary": "It concerned an interpretation of the Michelson–Morley experiment and the properties of light and time. Special relativity incorporates the principle that the speed of light is the same for all inertial observers regardless of the state of motion of the source."
-    },
-    {
-      "name": "Über einen die Erzeugung und Verwandlung des Lichtes betreffenden heuristischen Gesichtspunkt",
-      "publisher": "Annalen der Physik",
-      "releaseDate": "1905-03-18",
-      "url": "https://de.wikisource.org/wiki/Über_einen_die_Erzeugung_und_Verwandlung_des_Lichtes_betreffenden_heuristischen_Gesichtspunkt",
-      "summary": "In the second paper, he applied the quantum theory to light to explain the photoelectric effect. In particular, he used the idea of light quanta (photons) to explain experimental results, but stressed the importance of the experimental results. The importance of his work on the photoelectric effect earned him the Nobel Prize in Physics in 1921."
-    },
-    {
-      "name": "Die Grundlage der allgemeinen Relativitätstheorie",
-      "publisher": "Annalen der Physik",
-      "releaseDate": "1916-03-20",
-      "url": "https://de.wikisource.org/wiki/Die_Grundlage_der_allgemeinen_Relativitätstheorie",
-      "summary": "The publication of the theory of general relativity made him internationally famous. He was professor of physics at the universities of Zurich (1909–1911) and Prague (1911–1912), before he returned to ETH Zurich (1912–1914)."
-    }
-  ],
-  "skills": [
-    {
-      "name": "Physics",
-      "level": "Master",
-      "icon": "fa-solid fa-hashtag",
-      "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
-      ]
-    }
-  ],
-  "languages": [
-    {
-      "language": "German",
-      "fluency": "Native speaker",
-      "icon": ""
-    },
-    {
-      "language": "English",
-      "fluency": "Fluent",
-      "icon": ""
-    }
-  ],
-  "interests": [
-    {
-      "name": "Physics",
-      "icon": "fa-solid fa-tag",
-      "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
-      ]
-    }
-  ],
-  "references": [
-    {
-      "name": "Professor John Doe",
-      "icon": "fa-solid fa-laptop",
-      "reference": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum, diam quis convallis euismod, arcu mi ullamcorper lorem, a vestibulum nunc magna at sem. Sed in risus ac felis varius blandit. D"
-    },
-    {
-      "name": "Professor John Doe",
-      "icon": "fa-solid fa-thumbtack",
-      "reference": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum, diam quis convallis euismod, arcu mi ullamcorper lorem, a vestibulum nunc magna at sem. Sed in risus ac felis varius blandit. D"
-    }
-  ],
-  "projects": [
-    {
-      "name": "Quantum Computing",
-      "summary": "Quantum computing is the use of quantum-mechanical phenomena such as superposition and entanglement to perform computation. Computers that perform quantum computations are known as quantum computers.",
-      "highlights": ["Quantum Teleportation", "Quantum Cryptography"],
-      "startDate": "2018-01-01",
-      "endDate": "2018-01-01",
-      "url": "https://example.com"
-    }
-  ]
-}
+  }

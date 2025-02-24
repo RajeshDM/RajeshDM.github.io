@@ -248,7 +248,6 @@ exclude:
   - _pages/teaching.md
   - _pages/profiles.md
   - _pages/projects.md
-  - _pages/cv.md
   - _news/announcement_2.md
   - _posts/*
   - purgecss.config.js
