@@ -201,6 +201,15 @@ kramdown:
       line_numbers: false
       start_line: 1
 
+excludes:
+  - _news/*.md
+  - _projects/*.md
+  - _pages/projects.md
+  - _posts/*.md
+  - _blog/*.md
+  - _pages/teaching.md
+  - _pages/profiles.md
+
 # Includes & excludes
 include: ["_pages"]
 exclude:

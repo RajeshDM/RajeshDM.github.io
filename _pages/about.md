@@ -19,8 +19,8 @@ social: true # includes social icons at the bottom of the page
 I am a PhD student in Computer Science at Oregon State University, where I work on artificial intelligence and robotics. My research focuses on developing intelligent planning and learning systems that can operate effectively in complex real-world environments.
 My current work explores several key areas in AI:
 
-Hierarchical planning and partial observability
-Graph neural networks and relational learning for classical planning
+Hierarchical planning and partial observability (POMDPs)
+Graph neural networks(GNN) and relational learning for classical planning
 Task and Motion Planning (TAMP) for robotic manipulation and navigation
 Learning affordance models for robotic interaction with environments
 
