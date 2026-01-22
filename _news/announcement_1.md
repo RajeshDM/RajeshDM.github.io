@@ -1,11 +1,8 @@
 ---
 layout: post
-date: 2025-01-24 15:59:00-0400
+date: 2025-01-15 10:00:00-0800
 inline: true
 related_posts: false
 ---
 
- <a href="https://www.linkedin.com/feed/update/urn:li:activity:7299670475717099520/"> My work "GABAR: Graph Attention-Based Action Ranking for Relational Policy Learning" has been published at AAAI GenPlan 2025</a>
-
-
- 
+Released <a href="https://arxiv.org/abs/2510.14035">GammaZero</a>: A GNN framework for scalable POMDP planning achieving 20x computational efficiency gains with zero-shot transfer to larger scenarios.
