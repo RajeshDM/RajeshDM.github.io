@@ -1,3 +1,38 @@
+# Publication venue styling
+# Colors are used for the badges in the publications list
+
+"NeurIPS":
+  url: https://neurips.cc/
+  color: "#8B0000"  # Dark red - prestigious conference
+
+"NeurIPS SpaVLE":
+  url: https://neurips.cc/
+  color: "#B22222"  # Firebrick red - NeurIPS workshop
+
+"arXiv":
+  url: https://arxiv.org/
+  color: "#228B22"  # Forest green
+
+"Arxiv":
+  url: https://arxiv.org/
+  color: "#228B22"  # Forest green (alternate capitalization)
+
+"ISNN":
+  url: https://link.springer.com/
+  color: "#4169E1"  # Royal blue
+
+"AAAI":
+  url: https://aaai.org/
+  color: "#FF6347"  # Tomato red
+
+"ICML":
+  url: https://icml.cc/
+  color: "#9932CC"  # Dark orchid purple
+
+"ICLR":
+  url: https://iclr.cc/
+  color: "#FF8C00"  # Dark orange
+
 "AJP":
   url: https://aapt.scitation.org/journal/ajp
   color: "#00369f"

@@ -1,179 +1,278 @@
-
 {
-    "basics": {
-      "name": "Rajesh D. Mangannavar",
-      "label": "Artifical Intelligence Researcher",
-      "email": "mangannr@oregonstate.edu",
-      "url": "",
-      "summary": "To leverage my expertise in sequential decision-making, planning, reinforcement learning, and graph neural networks to develop intelligent agents with common sense behavior, contributing to the advancement of artificial intelligence and its real-world applications",
-      "location": {
-        "city": "Oregon",
-        "countryCode": "US",
-        "region": "USA"
-      },
-      "profiles": [
-        {
-          "network": "LinkedIn",
-          "username": "RajeshDM",
-          "url": "linkedin.com/RajeshDM"
-        },
-        {
-          "network": "GitHub",
-          "username": "RajeshDM",
-          "url": "github.com/RajeshDM"
-        }
-      ]
+  "basics": {
+    "name": "Rajesh Mangannavar",
+    "label": "AI/ML Researcher - LLM Agents, Planning, Graph Neural Networks",
+    "email": "rajeshdm9@gmail.com",
+    "phone": "541-908-9645",
+    "url": "https://rajeshdm.github.io",
+    "summary": "PhD candidate developing intelligent AI agents that reason, plan, and act effectively. Research combines LLMs, reinforcement learning, and neural-symbolic methods for complex decision-making.",
+    "location": {
+      "city": "Oregon",
+      "countryCode": "US",
+      "region": "USA"
     },
-    "work": [
+    "profiles": [
       {
-        "name": "Oregon State University",
-        "position": "Graduate Research Assistant",
-        "startDate": "2019-09",
-        "endDate": "Present",
-        "summary": "Research in AI, focusing on intelligent agents and machine learning",
-        "highlights": [
-          "Developed an agent for object retrieval in AI2Thor with 91% success rate over 5000 scenes",
-          "Implemented hierarchical POMDP techniques for environment mapping",
-          "Developed GNN-based planning model with 5x speedups in 4/8 domains",
-          "Led core algorithm development while mentoring 5 team members"
-        ]
+        "network": "LinkedIn",
+        "username": "RajeshDM",
+        "url": "https://linkedin.com/in/RajeshDM"
       },
       {
-        "name": "Oregon State University",
-        "position": "Teaching Assistant",
-        "startDate": "2021-04",
-        "endDate": "2024-06",
-        "summary": "Teaching assistant for multiple courses",
-        "highlights": [
-          "TA for AI531 (Artificial Intelligence)",
-          "TA for CS271 (Computer Architecture and Assembly Language)",
-          "Assisted in grading, conducting tests, and held office hours"
-        ]
-      },
-      {
-        "name": "CISCO",
-        "position": "Software Engineer",
-        "startDate": "2018-08",
-        "endDate": "2019-09",
-        "summary": "Worked on IOS XR security and NLP applications",
-        "highlights": [
-          "Improved router security through secure workflow implementation",
-          "Developed NLP solutions for command line interface",
-          "Implemented reinforcement learning for continuous model improvement"
-        ]
-      },
-      {
-        "name": "IIIT Bangalore",
-        "position": "Teaching Assistant",
-        "startDate": "2018-01",
-        "endDate": "2018-06",
-        "summary": "TA for Text Processing and Information Retrieval course"
-      }
-    ],
-    "education": [
-      {
-        "institution": "Oregon State University",
-        "area": "Computer Science and Artificial Intelligence",
-        "studyType": "PhD - Dual major",
-        "startDate": "2019-09",
-        "endDate": "Present",
-        "score": "3.82",
-        "highlights": ["Advisor: Dr. Prasad Tadepalli"]
-      },
-      {
-        "institution": "International Institute of Information Technology, Bangalore (IIITB)",
-        "area": "Theoretical Computer Science",
-        "studyType": "Integrated M.Tech",
-        "startDate": "2013-08",
-        "endDate": "2018-07",
-        "score": "3.64"
-      }
-    ],
-    "publications": [
-      {
-        "name": "Learning agents with prioritization and parameter noise in continuous state and action space",
-        "publisher": "Advances in Neural Networks–ISNN 2019",
-        "releaseDate": "2019-07",
-        "url": "",
-        "summary": "Novel reinforcement learning algorithm merging DQN and DDPG with prioritized learning"
-      },
-      {
-        "name": "Using FMEA and game theory for security models and analysis of cyber-physical systems",
-        "publisher": "International Conference of Communications security and Information",
-        "releaseDate": "2018",
-        "url": "",
-        "summary": "Novel mathematical model and game-theoretic approach for cyber-physical systems security"
-      }
-    ],
-    "awards": [
-      {
-        "title": "Ag Aid Hackathon Winner",
-        "date": "2023",
-        "awarder": "OSU",
-        "summary": "Won the Water challenge"
-      },
-      {
-        "title": "Dean's Merit List",
-        "date": "2018-06",
-        "awarder": "IIIT Bangalore"
-      },
-      {
-        "title": "Hack.Bangalore Second Runner-up",
-        "date": "2016",
-        "awarder": "Mercedes-Benz Research and Development India",
-        "summary": "Idea presented at Mobile World Congress (MWC), Barcelona"
-      },
-      {
-        "title": "DreamWorks Hackathon First Prize",
-        "date": "2015-07",
-        "awarder": "IIITB"
-      }
-    ],
-    "skills": [
-      {
-        "name": "Programming Languages",
-        "keywords": ["Python", "C/C++", "Java", "Assembly", "MATLAB", "R"]
-      },
-      {
-        "name": "Frameworks",
-        "keywords": ["PyTorch", "PyTorch Geometric", "AI2Thor", "Habitat", "TensorFlow", "POMDP-py", "PDDL"]
-      },
-      {
-        "name": "AI Techniques",
-        "keywords": ["Graph Neural Networks", "Reinforcement Learning", "Diffusion Models", "CNNs", "XGBoost", "POMDPs", "Task and Motion Planning"]
-      }
-    ],
-    "projects": [
-      {
-        "name": "Denoising Diffusion Probabilistic Models",
-        "startDate": "2023-10",
-        "endDate": "2024-03",
-        "summary": "Developed diffusion models for path generation in cluttered environments",
-        "highlights": [
-          "80% accuracy in path generation",
-          "3x speed improvement over RRT for long paths"
-        ]
-      },
-      {
-        "name": "Convolutional Neural Networks Optimization",
-        "startDate": "2020-01",
-        "endDate": "2020-04",
-        "summary": "Implemented efficient CNN architectures",
-        "highlights": [
-          "Implemented 2x2 convolutional kernels",
-          "Reduced FLOPs by 50% in Resnet-50 C2sp model"
-        ]
-      },
-      {
-        "name": "Ag Aid Hackathon Project",
-        "startDate": "2023-01",
-        "endDate": "2023-01",
-        "summary": "ML solution for precipitation forecasting",
-        "highlights": [
-          "75% accuracy on temporal data",
-          "84% accuracy on spatial data",
-          "Used XGBoost and extensive feature engineering"
-        ]
+        "network": "GitHub",
+        "username": "RajeshDM",
+        "url": "https://github.com/RajeshDM"
       }
     ]
-  }
+  },
+  "work": [
+    {
+      "name": "Oregon State University",
+      "position": "Graduate Research Assistant",
+      "startDate": "2019-09",
+      "endDate": "Present",
+      "summary": "Machine Learning Research: Deep Learning, AI Planning, Agentic AI, Reinforcement Learning, LLM Agents",
+      "highlights": [
+        "Developed multi-agent LLM framework for PDDL planning with verifier-guided training, reducing LLM calls by 40%",
+        "Created GNN-based POMDP framework (GammaZero) achieving 20x computational efficiency with zero-shot transfer",
+        "Designed GNN action ranking approach outperforming LLMs (GPT-O3, Gemini-2.5-Pro) by 20-30x in planning coverage",
+        "Led algorithm development and mentored team of 5 on AI2Thor embodied agent project (91% success rate)"
+      ]
+    },
+    {
+      "name": "Cisco",
+      "position": "Software Engineer",
+      "startDate": "2018-08",
+      "endDate": "2019-09",
+      "summary": "Enhanced security for IOS XR routers and developed NLP-enhanced interfaces",
+      "highlights": [
+        "Enhanced security for IOS XR routers supporting global internet infrastructure (C++)",
+        "Reduced user onboarding time by 15% with NLP-enhanced command line interface",
+        "Leveraged reinforcement learning for continuous model improvement through user feedback"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Oregon State University",
+      "area": "Computer Science and Artificial Intelligence",
+      "studyType": "PhD",
+      "startDate": "2019-09",
+      "endDate": "Present",
+      "score": "3.82/4.0",
+      "highlights": ["Advisor: Dr. Prasad Tadepalli", "Research: AI Planning, RL, GNNs, LLM Agents"]
+    },
+    {
+      "institution": "IIIT Bangalore",
+      "area": "Computer Science",
+      "studyType": "Integrated M.Tech",
+      "startDate": "2013-08",
+      "endDate": "2018-07",
+      "score": "3.64/4.0",
+      "highlights": ["Advisor: Dr. Gopalakrishnan Srinivasaraghavan"]
+    }
+  ],
+  "publications": [
+    {
+      "name": "Graph Neural Network Based Action Ranking for Planning",
+      "publisher": "NeurIPS 2025",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/pdf/2412.04752",
+      "summary": "GNN approach for learning relational policies achieving 89-100% success rates with 13x better coverage than baselines"
+    },
+    {
+      "name": "Hierarchical Object-Oriented POMDP Planning for Object Rearrangement",
+      "publisher": "NeurIPS SpaVLE 2025",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/pdf/2412.01348",
+      "summary": "Hierarchical framework achieving 71% task completion, scaling to 20 objects across 4 rooms"
+    },
+    {
+      "name": "GammaZero: Learning to Guide Belief-Space Search for Long-Horizon POMDPs",
+      "publisher": "arXiv 2025",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/abs/2510.14035",
+      "summary": "GNN framework for POMDP planning with 20x efficiency gain and zero-shot transfer to 6x larger scenarios"
+    },
+    {
+      "name": "Planning with Affordances: Integrating Learned Affordance Models and Symbolic Planning",
+      "publisher": "arXiv 2025",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/pdf/2502.02768",
+      "summary": "Novel approach integrating PDDLStream with learned affordance models for task and motion planning"
+    },
+    {
+      "name": "Learning Agents with Prioritization and Parameter Noise in Continuous State and Action Space",
+      "publisher": "ISNN 2019",
+      "releaseDate": "2019",
+      "url": "https://doi.org/10.1007/978-3-030-22796-8_22",
+      "summary": "Prioritized DDPG algorithm outperforming DDPG on 80% of MuJoCo benchmarks with 40% faster convergence"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Ag Aid Hackathon Winner - Water Challenge",
+      "date": "2023",
+      "awarder": "Oregon State University",
+      "summary": "ML solution for precipitation forecasting with 75% temporal and 84% spatial accuracy"
+    },
+    {
+      "title": "Dean's Merit List",
+      "date": "2018",
+      "awarder": "IIIT Bangalore"
+    },
+    {
+      "title": "Second Runner-Up - Hack.Bangalore",
+      "date": "2016",
+      "awarder": "Daimler",
+      "summary": "Idea presented at Mobile World Congress (MWC), Barcelona 2017"
+    },
+    {
+      "title": "Second Runner-Up - Tech Maestro",
+      "date": "2017",
+      "awarder": "NetApp",
+      "summary": "All India tech quiz"
+    },
+    {
+      "title": "Winner - DreamWorks Hackathon",
+      "date": "2015",
+      "awarder": "IIITB"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming",
+      "keywords": ["Python", "C/C++", "Java", "MATLAB", "R", "Julia"]
+    },
+    {
+      "name": "ML Frameworks",
+      "keywords": ["PyTorch", "PyTorch Geometric", "TensorFlow", "AI2Thor", "Habitat", "POMDP-py"]
+    },
+    {
+      "name": "AI/LLM Techniques",
+      "keywords": ["LLM Agents", "Agentic AI", "LoRA/QLoRA", "RLVR", "PPO", "LangChain", "LangGraph", "Finetuning LLMs"]
+    },
+    {
+      "name": "Core ML",
+      "keywords": ["Graph Neural Networks", "Reinforcement Learning", "MCTS", "XGBoost", "Diffusion Models", "POMDPs", "PDDL"]
+    },
+    {
+      "name": "Tools",
+      "keywords": ["Linux", "Git", "LaTeX", "Weights and Biases"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Verifier-Guided Multi-Agent Orchestrator for LLM Planning",
+      "startDate": "2025",
+      "endDate": "2025",
+      "summary": "Multi-agent LLM framework for PDDL planning using compiler feedback as dense training signal",
+      "highlights": [
+        "Developed Contextual Action Ranking (supervised) and RLVR + PPO training approaches",
+        "Reduced total LLM calls by 40% through improved routing",
+        "Trained Llama-3-8B orchestrator matching prompted GPT-4 at significantly lower inference cost",
+        "Applicable to any compiler-equipped domain (Python, C++, SQL, PDDL)"
+      ],
+      "keywords": ["LLM Agents", "Multi-Agent Systems", "RLVR", "PPO", "PDDL Planning"]
+    },
+    {
+      "name": "GlobXAI: LLM-Based Natural Language Interface for Explainable AI",
+      "startDate": "2025",
+      "endDate": "2025",
+      "summary": "Natural language querying system over global explanations of image classifiers",
+      "highlights": [
+        "Fine-tuned Gemma-2 9B using QLoRA achieving 98.7% parse rate and 96.2% intent classification",
+        "LLM parses queries while Pandas executes deterministically - hallucination-free outputs",
+        "Created synthetic dataset pipeline producing 50K+ training examples"
+      ],
+      "keywords": ["LLM", "QLoRA", "Fine-tuning", "Explainable AI", "Natural Language Processing"]
+    },
+    {
+      "name": "GammaZero: GNN Framework for Scalable POMDP Planning",
+      "startDate": "2025",
+      "endDate": "2025",
+      "summary": "Graph neural network framework achieving dramatic efficiency gains in POMDP planning",
+      "highlights": [
+        "20x computational efficiency gain with inference in seconds vs minutes",
+        "Zero-shot transfer to scenarios 6x larger than training",
+        "Uncertainty-aware graph representation for partial observability",
+        "Integrated with MCTS for drastically reduced search"
+      ],
+      "url": "https://arxiv.org/abs/2510.14035",
+      "keywords": ["GNN", "POMDP", "MCTS", "Planning under Uncertainty"]
+    },
+    {
+      "name": "GNN-Based Action Ranking for Classical Planning",
+      "startDate": "2023",
+      "endDate": "2025",
+      "summary": "Learning-to-rank approach for guiding classical planners with GNNs",
+      "highlights": [
+        "89-100% success rates with strong out-of-distribution generalization",
+        "75% less training data than value-function methods",
+        "13x better coverage on hard problems, generalizes to 8x larger test problems",
+        "Outperforms LLMs (GPT-O3, Gemini-2.5-Pro) by 20-30x in coverage"
+      ],
+      "url": "https://arxiv.org/pdf/2412.04752",
+      "keywords": ["GNN", "Planning", "Learning to Rank", "NeurIPS"]
+    },
+    {
+      "name": "Hierarchical Object-Oriented POMDP for Object Rearrangement",
+      "startDate": "2024",
+      "endDate": "2025",
+      "summary": "Hierarchical planning for multi-object rearrangement in partially observable environments",
+      "highlights": [
+        "71% task completion in partially observable multi-object environments",
+        "2-3x improvement over baselines through hierarchical decomposition",
+        "Scales to 20 objects across 4 rooms (baselines: 5 objects, 1 room)",
+        "Handles blocked paths, object dependencies, goal conflicts"
+      ],
+      "url": "https://arxiv.org/pdf/2412.01348",
+      "keywords": ["POMDP", "Hierarchical Planning", "Object Rearrangement", "NeurIPS"]
+    },
+    {
+      "name": "Intelligent Embodied Agent for Object Retrieval",
+      "startDate": "2022",
+      "endDate": "2022",
+      "summary": "Navigation system for object retrieval in interactive AI2Thor environments",
+      "highlights": [
+        "91% success rate across 5000 test scenarios",
+        "Handles container opening, tool usage, obstacle navigation",
+        "Led algorithm development while mentoring team of 5"
+      ],
+      "keywords": ["Embodied AI", "AI2Thor", "Spatial Reasoning", "Team Leadership"]
+    },
+    {
+      "name": "Denoising Diffusion for Motion Planning",
+      "startDate": "2024",
+      "endDate": "2024",
+      "summary": "Using diffusion models for collision-free path generation",
+      "highlights": [
+        "80% generation accuracy in complex 2D environments",
+        "3x speedup over RRT for paths longer than 50 steps"
+      ],
+      "keywords": ["Diffusion Models", "Motion Planning", "DDPM"]
+    },
+    {
+      "name": "XGBoost Precipitation Forecasting (Hackathon Winner)",
+      "startDate": "2023",
+      "endDate": "2023",
+      "summary": "ML solution for agricultural precipitation prediction",
+      "highlights": [
+        "75% temporal and 84% spatial prediction accuracy",
+        "Used Dynamic Time Warping, spatial aggregation, correlation analysis"
+      ],
+      "keywords": ["XGBoost", "Time Series", "Feature Engineering"]
+    },
+    {
+      "name": "Prioritized DDPG with Parameter Space Noise",
+      "startDate": "2018",
+      "endDate": "2019",
+      "summary": "Enhanced reinforcement learning for continuous control",
+      "highlights": [
+        "Outperformed DDPG on 80% of MuJoCo benchmarks",
+        "40% faster convergence using parameter space noise exploration"
+      ],
+      "url": "https://doi.org/10.1007/978-3-030-22796-8_22",
+      "keywords": ["Reinforcement Learning", "DDPG", "Continuous Control", "ISNN"]
+    }
+  ]
+}
