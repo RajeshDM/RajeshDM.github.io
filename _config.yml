@@ -166,10 +166,15 @@ disqus_shortname: al-folio # put your disqus shortname
 # External sources.
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
+# NOTE: Using direct URL fetch instead of RSS due to Cloudflare blocking
 external_sources:
-  # Main Substack feed (includes all posts from all sections)
   - name: Substack
-    rss_url: https://rajeshdm.substack.com/feed
+    posts:
+      # Add new posts here when you publish them:
+      # - url: https://rajeshdm.substack.com/p/post-slug
+      #   published_date: YYYY-MM-DD
+      - url: https://rajeshdm.substack.com/p/gabar-graph-neural-network-based
+        published_date: 2025-01-23
 
 # -----------------------------------------------------------------------------
 # Newsletter
