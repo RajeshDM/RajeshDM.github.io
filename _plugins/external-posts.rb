@@ -13,18 +13,40 @@ module ExternalPosts
       if site.config['external_sources'] != nil
         site.config['external_sources'].each do |src|
           puts "Fetching external posts from #{src['name']}:"
-          if src['rss_url']
-            fetch_from_rss(site, src)
-          elsif src['posts']
-            fetch_from_urls(site, src)
+          begin
+            if src['rss_url']
+              fetch_from_rss(site, src)
+            elsif src['posts']
+              fetch_from_urls(site, src)
+            end
+          rescue => e
+            puts "  WARNING: Failed to fetch from #{src['name']}: #{e.message}"
+            puts "  Skipping this source and continuing build..."
           end
         end
       end
     end
 
     def fetch_from_rss(site, src)
-      xml = HTTParty.get(src['rss_url']).body
-      return if xml.nil?
+      # Add headers to avoid being blocked by some services
+      response = HTTParty.get(src['rss_url'], {
+        headers: {
+          "User-Agent" => "Mozilla/5.0 (compatible; Jekyll/4.0; +https://jekyllrb.com)",
+          "Accept" => "application/rss+xml, application/xml, text/xml, */*"
+        },
+        timeout: 30
+      })
+
+      xml = response.body
+      return if xml.nil? || xml.empty?
+
+      # Check if response looks like XML
+      unless xml.strip.start_with?('<?xml') || xml.strip.start_with?('<rss') || xml.strip.start_with?('<feed')
+        puts "  WARNING: Response doesn't appear to be valid RSS/XML"
+        puts "  First 200 chars: #{xml[0..200]}"
+        return
+      end
+
       feed = Feedjira.parse(xml)
       process_entries(site, src, feed.entries)
     end
@@ -86,7 +108,12 @@ module ExternalPosts
     end
 
     def fetch_content_from_url(url)
-      html = HTTParty.get(url).body
+      html = HTTParty.get(url, {
+        headers: {
+          "User-Agent" => "Mozilla/5.0 (compatible; Jekyll/4.0; +https://jekyllrb.com)"
+        },
+        timeout: 30
+      }).body
       parsed_html = Nokogiri::HTML(html)
 
       title = parsed_html.at('head title')&.text.strip || ''
