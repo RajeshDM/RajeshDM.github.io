@@ -166,10 +166,13 @@ disqus_shortname: al-folio # put your disqus shortname
 # External sources.
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
-# NOTE: Uncomment the lines below once you have published posts on Substack
-# external_sources:
-#   - name: Substack
-#     rss_url: https://rajeshdm.substack.com/feed
+external_sources:
+  # My Research section (has posts)
+  - name: My Research
+    rss_url: https://rajeshdm.substack.com/s/my-research/feed
+  # LLMs and Automated Planning section (uncomment when you add posts)
+  # - name: LLMs & Planning
+  #   rss_url: https://rajeshdm.substack.com/s/llms-and-automated-planning/feed
 
 # -----------------------------------------------------------------------------
 # Newsletter
