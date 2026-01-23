@@ -1,6 +1,13 @@
 name: Deploy site
 
 on:
+  # Scheduled rebuild - runs weekly on Sunday at midnight UTC
+  # Change the cron expression to adjust frequency:
+  #   "0 0 * * 0" = weekly (Sunday midnight)
+  #   "0 0 1 * *" = monthly (1st of month)
+  #   "0 0 * * *" = daily (midnight)
+  schedule:
+    - cron: "0 0 * * 0"
   push:
     branches:
       - master
