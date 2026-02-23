@@ -660,6 +660,72 @@ _styles: >
       .blog-fullhtml .flow-arrow { padding: 0 6px; font-size: 1.2rem; }
       .blog-fullhtml .warehouse-scene { height: 350px; }
   }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
+  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
+  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
+  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1c1c1d; border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .paradigm-box.p1 { background: #141e2e; border-color: #4682b4; }
+  html[data-theme="dark"] .blog-fullhtml .paradigm-box.p2 { background: #2a1e10; border-color: #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .paradigm-box.p1 h4 { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .paradigm-box.p2 h4 { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .paradigm-box ul { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .flow-arrow { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .timeline-year { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml .timeline-question { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .timeline-answer { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .timeline-post-ref { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .timeline-dot { border-color: #1c1c1d; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list li:nth-child(1),
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list li:nth-child(2) { background: #141e2e; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list li:nth-child(3) { background: #2a1414; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list li:nth-child(4) { background: #142a14; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list li:nth-child(5) { background: #2a2010; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list li:nth-child(6) { background: #1e142e; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list .post-title { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap-list li { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .warehouse-scene { background: linear-gradient(180deg, #1a2030 0%, #141a24 100%); border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .wh-floor { background: repeating-linear-gradient(90deg, #2a3040 0px, #2a3040 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, #2a3040 0px, #2a3040 1px, transparent 1px, transparent 80px), #1a2030; }
+  html[data-theme="dark"] .blog-fullhtml .wh-ceiling { background: #0d1520; }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf { background: linear-gradient(180deg, #3a4555 0%, #2a3545 100%); }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf-label { color: #c0c8d0; background: #1a2030; }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf-row { background: #4a5565; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.naive { background: #2a1818; border-color: #5a3030; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.planned { background: #182a18; border-color: #305a30; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.naive h4 { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.planned h4 { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step.neutral { background: #1e2530; border-left-color: #5a6878; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step.ok { background: #1a2a1a; border-left-color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step.fail { background: #2a1a1a; border-left-color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .comp-result.errors { background: #2a1515; border-color: #5a2525; color: #e8a0a0; }
+  html[data-theme="dark"] .blog-fullhtml .comp-result.success { background: #152a15; border-color: #255a25; color: #a0e8a0; }
+  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .wh-btn.secondary { background: #2a3545; color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .wh-btn.secondary:hover { background: #354560; }
 ---
 
 <header class="hero">
