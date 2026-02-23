@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+  <head>
+    {% include head.liquid %}
+    {% if page._styles %}
+    <style type="text/css">
+      {{ page._styles }}
+    </style>
+    {% endif %}
+  </head>
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+    {% include header.liquid %}
+    <div class="blog-fullhtml">
+      {{ content }}
+    </div>
+    {% include footer.liquid %}
+    {% include scripts/jquery.liquid %}
+    {% include scripts/bootstrap.liquid %}
+    {% include scripts/misc.liquid %}
+    {% include scripts/analytics.liquid %}
+    {% include scripts/back_to_top.liquid %}
+    {% include scripts/search.liquid %}
+  </body>
+</html>
