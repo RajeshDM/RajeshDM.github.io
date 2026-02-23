@@ -131,8 +131,8 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: Research Blog
-blog_description: Thoughts on AI planning, reinforcement learning, and machine learning research
+blog_name: Blog
+blog_description: Writing on my research, LLMs and planning, and life in research
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -166,15 +166,7 @@ disqus_shortname: al-folio # put your disqus shortname
 # External sources.
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
-# NOTE: Using direct URL fetch instead of RSS due to Cloudflare blocking
 external_sources:
-  - name: Substack
-    posts:
-      # Add new posts here when you publish them:
-      # - url: https://rajeshdm.substack.com/p/post-slug
-      #   published_date: YYYY-MM-DD
-      - url: https://rajeshdm.substack.com/p/gabar-graph-neural-network-based
-        published_date: 2025-01-23
 
 # -----------------------------------------------------------------------------
 # Newsletter
@@ -311,7 +303,7 @@ jekyll-archives:
     category: "/blog/category/:name/"
 
 display_tags: ["planning", "reinforcement-learning", "gnn", "llm", "pomdp", "research"] # these tags will be displayed on the front page of your blog
-display_categories: ["research", "tutorials"] # these categories will be displayed on the front page of your blog
+display_categories: ["My Research", "LLMs Automated Planning and Agents", "Research Life"] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
