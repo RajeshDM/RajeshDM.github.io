@@ -9,6 +9,8 @@ category: work
 
 ## GammaZero: Learning to Guide Belief-Space Search for Long-Horizon POMDPs (2025)
 
+**Accepted at ICAPS 2026**
+
 GammaZero is a graph neural network-based framework for partially observable Markov decision process (POMDP) planning that achieves dramatic computational efficiency gains while enabling zero-shot transfer to larger scenarios.
 
 ### Key Contributions
@@ -27,4 +29,4 @@ GammaZero is a graph neural network-based framework for partially observable Mar
 
 The framework is applicable to robotic planning, autonomous navigation, and other domains requiring decision-making under uncertainty with scalability to real-world problem sizes.
 
-[Paper (arXiv)](https://arxiv.org/abs/2510.14035) | [Project Website](https://common-sense-for-seq-decision-making.github.io/GammaZero_Learning_To_Guide_POMDP_Belief_Space_Search_With_Graph_Representations/)
+[Paper (ICAPS 2026)](https://arxiv.org/abs/2510.14035) | [Project Website](https://learning-for-seq-decision-making.github.io/GammaZero_Learning_To_Guide_POMDP_Belief_Space_Search_With_Graph_Representations/)

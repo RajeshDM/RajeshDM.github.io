@@ -32,4 +32,4 @@ This project develops a learning-to-rank approach for guiding classical planners
 
 Traditional approaches learn value functions or policies, which require extensive training data. Our ranking approach focuses on relative action quality, enabling efficient learning from smaller datasets while achieving better generalization.
 
-[Paper (arXiv)](https://arxiv.org/pdf/2412.04752) | [Project Website](https://common-sense-for-seq-decision-making.github.io/GABAR_Graph_based_action_ranking_for_planning/)
+[Paper (arXiv)](https://arxiv.org/pdf/2412.04752) | [Project Website](https://learning-for-seq-decision-making.github.io/GABAR_Graph_based_action_ranking_for_planning/)

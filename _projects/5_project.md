@@ -35,4 +35,4 @@ This project addresses the challenge of object rearrangement in partially observ
 
 The hierarchical approach enables tractable planning in scenarios where flat approaches fail due to combinatorial explosion.
 
-[Paper (arXiv)](https://arxiv.org/pdf/2412.01348) | [Project Website](https://common-sense-for-seq-decision-making.github.io/HOO_POMDP_Hierarchical_Object_Oriented_POMDP_Planning_for_Object_Rearrangement/)
+[Paper (arXiv)](https://arxiv.org/pdf/2412.01348) | [Project Website](https://learning-for-seq-decision-making.github.io/HOO_POMDP_Hierarchical_Object_Oriented_POMDP_Planning_for_Object_Rearrangement/)
