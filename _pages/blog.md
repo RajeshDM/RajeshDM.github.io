@@ -19,131 +19,161 @@ pagination:
 <div class="post">
 <div class="blog-page">
 
-  <!-- Header + filters -->
+  <!-- Compact header -->
   <div class="blog-header">
     <p class="blog-header-desc">{{ site.blog_description }}</p>
   </div>
 
+  <!-- Topic filter bar -->
+  {% if site.display_tags and site.display_tags.size > 0 %}
   <div class="blog-filter-bar">
-    <button class="filter-chip active" data-filter="all">All</button>
-    {% for category_name in site.display_categories %}
-      {% assign cat_posts = site.posts | where_exp: "post", "post.categories contains category_name" %}
-      {% if cat_posts.size > 0 %}
-        <button class="filter-chip" data-filter="category" data-value="{{ category_name }}">{{ category_name }}</button>
-      {% endif %}
-    {% endfor %}
-    <span class="filter-divider"></span>
     {% for tag in site.display_tags %}
       {% assign tag_posts = site.tags[tag] %}
       {% if tag_posts and tag_posts.size > 0 %}
-        <button class="filter-chip filter-chip-tag" data-filter="tag" data-value="{{ tag }}">{{ tag }}</button>
+      <button class="filter-chip" data-filter="tag" data-value="{{ tag }}">
+        {{ tag }}
+      </button>
       {% endif %}
     {% endfor %}
   </div>
+  {% endif %}
 
-  <!-- Active filter label -->
-  <div class="blog-active-filter" style="display:none;">
-    <span class="active-filter-label"></span>
-    <button class="active-filter-clear">&times; Clear</button>
+  <!-- Back button (hidden by default) -->
+  <div class="blog-back-bar" style="display:none;">
+    <button class="blog-back-btn">&larr; Show all categories</button>
   </div>
 
-  <!-- All posts as a single filterable list -->
-  <div class="blog-posts">
-    {% assign all_posts = site.posts | sort: "date" | reverse %}
-    {% for post in all_posts %}
-      {% if post.external_source == blank %}
-        {% assign read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}
-      {% else %}
-        {% assign read_time = post.feed_content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}
-      {% endif %}
-
-      <a href="{{ post.url | relative_url }}" class="blog-post-card"
-         data-categories="{{ post.categories | join: '|||' }}"
-         data-tags="{{ post.tags | join: '|||' }}">
-        <div class="blog-post-card-inner">
-          <div class="blog-post-meta">
-            <time>{{ post.date | date: '%b %d, %Y' }}</time>
-            <span class="meta-sep">&middot;</span>
-            <span>{{ read_time }} min read</span>
-            {% for category in post.categories %}
-              <span class="meta-sep">&middot;</span>
-              <span class="meta-category">{{ category }}</span>
-            {% endfor %}
-          </div>
-          <h3 class="blog-post-title">{{ post.title }}</h3>
-          <p class="blog-post-desc">{{ post.description }}</p>
-          {% if post.tags.size > 0 %}
-          <div class="blog-post-tags">
-            {% for tag in post.tags %}
-              <span class="inline-tag">#{{ tag }}</span>
-            {% endfor %}
-          </div>
-          {% endif %}
+  <!-- Series / Categories -->
+  {% if site.display_categories and site.display_categories.size > 0 %}
+  <div class="blog-series-section">
+    {% for category_name in site.display_categories %}
+      {% assign cat_posts = site.posts | where_exp: "post", "post.categories contains category_name" %}
+      {% if cat_posts.size > 0 %}
+      <div class="series-block" data-category="{{ category_name }}">
+        <div class="series-header" data-category="{{ category_name }}">
+          <h2 class="series-title">{{ category_name }}</h2>
+          <span class="series-count">{{ cat_posts.size }} post{% if cat_posts.size != 1 %}s{% endif %}</span>
         </div>
-      </a>
+        <div class="series-posts">
+          {% for post in cat_posts %}
+            {% if post.external_source == blank %}
+              {% assign read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}
+            {% else %}
+              {% assign read_time = post.feed_content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}
+            {% endif %}
+            <a href="{{ post.url | relative_url }}" class="series-post-card"
+               data-tags="{{ post.tags | join: '|||' }}">
+              <div class="series-post-meta">
+                <time>{{ post.date | date: '%b %d, %Y' }}</time>
+                <span class="meta-sep">&middot;</span>
+                <span>{{ read_time }} min read</span>
+              </div>
+              <h3 class="series-post-title">{{ post.title }}</h3>
+              <p class="series-post-desc">{{ post.description }}</p>
+              {% if post.tags.size > 0 %}
+              <div class="series-post-tags">
+                {% for tag in post.tags %}
+                  <span class="inline-tag">#{{ tag }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
     {% endfor %}
   </div>
-
-  <!-- Empty state -->
-  <div class="blog-empty-state" style="display:none;">
-    No posts found for this filter.
-  </div>
+  {% endif %}
 
 </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const chips = document.querySelectorAll('.filter-chip');
-  const cards = document.querySelectorAll('.blog-post-card');
-  const activeFilterEl = document.querySelector('.blog-active-filter');
-  const activeFilterLabel = document.querySelector('.active-filter-label');
-  const clearBtn = document.querySelector('.active-filter-clear');
-  const emptyState = document.querySelector('.blog-empty-state');
+  var seriesBlocks = document.querySelectorAll('.series-block');
+  var seriesHeaders = document.querySelectorAll('.series-header');
+  var backBar = document.querySelector('.blog-back-bar');
+  var backBtn = document.querySelector('.blog-back-btn');
+  var filterChips = document.querySelectorAll('.filter-chip');
+  var filterBar = document.querySelector('.blog-filter-bar');
+  var activeTag = null;
 
-  function applyFilter(type, value) {
-    let visibleCount = 0;
-    cards.forEach(function(card) {
-      let show = false;
-      if (type === 'all') {
-        show = true;
-      } else if (type === 'category') {
-        var cats = card.getAttribute('data-categories').split('|||');
-        show = cats.indexOf(value) !== -1;
-      } else if (type === 'tag') {
-        var tags = card.getAttribute('data-tags').split('|||');
-        show = tags.indexOf(value) !== -1;
-      }
-      card.style.display = show ? '' : 'none';
-      if (show) visibleCount++;
-    });
-
-    // Update active states
-    chips.forEach(function(c) { c.classList.remove('active'); });
-    var activeChip = document.querySelector('.filter-chip[data-filter="' + type + '"][data-value="' + value + '"]');
-    if (type === 'all') activeChip = document.querySelector('.filter-chip[data-filter="all"]');
-    if (activeChip) activeChip.classList.add('active');
-
-    // Show/hide filter label
-    if (type === 'all') {
-      activeFilterEl.style.display = 'none';
-    } else {
-      activeFilterLabel.textContent = (type === 'category' ? '' : '#') + value;
-      activeFilterEl.style.display = 'flex';
-    }
-
-    // Empty state
-    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-  }
-
-  chips.forEach(function(chip) {
-    chip.addEventListener('click', function() {
-      applyFilter(this.getAttribute('data-filter'), this.getAttribute('data-value'));
+  // Click a series header → show only that category
+  seriesHeaders.forEach(function(header) {
+    header.addEventListener('click', function() {
+      var cat = this.getAttribute('data-category');
+      seriesBlocks.forEach(function(block) {
+        if (block.getAttribute('data-category') === cat) {
+          block.style.display = '';
+        } else {
+          block.style.display = 'none';
+        }
+      });
+      backBar.style.display = 'flex';
+      // Clear tag filter when selecting category
+      activeTag = null;
+      filterChips.forEach(function(c) { c.classList.remove('active'); });
+      showAllPostsInVisibleBlocks();
     });
   });
 
-  clearBtn.addEventListener('click', function() {
-    applyFilter('all', '');
+  // Back button → show all categories
+  backBtn.addEventListener('click', function() {
+    showAll();
+  });
+
+  function showAll() {
+    seriesBlocks.forEach(function(block) {
+      block.style.display = '';
+    });
+    backBar.style.display = 'none';
+    activeTag = null;
+    filterChips.forEach(function(c) { c.classList.remove('active'); });
+    showAllPostsInVisibleBlocks();
+  }
+
+  function showAllPostsInVisibleBlocks() {
+    document.querySelectorAll('.series-post-card').forEach(function(card) {
+      card.style.display = '';
+    });
+  }
+
+  // Tag filter chips
+  filterChips.forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var tag = this.getAttribute('data-value');
+
+      // Toggle: clicking same tag again clears filter
+      if (activeTag === tag) {
+        showAll();
+        return;
+      }
+
+      activeTag = tag;
+      filterChips.forEach(function(c) { c.classList.remove('active'); });
+      this.classList.add('active');
+
+      // Show all series blocks, but hide posts that don't match the tag
+      seriesBlocks.forEach(function(block) {
+        block.style.display = '';
+        var cards = block.querySelectorAll('.series-post-card');
+        var hasVisible = false;
+        cards.forEach(function(card) {
+          var tags = card.getAttribute('data-tags').split('|||');
+          if (tags.indexOf(tag) !== -1) {
+            card.style.display = '';
+            hasVisible = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        // Hide entire series block if no posts match
+        if (!hasVisible) block.style.display = 'none';
+      });
+
+      backBar.style.display = 'flex';
+    });
   });
 });
 </script>
