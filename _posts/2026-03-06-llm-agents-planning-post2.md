@@ -1,0 +1,1502 @@
+---
+layout: fullhtml-post
+title: "The Formal Planning Primer"
+date: 2026-02-24
+categories: ["LLMs Automated Planning and Agents"]
+tags: ["planning", "llm", "pddl"]
+description: "States, actions, goals, and the language that makes them precise — everything you need to follow the rest of this series. Part 2 of the Planning in the Era of LLMs series."
+_styles: >
+  .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .blog-fullhtml {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      color: #1a1a2e;
+  }
+  .blog-fullhtml .hero {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+      color: #f0f0f0;
+      padding: 80px 20px 60px;
+      text-align: center;
+  }
+  .blog-fullhtml .hero .series-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #7eb8da;
+      margin-bottom: 16px;
+  }
+  .blog-fullhtml .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 820px;
+      margin: 0 auto 20px;
+      color: #f0f0f0;
+      border: none;
+      padding: 0;
+  }
+  .blog-fullhtml .hero .subtitle {
+      font-size: 1.15rem;
+      color: #b0c4de;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-style: italic;
+  }
+  .blog-fullhtml .blog-container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+  }
+  .blog-fullhtml h2 {
+      font-size: 1.85rem;
+      color: #0d1b2a;
+      margin: 56px 0 20px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #2a4066;
+  }
+  .blog-fullhtml h3 {
+      font-size: 1.35rem;
+      color: #1b2838;
+      margin: 40px 0 14px;
+  }
+  .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
+  .blog-fullhtml strong { color: #0d1b2a; }
+  .blog-fullhtml a { color: #2a6496; text-decoration: none; border-bottom: 1px solid #2a649644; }
+  .blog-fullhtml a:hover { color: #1a4060; border-bottom-color: #1a4060; }
+  .blog-fullhtml .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
+  .blog-fullhtml li { margin-bottom: 6px; }
+  .blog-fullhtml .series-nav {
+      background: #f0f4f8;
+      border: 1px solid #d0d8ef;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.92rem;
+      color: #444;
+  }
+  .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
+  .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
+  .blog-fullhtml .series-nav .nav-links {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #2a4066;
+      font-weight: 600;
+  }
+  .blog-fullhtml .callout {
+      border-left: 4px solid #2a4066;
+      background: #f0f4f8;
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 0 6px 6px 0;
+  }
+  .blog-fullhtml .callout.insight {
+      border-left-color: #228b22;
+      background: #f0faf0;
+  }
+  .blog-fullhtml .callout.warning {
+      border-left-color: #b22222;
+      background: #fdf2f2;
+  }
+  .blog-fullhtml .callout.question {
+      border-left-color: #d4740e;
+      background: #fef9f0;
+  }
+  .blog-fullhtml .callout-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
+  .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
+  .blog-fullhtml .callout.question .callout-label { color: #d4740e; }
+  .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
+  .blog-fullhtml .agentic-sidebar {
+      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+      border: 1px solid #d4c5f0;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+  }
+  .blog-fullhtml .agentic-sidebar .sidebar-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #6b3fa0;
+      margin-bottom: 12px;
+  }
+  .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
+  .blog-fullhtml pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 24px 0;
+  }
+  .blog-fullhtml code {
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.88em;
+  }
+  .blog-fullhtml p code, .blog-fullhtml li code {
+      background: #e8edf2;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #2a4066;
+  }
+  .blog-fullhtml .code-caption {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+      margin-top: -16px;
+      margin-bottom: 24px;
+      font-style: italic;
+  }
+  .blog-fullhtml .kw { color: #cba6f7; }
+  .blog-fullhtml .fn { color: #89b4fa; }
+  .blog-fullhtml .str { color: #a6e3a1; }
+  .blog-fullhtml .cm { color: #6c7086; font-style: italic; }
+  .blog-fullhtml .var { color: #f9e2af; }
+  .blog-fullhtml .vis-container {
+      margin: 2em 0;
+      padding: 1.5em;
+      background: #fafafa;
+      border-radius: 10px;
+      border: 1px solid #eee;
+  }
+  .blog-fullhtml .vis-caption {
+      font-size: 0.85em;
+      color: #666;
+      font-style: italic;
+      margin-top: 10px;
+      text-align: center;
+  }
+  .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
+  .blog-fullhtml .math-block {
+      text-align: center; padding: 16px 0; margin: 20px 0;
+      font-size: 1.15rem; background: #f8f9fb; border-radius: 6px;
+  }
+  .blog-fullhtml .interactive-container {
+      border: 1px solid #d0d8ef;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+      background: #fff;
+  }
+  .blog-fullhtml .auto-demo-btn {
+      background: #2a9d8f;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-top: 12px;
+  }
+  .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
+  .blog-fullhtml .next-post {
+      margin: 56px 0 0; padding: 28px;
+      background: linear-gradient(135deg, #1b2838, #2a4066);
+      border-radius: 10px; color: #e0e8f0;
+  }
+  .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
+  .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
+  .blog-fullhtml .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #dde; }
+  .blog-fullhtml .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
+  .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
+  .blog-fullhtml .references li { margin-bottom: 8px; }
+  .blog-fullhtml .blog-footer {
+      text-align: center; padding: 32px 20px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  }
+  .blog-fullhtml .tuple-display {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+  }
+  .blog-fullhtml .tuple-item {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      text-align: center;
+      min-width: 80px;
+  }
+  .blog-fullhtml .tuple-item .symbol {
+      font-family: 'Cambria Math', 'Georgia', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+  }
+  .blog-fullhtml .tuple-item .meaning {
+      font-size: 0.72rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+  }
+  .blog-fullhtml .tuple-item.states { background: #e8edf5; border: 2px solid #4682b4; }
+  .blog-fullhtml .tuple-item.states .symbol { color: #4682b4; }
+  .blog-fullhtml .tuple-item.init { background: #fff7ed; border: 2px solid #d4740e; }
+  .blog-fullhtml .tuple-item.init .symbol { color: #d4740e; }
+  .blog-fullhtml .tuple-item.goal { background: #f0faf0; border: 2px solid #228b22; }
+  .blog-fullhtml .tuple-item.goal .symbol { color: #228b22; }
+  .blog-fullhtml .tuple-item.actions { background: #f5f0ff; border: 2px solid #6b3fa0; }
+  .blog-fullhtml .tuple-item.actions .symbol { color: #6b3fa0; }
+  .blog-fullhtml .tuple-item.transition { background: #f0f8f8; border: 2px solid #2a9d8f; }
+  .blog-fullhtml .tuple-item.transition .symbol { color: #2a9d8f; }
+  .blog-fullhtml .tuple-item.cost { background: #fdf2f2; border: 2px solid #b22222; }
+  .blog-fullhtml .tuple-item.cost .symbol { color: #b22222; }
+  .blog-fullhtml .state-tree {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      position: relative;
+      padding: 20px 0;
+  }
+  .blog-fullhtml .tree-level {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+  }
+  .blog-fullhtml .tree-node {
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 48px;
+      border: 2px solid;
+      transition: all 0.3s;
+      cursor: default;
+  }
+  .blog-fullhtml .tree-node.current { background: #e8edf5; border-color: #4682b4; color: #2a4066; }
+  .blog-fullhtml .tree-node.explored { background: #f0faf0; border-color: #228b22; color: #1a6b1a; }
+  .blog-fullhtml .tree-node.unexplored { background: #f5f5f5; border-color: #ccc; color: #999; }
+  .blog-fullhtml .tree-node.goal-node { background: #228b22; border-color: #1a6b1a; color: #fff; }
+  .blog-fullhtml .tree-node.expanded { background: #fff7ed; border-color: #d4740e; color: #b35c00; }
+  .blog-fullhtml .tree-connector {
+      text-align: center;
+      color: #999;
+      font-size: 0.7rem;
+      margin: 2px 0;
+  }
+  .blog-fullhtml .tree-legend {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 14px;
+      flex-wrap: wrap;
+  }
+  .blog-fullhtml .tree-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      color: #666;
+  }
+  .blog-fullhtml .tree-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      border: 2px solid;
+  }
+  .blog-fullhtml .formalism-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+  }
+  .blog-fullhtml .formalism-grid > * { min-width: 0; }
+  .blog-fullhtml .formalism-card {
+      padding: 14px;
+      border-radius: 8px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      text-align: center;
+      border: 2px solid;
+      transition: transform 0.15s;
+  }
+  .blog-fullhtml .formalism-card:hover { transform: translateY(-2px); }
+  .blog-fullhtml .formalism-card h5 {
+      font-size: 0.82rem;
+      margin-bottom: 4px;
+  }
+  .blog-fullhtml .formalism-card p {
+      font-size: 0.72rem;
+      color: #666;
+      margin: 0;
+  }
+  .blog-fullhtml .formalism-card.classical { background: #e8edf5; border-color: #4682b4; }
+  .blog-fullhtml .formalism-card.classical h5 { color: #2a4066; }
+  .blog-fullhtml .formalism-card.temporal { background: #f0f8f8; border-color: #2a9d8f; }
+  .blog-fullhtml .formalism-card.temporal h5 { color: #1a6b6b; }
+  .blog-fullhtml .formalism-card.probabilistic { background: #fff7ed; border-color: #d4740e; }
+  .blog-fullhtml .formalism-card.probabilistic h5 { color: #b35c00; }
+  .blog-fullhtml .formalism-card.htn { background: #f5f0ff; border-color: #6b3fa0; }
+  .blog-fullhtml .formalism-card.htn h5 { color: #6b3fa0; }
+  .blog-fullhtml .formalism-card.conformant { background: #fdf2f2; border-color: #b22222; }
+  .blog-fullhtml .formalism-card.conformant h5 { color: #b22222; }
+  .blog-fullhtml .formalism-card.fond { background: #f0faf0; border-color: #228b22; }
+  .blog-fullhtml .formalism-card.fond h5 { color: #228b22; }
+  .blog-fullhtml .pipeline-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: nowrap;
+      margin: 20px 0;
+  }
+  .blog-fullhtml .pipeline-node {
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+      min-width: 120px;
+      line-height: 1.4;
+  }
+  .blog-fullhtml .pipeline-node.pddl-node { background: #4682b4; }
+  .blog-fullhtml .pipeline-node.strips-node { background: #6b3fa0; }
+  .blog-fullhtml .pipeline-node.fdr-node { background: #2a9d8f; }
+  .blog-fullhtml .pipeline-node.solver-node { background: #228b22; }
+  .blog-fullhtml .pipeline-arrow {
+      font-size: 1.4rem;
+      color: #555;
+      padding: 0 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+  }
+  .blog-fullhtml .pipeline-label {
+      font-size: 0.68rem;
+      display: block;
+      font-weight: 400;
+      opacity: 0.85;
+      margin-top: 2px;
+  }
+  .blog-fullhtml .warehouse-scene {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      background: linear-gradient(180deg, #e8ecf1 0%, #d5dbe3 100%);
+      border-radius: 10px;
+      overflow: hidden;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      border: 1px solid #bcc5d3;
+      transition: box-shadow 0.3s ease;
+  }
+  .blog-fullhtml .wh-floor {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 260px;
+      background:
+          repeating-linear-gradient(90deg, #c8cdd4 0px, #c8cdd4 1px, transparent 1px, transparent 80px),
+          repeating-linear-gradient(0deg, #c8cdd4 0px, #c8cdd4 1px, transparent 1px, transparent 80px),
+          #dfe3e8;
+  }
+  .blog-fullhtml .wh-ceiling {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 25px;
+      background: #3a4a5c;
+  }
+  .blog-fullhtml .wh-light {
+      position: absolute;
+      top: 25px;
+      width: 40px;
+      height: 8px;
+      background: #ffe8a0;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 4px 20px 8px rgba(255, 232, 160, 0.25);
+  }
+  .blog-fullhtml .wh-shelf {
+      position: absolute;
+      bottom: 100px;
+      width: 110px;
+      height: 160px;
+      background: linear-gradient(180deg, #6a7585 0%, #555f6e 100%);
+      border-radius: 3px 3px 0 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 6px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  }
+  .blog-fullhtml .wh-shelf-label {
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #444;
+      background: #f0f2f5;
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+  }
+  .blog-fullhtml .wh-shelf-row {
+      width: 94%;
+      height: 3px;
+      background: #8a95a5;
+      border-radius: 1px;
+  }
+  .blog-fullhtml .wh-package {
+      width: 32px;
+      height: 28px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #fff;
+      position: absolute;
+      transition: all 0.6s ease;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+  .blog-fullhtml .piece-l1 { background: #e07030; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-l2 { background: #3080c0; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-bm { background: #d04050; width: 160px; height: 16px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-rf { background: #30a060; width: 60px; height: 18px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-fg { background: #8050c0; width: 16px; height: 26px; font-size: 0.42rem; }
+  .blog-fullhtml .build-zone {
+      position: absolute;
+      left: 478px;
+      bottom: 6px;
+      width: 200px;
+      height: 195px;
+      border: 2px dashed rgba(100,120,140,0.45);
+      border-radius: 6px;
+      background: rgba(245,248,252,0.25);
+  }
+  .blog-fullhtml .build-zone-label {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: #5a6a7a;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      white-space: nowrap;
+  }
+  .blog-fullhtml .build-zone-platform {
+      position: absolute;
+      bottom: 8px;
+      left: 8%;
+      width: 84%;
+      height: 5px;
+      background: linear-gradient(90deg, #6a7585, #555f6e, #6a7585);
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .blog-fullhtml .wh-robot {
+      position: absolute;
+      width: 50px;
+      height: 60px;
+      transition: all 0.6s ease;
+      z-index: 10;
+  }
+  .blog-fullhtml .wh-robot-body {
+      width: 50px;
+      height: 40px;
+      background: linear-gradient(180deg, #6b3fa0, #5a2e8f);
+      border-radius: 8px 8px 4px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+  }
+  .blog-fullhtml .wh-robot-eyes { display: flex; gap: 8px; }
+  .blog-fullhtml .wh-robot-eye {
+      width: 10px;
+      height: 10px;
+      background: #7eb8da;
+      border-radius: 50%;
+      box-shadow: 0 0 4px #7eb8da;
+  }
+  .blog-fullhtml .wh-robot-wheels {
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 5px 0;
+  }
+  .blog-fullhtml .wh-robot-wheel {
+      width: 14px;
+      height: 14px;
+      background: #333;
+      border-radius: 50%;
+      border: 2px solid #555;
+  }
+  .blog-fullhtml .wh-robot-arm {
+      position: absolute;
+      top: 8px;
+      right: -12px;
+      width: 14px;
+      height: 6px;
+      background: #888;
+      border-radius: 2px;
+      transition: all 0.3s;
+  }
+  .blog-fullhtml .wh-robot-arm.carrying {
+      height: 10px;
+      background: #aaa;
+  }
+  .blog-fullhtml .wh-robot-label {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #6b3fa0;
+      white-space: nowrap;
+  }
+  .blog-fullhtml .wh-status {
+      position: absolute;
+      top: 35px;
+      left: 12px;
+      right: 12px;
+      background: rgba(27,40,56,0.88);
+      color: #e0e8f0;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .blog-fullhtml .wh-status .status-action { color: #7eb8da; }
+  .blog-fullhtml .wh-status .status-state { color: #a6e3a1; }
+  .blog-fullhtml .pddl-overlay {
+      position: absolute;
+      z-index: 15;
+      background: rgba(30,30,46,0.92);
+      color: #cdd6f4;
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.62rem;
+      line-height: 1.4;
+      pointer-events: none;
+      visibility: hidden;
+      transition: visibility 0.3s, opacity 0.3s;
+      opacity: 0;
+      max-width: 220px;
+  }
+  .blog-fullhtml .pddl-overlay.visible {
+      visibility: visible;
+      opacity: 1;
+  }
+  .blog-fullhtml .pddl-overlay .kw { color: #cba6f7; }
+  .blog-fullhtml .pddl-overlay .fn { color: #89b4fa; }
+  .blog-fullhtml .pddl-overlay .str { color: #a6e3a1; }
+  .blog-fullhtml .wh-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 14px;
+  }
+  .blog-fullhtml .wh-btn {
+      padding: 7px 16px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: background 0.15s;
+  }
+  .blog-fullhtml .wh-btn.primary { background: #6b3fa0; color: #fff; }
+  .blog-fullhtml .wh-btn.primary:hover { background: #5a2e8f; }
+  .blog-fullhtml .wh-btn.secondary { background: #dde; color: #444; }
+  .blog-fullhtml .wh-btn.secondary:hover { background: #ccd; }
+  .blog-fullhtml .wh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .blog-fullhtml .comparison-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+  }
+  .blog-fullhtml .comp-panel {
+      border-radius: 8px;
+      padding: 18px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+  }
+  .blog-fullhtml .comp-panel.english {
+      background: #f0f4f8;
+      border: 2px solid #b0c4de;
+  }
+  .blog-fullhtml .comp-panel.formal {
+      background: #f0faf0;
+      border: 2px solid #a0d8a0;
+  }
+  .blog-fullhtml .comp-panel h4 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .comp-panel.english h4 { color: #2a4066; }
+  .blog-fullhtml .comp-panel.formal h4 { color: #228b22; }
+  .blog-fullhtml .comp-step {
+      padding: 6px 10px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      opacity: 0.3;
+      transition: opacity 0.35s;
+      background: #f0f0f0;
+  }
+  .blog-fullhtml .comp-step.active { opacity: 1; }
+  .blog-fullhtml .comp-step.ok { background: #d4edda; border-left: 3px solid #228b22; }
+  .blog-fullhtml .comp-step.highlight { background: #e8edf5; border-left: 3px solid #4682b4; }
+  .blog-fullhtml .comp-step.neutral { background: #e8edf2; border-left: 3px solid #6c757d; }
+  .blog-fullhtml .comp-result {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      visibility: hidden;
+  }
+  .blog-fullhtml .comp-result.success {
+      background: #f0fff0;
+      border: 1px solid #b5e8b5;
+      color: #1a6b1a;
+  }
+  .blog-fullhtml .comp-result strong { display: block; margin-bottom: 4px; }
+  @media (max-width: 700px) {
+      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
+      .blog-fullhtml .comparison-wrapper { grid-template-columns: 1fr; }
+      .blog-fullhtml .formalism-grid { grid-template-columns: 1fr 1fr; }
+      .blog-fullhtml .pipeline-flow { flex-wrap: wrap; gap: 8px; }
+      .blog-fullhtml .pipeline-node { min-width: 100px; font-size: 0.8rem; padding: 10px 14px; }
+      .blog-fullhtml .pipeline-arrow { padding: 0 6px; font-size: 1rem; }
+      .blog-fullhtml .tuple-display { gap: 6px; }
+      .blog-fullhtml .tuple-item { min-width: 65px; padding: 8px 10px; }
+      .blog-fullhtml .warehouse-scene { height: 350px; }
+  }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
+  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
+  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
+  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .code-caption { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .math-block { background: #1e2530; }
+  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1c1c1d; border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .tuple-item .meaning { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .tuple-item.states { background: #141e2e; border-color: #4682b4; }
+  html[data-theme="dark"] .blog-fullhtml .tuple-item.init { background: #2a2010; border-color: #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .tuple-item.goal { background: #142a14; border-color: #228b22; }
+  html[data-theme="dark"] .blog-fullhtml .tuple-item.actions { background: #1e142e; border-color: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .tuple-item.transition { background: #142a2a; border-color: #2a9d8f; }
+  html[data-theme="dark"] .blog-fullhtml .tuple-item.cost { background: #2a1414; border-color: #b22222; }
+  html[data-theme="dark"] .blog-fullhtml .tree-node.current { background: #141e2e; border-color: #4682b4; color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .tree-node.explored { background: #142a14; border-color: #228b22; color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .tree-node.unexplored { background: #1e2530; border-color: #444; color: #666; }
+  html[data-theme="dark"] .blog-fullhtml .tree-node.goal-node { background: #228b22; border-color: #1a6b1a; color: #fff; }
+  html[data-theme="dark"] .blog-fullhtml .tree-node.expanded { background: #2a2010; border-color: #d4740e; color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .tree-connector { color: #666; }
+  html[data-theme="dark"] .blog-fullhtml .tree-legend-item { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.classical { background: #141e2e; border-color: #4682b4; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.classical h5 { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.temporal { background: #142a2a; border-color: #2a9d8f; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.temporal h5 { color: #4dc9b0; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.probabilistic { background: #2a2010; border-color: #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.probabilistic h5 { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.htn { background: #1e142e; border-color: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.htn h5 { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.conformant { background: #2a1414; border-color: #b22222; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.conformant h5 { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.fond { background: #142a14; border-color: #228b22; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card.fond h5 { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .formalism-card p { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .pipeline-arrow { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .warehouse-scene { background: linear-gradient(180deg, #1a2030 0%, #141a24 100%); border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .wh-floor { background: repeating-linear-gradient(90deg, #2a3040 0px, #2a3040 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, #2a3040 0px, #2a3040 1px, transparent 1px, transparent 80px), #1a2030; }
+  html[data-theme="dark"] .blog-fullhtml .wh-ceiling { background: #0d1520; }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf { background: linear-gradient(180deg, #3a4555 0%, #2a3545 100%); }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf-label { color: #c0c8d0; background: #1a2030; }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf-row { background: #4a5565; }
+  html[data-theme="dark"] .blog-fullhtml .build-zone { border-color: rgba(100,120,140,0.6); background: rgba(30,37,48,0.25); }
+  html[data-theme="dark"] .blog-fullhtml .build-zone-label { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .build-zone-platform { background: linear-gradient(90deg, #3a4555, #2a3545, #3a4555); }
+  html[data-theme="dark"] .blog-fullhtml .wh-robot-label { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.english { background: #141e2e; border-color: #3a5070; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.formal { background: #142a14; border-color: #305a30; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.english h4 { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .comp-panel.formal h4 { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step.neutral { background: #1e2530; border-left-color: #5a6878; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step.ok { background: #1a2a1a; border-left-color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step.highlight { background: #141e2e; border-left-color: #4682b4; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .comp-result.success { background: #152a15; border-color: #255a25; color: #a0e8a0; }
+  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .wh-btn.secondary { background: #2a3545; color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .wh-btn.secondary:hover { background: #354560; }
+---
+
+<header class="hero">
+    <div class="series-label">Planning in the Era of LLMs — Part 2 of 7</div>
+    <h1>The Formal Planning Primer</h1>
+    <p class="subtitle">States, actions, goals, and the language that makes them precise — everything you need to follow the rest of this series.</p>
+</header>
+
+<article class="blog-container">
+
+    <!-- Series Navigation -->
+    <div class="vis-container">
+        <div class="series-nav">
+            <strong>📚 Planning in the Era of LLMs — Part 2 of 7</strong>
+            <div class="nav-desc">The formal planning foundations: states, actions, PDDL, and computational complexity. Everything an ML engineer needs to understand the rest of this series.</div>
+            <div class="nav-links">
+                ← Part 1: "Making LLM Agents Actually Plan" | Next: Part 3 — "50 Years of Planning Algorithms" →
+            </div>
+        </div>
+    </div>
+
+    <p class="lead">If you already know what PDDL is, skip to Post 3. If "heuristic search" sounds like a fancy way to say "guessing," this post is for you.</p>
+
+    <p>In Post 1, we saw RoboSort fail catastrophically when an LLM planned its tower assembly without checking constraints. The beam went last, the roof fell through, and two pieces crashed. The planning-enhanced agent got it right by formalizing support constraints and searching for a valid sequence.</p>
+
+    <p>But we hand-waved over a critical question: what does "formalizing" actually mean? How do you take a vague task description — "build a tower from these five pieces" — and turn it into something a computer can reason about with mathematical guarantees?</p>
+
+    <p>That's what this post answers. We'll take the RoboSort warehouse and turn it into a formal planning problem, piece by piece. By the end, you'll understand the mathematical model, read real PDDL code, and know why planning is computationally hard — the essential vocabulary for everything that follows.</p>
+
+    <h2>The Planning Problem, Through the Warehouse</h2>
+
+    <p>Every planning problem answers the same three questions: Where are we now? What can we do? Where do we want to be?</p>
+
+    <p>For RoboSort, those questions become concrete. Where are we now? The robot is at its home position, five pieces sit on shelves, the build zone is empty. What can we do? Move to a shelf, pick up a piece, move to the build zone, place a piece — but only if constraints are met (gripper must be empty to pick, piece must have support underneath to stay). Where do we want to be? All five pieces assembled into a stable tower: legs on the platform, beam on legs, roof on beam, flag on top.</p>
+
+    <p>The planning community captures this with a precise mathematical model. A planning problem is a tuple:</p>
+
+    <div class="vis-container">
+        <div class="math-block">
+            <span class="math" style="font-size: 1.3rem;">P = ⟨S, s₀, S<sub>G</sub>, A, f, c⟩</span>
+        </div>
+        <div class="tuple-display">
+            <div class="tuple-item states">
+                <span class="symbol">S</span>
+                <span class="meaning">State space</span>
+            </div>
+            <div class="tuple-item init">
+                <span class="symbol">s₀</span>
+                <span class="meaning">Initial state</span>
+            </div>
+            <div class="tuple-item goal">
+                <span class="symbol">S<sub>G</sub></span>
+                <span class="meaning">Goal states</span>
+            </div>
+            <div class="tuple-item actions">
+                <span class="symbol">A</span>
+                <span class="meaning">Actions</span>
+            </div>
+            <div class="tuple-item transition">
+                <span class="symbol">f</span>
+                <span class="meaning">Transition fn</span>
+            </div>
+            <div class="tuple-item cost">
+                <span class="symbol">c</span>
+                <span class="meaning">Cost fn</span>
+            </div>
+        </div>
+        <p class="vis-caption">The six components of a planning problem. Every formal planning system — from STRIPS (1971) to modern solvers — works with some variant of this tuple.</p>
+    </div>
+
+    <p>Let's map each symbol to the warehouse:</p>
+
+    <ul>
+        <li><strong><span class="math">S</span> — State space:</strong> Every possible configuration of the warehouse. Where is the robot? What's in the gripper? Which pieces are on shelves? Which are in the build zone? Which are supported? Each unique combination is a <em>state</em>.</li>
+        <li><strong><span class="math">s₀</span> — Initial state:</strong> Robot at home, gripper empty, L1 and L2 on Shelf A, Beam on Shelf B, Roof and Flag on Shelf C, build zone empty.</li>
+        <li><strong><span class="math">S<sub>G</sub></span> — Goal states:</strong> Any state where all five pieces form a stable tower — legs on platform, beam spanning both legs, roof on beam, flag on roof.</li>
+        <li><strong><span class="math">A</span> — Actions:</strong> <code>move(from, to)</code>, <code>pick(piece, location)</code>, <code>place(piece, location)</code>. Each has preconditions (gripper must be empty to pick) and effects (after picking, gripper holds the piece and the shelf no longer does).</li>
+        <li><strong><span class="math">f</span> — Transition function:</strong> Given a state and an action, produces the next state. If RoboSort is at Shelf A with an empty gripper and executes <code>pick(L1)</code>, the new state has L1 in the gripper and no longer on Shelf A.</li>
+        <li><strong><span class="math">c</span> — Cost function:</strong> How expensive each action is. For RoboSort, each move or manipulation might cost 1 unit. An optimal planner minimizes total cost.</li>
+    </ul>
+
+    <div class="vis-container">
+        <div class="callout insight">
+            <div class="callout-label">Key Insight</div>
+            <p>A <strong>plan</strong> is a sequence of actions that transforms the initial state into a goal state, with every precondition satisfied at every step. A <strong>sound</strong> planner guarantees every plan it returns is valid. An <strong>optimal</strong> planner guarantees the plan has minimum cost. This is what separates formal planning from "just prompting an LLM" — mathematical certainty, not probabilistic hope.</p>
+        </div>
+    </div>
+
+    <p>This model is deceptively simple. Six symbols. But it's powerful enough to represent everything from warehouse logistics to spacecraft operations to the multi-step agentic tasks we care about. The question is: how do you write it down in a way a computer can process?</p>
+
+    <h2>PDDL: The Map Format for Planning</h2>
+
+    <p>The planning community's answer is <strong>PDDL</strong> — the Planning Domain Definition Language. Think of it as the structured data format that turns the mathematical model into something a solver can read. Just as SQL lets you describe database queries without specifying how to search, PDDL lets you describe planning problems without specifying how to solve them.</p>
+
+    <p>A PDDL problem has two files: a <strong>domain</strong> file (what's possible — the types, predicates, and actions) and a <strong>problem</strong> file (what's specific — the objects, initial state, and goal). Let's build both for RoboSort's tower assembly.</p>
+
+    <h3>The Domain File: Types, Predicates, Actions</h3>
+
+    <p>The domain file defines the "physics" of the warehouse — what kinds of things exist, what properties they can have, and what actions the robot can perform.</p>
+
+    <div class="vis-container">
+<pre><span class="cm">; RoboSort Tower Assembly Domain</span>
+(<span class="kw">define</span> (<span class="fn">domain</span> <span class="str">robosort-tower</span>)
+  (<span class="kw">:requirements</span> :strips :typing)
+
+  <span class="cm">; What kinds of things exist</span>
+  (<span class="kw">:types</span>
+    <span class="var">location piece</span> - object
+  )
+
+  <span class="cm">; Properties that can be true or false</span>
+  (<span class="kw">:predicates</span>
+    (<span class="fn">robot-at</span> <span class="var">?loc</span> - location)         <span class="cm">; robot is at this location</span>
+    (<span class="fn">piece-at</span> <span class="var">?p</span> - piece <span class="var">?loc</span> - location) <span class="cm">; piece is at location</span>
+    (<span class="fn">holding</span> <span class="var">?p</span> - piece)                 <span class="cm">; robot is holding piece</span>
+    (<span class="fn">gripper-empty</span>)                      <span class="cm">; gripper has nothing</span>
+    (<span class="fn">supports</span> <span class="var">?lower</span> <span class="var">?upper</span> - piece)     <span class="cm">; lower supports upper</span>
+    (<span class="fn">on-platform</span> <span class="var">?p</span> - piece)              <span class="cm">; piece is on the base platform</span>
+    (<span class="fn">placed</span> <span class="var">?p</span> - piece)                   <span class="cm">; piece is in the build zone</span>
+  )
+
+  <span class="cm">; Action 1: Move between locations</span>
+  (<span class="kw">:action</span> <span class="fn">move</span>
+    <span class="kw">:parameters</span> (<span class="var">?from ?to</span> - location)
+    <span class="kw">:precondition</span> (<span class="kw">and</span> (<span class="fn">robot-at</span> <span class="var">?from</span>))
+    <span class="kw">:effect</span> (<span class="kw">and</span> (<span class="fn">robot-at</span> <span class="var">?to</span>)
+                 (<span class="kw">not</span> (<span class="fn">robot-at</span> <span class="var">?from</span>)))
+  )
+
+  <span class="cm">; Action 2: Pick up a piece</span>
+  (<span class="kw">:action</span> <span class="fn">pick</span>
+    <span class="kw">:parameters</span> (<span class="var">?p</span> - piece <span class="var">?loc</span> - location)
+    <span class="kw">:precondition</span> (<span class="kw">and</span> (<span class="fn">robot-at</span> <span class="var">?loc</span>)
+                       (<span class="fn">piece-at</span> <span class="var">?p</span> <span class="var">?loc</span>)
+                       (<span class="fn">gripper-empty</span>))
+    <span class="kw">:effect</span> (<span class="kw">and</span> (<span class="fn">holding</span> <span class="var">?p</span>)
+                 (<span class="kw">not</span> (<span class="fn">piece-at</span> <span class="var">?p</span> <span class="var">?loc</span>))
+                 (<span class="kw">not</span> (<span class="fn">gripper-empty</span>)))
+  )
+
+  <span class="cm">; Action 3: Place piece (needs support!)</span>
+  (<span class="kw">:action</span> <span class="fn">place-on-platform</span>
+    <span class="kw">:parameters</span> (<span class="var">?p</span> - piece <span class="var">?loc</span> - location)
+    <span class="kw">:precondition</span> (<span class="kw">and</span> (<span class="fn">robot-at</span> <span class="var">?loc</span>)
+                       (<span class="fn">holding</span> <span class="var">?p</span>))
+    <span class="kw">:effect</span> (<span class="kw">and</span> (<span class="fn">on-platform</span> <span class="var">?p</span>)
+                 (<span class="fn">placed</span> <span class="var">?p</span>)
+                 (<span class="fn">gripper-empty</span>)
+                 (<span class="kw">not</span> (<span class="fn">holding</span> <span class="var">?p</span>)))
+  )
+
+  <span class="cm">; Action 4: Place piece on top of another (must be supported)</span>
+  (<span class="kw">:action</span> <span class="fn">place-on-piece</span>
+    <span class="kw">:parameters</span> (<span class="var">?p ?support</span> - piece <span class="var">?loc</span> - location)
+    <span class="kw">:precondition</span> (<span class="kw">and</span> (<span class="fn">robot-at</span> <span class="var">?loc</span>)
+                       (<span class="fn">holding</span> <span class="var">?p</span>)
+                       (<span class="fn">placed</span> <span class="var">?support</span>)
+                       (<span class="fn">supports</span> <span class="var">?support</span> <span class="var">?p</span>))
+    <span class="kw">:effect</span> (<span class="kw">and</span> (<span class="fn">placed</span> <span class="var">?p</span>)
+                 (<span class="fn">gripper-empty</span>)
+                 (<span class="kw">not</span> (<span class="fn">holding</span> <span class="var">?p</span>)))
+  )
+)</pre>
+        <p class="vis-caption">The PDDL domain file for RoboSort's tower assembly. Four actions, each with explicit preconditions and effects. The <code>supports</code> predicate encodes the physics: a piece can only be placed if its support structure exists.</p>
+    </div>
+
+    <p>Read through the actions. Notice how each one has explicit <em>preconditions</em> (what must be true before the action can execute) and <em>effects</em> (what changes after it executes). The <code>pick</code> action requires the robot to be at the piece's location with an empty gripper. After picking, the robot holds the piece, the piece is no longer at that location, and the gripper is no longer empty. No ambiguity. No room for misinterpretation.</p>
+
+    <p>The key constraint is in <code>place-on-piece</code>: it requires <code>(supports ?support ?p)</code> to be true and the support piece to already be <code>(placed ...)</code>. This is what prevents the naive ordering. You can't place the roof without the beam being placed first, because the domain says the beam supports the roof.</p>
+
+    <h3>The Problem File: Objects, Init, Goal</h3>
+
+    <p>The problem file describes this specific scenario — our particular warehouse with its particular pieces and target tower.</p>
+
+    <div class="vis-container">
+<pre><span class="cm">; RoboSort Tower Assembly Problem — 5 pieces</span>
+(<span class="kw">define</span> (<span class="fn">problem</span> <span class="str">tower-5</span>)
+  (<span class="kw">:domain</span> robosort-tower)
+
+  <span class="cm">; The specific objects in this scenario</span>
+  (<span class="kw">:objects</span>
+    <span class="var">shelf-a shelf-b shelf-c build-zone home</span> - location
+    <span class="var">leg1 leg2 beam roof flag</span> - piece
+  )
+
+  <span class="cm">; Where everything starts</span>
+  (<span class="kw">:init</span>
+    (<span class="fn">robot-at</span> home)
+    (<span class="fn">gripper-empty</span>)
+    (<span class="fn">piece-at</span> leg1 shelf-a)
+    (<span class="fn">piece-at</span> leg2 shelf-a)
+    (<span class="fn">piece-at</span> beam shelf-b)
+    (<span class="fn">piece-at</span> roof shelf-c)
+    (<span class="fn">piece-at</span> flag shelf-c)
+    <span class="cm">; Support constraints (the "physics")</span>
+    (<span class="fn">supports</span> leg1 beam)    <span class="cm">; legs support beam</span>
+    (<span class="fn">supports</span> leg2 beam)
+    (<span class="fn">supports</span> beam roof)    <span class="cm">; beam supports roof</span>
+    (<span class="fn">supports</span> roof flag)    <span class="cm">; roof supports flag</span>
+  )
+
+  <span class="cm">; What we want to achieve</span>
+  (<span class="kw">:goal</span> (<span class="kw">and</span>
+    (<span class="fn">placed</span> leg1)
+    (<span class="fn">placed</span> leg2)
+    (<span class="fn">placed</span> beam)
+    (<span class="fn">placed</span> roof)
+    (<span class="fn">placed</span> flag)
+  ))
+)</pre>
+        <p class="vis-caption">The PDDL problem file for the 5-piece tower. The <code>supports</code> predicates in the initial state encode the structural constraints. A planner that respects preconditions will <em>never</em> try to place the roof before the beam.</p>
+    </div>
+
+    <p>The <code>supports</code> facts in the <code>:init</code> block are the crucial difference. They encode the physical reality that legs support the beam, the beam supports the roof, and the roof supports the flag. These aren't suggestions — they're hard constraints. A planner working with this model will <em>never</em> generate a plan that places the roof before the beam, because the precondition for <code>place-on-piece(roof, beam)</code> requires <code>(placed beam)</code> to be true.</p>
+
+    <p>This is exactly what the naive LLM missed in Post 1. It had the right pieces and the right goal, but no formal model of support constraints. It treated "assemble a tower" as a sequence of independent actions rather than a constraint-satisfaction problem with ordering dependencies.</p>
+
+    <h2>Why This is Hard: State Space Explosion</h2>
+
+    <p>You might think: "Okay, so write the PDDL and feed it to a solver. Problem solved." And for five pieces, yes — the solver finds the optimal plan almost instantly. But planning gets hard fast.</p>
+
+    <p>Consider what happens as we scale RoboSort's warehouse. With 5 pieces, each either on a shelf, in the gripper, or in the build zone, we have a manageable state space. But every piece we add roughly <em>doubles</em> the number of possible states, because each new piece can independently be in any of several locations.</p>
+
+    <div class="vis-container">
+        <div class="state-tree">
+            <div style="text-align:center; margin-bottom: 16px;">
+                <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 700; color: #1b2838;">State Space Growth: RoboSort Tower Assembly</span>
+            </div>
+            <div class="tree-level">
+                <div class="tree-node current" style="min-width: 120px;">s₀: All on shelves<br>Robot at home</div>
+            </div>
+            <div class="tree-connector">↓ move(home, shelf-a) &nbsp;&nbsp;&nbsp; ↓ move(home, shelf-b) &nbsp;&nbsp;&nbsp; ↓ move(home, shelf-c)</div>
+            <div class="tree-level">
+                <div class="tree-node explored">At Shelf A<br>5 on shelves</div>
+                <div class="tree-node explored">At Shelf B<br>5 on shelves</div>
+                <div class="tree-node explored">At Shelf C<br>5 on shelves</div>
+            </div>
+            <div class="tree-connector">↓ pick(L1) &nbsp; ↓ pick(L2) &nbsp;&nbsp;&nbsp; ↓ pick(Beam) &nbsp;&nbsp;&nbsp; ↓ pick(Roof) &nbsp; ↓ pick(Flag)</div>
+            <div class="tree-level">
+                <div class="tree-node expanded">Holding L1</div>
+                <div class="tree-node expanded">Holding L2</div>
+                <div class="tree-node expanded">Holding Beam</div>
+                <div class="tree-node expanded">Holding Roof</div>
+                <div class="tree-node expanded">Holding Flag</div>
+            </div>
+            <div class="tree-connector">↓ ↓ ↓ ↓ ↓ ↓ ↓ ... (move, place, pick more) ... ↓ ↓ ↓ ↓ ↓ ↓ ↓</div>
+            <div class="tree-level">
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+                <div class="tree-node unexplored">...</div>
+            </div>
+            <div class="tree-connector">↓ ... eventually ...</div>
+            <div class="tree-level">
+                <div class="tree-node goal-node" style="min-width: 140px;">Goal: Tower complete<br>All 5 pieces placed</div>
+            </div>
+            <div class="tree-legend">
+                <div class="tree-legend-item"><div class="tree-legend-dot" style="background: #e8edf5; border-color: #4682b4;"></div> Initial</div>
+                <div class="tree-legend-item"><div class="tree-legend-dot" style="background: #f0faf0; border-color: #228b22;"></div> Explored</div>
+                <div class="tree-legend-item"><div class="tree-legend-dot" style="background: #fff7ed; border-color: #d4740e;"></div> Expanded</div>
+                <div class="tree-legend-item"><div class="tree-legend-dot" style="background: #f5f5f5; border-color: #ccc;"></div> Unexplored</div>
+                <div class="tree-legend-item"><div class="tree-legend-dot" style="background: #228b22; border-color: #1a6b1a;"></div> Goal</div>
+            </div>
+        </div>
+        <p class="vis-caption">The search tree for RoboSort's tower assembly. Each level of the tree represents one action. With 5 pieces, the tree is manageable. With 50, it has more states than atoms in the universe.</p>
+    </div>
+
+    <p>With 5 pieces: a few hundred reachable states. A modern solver handles this in milliseconds.</p>
+    <p>With 10 pieces: tens of thousands of states. Still fast.</p>
+    <p>With 30 pieces: millions of states. The solver needs good heuristics to avoid exploring them all.</p>
+    <p>With 50 pieces: more reachable states than atoms in the observable universe. Brute-force search is impossible.</p>
+
+    <p>This exponential blowup is inherent. Classical planning is <strong>PSPACE-hard</strong> — which means that in the worst case, determining whether a valid plan even exists is at least as hard as any problem solvable with polynomial memory. Optimal planning (finding the shortest or cheapest plan) is even harder.</p>
+
+    <div class="vis-container">
+        <div class="callout warning">
+            <div class="callout-label">Why This Matters</div>
+            <p>The state space explosion is why we need <em>algorithms</em>, not just <em>languages</em>. PDDL describes the problem. But finding a plan within that astronomical search space requires heuristic search, constraint propagation, and decades of algorithmic innovation. That's Post 3.</p>
+        </div>
+    </div>
+
+    <p>This is why just having PDDL isn't enough. You need sophisticated search algorithms that can navigate enormous state spaces without exploring every state. The planning community has spent 50 years developing exactly these algorithms — and the best ones solve problems with billions of reachable states in seconds. How? That's the next post.</p>
+
+    <h2>The Broader Landscape: Beyond Classical Planning</h2>
+
+    <p>Everything we've covered so far is <strong>classical planning</strong> — deterministic, fully observable, single-agent. But the planning community has extended the framework in many directions. You don't need to learn all of these now, but knowing the landscape helps you appreciate how general the planning framework really is.</p>
+
+    <div class="vis-container">
+        <div style="text-align:center; margin-bottom: 12px;">
+            <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.95rem; font-weight: 700; color: #1b2838;">Planning Formalisms Landscape</span>
+        </div>
+        <div class="formalism-grid">
+            <div class="formalism-card classical">
+                <h5>Classical (STRIPS)</h5>
+                <p>Deterministic, fully observable. Our warehouse so far.</p>
+            </div>
+            <div class="formalism-card temporal">
+                <h5>Temporal</h5>
+                <p>Actions have durations. Parallel execution. Scheduling.</p>
+            </div>
+            <div class="formalism-card probabilistic">
+                <h5>Probabilistic</h5>
+                <p>Actions can fail. Stochastic transitions. MDPs.</p>
+            </div>
+            <div class="formalism-card htn">
+                <h5>HTN</h5>
+                <p>Hierarchical task decomposition. Tasks break into subtasks.</p>
+            </div>
+            <div class="formalism-card conformant">
+                <h5>Conformant</h5>
+                <p>Uncertainty in initial state. Plan must work regardless.</p>
+            </div>
+            <div class="formalism-card fond">
+                <h5>FOND</h5>
+                <p>Non-deterministic but fair. Contingency planning.</p>
+            </div>
+        </div>
+        <p class="vis-caption">Classical planning is one slice of a rich landscape. Temporal planning handles time. Probabilistic planning handles uncertainty. HTN planning handles hierarchical task decomposition. Each extends the core model.</p>
+    </div>
+
+    <p>Classical planning covers RoboSort as described: deterministic actions, one robot, full knowledge of the world. But imagine extending the warehouse: the robot's gripper might slip (probabilistic), two robots work simultaneously (temporal), or the manager decomposes "organize aisle 3" into subtasks (HTN). Each formalism extends the mathematical model with new capabilities.</p>
+
+    <p>For this series, we'll focus primarily on classical planning — it's the foundation everything builds on, and it's where most LLM-planning research operates today. But when we reach Posts 6 and 7, you'll see how LLMs are being used to handle natural language descriptions that implicitly require temporal, probabilistic, or hierarchical reasoning.</p>
+
+    <h2>From PDDL to Plan: The Compilation Pipeline</h2>
+
+    <p>When a solver receives your PDDL files, it doesn't search the PDDL directly. There's a compilation pipeline that transforms the lifted, human-readable PDDL into increasingly optimized representations.</p>
+
+    <div class="vis-container">
+        <div class="pipeline-flow">
+            <div class="pipeline-node pddl-node">
+                PDDL
+                <span class="pipeline-label">Lifted representation</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-node strips-node">
+                Grounded STRIPS
+                <span class="pipeline-label">All objects substituted</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-node fdr-node">
+                FDR
+                <span class="pipeline-label">Finite-domain vars</span>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-node solver-node">
+                Solver
+                <span class="pipeline-label">Heuristic search</span>
+            </div>
+        </div>
+        <p class="vis-caption">The compilation pipeline. PDDL uses variables (?p, ?loc) — grounding replaces these with all concrete objects (leg1, shelf-a). FDR compresses Boolean facts into multi-valued variables. The solver searches this compact representation.</p>
+    </div>
+
+    <p><strong>Step 1: Grounding.</strong> PDDL actions use variables like <code>?p</code> and <code>?loc</code>. Grounding replaces every variable with every possible object. The action <code>pick(?p, ?loc)</code> becomes <code>pick(leg1, shelf-a)</code>, <code>pick(leg2, shelf-a)</code>, <code>pick(beam, shelf-b)</code>, and so on. With 5 pieces and 5 locations, one action schema becomes 25 ground actions.</p>
+
+    <p><strong>Step 2: FDR (Finite Domain Representation).</strong> PDDL uses Boolean predicates — <code>(robot-at shelf-a)</code> is either true or false. FDR compresses these into multi-valued variables. Instead of five separate Boolean facts for the robot's location, FDR uses a single variable <code>robot-location ∈ {home, shelf-a, shelf-b, shelf-c, build-zone}</code>. This is more compact and enables more efficient search.</p>
+
+    <p><strong>Step 3: Search.</strong> The solver explores the grounded, compressed state space using heuristic search. How these heuristics work — and why they're the key to handling billion-state problems — is the focus of Post 3.</p>
+
+    <h2>Seeing the Formal Model in Action</h2>
+
+    <p>Let's bring the formalization full circle. Here's the same PackBot Warehouse from Post 1 — but this time, the interactive demo shows how the formal PDDL model maps onto the physical warehouse scene. Watch as each action fires with its preconditions checked and effects applied.</p>
+
+    <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; font-style: italic; margin-bottom: 8px;">Interactive — click "▶ Auto Demo" to watch the PDDL model formalize the warehouse step by step</p>
+
+    <div class="vis-container" style="padding: 1em 1em 0.5em;">
+        <div class="warehouse-scene" id="warehouse" style="position:relative;">
+            <div class="wh-ceiling"></div>
+            <div class="wh-light" style="left: 80px;"></div>
+            <div class="wh-light" style="left: 240px;"></div>
+            <div class="wh-light" style="left: 400px;"></div>
+            <div class="wh-light" style="left: 560px;"></div>
+            <div class="wh-floor"></div>
+            <div class="wh-status" id="wh-status">
+                <span class="status-action" id="status-action">Awaiting formalization...</span>
+                <span class="status-state" id="status-state">State: s₀ — initial</span>
+            </div>
+            <div class="wh-shelf" style="left: 40px;" id="shelf-a">
+                <div class="wh-shelf-label">Shelf A</div>
+                <div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div>
+            </div>
+            <div class="wh-shelf" style="left: 200px;" id="shelf-b">
+                <div class="wh-shelf-label">Shelf B</div>
+                <div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div>
+            </div>
+            <div class="wh-shelf" style="left: 360px;" id="shelf-c">
+                <div class="wh-shelf-label">Shelf C</div>
+                <div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div>
+            </div>
+            <div class="wh-package piece-l1" id="piece-l1" style="left:55px; bottom:185px;">L1</div>
+            <div class="wh-package piece-l2" id="piece-l2" style="left:100px; bottom:185px;">L2</div>
+            <div class="wh-package piece-bm" id="piece-bm" style="left:175px; bottom:197px;">Beam</div>
+            <div class="wh-package piece-rf" id="piece-rf" style="left:370px; bottom:192px;">Roof</div>
+            <div class="wh-package piece-fg" id="piece-fg" style="left:442px; bottom:193px;">Flag</div>
+            <div class="build-zone">
+                <div class="build-zone-label">Build Zone</div>
+                <div class="build-zone-platform"></div>
+            </div>
+            <div class="wh-robot" id="robot" style="left: 40px; bottom: 30px;">
+                <div class="wh-robot-body">
+                    <div class="wh-robot-eyes"><div class="wh-robot-eye"></div><div class="wh-robot-eye"></div></div>
+                    <div class="wh-robot-arm" id="robot-arm"></div>
+                </div>
+                <div class="wh-robot-wheels"><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div></div>
+                <div class="wh-robot-label">RoboSort</div>
+            </div>
+            <!-- PDDL overlays that appear during demo -->
+            <div class="pddl-overlay" id="pddl-init" style="top: 70px; right: 12px; max-width: 250px;">
+                <span class="kw">(:init</span><br>
+                &nbsp;&nbsp;(<span class="fn">robot-at</span> home)<br>
+                &nbsp;&nbsp;(<span class="fn">gripper-empty</span>)<br>
+                &nbsp;&nbsp;(<span class="fn">piece-at</span> leg1 shelf-a)<br>
+                &nbsp;&nbsp;(<span class="fn">piece-at</span> leg2 shelf-a)<br>
+                &nbsp;&nbsp;... <span class="kw">)</span>
+            </div>
+            <div class="pddl-overlay" id="pddl-action" style="bottom: 12px; left: 12px; max-width: 260px;"></div>
+            <div class="pddl-overlay" id="pddl-state" style="top: 70px; left: 12px; max-width: 200px;"></div>
+        </div>
+        <!-- Comparison: English vs Formal -->
+        <div class="comparison-wrapper" style="margin-top: 0.8em;">
+            <div class="comp-panel english">
+                <h4>English Description</h4>
+                <div class="comp-step neutral" id="e1">1. "Go to shelf A and grab a leg"</div>
+                <div class="comp-step neutral" id="e2">2. "Put legs on the platform in the build zone"</div>
+                <div class="comp-step neutral" id="e3">3. "Get the beam and lay it across the legs"</div>
+                <div class="comp-step neutral" id="e4">4. "Finish with roof and flag on top"</div>
+                <div class="comp-result success" id="english-result">
+                    <strong>Sounds right, but:</strong>
+                    Ambiguous — "grab a leg" (which one?)<br>
+                    Implicit constraints (support order)<br>
+                    No verification possible<br><br>
+                    <em>A human understands. A machine can't verify.</em>
+                </div>
+            </div>
+            <div class="comp-panel formal">
+                <h4>PDDL Formalization</h4>
+                <div class="comp-step neutral" id="f1">1. move(home, shelf-a), pick(leg1, shelf-a)</div>
+                <div class="comp-step neutral" id="f2">2. move(shelf-a, build-zone), place-on-platform(leg1)</div>
+                <div class="comp-step neutral" id="f3">3. ... pick(beam), place-on-piece(beam, leg1)</div>
+                <div class="comp-step neutral" id="f4">4. ... place-on-piece(roof, beam), place-on-piece(flag, roof)</div>
+                <div class="comp-result success" id="formal-result">
+                    <strong>Every step is checkable:</strong>
+                    ✓ Each action's preconditions verified<br>
+                    ✓ Each effect updates state precisely<br>
+                    ✓ Goal reachable via this sequence<br><br>
+                    <em>A solver proves this plan is valid.</em>
+                </div>
+            </div>
+        </div>
+        <p class="vis-caption">English descriptions are intuitive but ambiguous. PDDL formalizations are verbose but verifiable. The planning solver works with the formal model — guaranteeing validity that no amount of natural language clarity can match.</p>
+    </div>
+
+    <div class="wh-controls" style="padding: 4px 0 12px; justify-content: center;">
+        <button class="auto-demo-btn" id="wh-auto-btn" onclick="runPost2Demo()">▶ Auto Demo</button>
+        <button class="wh-btn secondary" id="wh-reset-btn" onclick="resetPost2()" style="display:none;">↺ Reset</button>
+    </div>
+
+    <p>The warehouse is the same one you saw in Post 1 — same shelves, same five pieces, same RoboSort. But now you can see the formal model underneath: every action has a name, preconditions, and effects. Every state is a set of facts. The plan is a sequence of ground actions, and a solver can mathematically prove it reaches the goal.</p>
+
+    <p>This is the foundation everything else builds on. In Post 3, we'll see how heuristic search algorithms navigate the enormous state spaces these models create. In Posts 4-7, we'll see how LLMs interact with these formal models — sometimes helping to solve them, sometimes generating them from scratch.</p>
+
+    <div class="vis-container">
+        <div class="callout insight">
+            <div class="callout-label">Key Insight</div>
+            <p>PDDL is the bridge between human intent and machine reasoning. It captures what's possible (actions), what's true (states), and what's desired (goals) in a format that enables mathematical proof. Every post in this series — from classical algorithms to LLM-driven systems — builds on this formal foundation.</p>
+        </div>
+    </div>
+
+    <h3>Beyond the Warehouse: Planning in Agentic AI</h3>
+
+    <p>The formalization we just walked through — states, actions, preconditions, effects — isn't unique to warehouse robots. Every agentic system that decomposes tasks into steps is implicitly building a plan. The formal framework just makes it explicit and verifiable.</p>
+
+    <div class="vis-container">
+        <div class="agentic-sidebar">
+            <div class="sidebar-title">🤖 Agentic AI in the Wild: Your Coding Agent is Planning</div>
+            <p>When a coding agent like Devin or SWE-Agent decomposes a GitHub issue into subtasks, it's implicitly building a plan. "First read the failing test (precondition: know what's broken), then locate the source file (precondition: understand the test), then modify the function (precondition: file is located), then run tests (precondition: modification complete)." Each subtask has preconditions and effects.</p>
+            <p style="margin-top: 10px;">Just like RoboSort's tower assembly, the order matters. You can't modify a function before locating it. You can't run tests before making the change. The formal planning framework gives us language to describe what these agents are doing — and, critically, to verify that their decomposition is correct before execution.</p>
+            <p style="margin-top: 10px;">Every agentic system that sequences multi-step operations — coding agents, data pipelines, automated testing frameworks — is solving a planning problem. PDDL gives us the vocabulary to describe it precisely. Each post in this series includes a sidebar like this one, connecting the planning concepts to real agentic AI applications.</p>
+        </div>
+    </div>
+
+    <h2>What's Ahead</h2>
+
+    <p>Now you know what a plan is — formally. A planning problem is a tuple of states, actions, transitions, and goals. PDDL is the language that encodes it. And the state space explosion is why finding plans is computationally hard.</p>
+
+    <p>But knowing the formalism is only half the story. The other half is solving it. With five pieces, brute-force search works fine. With fifty, you need heuristics — functions that estimate how far you are from the goal and guide the search toward promising paths. The planning community has spent five decades developing these algorithms, and the best modern solvers can handle problems with billions of reachable states.</p>
+
+    <p>Next, we'll see how.</p>
+
+    <div class="next-post">
+        <h3>Up Next: Part 3 — 50 Years of Planning Algorithms</h3>
+        <p>Heuristic search, the relaxation trick, Fast Downward, and the International Planning Competition. How the planning community learned to navigate astronomical state spaces — and why these algorithms are what we're integrating with, not replacing. The machinery behind the guarantees.</p>
+    </div>
+
+    <div class="references">
+        <h2>References</h2>
+        <ol>
+            <li>Fikes, R. E. &amp; Nilsson, N. J. (1971). <em>STRIPS: A New Approach to the Application of Theorem Proving to Problem Solving.</em> Artificial Intelligence, 2(3-4), 189-208.</li>
+            <li>Aeronautiques, C., et al. (1998). <em>PDDL — The Planning Domain Definition Language.</em> Technical Report CVC TR-98-003.</li>
+            <li>Helmert, M. (2006). <em>The Fast Downward Planning System.</em> JAIR, 26, 191-246.</li>
+            <li>Katz, M., Kokel, H., &amp; Muise, C. (2025). <em>Planning in the Era of Language Models.</em> NeurIPS 2025 Tutorial.</li>
+            <li>Ghallab, M., Nau, D., &amp; Traverso, P. (2004). <em>Automated Planning: Theory and Practice.</em> Morgan Kaufmann.</li>
+            <li>Bylander, T. (1994). <em>The Computational Complexity of Propositional STRIPS Planning.</em> Artificial Intelligence, 69(1-2), 165-204.</li>
+        </ol>
+    </div>
+
+</article>
+
+<div class="blog-footer">
+    <p>Planning in the Era of LLMs — Part 2 of 7</p>
+</div>
+
+<script>
+// ============================================================
+// POST 2 WAREHOUSE DEMO — PDDL FORMALIZATION
+// ============================================================
+
+var whRunning = false;
+var pieceHome = {
+    l1: { x: 55, y: 185 },
+    l2: { x: 100, y: 185 },
+    bm: { x: 175, y: 197 },
+    rf: { x: 370, y: 192 },
+    fg: { x: 442, y: 193 }
+};
+var buildTarget = {
+    l1: { x: 498, y: 24 },
+    l2: { x: 612, y: 24 },
+    bm: { x: 493, y: 74 },
+    rf: { x: 543, y: 90 },
+    fg: { x: 565, y: 110 }
+};
+
+function setRobot(x, y) {
+    var r = document.getElementById('robot');
+    r.style.left = x + 'px'; r.style.bottom = y + 'px';
+}
+function setPiece(id, x, y) {
+    var p = document.getElementById('piece-' + id);
+    p.style.left = x + 'px'; p.style.bottom = y + 'px';
+}
+function setStatus(action, state) {
+    document.getElementById('status-action').textContent = action;
+    document.getElementById('status-state').textContent = state;
+}
+function setArm(c) {
+    document.getElementById('robot-arm').className = c ? 'wh-robot-arm carrying' : 'wh-robot-arm';
+}
+function delay(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+function showOverlay(id, html) {
+    var el = document.getElementById(id);
+    if (html !== undefined) el.innerHTML = html;
+    el.classList.add('visible');
+}
+function hideOverlay(id) {
+    document.getElementById(id).classList.remove('visible');
+}
+
+function activateStep(id, cls) {
+    var el = document.getElementById(id);
+    el.className = 'comp-step active ' + cls;
+}
+
+function resetPost2() {
+    whRunning = false;
+    setRobot(40, 30);
+    setArm(false);
+    var ids = ['l1','l2','bm','rf','fg'];
+    for (var i = 0; i < ids.length; i++) {
+        setPiece(ids[i], pieceHome[ids[i]].x, pieceHome[ids[i]].y);
+    }
+    setStatus('Awaiting formalization...', 'State: s₀ — initial');
+    hideOverlay('pddl-init');
+    hideOverlay('pddl-action');
+    hideOverlay('pddl-state');
+    var steps = ['e1','e2','e3','e4','f1','f2','f3','f4'];
+    for (var j = 0; j < steps.length; j++) {
+        document.getElementById(steps[j]).className = 'comp-step neutral';
+    }
+    document.getElementById('english-result').style.visibility = 'hidden';
+    document.getElementById('formal-result').style.visibility = 'hidden';
+    document.getElementById('wh-auto-btn').style.display = '';
+    document.getElementById('wh-auto-btn').disabled = false;
+    document.getElementById('wh-reset-btn').style.display = 'none';
+}
+
+async function runPost2Demo() {
+    if (whRunning) return;
+    whRunning = true;
+    document.getElementById('wh-auto-btn').disabled = true;
+    document.getElementById('wh-reset-btn').style.display = '';
+
+    // Step 1: Show initial state PDDL overlay
+    setStatus('Formalizing initial state...', 'State: s₀');
+    showOverlay('pddl-init');
+    activateStep('e1', 'highlight');
+    activateStep('f1', 'ok');
+    await delay(2000);
+
+    // Step 2: Pick L1 from shelf-a
+    showOverlay('pddl-action',
+        '<span class="kw">(:action</span> <span class="fn">move</span> home shelf-a<span class="kw">)</span><br>' +
+        '<span class="kw">(:action</span> <span class="fn">pick</span> leg1 shelf-a<span class="kw">)</span><br>' +
+        '<span class="cm">; pre: (robot-at shelf-a)</span><br>' +
+        '<span class="cm">;       (piece-at leg1 shelf-a)</span><br>' +
+        '<span class="cm">;       (gripper-empty) ✓</span>'
+    );
+    setStatus('move(home, shelf-a) → pick(leg1, shelf-a)', 'Preconditions: ✓ ✓ ✓');
+    setRobot(55, 100); await delay(500);
+    setArm(true); await delay(400);
+
+    // Move L1 to build zone
+    showOverlay('pddl-action',
+        '<span class="kw">(:action</span> <span class="fn">move</span> shelf-a build-zone<span class="kw">)</span><br>' +
+        '<span class="kw">(:action</span> <span class="fn">place-on-platform</span> leg1<span class="kw">)</span><br>' +
+        '<span class="cm">; effect: (on-platform leg1)</span><br>' +
+        '<span class="cm">;         (placed leg1)</span><br>' +
+        '<span class="cm">;         (gripper-empty)</span>'
+    );
+    activateStep('e2', 'highlight');
+    activateStep('f2', 'ok');
+    setStatus('place-on-platform(leg1, build-zone)', 'Effect: (placed leg1) ✓');
+    setRobot(498, 55); setPiece('l1', buildTarget.l1.x, buildTarget.l1.y);
+    await delay(500);
+    setArm(false);
+    hideOverlay('pddl-init');
+    await delay(800);
+
+    // Step 3: Pick L2, place it
+    setRobot(100, 100); await delay(400);
+    setArm(true);
+    setStatus('pick(leg2, shelf-a) → place-on-platform(leg2)', 'Preconditions: ✓');
+    await delay(400);
+    setRobot(612, 55); setPiece('l2', buildTarget.l2.x, buildTarget.l2.y);
+    setArm(false);
+    setStatus('Both legs placed', 'State: (placed leg1) (placed leg2)');
+    showOverlay('pddl-state',
+        '<span class="fn">Current state:</span><br>' +
+        '(<span class="fn">placed</span> leg1) ✓<br>' +
+        '(<span class="fn">placed</span> leg2) ✓<br>' +
+        '(<span class="fn">gripper-empty</span>) ✓'
+    );
+    await delay(1000);
+
+    // Step 4: Pick beam, place on legs
+    activateStep('e3', 'highlight');
+    activateStep('f3', 'ok');
+    showOverlay('pddl-action',
+        '<span class="kw">(:action</span> <span class="fn">place-on-piece</span> beam leg1<span class="kw">)</span><br>' +
+        '<span class="cm">; pre: (holding beam)</span><br>' +
+        '<span class="cm">;       (placed leg1) ✓</span><br>' +
+        '<span class="cm">;       (supports leg1 beam) ✓</span>'
+    );
+    setRobot(175, 100); await delay(400);
+    setArm(true);
+    setStatus('pick(beam, shelf-b) → place-on-piece(beam, leg1)', 'Checking: (supports leg1 beam) ✓');
+    await delay(400);
+    setRobot(530, 90); setPiece('bm', buildTarget.bm.x, buildTarget.bm.y);
+    setArm(false);
+    showOverlay('pddl-state',
+        '<span class="fn">Current state:</span><br>' +
+        '(<span class="fn">placed</span> leg1) ✓<br>' +
+        '(<span class="fn">placed</span> leg2) ✓<br>' +
+        '(<span class="fn">placed</span> beam) ✓<br>' +
+        '(<span class="fn">gripper-empty</span>) ✓'
+    );
+    setStatus('Beam placed — supports verified', 'State: 3/5 placed');
+    await delay(1000);
+
+    // Step 5: Roof and flag
+    activateStep('e4', 'highlight');
+    activateStep('f4', 'ok');
+    showOverlay('pddl-action',
+        '<span class="kw">(:action</span> <span class="fn">place-on-piece</span> roof beam<span class="kw">)</span><br>' +
+        '<span class="cm">; pre: (supports beam roof) ✓</span><br>' +
+        '<span class="cm">;       (placed beam) ✓</span>'
+    );
+    setRobot(370, 100); await delay(300);
+    setArm(true); await delay(300);
+    setRobot(543, 100); setPiece('rf', buildTarget.rf.x, buildTarget.rf.y);
+    setArm(false);
+    setStatus('Roof placed — (supports beam roof) ✓', 'State: 4/5 placed');
+    await delay(600);
+
+    setRobot(442, 100); await delay(300);
+    setArm(true); await delay(300);
+    setRobot(565, 115); setPiece('fg', buildTarget.fg.x, buildTarget.fg.y);
+    setArm(false);
+    showOverlay('pddl-action',
+        '<span class="kw">(:goal</span> (<span class="kw">and</span><br>' +
+        '&nbsp;&nbsp;(<span class="fn">placed</span> leg1) ✓<br>' +
+        '&nbsp;&nbsp;(<span class="fn">placed</span> leg2) ✓<br>' +
+        '&nbsp;&nbsp;(<span class="fn">placed</span> beam) ✓<br>' +
+        '&nbsp;&nbsp;(<span class="fn">placed</span> roof) ✓<br>' +
+        '&nbsp;&nbsp;(<span class="fn">placed</span> flag) ✓<br>' +
+        '<span class="kw">))</span> <span class="str">SATISFIED</span>'
+    );
+    showOverlay('pddl-state',
+        '<span class="str">GOAL REACHED</span><br>' +
+        'All 5 pieces placed ✓<br>' +
+        'All preconditions met ✓<br>' +
+        'Plan length: 14 actions'
+    );
+    setStatus('✓ Goal satisfied — all 5 pieces placed', 'Plan verified: sound and complete');
+
+    // Move robot out
+    setRobot(40, 30);
+    await delay(500);
+
+    // Show results
+    document.getElementById('english-result').style.visibility = 'visible';
+    document.getElementById('formal-result').style.visibility = 'visible';
+    await delay(3000);
+}
+</script>
