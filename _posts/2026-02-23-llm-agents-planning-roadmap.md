@@ -451,37 +451,59 @@ _styles: >
       transition: all 0.6s ease;
       box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
   }
-  .blog-fullhtml .pkg-1 { background: #e07030; }
-  .blog-fullhtml .pkg-2 { background: #3080c0; }
-  .blog-fullhtml .pkg-3 { background: #d04050; }
-  .blog-fullhtml .pkg-4 { background: #30a060; }
-  .blog-fullhtml .pkg-5 { background: #8050c0; }
-  .blog-fullhtml .wh-dock {
+  .blog-fullhtml .piece-l1 { background: #e07030; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-l2 { background: #3080c0; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-bm { background: #d04050; width: 160px; height: 16px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-rf { background: #30a060; width: 60px; height: 18px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-fg { background: #8050c0; width: 16px; height: 26px; font-size: 0.42rem; }
+  .blog-fullhtml .build-zone {
       position: absolute;
-      right: 20px;
-      bottom: 20px;
-      width: 130px;
-      height: 80px;
-      background: repeating-linear-gradient(
-          -45deg,
-          #f5c542 0px, #f5c542 10px,
-          #1b2838 10px, #1b2838 20px
-      );
+      left: 478px;
+      bottom: 6px;
+      width: 200px;
+      height: 195px;
+      border: 2px dashed rgba(100,120,140,0.45);
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      background: rgba(245,248,252,0.25);
   }
-  .blog-fullhtml .wh-dock-inner {
-      background: #1b2838;
-      color: #f5c542;
-      font-size: 0.72rem;
+  .blog-fullhtml .build-zone-label {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
       font-weight: 800;
+      color: #5a6a7a;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      padding: 6px 14px;
-      border-radius: 4px;
+      white-space: nowrap;
+  }
+  .blog-fullhtml .build-zone-platform {
+      position: absolute;
+      bottom: 8px;
+      left: 8%;
+      width: 84%;
+      height: 5px;
+      background: linear-gradient(90deg, #6a7585, #555f6e, #6a7585);
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .blog-fullhtml .wh-package.falling {
+      transition: bottom 0.5s cubic-bezier(0.55, 0, 1, 0.45), transform 0.5s ease-in !important;
+  }
+  .blog-fullhtml .wh-package.fallen {
+      filter: brightness(0.65) saturate(0.4);
+      box-shadow: 0 0 10px rgba(255,68,68,0.7);
+  }
+  @keyframes crashShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-3px) rotate(-2deg); }
+      40% { transform: translateX(3px) rotate(2deg); }
+      60% { transform: translateX(-2px) rotate(-1deg); }
+      80% { transform: translateX(2px) rotate(1deg); }
+  }
+  .blog-fullhtml .wh-package.crash-shake {
+      animation: crashShake 0.4s ease-in-out;
   }
   .blog-fullhtml .wh-robot {
       position: absolute;
@@ -561,10 +583,51 @@ _styles: >
       z-index: 20;
       display: flex;
       justify-content: space-between;
+      align-items: center;
   }
   .blog-fullhtml .wh-status .status-action { color: #7eb8da; }
   .blog-fullhtml .wh-status .status-state { color: #a6e3a1; }
   .blog-fullhtml .wh-status .status-error { color: #f38ba8; }
+  .blog-fullhtml .violation-counter {
+      display: none;
+      background: #ff4444;
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      letter-spacing: 0.5px;
+      animation: violationPulse 0.6s ease-in-out;
+  }
+  @keyframes violationPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+  }
+  .blog-fullhtml .phase-divider {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(27,40,56,0.92);
+      z-index: 30;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 8px;
+      border-radius: 8px;
+  }
+  .blog-fullhtml .phase-divider .divider-text {
+      color: #a6e3a1;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+  }
+  .blog-fullhtml .phase-divider .divider-sub {
+      color: #7eb8da;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+  }
   .blog-fullhtml .wh-controls {
       display: flex;
       gap: 8px;
@@ -710,6 +773,10 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .wh-shelf { background: linear-gradient(180deg, #3a4555 0%, #2a3545 100%); }
   html[data-theme="dark"] .blog-fullhtml .wh-shelf-label { color: #c0c8d0; background: #1a2030; }
   html[data-theme="dark"] .blog-fullhtml .wh-shelf-row { background: #4a5565; }
+  html[data-theme="dark"] .blog-fullhtml .build-zone { border-color: rgba(100,120,140,0.6); background: rgba(30,37,48,0.25); }
+  html[data-theme="dark"] .blog-fullhtml .build-zone-label { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .build-zone-platform { background: linear-gradient(90deg, #3a4555, #2a3545, #3a4555); }
+  html[data-theme="dark"] .blog-fullhtml .wh-robot-label { color: #b088e0; }
   html[data-theme="dark"] .blog-fullhtml .comp-panel.naive { background: #2a1818; border-color: #5a3030; }
   html[data-theme="dark"] .blog-fullhtml .comp-panel.planned { background: #182a18; border-color: #305a30; }
   html[data-theme="dark"] .blog-fullhtml .comp-panel.naive h4 { color: #e06060; }
@@ -726,6 +793,7 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
   html[data-theme="dark"] .blog-fullhtml .wh-btn.secondary { background: #2a3545; color: #b0b8c8; }
   html[data-theme="dark"] .blog-fullhtml .wh-btn.secondary:hover { background: #354560; }
+  html[data-theme="dark"] .blog-fullhtml .comp-step.neutral { background: #1e2530; }
 ---
 
 <header class="hero">
@@ -757,9 +825,13 @@ _styles: >
 
     <p>LLMs are extraordinarily good at generating plausible-sounding next steps. They are extraordinarily bad at ensuring those steps form a coherent, constraint-satisfying sequence. And if you're building agentic AI systems — anything that coordinates multi-step tasks in the real world — this distinction is the difference between a demo and a product.</p>
 
+    <p>So what would it actually take to fix this? Think about what went wrong in the dinner party example. The problem wasn't that the LLM didn't know good recipes — it did. The problem was that nobody checked whether two dishes could physically share one oven at the same time, or whether the appetizers would actually be ready before the main course. What was missing wasn't knowledge. It was a system that tracks what's true right now, what each action changes, and whether the whole sequence actually works end to end.</p>
+
+    <p>That kind of system exists. And it's been around a lot longer than LLMs.</p>
+
     <h2>What the Planning Community Brings to the Table</h2>
 
-    <p>Here's what most people building with LLMs don't know: there is an entire subfield of AI dedicated to exactly this problem. It's called <strong>automated planning</strong> — it has been around for decades, but the rise of LLM-based agents has brought it into the spotlight from a completely new angle.</p>
+    <p>There is an entire subfield of AI dedicated to exactly this problem. It's called <strong>automated planning</strong> — it has been around for decades, but the rise of LLM-based agents has brought it into the spotlight from a completely new angle.</p>
 
     <div class="vis-container">
         <div class="callout insight">
@@ -768,15 +840,15 @@ _styles: >
         </div>
     </div>
 
-    <p>Planning solvers take a formal description of a problem — what states exist, what actions are available, what the goal is — and they search for a valid sequence of actions to reach that goal. The best modern solvers handle millions of states efficiently. They've been honed through international competitions and decades of research, and they're now finding a second life as the backbone of reliable agentic systems.</p>
+    <p>Think of it like a GPS navigation system. You tell it where you want to go, it knows every road and turn restriction, and it finds a route that's guaranteed to get you there — no wrong turns, no dead ends. Planning solvers work the same way, but for sequences of actions: you tell them what the world looks like now, what actions are available, and what you want to achieve, and they search for a valid sequence to reach that goal. The best modern solvers handle millions of states efficiently. They've been honed through international competitions and decades of research, and they're now finding a second life as the backbone of reliable agentic systems.</p>
 
-    <p>The one thing they need? A formal description of the problem. The planning community uses a language called <strong>PDDL</strong> (Planning Domain Definition Language) — a precise specification of what's possible and what's desired. Writing PDDL requires expertise. It's not something you hand to a product manager.</p>
+    <p>But just like a GPS needs a map, a planning solver needs a formal description of the problem — one that spells out every possible state, every action, and every constraint in precise, unambiguous terms. The planning community uses a language called <strong>PDDL</strong> (Planning Domain Definition Language) for exactly this. Think of it as the "map format" for planning: a structured specification of what's possible and what's desired. Writing PDDL requires expertise. It's not something you hand to a product manager.</p>
 
-    <p>That's where LLMs come in. Not as replacements for planners — but as a bridge between human language and formal planning tools.</p>
+    <p>And that's exactly where the opportunity is. LLMs are excellent at understanding messy, natural language descriptions of problems. Formal planners are excellent at finding guaranteed-correct solutions — but only if someone writes the formal description first. What if LLMs could be the bridge? Not as replacements for planners — but as translators between human language and formal planning tools.</p>
 
     <h2>The Two Paradigms</h2>
 
-    <p>The research on combining LLMs with planning splits into two distinct paradigms, and understanding this split is the key to understanding the whole field.</p>
+    <p>This idea — LLMs as a bridge to formal planning — sounds straightforward, but it plays out very differently depending on one critical question: <em>does someone already have the formal description, or does the system need to create it from scratch?</em> The answer splits the entire field into two paradigms, and understanding this split is the key to understanding everything that follows.</p>
 
     <div class="vis-container">
         <div class="paradigm-grid">
@@ -826,9 +898,11 @@ _styles: >
 
     <p>Paradigm 2 is harder and more ambitious. A user describes a task in plain English — "My robot can carry two items, fragile items go on top, it needs to recharge every 30 minutes" — and the system converts that to a formal model, validates it, solves it, and returns a verified plan. No PDDL expertise required. This is the frontier, and it's where the most exciting unsolved problems live.</p>
 
+    <p>These two paradigms didn't emerge simultaneously. They represent a progression — the field didn't jump straight to "English in, verified plan out." It got there through a series of hard lessons, each building on the failures of the last.</p>
+
     <h2>The Evolution</h2>
 
-    <p>The field has moved fast. In just three years, the research question has shifted entirely.</p>
+    <p>In just three years, the research question has shifted entirely — from "can LLMs plan?" to "how do we build systems where LLMs and planners work together?" Here's how that happened.</p>
 
     <div class="vis-container">
         <div class="timeline-track">
@@ -864,13 +938,13 @@ _styles: >
         <p class="vis-caption">The rapid evolution of LLM-Planning research. Each phase built on the failures and insights of the previous one.</p>
     </div>
 
-    <p>The first wave asked whether LLMs could plan on their own. Rigorous benchmarks showed they couldn't — frontier models solved about 12% of planning problems correctly. Renaming predicates to meaningless tokens collapsed performance to zero, proving LLMs were doing pattern retrieval, not reasoning.</p>
+    <p>The first wave asked the obvious question: can LLMs just plan on their own? The answer was a clear no. Rigorous benchmarks showed that frontier models solved about 12% of planning problems correctly. And when researchers renamed predicates to meaningless tokens — turning "move-block" into "xyzzy-37" — performance collapsed to zero. The LLMs weren't reasoning about actions and consequences. They were pattern-matching against their training data.</p>
 
-    <p>The second wave was more productive. Researchers stopped asking LLMs to plan and started asking them to <em>help</em> planners. LLMs generated candidate plans that formal verifiers checked. LLMs wrote Python heuristic functions that guided classical search. Results jumped from 12% to 82% on the same benchmarks.</p>
+    <p>That failure turned out to be productive. Instead of giving up, the second wave asked a better question: what if LLMs don't need to plan alone? Researchers started pairing LLMs with formal planners — the LLM proposes, the planner verifies. LLMs generated candidate plans that formal verifiers checked. LLMs wrote Python heuristic functions that guided classical search. Results jumped from 12% to 82% on the same benchmarks.</p>
 
-    <p>The third wave removed the requirement for expert-written PDDL. Multi-agent systems where LLMs translate English to formal models started achieving real results — 100% on some domains, though orchestration failures remained a bottleneck.</p>
+    <p>But all of that still required someone to write PDDL by hand. The third wave tackled that bottleneck head-on: what if the LLM could create the formal model itself, from nothing but an English description? Multi-agent systems where LLMs translate natural language to formal models started achieving real results — 100% on some domains, though orchestration failures remained a bottleneck.</p>
 
-    <p>The emerging fourth wave asks: can we build truly agentic systems for planning — systems that learn, adapt, and improve their own coordination strategies? That's the frontier this series builds toward.</p>
+    <p>Which leads to the emerging fourth wave: can we build truly agentic systems for planning — systems that learn, adapt, and improve their own coordination strategies? That's the frontier this series builds toward.</p>
 
     <h2>The Roadmap</h2>
 
@@ -914,13 +988,17 @@ _styles: >
 
     <h2>Meet RoboSort</h2>
 
-    <p>Throughout this series, we'll follow a single running example: a warehouse robot named <strong>RoboSort</strong> working at the <strong>PackBot Warehouse</strong>.</p>
+    <p>All of this — paradigms, evolution, formal guarantees — can feel abstract until you see it in action. So throughout this series, we'll ground every concept in a single running example: a warehouse robot named <strong>RoboSort</strong> working at the <strong>PackBot Warehouse</strong>.</p>
 
-    <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; font-style: italic; margin-bottom: 8px;">Interactive — click "▶ Auto Demo" to watch a naive LLM plan fail, then see planning fix it</p>
+    <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; font-style: italic; margin-bottom: 8px;">Interactive — click "▶ Auto Demo" to watch a planner build a tower, then see the naive LLM try (and fail)</p>
 
     <div class="vis-container" style="padding: 1em 1em 0.5em;">
 
-        <div class="warehouse-scene" id="warehouse">
+        <div class="warehouse-scene" id="warehouse" style="position:relative;">
+            <div class="phase-divider" id="phase-divider">
+                <div class="divider-text">Now without planning...</div>
+                <div class="divider-sub">Same task, but no constraint checking</div>
+            </div>
             <div class="wh-ceiling"></div>
             <div class="wh-light" style="left: 80px;"></div>
             <div class="wh-light" style="left: 240px;"></div>
@@ -929,7 +1007,8 @@ _styles: >
             <div class="wh-floor"></div>
             <div class="wh-status" id="wh-status">
                 <span class="status-action" id="status-action">Awaiting orders...</span>
-                <span class="status-state" id="status-state">Gripper: empty | Delivered: 0/5</span>
+                <span class="violation-counter" id="violation-counter">Failures: 0</span>
+                <span class="status-state" id="status-state">Gripper: empty | Tower: 0/5 pieces</span>
             </div>
             <div class="wh-shelf" style="left: 40px;" id="shelf-a">
                 <div class="wh-shelf-label">Shelf A</div>
@@ -943,12 +1022,15 @@ _styles: >
                 <div class="wh-shelf-label">Shelf C</div>
                 <div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div>
             </div>
-            <div class="wh-package pkg-1" id="pkg-1" style="left:55px; bottom:190px;">P1</div>
-            <div class="wh-package pkg-2" id="pkg-2" style="left:95px; bottom:190px;">P2</div>
-            <div class="wh-package pkg-3" id="pkg-3" style="left:225px; bottom:190px;">P3</div>
-            <div class="wh-package pkg-4" id="pkg-4" style="left:375px; bottom:190px;">P4</div>
-            <div class="wh-package pkg-5" id="pkg-5" style="left:415px; bottom:190px;">P5</div>
-            <div class="wh-dock"><div class="wh-dock-inner">LOADING DOCK</div></div>
+            <div class="wh-package piece-l1" id="piece-l1" style="left:55px; bottom:185px;">L1</div>
+            <div class="wh-package piece-l2" id="piece-l2" style="left:100px; bottom:185px;">L2</div>
+            <div class="wh-package piece-bm" id="piece-bm" style="left:175px; bottom:197px;">Beam</div>
+            <div class="wh-package piece-rf" id="piece-rf" style="left:370px; bottom:192px;">Roof</div>
+            <div class="wh-package piece-fg" id="piece-fg" style="left:442px; bottom:193px;">Flag</div>
+            <div class="build-zone">
+                <div class="build-zone-label">Build Zone</div>
+                <div class="build-zone-platform"></div>
+            </div>
             <div class="wh-robot" id="robot" style="left: 40px; bottom: 30px;">
                 <div class="wh-robot-body">
                     <div class="wh-robot-eyes"><div class="wh-robot-eye"></div><div class="wh-robot-eye"></div></div>
@@ -959,37 +1041,40 @@ _styles: >
             </div>
         </div>
 
-        <div class="comparison-wrapper" style="margin-top: 4px;">
-            <div class="comp-panel naive">
-                <h4>Naive LLM Plan</h4>
-                <div class="comp-step neutral" id="n1">1. Go to Shelf C, pick P4</div>
-                <div class="comp-step neutral" id="n2">2. Pick P5 too (already holding P4!)</div>
-                <div class="comp-step neutral" id="n3">3. Place both at Dock</div>
-                <div class="comp-step neutral" id="n4">4. Shelf A → pick P1, go to Dock... (skips P2)</div>
-                <div class="comp-result errors" id="naive-result">
-                    <strong>3 constraint violations:</strong>
-                    ✗ Picks P5 while holding P4 — gripper full<br>
-                    ✗ Places "both" — can only place one at a time<br>
-                    ✗ Skips P2 — state not tracked, delivery incomplete<br><br>
-                    <em>Plan is invalid. Cannot execute.</em>
-                </div>
-            </div>
+        <!-- Side-by-side comparison panels -->
+        <div class="comparison-wrapper" style="margin-top: 0.8em;">
+            <!-- Planning-Enhanced Panel -->
             <div class="comp-panel planned">
                 <h4>Planning-Enhanced Agent</h4>
-                <div class="comp-step neutral" id="p1">1. Formalize: 1 gripper, pick→move→place</div>
-                <div class="comp-step neutral" id="p2">2. Plan: left-to-right minimizes travel</div>
-                <div class="comp-step neutral" id="p3">3. Execute: A→P1→Dock, A→P2→Dock, B→P3...</div>
-                <div class="comp-step neutral" id="p4">4. Verify: all constraints met, 5/5 delivered</div>
+                <div class="comp-step neutral" id="p1">1. Formalize: support constraints (bottom-up)</div>
+                <div class="comp-step neutral" id="p2">2. Plan: L1→L2→Beam→Roof→Flag (foundation first)</div>
+                <div class="comp-step neutral" id="p3">3. Execute: build tower bottom-up, each piece supported</div>
+                <div class="comp-step neutral" id="p4">4. Verify: stable tower, all pieces supported</div>
                 <div class="comp-result success" id="planner-result">
                     <strong>All constraints satisfied:</strong>
-                    ✓ Single gripper — one package per trip<br>
-                    ✓ All 5 packages delivered to dock<br>
-                    ✓ 10 moves, zero backtracking<br><br>
-                    <em>Plan is guaranteed valid and optimal.</em>
+                    ✓ Both legs placed before beam<br>
+                    ✓ Each piece rests on proper support<br>
+                    ✓ 5 pieces, stable tower, zero failures<br><br>
+                    <em>Plan is guaranteed valid and stable.</em>
+                </div>
+            </div>
+            <!-- Naive LLM Panel -->
+            <div class="comp-panel naive">
+                <h4>Naive LLM Plan</h4>
+                <div class="comp-step neutral" id="n1">1. Place L1, L2 at Build Zone (gets legs right)</div>
+                <div class="comp-step neutral" id="n2">2. Skip Beam → Roof on legs — no support! (falls)</div>
+                <div class="comp-step neutral" id="n3">3. Skip Beam → Flag on nothing (falls)</div>
+                <div class="comp-step neutral" id="n4">4. Finally place Beam — too late, 2 pieces crashed</div>
+                <div class="comp-result errors" id="naive-result">
+                    <strong>Same 5 pieces, wrong order:</strong>
+                    ✗ Roof fell between legs — no beam yet<br>
+                    ✗ Flag fell — no surface below<br>
+                    ✓ Beam placed last — but damage done<br><br>
+                    <em>Order matters. All pieces used, tower broken.</em>
                 </div>
             </div>
         </div>
-        <p class="vis-caption">The naive LLM produces a plan that <em>looks</em> reasonable but violates physical constraints. The planning-enhanced agent formalizes constraints first, then finds a verified, optimal plan.</p>
+        <p class="vis-caption">The planning-enhanced agent builds a stable tower by reasoning about support constraints. The naive LLM gets the legs right but skips the beam — and the roof <em>visibly collapses</em> without it.</p>
 
     </div>
 
@@ -998,9 +1083,9 @@ _styles: >
         <button class="wh-btn secondary" id="wh-reset-btn" onclick="resetWarehouse()" style="display:none;">↺ Reset</button>
     </div>
 
-    <p>The setup is simple: three shelves holding five packages, one loading dock, and RoboSort with a single gripper. A customer order arrives, and the robot must pick each requested package from its shelf and deliver it to the dock.</p>
+    <p>The setup is simple: three shelves holding tower parts — two legs, a beam, a roof, and a flag — plus a build zone where RoboSort must assemble them into a stable tower. The catch: pieces need support underneath. Place the beam before the legs are down? It falls. Place the roof with nothing below? Same thing. Order matters — and the naive LLM gets it catastrophically, visibly wrong.</p>
 
-    <p>This sounds easy. It isn't. If RoboSort picks packages in the wrong order, it backtracks across the warehouse. If it grabs a package before clearing the one blocking it, it's stuck. If it doesn't account for its single gripper, it tries impossible moves. Every post in this series will revisit this warehouse — growing from 5 packages to 50, adding aisles, conveyor belts, charging stations, and eventually new facilities with novel rules described only in English.</p>
+    <p>This sounds easy. It isn't. If RoboSort places pieces in the wrong order, the structure collapses. If it skips a foundation piece, everything above is unsupported. If it doesn't track what's already been placed, it tries impossible assemblies. Every post in this series will revisit this warehouse — growing from 5 pieces to 50, adding aisles, conveyor belts, charging stations, and eventually new facilities with novel rules described only in English.</p>
 
     <div class="vis-container">
         <div class="callout insight">
@@ -1011,7 +1096,7 @@ _styles: >
 
     <h3>Beyond the Warehouse: Planning in Agentic AI</h3>
 
-    <p>RoboSort makes the problem concrete, but every agentic AI system faces the same challenge. If you're building agents that coordinate multi-step tasks, here's how the exact same planning principles apply to your domain.</p>
+    <p>You might be thinking: "Warehouse robots are interesting, but I'm building a coding agent / travel bot / workflow system." Fair enough. RoboSort makes the planning problem concrete, but the constraints-and-sequencing challenge shows up everywhere. If you're building agents that coordinate multi-step tasks, here's how the exact same planning principles apply to your domain.</p>
 
     <div class="vis-container">
         <div class="agentic-sidebar">
@@ -1057,27 +1142,48 @@ _styles: >
 </div>
 
 <script>
-var whRunning = false;
-var robotState = { x: 40, y: 30, carrying: null, delivered: 0 };
+// ============================================================
+// WAREHOUSE INTERACTIVE DEMO — TOWER BUILDING
+// ============================================================
 
-var pkgHome = {
-    1: { x: 55, y: 190 },
-    2: { x: 95, y: 190 },
-    3: { x: 225, y: 190 },
-    4: { x: 375, y: 190 },
-    5: { x: 415, y: 190 }
+var whRunning = false;
+var robotState = { x: 40, y: 30, carrying: null };
+var pieceIds = ['l1', 'l2', 'bm', 'rf', 'fg'];
+
+// Piece home positions (on shelves)
+var pieceHome = {
+    l1: { x: 55, y: 185 },
+    l2: { x: 100, y: 185 },
+    bm: { x: 175, y: 197 },
+    rf: { x: 370, y: 192 },
+    fg: { x: 442, y: 193 }
 };
-var dockPos = { x: 540, y: 40 };
+
+// Target positions in build zone (correct tower, bottom-up)
+var buildTarget = {
+    l1: { x: 498, y: 24 },
+    l2: { x: 612, y: 24 },
+    bm: { x: 493, y: 74 },
+    rf: { x: 543, y: 90 },
+    fg: { x: 565, y: 110 }
+};
+
+var fallY = 10;
 
 function setRobot(x, y) {
     var r = document.getElementById('robot');
     r.style.left = x + 'px'; r.style.bottom = y + 'px';
     robotState.x = x; robotState.y = y;
 }
-function setPkg(id, x, y, vis) {
-    var p = document.getElementById('pkg-' + id);
+function setPiece(id, x, y, vis) {
+    var p = document.getElementById('piece-' + id);
     p.style.left = x + 'px'; p.style.bottom = y + 'px';
     p.style.opacity = vis ? '1' : '0.3';
+}
+function resetPieceState(id) {
+    var p = document.getElementById('piece-' + id);
+    p.classList.remove('falling', 'fallen', 'crash-shake');
+    p.style.transform = '';
 }
 function setStatus(action, state) {
     document.getElementById('status-action').textContent = action;
@@ -1093,20 +1199,39 @@ function activateStep(id, cls) {
     el.className = 'comp-step active ' + cls;
 }
 
+async function dropPiece(id, rotation) {
+    var p = document.getElementById('piece-' + id);
+    p.classList.add('falling');
+    await delay(50);
+    p.style.bottom = fallY + 'px';
+    p.style.transform = 'rotate(' + (rotation || 0) + 'deg)';
+    await delay(550);
+    p.classList.remove('falling');
+    p.classList.add('fallen', 'crash-shake');
+    await delay(400);
+    p.classList.remove('crash-shake');
+}
+
 function resetWarehouse() {
     whRunning = false;
-    robotState = { x: 40, y: 30, carrying: null, delivered: 0 };
+    robotState = { x: 40, y: 30, carrying: null };
     setRobot(40, 30); setArm(false);
     document.getElementById('status-action').style.color = '';
     document.getElementById('warehouse').style.boxShadow = '';
-    for (var i = 1; i <= 5; i++) setPkg(i, pkgHome[i].x, pkgHome[i].y, true);
-    setStatus('Awaiting orders...', 'Gripper: empty | Delivered: 0/5');
+    for (var i = 0; i < pieceIds.length; i++) {
+        var id = pieceIds[i];
+        resetPieceState(id);
+        setPiece(id, pieceHome[id].x, pieceHome[id].y, true);
+    }
+    setStatus('Awaiting orders...', 'Gripper: empty | Tower: 0/5 pieces');
     for (var j = 1; j <= 4; j++) {
         document.getElementById('n' + j).className = 'comp-step neutral';
         document.getElementById('p' + j).className = 'comp-step neutral';
     }
     document.getElementById('naive-result').style.visibility = 'hidden';
     document.getElementById('planner-result').style.visibility = 'hidden';
+    document.getElementById('violation-counter').style.display = 'none';
+    document.getElementById('phase-divider').style.display = 'none';
     document.getElementById('wh-auto-btn').style.display = '';
     document.getElementById('wh-auto-btn').disabled = false;
     document.getElementById('wh-reset-btn').style.display = 'none';
@@ -1118,99 +1243,181 @@ async function runWarehouseAutodemo() {
     document.getElementById('wh-auto-btn').disabled = true;
     document.getElementById('wh-reset-btn').style.display = '';
 
-    setStatus('▶ Naive LLM generating plan...', 'No constraint checking');
-    document.getElementById('status-action').style.color = '#f38ba8';
-    await delay(700);
+    var vc = document.getElementById('violation-counter');
+    var wh = document.getElementById('warehouse');
+    var violations = 0;
 
-    activateStep('n1', 'neutral');
-    setRobot(375, 100); await delay(400);
-    setArm(true); robotState.carrying = 4;
-    setPkg(4, 395, 130, true);
-    setStatus('Go to Shelf C, PICK(P4)', 'Gripper: P4');
-    document.getElementById('status-action').style.color = '#f38ba8';
-    await delay(600);
+    function showViolation() {
+        violations++;
+        vc.textContent = 'Failures: ' + violations;
+        vc.style.display = 'inline-block';
+        vc.style.animation = 'none';
+        vc.offsetHeight;
+        vc.style.animation = 'violationPulse 0.6s ease-in-out';
+    }
 
-    activateStep('n2', 'fail');
-    setRobot(415, 100); setPkg(4, 435, 130, true);
-    setStatus('PICK(P5) — ✗ GRIPPER FULL!', 'Cannot hold two packages!');
-    document.getElementById('status-action').style.color = '#ff4444';
-    document.getElementById('warehouse').style.boxShadow = '0 0 0 3px #ff4444';
-    await delay(1100);
-    document.getElementById('warehouse').style.boxShadow = '';
-
-    activateStep('n3', 'fail');
-    setRobot(540, 30); setPkg(4, 560, 60, true);
-    setStatus('Place "both"? — ✗ Only one!', 'Plan is incoherent');
-    document.getElementById('status-action').style.color = '#ff4444';
-    document.getElementById('warehouse').style.boxShadow = '0 0 0 3px #ff4444';
-    await delay(1100);
-    document.getElementById('warehouse').style.boxShadow = '';
-    setArm(false); robotState.carrying = null;
-    setPkg(4, dockPos.x, dockPos.y + 10, false);
-
-    activateStep('n4', 'fail');
-    setRobot(55, 100); await delay(300);
-    setArm(true); setPkg(1, 75, 130, true);
-    setStatus('Picks P1, skips P2 — state lost', 'Delivery will be incomplete');
-    document.getElementById('status-action').style.color = '#ff4444';
-    document.getElementById('warehouse').style.boxShadow = '0 0 0 3px #ff4444';
-    await delay(1100);
-    document.getElementById('warehouse').style.boxShadow = '';
-    setArm(false); setPkg(1, dockPos.x + 6, dockPos.y + 10, false);
-
-    setStatus('✗ INVALID — 3 violations', 'Cannot execute');
-    document.getElementById('status-action').style.color = '#ff4444';
-    document.getElementById('naive-result').style.visibility = 'visible';
-    await delay(2200);
-
-    robotState = { x: 40, y: 30, carrying: null, delivered: 0 };
-    setRobot(40, 30); setArm(false);
-    document.getElementById('warehouse').style.boxShadow = '';
-    for (var i = 1; i <= 5; i++) setPkg(i, pkgHome[i].x, pkgHome[i].y, true);
-    setStatus('▶ Planning-Enhanced Agent...', 'Formalizing constraints');
+    // ============================================================
+    // PHASE 1: PLANNER (success)
+    // ============================================================
+    setStatus('▶ Planning-Enhanced Agent...', 'Formalizing support constraints');
     document.getElementById('status-action').style.color = '#a6e3a1';
-    await delay(1000);
-
-    var d = 0;
+    await delay(1200);
 
     activateStep('p1', 'ok');
-    setStatus('Constraint model: 1 gripper, pick→move→place', 'Building...');
+    setStatus('Support constraints: legs → beam → roof → flag', 'Building model...');
     document.getElementById('status-action').style.color = '#a6e3a1';
-    await delay(700);
+    await delay(900);
 
     activateStep('p2', 'ok');
-    setStatus('Optimal route: left→right, A→B→C→Dock', 'Planned');
-    await delay(600);
+    setStatus('Optimal order: L1 → L2 → Beam → Roof → Flag', 'Bottom-up assembly');
+    await delay(800);
 
     activateStep('p3', 'ok');
-    setRobot(55, 100); await delay(250);
-    setArm(true); setPkg(1, 75, 130, true);
-    setStatus('PICK(P1) → Dock', 'Delivering...'); await delay(300);
-    setRobot(530, 30); setPkg(1, 550, 60, true); await delay(200);
-    setArm(false); d++; setPkg(1, dockPos.x - 10, dockPos.y, false); await delay(200);
-    setRobot(95, 100); await delay(200);
-    setArm(true); setPkg(2, 115, 130, true); await delay(200);
-    setRobot(545, 30); setPkg(2, 565, 60, true); await delay(200);
-    setArm(false); d++; setPkg(2, dockPos.x - 4, dockPos.y, false); await delay(200);
-    setRobot(225, 100); await delay(200);
-    setArm(true); setPkg(3, 245, 130, true); await delay(200);
-    setRobot(555, 35); setPkg(3, 575, 65, true); await delay(200);
-    setArm(false); d++; setPkg(3, dockPos.x + 2, dockPos.y, false);
-    setStatus('Executing: P1✓ P2✓ P3✓ ...', 'Delivered: ' + d + '/5');
-    await delay(200);
-    setRobot(375, 100); await delay(200);
-    setArm(true); setPkg(4, 395, 130, true); await delay(200);
-    setRobot(540, 45); setPkg(4, 560, 75, true); await delay(200);
-    setArm(false); d++; setPkg(4, dockPos.x + 8, dockPos.y, false); await delay(150);
-    setRobot(415, 100); await delay(200);
-    setArm(true); setPkg(5, 435, 130, true); await delay(200);
-    setRobot(560, 45); setPkg(5, 580, 75, true); await delay(200);
-    setArm(false); d++; setPkg(5, dockPos.x + 14, dockPos.y, false);
-    setStatus('All 5 delivered: P1✓ P2✓ P3✓ P4✓ P5✓', 'Delivered: 5/5');
+
+    // L1
+    setRobot(55, 100); await delay(350);
+    setArm(true); setPiece('l1', 75, 130, true);
+    setStatus('PICK(L1) → Build Zone', 'Foundation first'); await delay(400);
+    setRobot(498, 55); setPiece('l1', buildTarget.l1.x, buildTarget.l1.y, true); await delay(350);
+    setArm(false);
+    setStatus('L1 placed ✓', 'Tower: 1/5'); await delay(300);
+
+    // L2
+    setRobot(100, 100); await delay(300);
+    setArm(true); setPiece('l2', 120, 130, true); await delay(300);
+    setRobot(612, 55); setPiece('l2', buildTarget.l2.x, buildTarget.l2.y, true); await delay(350);
+    setArm(false);
+    setStatus('L1 ✓ L2 ✓ — both legs down', 'Tower: 2/5'); await delay(300);
+
+    // Beam
+    setRobot(175, 100); await delay(300);
+    setArm(true); setPiece('bm', 195, 130, true); await delay(300);
+    setRobot(530, 90); setPiece('bm', buildTarget.bm.x, buildTarget.bm.y, true); await delay(350);
+    setArm(false);
+    setStatus('L1 ✓ L2 ✓ Beam ✓ — supported!', 'Tower: 3/5'); await delay(300);
+
+    // Roof
+    setRobot(370, 100); await delay(300);
+    setArm(true); setPiece('rf', 390, 130, true); await delay(300);
+    setRobot(543, 100); setPiece('rf', buildTarget.rf.x, buildTarget.rf.y, true); await delay(350);
+    setArm(false);
+    setStatus('L1 ✓ L2 ✓ Beam ✓ Roof ✓', 'Tower: 4/5'); await delay(300);
+
+    // Flag
+    setRobot(442, 100); await delay(300);
+    setArm(true); setPiece('fg', 462, 130, true); await delay(300);
+    setRobot(565, 115); setPiece('fg', buildTarget.fg.x, buildTarget.fg.y, true); await delay(350);
+    setArm(false);
+    setStatus('L1 ✓ L2 ✓ Beam ✓ Roof ✓ Flag ✓', 'Tower: 5/5 — Complete!');
     await delay(400);
 
+    setRobot(40, 30);
+    await delay(600);
+
     activateStep('p4', 'ok');
-    setStatus('✓ DONE — 10 moves, 0 violations, 5/5 delivered', 'Plan verified and optimal');
+    setStatus('✓ DONE — stable tower, 0 failures, 5/5 pieces', 'Plan verified and optimal');
     document.getElementById('planner-result').style.visibility = 'visible';
+    await delay(3000);
+
+    // ============================================================
+    // PAUSE: Phase divider
+    // ============================================================
+    var divider = document.getElementById('phase-divider');
+    divider.style.display = 'flex';
+    await delay(2500);
+    divider.style.display = 'none';
+
+    // ============================================================
+    // RESET for Phase 2
+    // ============================================================
+    robotState = { x: 40, y: 30, carrying: null };
+    setRobot(40, 30); setArm(false);
+    wh.style.boxShadow = '';
+    for (var i = 0; i < pieceIds.length; i++) {
+        resetPieceState(pieceIds[i]);
+        setPiece(pieceIds[i], pieceHome[pieceIds[i]].x, pieceHome[pieceIds[i]].y, true);
+    }
+
+    // ============================================================
+    // PHASE 2: NAIVE LLM (partial success, then collapses)
+    // ============================================================
+    setStatus('▶ Naive LLM generating plan...', 'No constraint checking');
+    document.getElementById('status-action').style.color = '#f38ba8';
+    await delay(1000);
+
+    // N1: Place L1 and L2 — SUCCEEDS
+    activateStep('n1', 'ok');
+    setRobot(55, 100); await delay(350);
+    setArm(true); setPiece('l1', 75, 130, true);
+    setStatus('PICK(L1) → Build Zone', 'Gripper: L1');
+    document.getElementById('status-action').style.color = '#f38ba8';
+    await delay(400);
+    setRobot(498, 55); setPiece('l1', buildTarget.l1.x, buildTarget.l1.y, true);
+    setArm(false); await delay(350);
+    setRobot(100, 100); await delay(300);
+    setArm(true); setPiece('l2', 120, 130, true);
+    setStatus('PICK(L2) → Build Zone', 'Legs are easy...'); await delay(300);
+    setRobot(612, 55); setPiece('l2', buildTarget.l2.x, buildTarget.l2.y, true);
+    setArm(false);
+    setStatus('L1 ✓ L2 ✓ — legs placed', 'Tower: 2/5');
+    await delay(500);
+
+    // N2: Skip Beam → place Roof directly on legs — FALLS
+    activateStep('n2', 'fail');
+    setRobot(370, 100); await delay(400);
+    setArm(true); robotState.carrying = 'rf';
+    setPiece('rf', 390, 130, true);
+    setStatus('Skip Beam → PICK(Roof)...', 'Gripper: Roof — skipping ahead!');
+    document.getElementById('status-action').style.color = '#f38ba8';
+    await delay(500);
+    setRobot(543, 80); setPiece('rf', buildTarget.rf.x, buildTarget.rf.y, true);
+    setStatus('PLACE(Roof) on legs...', 'Placing...');
+    await delay(600);
+    setArm(false); robotState.carrying = null;
+    setStatus('✗ NO BEAM — Roof falls between legs!', 'Too narrow to bridge the gap!');
+    document.getElementById('status-action').style.color = '#ff4444';
+    wh.style.boxShadow = '0 0 0 3px #ff4444';
+    showViolation();
+    await dropPiece('rf', 15);
+    await delay(800);
+
+    // N3: Still skips Beam → tries Flag on nothing — FALLS
+    activateStep('n3', 'fail');
+    setRobot(442, 100); await delay(400);
+    setArm(true); robotState.carrying = 'fg';
+    setPiece('fg', 462, 130, true);
+    setStatus('PICK(Flag) → Build Zone...', 'Gripper: Flag — still no beam!');
+    document.getElementById('status-action').style.color = '#f38ba8';
+    await delay(500);
+    setRobot(565, 105); setPiece('fg', buildTarget.fg.x, buildTarget.fg.y, true);
+    setStatus('PLACE(Flag)...', 'Placing on... nothing?');
+    await delay(600);
+    setArm(false); robotState.carrying = null;
+    setStatus('✗ NOTHING BELOW — Flag falls!', 'No roof, no beam!');
+    document.getElementById('status-action').style.color = '#ff4444';
+    showViolation();
+    await dropPiece('fg', -20);
+    await delay(800);
+
+    // N4: Finally places Beam — but too late
+    activateStep('n4', 'fail');
+    setRobot(175, 100); await delay(400);
+    setArm(true); robotState.carrying = 'bm';
+    setPiece('bm', 195, 130, true);
+    setStatus('PICK(Beam)... finally', 'Gripper: Beam — too late!');
+    document.getElementById('status-action').style.color = '#f38ba8';
+    await delay(500);
+    setRobot(530, 90); setPiece('bm', buildTarget.bm.x, buildTarget.bm.y, true);
+    setArm(false); robotState.carrying = null;
+    setStatus('Beam placed — but roof and flag already crashed', 'All 5 pieces used, wrong order!');
+    document.getElementById('status-action').style.color = '#ff4444';
+    await delay(1200);
+
+    setRobot(40, 30);
+    await delay(400);
+    setStatus('✗ FAILED — same pieces, wrong order', '2 collapses, tower broken');
+    document.getElementById('status-action').style.color = '#ff4444';
+    document.getElementById('naive-result').style.visibility = 'visible';
+    await delay(3000);
 }
 </script>
