@@ -1,0 +1,1081 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Modern Playbook: LLMs That Help Planners - Planning in the Era of LLMs</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* === Base === */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #1a1a2e;
+            background: #fafafa;
+        }
+        /* === Hero Header === */
+        .hero {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+            color: #f0f0f0;
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+        .hero .series-label {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #7eb8da;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.25;
+            max-width: 820px;
+            margin: 0 auto 20px;
+        }
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: #b0c4de;
+            max-width: 640px;
+            margin: 0 auto 28px;
+            font-style: italic;
+        }
+        /* === Article Container === */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+        /* === Typography === */
+        h2 {
+            font-size: 1.85rem;
+            color: #0d1b2a;
+            margin: 56px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #2a4066;
+        }
+        h3 {
+            font-size: 1.35rem;
+            color: #1b2838;
+            margin: 40px 0 14px;
+        }
+        p { margin-bottom: 18px; font-size: 1.05rem; }
+        strong { color: #0d1b2a; }
+        a { color: #2a6496; text-decoration: none; border-bottom: 1px solid #2a649644; }
+        a:hover { color: #1a4060; border-bottom-color: #1a4060; }
+        .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
+        ul, ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
+        li { margin-bottom: 6px; }
+        /* === Series Navigation Banner === */
+        .series-nav {
+            background: #f0f4f8;
+            border: 1px solid #d0d8ef;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.92rem;
+            color: #444;
+        }
+        .series-nav strong { color: #2a4066; font-size: 1rem; }
+        .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
+        .series-nav .nav-links {
+            margin-top: 10px;
+            font-size: 0.88rem;
+            color: #2a4066;
+            font-weight: 600;
+        }
+        /* === Callout Boxes === */
+        .callout {
+            border-left: 4px solid #2a4066;
+            background: #f0f4f8;
+            padding: 20px 24px;
+            margin: 28px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .callout.insight {
+            border-left-color: #228b22;
+            background: #f0faf0;
+        }
+        .callout.warning {
+            border-left-color: #b22222;
+            background: #fdf2f2;
+        }
+        .callout.question {
+            border-left-color: #d4740e;
+            background: #fef9f0;
+        }
+        .callout-label {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .callout.insight .callout-label { color: #228b22; }
+        .callout.warning .callout-label { color: #b22222; }
+        .callout.question .callout-label { color: #d4740e; }
+        .callout p:last-child { margin-bottom: 0; }
+        /* === Agentic AI Sidebar === */
+        .agentic-sidebar {
+            background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+            border: 1px solid #d4c5f0;
+            border-radius: 10px;
+            padding: 24px;
+            margin: 36px 0;
+        }
+        .agentic-sidebar .sidebar-title {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #6b3fa0;
+            margin-bottom: 12px;
+        }
+        .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
+        /* === Code Blocks === */
+        pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px 24px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 24px 0;
+        }
+        code {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+            font-size: 0.88em;
+        }
+        p code, li code {
+            background: #e8edf2;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #2a4066;
+        }
+        /* === Downloadable Visualization Containers === */
+        .vis-container {
+            margin: 2em 0;
+            padding: 1.5em;
+            background: #fafafa;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+        .vis-caption {
+            font-size: 0.85em;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+            text-align: center;
+        }
+        /* Download buttons */
+        .download-btn {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 4px 12px;
+            font-size: 0.72em;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #2a4066;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .download-btn:hover { background: #1b2838; }
+        .download-btn-wrapper {
+            text-align: center;
+            margin-top: -8px;
+            margin-bottom: 24px;
+        }
+        .download-all-container {
+            text-align: center;
+            margin: 2em 0;
+            padding: 15px;
+            background: #f0f4f8;
+            border-radius: 8px;
+            border: 1px dashed #2a4066;
+        }
+        .download-all-btn {
+            padding: 10px 24px;
+            font-size: 0.9em;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #2a4066;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .download-all-btn:hover { background: #1b2838; }
+        .download-all-container p {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 8px;
+        }
+        /* === Interactive Element Containers === */
+        .interactive-container {
+            border: 1px solid #d0d8ef;
+            border-radius: 10px;
+            padding: 24px;
+            margin: 36px 0;
+            background: #fff;
+        }
+        .interactive-container .interactive-label {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.82rem;
+            color: #888;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+        .auto-demo-btn {
+            background: #2a9d8f;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+        .auto-demo-btn:hover { background: #238577; }
+        /* === Next Post Teaser === */
+        .next-post {
+            margin: 56px 0 0; padding: 28px;
+            background: linear-gradient(135deg, #1b2838, #2a4066);
+            border-radius: 10px; color: #e0e8f0;
+        }
+        .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
+        .next-post p { font-size: 0.95rem; color: #b0c4de; }
+        /* === References === */
+        .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #dde; }
+        .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
+        .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
+        .references li { margin-bottom: 8px; }
+        /* === Footer === */
+        footer {
+            text-align: center; padding: 32px 20px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+        }
+        /* === Math === */
+        .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
+
+        /* =============================================
+           LLM-MODULO LOOP DIAGRAM
+           ============================================= */
+        .modulo-loop {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: nowrap;
+            margin: 20px 0;
+            padding: 20px;
+        }
+        .modulo-node {
+            padding: 16px 22px;
+            border-radius: 10px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            min-width: 130px;
+            line-height: 1.4;
+            position: relative;
+        }
+        .modulo-node.llm-gen { background: #6b3fa0; }
+        .modulo-node.verifier { background: #228b22; }
+        .modulo-node.output { background: #2a9d8f; }
+        .modulo-arrow {
+            font-size: 1.6rem;
+            color: #555;
+            padding: 0 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .modulo-feedback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8rem;
+            color: #b22222;
+            font-weight: 600;
+        }
+        .modulo-feedback-arrow {
+            font-size: 1.8rem;
+            color: #b22222;
+            margin: 0 8px;
+        }
+
+        /* =============================================
+           RESULTS COMPARISON CHART
+           ============================================= */
+        .results-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 20px 0;
+        }
+        .result-row {
+            display: grid;
+            grid-template-columns: 180px 1fr 50px;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.85rem;
+        }
+        .result-label {
+            text-align: right;
+            font-weight: 600;
+            color: #1b2838;
+            font-size: 0.82rem;
+        }
+        .result-bar-track {
+            height: 28px;
+            background: #e8ecf1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .result-bar {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .result-value {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* =============================================
+           CODE GENERATION PANEL
+           ============================================= */
+        .code-gen-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .code-gen-side {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .code-gen-header {
+            padding: 10px 16px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .code-gen-side.input .code-gen-header {
+            background: #6b3fa0;
+            color: white;
+        }
+        .code-gen-side.output .code-gen-header {
+            background: #228b22;
+            color: white;
+        }
+        .code-gen-side pre {
+            margin: 0;
+            border-radius: 0 0 10px 10px;
+            font-size: 0.78rem;
+            min-height: 200px;
+        }
+
+        /* =============================================
+           APPROACH CARDS
+           ============================================= */
+        .approach-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .approach-card {
+            border-radius: 10px;
+            padding: 18px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        .approach-card .card-number {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+        .approach-card h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+        .approach-card p {
+            font-size: 0.82rem;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .approach-card .card-result {
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .approach-card.card-modulo {
+            background: #f0faf0;
+            border: 2px solid #228b22;
+        }
+        .approach-card.card-modulo .card-number { color: #228b22; }
+        .approach-card.card-modulo h4 { color: #1a6b1a; }
+        .approach-card.card-modulo p { color: #0a4a0a; }
+        .approach-card.card-modulo .card-result { background: #d4edda; color: #155724; }
+        .approach-card.card-heuristic {
+            background: #f5f0ff;
+            border: 2px solid #6b3fa0;
+        }
+        .approach-card.card-heuristic .card-number { color: #6b3fa0; }
+        .approach-card.card-heuristic h4 { color: #5a2d8a; }
+        .approach-card.card-heuristic p { color: #3a2060; }
+        .approach-card.card-heuristic .card-result { background: #e8ddf5; color: #3a2060; }
+        .approach-card.card-tos {
+            background: #fff7ed;
+            border: 2px solid #d4740e;
+        }
+        .approach-card.card-tos .card-number { color: #d4740e; }
+        .approach-card.card-tos h4 { color: #b35c00; }
+        .approach-card.card-tos p { color: #7a3f00; }
+        .approach-card.card-tos .card-result { background: #ffecd0; color: #7a3f00; }
+
+        /* =============================================
+           INTERACTIVE LLM-MODULO DEMO
+           ============================================= */
+        .modulo-demo {
+            width: 960px;
+            max-width: calc(100vw - 40px);
+            margin-left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+        }
+        .modulo-demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            gap: 0;
+            align-items: stretch;
+            margin-top: 14px;
+        }
+        .modulo-panel {
+            border-radius: 10px;
+            padding: 18px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.85rem;
+        }
+        .modulo-panel.gen-panel {
+            background: #f5f0ff;
+            border: 2px solid #6b3fa0;
+        }
+        .modulo-panel.ver-panel {
+            background: #f0faf0;
+            border: 2px solid #228b22;
+        }
+        .modulo-panel h4 {
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+        .modulo-panel.gen-panel h4 { color: #6b3fa0; }
+        .modulo-panel.ver-panel h4 { color: #228b22; }
+        .modulo-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.75rem;
+            color: #888;
+        }
+        .modulo-center .arrow-right { font-size: 2rem; color: #6b3fa0; }
+        .modulo-center .arrow-left { font-size: 2rem; color: #b22222; }
+        .round-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .round-badge.attempt { background: #e8ddf5; color: #6b3fa0; }
+        .round-badge.feedback { background: #fce4e4; color: #b22222; }
+        .round-badge.success { background: #d4edda; color: #155724; }
+        .step-item {
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            border-radius: 5px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+        }
+        .step-item.valid { background: #e8f5e9; }
+        .step-item.invalid { background: #ffebee; }
+        .step-item.corrected { background: #e8f5e9; border-left: 3px solid #228b22; }
+
+        /* === Responsive === */
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 1.8rem; }
+            .container { padding: 32px 16px 60px; }
+            .code-gen-panel { grid-template-columns: 1fr; }
+            .approach-cards { grid-template-columns: 1fr; }
+            .modulo-loop { flex-wrap: wrap; gap: 8px; }
+            .modulo-node { min-width: 100px; font-size: 0.82rem; }
+            .modulo-demo-grid { grid-template-columns: 1fr; }
+            .result-row { grid-template-columns: 120px 1fr 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="series-label">Planning in the Era of LLMs — Part 5 of 7</div>
+    <h1>The Modern Playbook: LLMs That Help Planners</h1>
+    <p class="subtitle">LLM-Modulo, heuristic generation, and the generate-verify loop that turned 12% into 82%.</p>
+</header>
+
+<article class="container">
+
+    <!-- Series Navigation -->
+    <div class="vis-container" data-download-name="series-nav-banner">
+        <div class="series-nav">
+            <strong>📚 Planning in the Era of LLMs — Part 5 of 7</strong>
+            <div class="nav-desc">Paradigm 1 in action: when PDDL is given, LLMs amplify planners through code generation, heuristic design, and generate-verify loops. The combination achieves what neither could alone.</div>
+            <div class="nav-links">
+                ← Part 4: "LLMs Try to Plan (It Goes Badly)" | Next: Part 6 — "From English to Plans: The NL-to-PDDL Frontier" →
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Opening Hook        -->
+    <!-- ============================== -->
+
+    <p class="lead">Post 4 delivered the bad news: LLMs can't plan. Not with chain-of-thought. Not with self-critique. Not with tree search. Frontier models solve about 12–30% of trivial Blocksworld problems — while a classical planner from 2004 hits 100% in under a second.</p>
+
+    <p>But that post also introduced a taxonomy of roles, and one role stood out: <strong>LLM as helper, not planner</strong>. What if, instead of asking the LLM to generate the full plan, you asked it to do what it's actually good at — write code, understand context, translate between representations — and let the formal planner handle the reasoning?</p>
+
+    <p>That's exactly what happened between 2023 and 2025. A series of breakthroughs showed that the combination of LLMs and formal planners dramatically outperforms either alone. Not by a small margin — from 12% to 82% on the same benchmarks where LLMs alone failed. This post covers the three approaches that made it work.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: LLM-Modulo          -->
+    <!-- ============================== -->
+
+    <h2>The Big Idea: LLM-Modulo</h2>
+
+    <p>The most influential framework to emerge from the planning community's response to LLM limitations is <strong>LLM-Modulo</strong>, introduced by Kambhampati et al. (2024). The core insight is disarmingly simple: <em>let the LLM generate, let the planner verify</em>.</p>
+
+    <div class="vis-container" data-download-name="llm-modulo-loop">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">The LLM-Modulo Framework</h3>
+        <div class="modulo-loop">
+            <div class="modulo-node llm-gen">LLM<br>Generator</div>
+            <div class="modulo-arrow">→</div>
+            <div class="modulo-node" style="background: #d4740e;">Candidate<br>Plan</div>
+            <div class="modulo-arrow">→</div>
+            <div class="modulo-node verifier">Formal<br>Verifier</div>
+            <div class="modulo-arrow">→</div>
+            <div class="modulo-node output">Verified<br>Plan ✓</div>
+        </div>
+        <div class="modulo-feedback">
+            <span class="modulo-feedback-arrow">↰</span>
+            Feedback: "Step 5 violates precondition: Beam not placed before Roof"
+            <span class="modulo-feedback-arrow">↲</span>
+        </div>
+        <p class="vis-caption">LLM-Modulo: the LLM generates candidate plans (fast, creative, but unreliable). The formal verifier checks every precondition and effect (slow to build, but mathematically sound). Invalid plans get sent back with specific feedback. This loop converges on valid plans — typically in 2–4 iterations.</p>
+    </div>
+    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
+
+    <p>Here's why this works. LLMs are excellent at generating <em>plausible</em> plans — plans that look roughly right, with most pieces in approximately the right order. Post 4 showed they get 30% fully correct. But even the 70% that fail are usually <em>close</em> — one or two constraints violated, not total nonsense. The formal verifier catches exactly which constraints fail, and feeds that specific error back to the LLM. The LLM then fixes just that part.</p>
+
+    <p>This is fundamentally different from self-critique (Post 4), where the LLM tried to verify <em>its own</em> output. Self-critique failed because the LLM couldn't reliably detect violations. LLM-Modulo succeeds because the verifier is a <em>formal tool</em> — a PDDL validator that checks every precondition with mathematical certainty. The feedback isn't "this looks wrong" — it's "step 5 requires <code>(placed beam)</code> to be true, but beam has not been placed."</p>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>LLM-Modulo separates generation from verification. The LLM handles the creative part (proposing action sequences) while formal tools handle the rigorous part (checking correctness). This is exactly how software development works: developers write code, compilers and tests verify it. Nobody asks the developer to also be the compiler.</p>
+    </div>
+
+    <h3>LLM-Modulo on RoboSort</h3>
+
+    <p>Let's watch this loop in action on our warehouse robot. The LLM generates a plan for the 5-piece tower assembly. The PDDL verifier (using the domain from Post 2) checks every step.</p>
+
+    <div class="interactive-container">
+        <div class="interactive-label">Interactive — click "▶ Run LLM-Modulo" to watch the generate-verify loop converge on a valid RoboSort plan</div>
+
+        <div style="text-align: center; margin-bottom: 16px;">
+            <button class="auto-demo-btn" id="moduloRunBtn" onclick="runModuloDemo()">▶ Run LLM-Modulo</button>
+            <button class="auto-demo-btn" id="moduloResetBtn" onclick="resetModuloDemo()" style="display:none; background:#666;">↺ Reset</button>
+        </div>
+
+        <div class="modulo-demo">
+            <div class="modulo-demo-grid">
+                <!-- Generator Panel -->
+                <div class="modulo-panel gen-panel" id="genPanel">
+                    <h4>LLM Generator</h4>
+                    <div id="genContent">
+                        <div style="color: #888; font-style: italic; font-size: 0.82rem;">Waiting to generate...</div>
+                    </div>
+                </div>
+
+                <!-- Center Arrows -->
+                <div class="modulo-center" id="centerArrows">
+                    <div style="color: #aaa; font-size: 0.7rem;">LOOP</div>
+                </div>
+
+                <!-- Verifier Panel -->
+                <div class="modulo-panel ver-panel" id="verPanel">
+                    <h4>Formal Verifier (PDDL)</h4>
+                    <div id="verContent">
+                        <div style="color: #888; font-style: italic; font-size: 0.82rem;">Waiting for candidate plan...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Round counter -->
+            <div style="text-align: center; margin-top: 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
+                <span id="roundCounter" style="font-size: 0.85rem; color: #888;"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Heuristic Generation -->
+    <!-- ============================== -->
+
+    <h2>LLMs as Heuristic Designers</h2>
+
+    <p>Remember from Post 3 that the heuristic function is everything in planning. Two planners with the same search algorithm but different heuristics can differ by orders of magnitude. The planning community spent 50 years crafting domain-independent heuristics like h<sub>FF</sub> — but what if an LLM could generate <em>domain-specific</em> heuristics that are even better?</p>
+
+    <p>This is the second major breakthrough. Instead of asking the LLM to plan, ask it to write a <strong>Python function</strong> that estimates how far a given state is from the goal. Then plug that function into A* or GBFS (Post 3's search algorithms) as the heuristic. The search engine does the planning. The LLM just provides the guidance function.</p>
+
+    <div class="vis-container" data-download-name="heuristic-code-generation">
+        <div class="code-gen-panel">
+            <div class="code-gen-side input">
+                <div class="code-gen-header">Input: PDDL Domain + Prompt</div>
+<pre><code>Given this PDDL domain for a
+warehouse robot that assembles
+towers from pieces with support
+constraints...
+
+Write a Python function:
+  def heuristic(state) -> float
+that estimates the number of
+actions needed to reach the goal.
+
+The function receives the current
+state as a set of ground atoms
+(e.g., {"placed(L1)", "robot-at(
+shelf-b)", "holding(beam)"}).</code></pre>
+            </div>
+            <div class="code-gen-side output">
+                <div class="code-gen-header">Output: LLM-Generated Heuristic</div>
+<pre><code>def heuristic(state):
+    goal_pieces = ["L1","L2",
+        "beam","roof","flag"]
+    placed = sum(1 for p in
+        goal_pieces
+        if f"placed({p})" in state)
+    remaining = len(goal_pieces)
+                - placed
+    # Each piece needs: move to
+    # shelf, pick, move to BZ,
+    # place = ~4 actions
+    h = remaining * 4
+    # Subtract if already holding
+    if any("holding" in a
+           for a in state):
+        h -= 2  # skip pick+move
+    return h</code></pre>
+            </div>
+        </div>
+        <p class="vis-caption">The LLM generates a domain-specific heuristic for RoboSort. The function counts unplaced pieces and estimates ~4 actions per piece (move, pick, move, place). This is crude but effective — it gives the search engine a domain-aware signal that h<sub>FF</sub> alone doesn't have.</p>
+    </div>
+    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
+
+    <p>Why does this work so well? The LLM understands the <em>domain semantics</em> — it knows that warehouse robots need to travel between shelves, that each piece requires multiple actions, and that holding a piece reduces remaining work. Domain-independent heuristics like h<sub>FF</sub> compute estimates purely from the PDDL structure, ignoring this semantic understanding. The LLM-generated heuristic captures domain knowledge that would take a human expert hours to encode.</p>
+
+    <p>Critically, the heuristic <strong>doesn't need to be correct</strong>. It just needs to be roughly right — pointing the search in the right direction. If the LLM's heuristic overestimates or underestimates, the search engine compensates. A bad heuristic makes search slower but doesn't make the plan wrong — the planner still checks every precondition. This is the beauty of the setup: the LLM contributes <em>guidance</em>, and the formal system contributes <em>guarantees</em>.</p>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>LLM-generated heuristics are the best of both worlds. The LLM contributes domain understanding (what actions mean, what matters) while the search engine contributes correctness (no invalid plans, no violated preconditions). A wrong heuristic slows search; it never produces a wrong plan. This asymmetry is why the approach is so robust.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Thought of Search   -->
+    <!-- ============================== -->
+
+    <h2>Thought of Search: LLMs That Think About Searching</h2>
+
+    <p>The third breakthrough goes further. Instead of generating a heuristic function, what if the LLM generated an entire <strong>search policy</strong> — a strategy for which states to explore next, which actions to try, and when to backtrack?</p>
+
+    <p>This is the idea behind <strong>Thought of Search</strong> (Katz et al., 2025). The LLM is given the PDDL domain and prompted to generate, step by step, the search process itself: "I'm at state S. Available actions are A1, A2, A3. A1 seems most promising because it places a piece that enables the beam placement. Let me try A1. New state S'. Now available actions are..."</p>
+
+    <p>The LLM isn't just generating a plan — it's <em>simulating the search</em>. Each step is verified by the formal model. If the LLM proposes an action that violates a precondition, the system catches it immediately and asks the LLM to reconsider. The result is a guided search that combines the LLM's intuition about which actions to try with the planner's certainty about which actions are valid.</p>
+
+    <div class="agentic-sidebar">
+        <div class="sidebar-title">Agentic AI in the Wild: The AI Pair Programmer</div>
+        <p>This pattern — LLM generates, formal tool verifies — is already how the best AI coding tools work. GitHub Copilot proposes code; the compiler and tests verify it. When tests fail, the LLM gets specific feedback ("test_login expected 200, got 401") and regenerates. The planning community formalized this pattern and proved it works for action sequencing, not just code generation.</p>
+        <p style="margin-top: 10px;">The analogy to RoboSort: the LLM proposes "place Roof next," the PDDL verifier says "precondition <code>(placed beam)</code> not satisfied," and the LLM reconsiders. Same loop, different domain.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: The Three Approaches -->
+    <!-- ============================== -->
+
+    <h2>The Three Approaches at a Glance</h2>
+
+    <p>Let's compare the three Paradigm 1 approaches side by side. Each gives the LLM a different role while keeping the formal planner in the loop for correctness.</p>
+
+    <div class="vis-container" data-download-name="three-approaches">
+        <div class="approach-cards">
+            <div class="approach-card card-modulo">
+                <div class="card-number">Approach 1</div>
+                <h4>LLM-Modulo</h4>
+                <p>LLM generates complete candidate plans. Formal verifier checks. Invalid plans get feedback. Loop until valid.</p>
+                <p><strong>LLM role:</strong> Plan generator</p>
+                <p><strong>Planner role:</strong> Verifier</p>
+                <span class="card-result">~65% → 82% with feedback</span>
+            </div>
+            <div class="approach-card card-heuristic">
+                <div class="card-number">Approach 2</div>
+                <h4>Heuristic Generation</h4>
+                <p>LLM writes Python heuristic function. Planner uses it to guide A*/GBFS search through state space.</p>
+                <p><strong>LLM role:</strong> Heuristic designer</p>
+                <p><strong>Planner role:</strong> Search engine</p>
+                <span class="card-result">Solves larger instances faster</span>
+            </div>
+            <div class="approach-card card-tos">
+                <div class="card-number">Approach 3</div>
+                <h4>Thought of Search</h4>
+                <p>LLM simulates search step-by-step, with each action verified by formal model in real time.</p>
+                <p><strong>LLM role:</strong> Search policy</p>
+                <p><strong>Planner role:</strong> Action validator</p>
+                <span class="card-result">Verified reasoning trace</span>
+            </div>
+        </div>
+        <p class="vis-caption">Three approaches, one principle: the LLM contributes domain understanding and creative generation; the formal system contributes correctness guarantees. The division of labor matches each system's strengths.</p>
+    </div>
+    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: The Results         -->
+    <!-- ============================== -->
+
+    <h2>The Results: From 12% to 82%</h2>
+
+    <p>The numbers speak for themselves. On the same PlanBench problems where LLMs alone scored 12–30% (Post 4), LLM-Modulo and related approaches achieved dramatically higher accuracy.</p>
+
+    <div class="vis-container" data-download-name="paradigm1-results">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Paradigm 1 Results: LLM + Planner vs. LLM Alone</h3>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Plan validity rate on Blocksworld benchmarks (higher is better)</p>
+        <div class="results-chart">
+            <div class="result-row">
+                <div class="result-label">Classical Planner<br><span style="font-weight:400; font-size:0.75rem; color:#888;">(needs PDDL)</span></div>
+                <div class="result-bar-track">
+                    <div class="result-bar" style="width: 100%; background: linear-gradient(90deg, #228b22, #2ea82e);"></div>
+                </div>
+                <div class="result-value" style="color: #228b22;">100%</div>
+            </div>
+            <div class="result-row">
+                <div class="result-label">LLM-Modulo<br><span style="font-weight:400; font-size:0.75rem; color:#888;">(generate + verify)</span></div>
+                <div class="result-bar-track">
+                    <div class="result-bar" style="width: 82%; background: linear-gradient(90deg, #2a9d8f, #35b8a8);"></div>
+                </div>
+                <div class="result-value" style="color: #2a9d8f;">~82%</div>
+            </div>
+            <div class="result-row">
+                <div class="result-label">LLM + Heuristic Gen<br><span style="font-weight:400; font-size:0.75rem; color:#888;">(code → search)</span></div>
+                <div class="result-bar-track">
+                    <div class="result-bar" style="width: 75%; background: linear-gradient(90deg, #6b3fa0, #8855c0);"></div>
+                </div>
+                <div class="result-value" style="color: #6b3fa0;">~75%</div>
+            </div>
+            <div class="result-row">
+                <div class="result-label">GPT-4 + CoT<br><span style="font-weight:400; font-size:0.75rem; color:#888;">(Post 4 baseline)</span></div>
+                <div class="result-bar-track">
+                    <div class="result-bar" style="width: 35%; background: linear-gradient(90deg, #d4740e, #e88a30);"></div>
+                </div>
+                <div class="result-value" style="color: #d4740e;">~35%</div>
+            </div>
+            <div class="result-row">
+                <div class="result-label">GPT-4 Direct<br><span style="font-weight:400; font-size:0.75rem; color:#888;">(Post 4 baseline)</span></div>
+                <div class="result-bar-track">
+                    <div class="result-bar" style="width: 30%; background: linear-gradient(90deg, #b22222, #d43030);"></div>
+                </div>
+                <div class="result-value" style="color: #b22222;">~30%</div>
+            </div>
+            <div class="result-row">
+                <div class="result-label">GPT-4 + Self-Critique<br><span style="font-weight:400; font-size:0.75rem; color:#888;">(Post 4 baseline)</span></div>
+                <div class="result-bar-track">
+                    <div class="result-bar" style="width: 22%; background: linear-gradient(90deg, #8b0000, #b22222);"></div>
+                </div>
+                <div class="result-value" style="color: #8b0000;">~22%</div>
+            </div>
+        </div>
+        <p class="vis-caption">The dramatic improvement of Paradigm 1 approaches over LLM-only methods. LLM-Modulo achieves ~82% by adding formal verification to the loop. Data patterns from Kambhampati et al. (2024), Katz et al. (2025).</p>
+    </div>
+    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
+
+    <p>Several things stand out:</p>
+
+    <ol>
+        <li><strong>The gap from 30% to 82% comes entirely from formal verification.</strong> The LLM is the same. The prompting is similar. The only difference: instead of trusting the LLM's output, you verify it and feed back errors. This simple architectural change nearly triples accuracy.</li>
+
+        <li><strong>The remaining 18% gap is real.</strong> Some problems are hard enough that the LLM can't fix its plan even with specific feedback. It gets stuck in revision loops, making the same mistake repeatedly. This is where heuristic generation helps — by offloading the search entirely to a formal engine with LLM-designed guidance.</li>
+
+        <li><strong>Self-critique is strictly worse than formal verification.</strong> When the LLM verifies its own plans (~22%), it performs worse than direct generation (~30%). When a formal tool verifies (~82%), performance more than doubles. The verifier matters more than the generator.</li>
+    </ol>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>The lesson of Paradigm 1 is architectural, not algorithmic. You don't need a better LLM. You need a better <em>system</em> — one that routes generation to the LLM and verification to a formal tool. The same LLM that scores 30% alone scores 82% with a verifier in the loop. The bottleneck was never the model. It was the architecture.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: RoboSort Scaling     -->
+    <!-- ============================== -->
+
+    <h2>Back to the Warehouse: Scaling RoboSort</h2>
+
+    <p>Throughout Posts 1–4, RoboSort assembled a 5-piece tower. That was enough to demonstrate the core concepts. But real warehouses don't have 5 pieces — they have 50, 500, or 5,000. How do these Paradigm 1 approaches scale?</p>
+
+    <p>Let's extend the warehouse. Instead of one tower with 5 pieces, imagine RoboSort must assemble <strong>three towers simultaneously</strong> — 15 pieces across 6 shelves, with shared aisles and a single build zone. The robot still carries one piece at a time. The support constraints still apply. But now there are aisle congestion constraints and a build order across towers.</p>
+
+    <div class="vis-container" data-download-name="robosort-scaling">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Scaling the Warehouse: 5 Pieces → 15 Pieces</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-family: 'Helvetica Neue', Arial, sans-serif;">
+            <div style="background: #fdf2f2; border: 2px solid #b22222; border-radius: 10px; padding: 18px;">
+                <h4 style="color: #b22222; font-size: 0.9rem; margin-bottom: 10px;">LLM Direct (15 pieces)</h4>
+                <p style="font-size: 0.85rem; color: #5a1010; margin-bottom: 8px;">The LLM must track 15 pieces across 6 shelves with inter-tower dependencies. State space: ~10<sup>8</sup> reachable states.</p>
+                <div style="background: #f8d7da; color: #721c24; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-align: center;">
+                    Success rate: ~5% (drops from 30%)
+                </div>
+                <p style="font-size: 0.78rem; color: #888; margin-top: 8px; margin-bottom: 0;">Common failures: forgetting which tower a piece belongs to, violating aisle constraints, wrong beam-to-tower assignment.</p>
+            </div>
+            <div style="background: #f0faf0; border: 2px solid #228b22; border-radius: 10px; padding: 18px;">
+                <h4 style="color: #228b22; font-size: 0.9rem; margin-bottom: 10px;">LLM-Modulo (15 pieces)</h4>
+                <p style="font-size: 0.85rem; color: #0a4a0a; margin-bottom: 8px;">Same LLM generates candidates. PDDL verifier catches inter-tower constraint violations. Feedback specifies exactly which tower and which support is missing.</p>
+                <div style="background: #d4edda; color: #155724; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-align: center;">
+                    Success rate: ~70% (3–5 iterations)
+                </div>
+                <p style="font-size: 0.78rem; color: #888; margin-top: 8px; margin-bottom: 0;">Key advantage: verifier catches cross-tower mistakes the LLM can't track in its context window.</p>
+            </div>
+        </div>
+        <p class="vis-caption">As problem complexity grows, the LLM's accuracy drops sharply (30% → 5%) while LLM-Modulo degrades gracefully (82% → 70%). The formal verifier becomes more valuable as problems get harder.</p>
+    </div>
+    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
+
+    <p>The scaling pattern is clear. As problems grow, LLMs alone degrade rapidly — their context window fills up, state tracking becomes impossible, and constraint violations multiply. But the formal tools don't degrade. PDDL validators check constraints in polynomial time regardless of problem size. The combination degrades gracefully because the formal backbone provides structural support that scales.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: The Remaining Gap   -->
+    <!-- ============================== -->
+
+    <h2>The Remaining Gap: What Paradigm 1 Can't Do</h2>
+
+    <p>For all its success, Paradigm 1 has a fundamental limitation: <strong>it requires PDDL</strong>. Someone — a domain expert, a planning engineer — must write the formal model. For RoboSort, that means specifying every action (move, pick, place), every predicate (robot-at, holding, supports), and every constraint in precise PDDL syntax.</p>
+
+    <p>This is the same bottleneck Post 3 identified: classical planners are extraordinarily powerful <em>if given formal input</em>. LLM-Modulo doesn't remove this bottleneck — it assumes the PDDL already exists and uses the LLM to help find plans within it.</p>
+
+    <p>For well-defined domains — logistics, manufacturing, standard warehouse operations — this is fine. Experts write the PDDL once, and LLM-Modulo handles new instances. But what about novel domains? What about a user who says:</p>
+
+    <div class="callout question">
+        <div class="callout-label">The Paradigm 2 Question</div>
+        <p>"I have a warehouse with three shelves and a build zone. The robot can carry one piece. Some pieces need support below them. Build me a tower." — Can a system create the formal model <em>from this description alone</em>, without any PDDL expertise?</p>
+    </div>
+
+    <p>That's the Paradigm 2 question. And it's the subject of the next post.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 9: What's Ahead        -->
+    <!-- ============================== -->
+
+    <h2>What's Ahead</h2>
+
+    <p>This post showed how Paradigm 1 works: when PDDL is given, LLMs can dramatically amplify planners through generate-verify loops, heuristic code generation, and search simulation. The results are striking — 12% to 82% — and the architecture is simple: let each system do what it's best at.</p>
+
+    <p>But the requirement for hand-written PDDL is a bottleneck. Millions of potential planning problems are described only in English — user manuals, requirements documents, verbal instructions. Nobody is going to write PDDL for each one.</p>
+
+    <p>What if the LLM could <em>create</em> the PDDL? Not use it, not help search within it, but generate the formal model itself from a natural language description? That's the ambitious promise of Paradigm 2 — and it's where the most exciting (and most difficult) research is happening.</p>
+
+    <!-- Next Post Teaser -->
+    <div class="next-post">
+        <h3>Up Next: Part 6 — From English to Plans: The NL-to-PDDL Frontier</h3>
+        <p>NL2Plan, agentic PDDL generation, and the orchestrator bottleneck. Describe a task in English, get a verified plan — and discover why the conductor can't keep up with the orchestra. The frontier of automated planning meets the frontier of language understanding.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- REFERENCES                     -->
+    <!-- ============================== -->
+
+    <div class="references">
+        <h2>References</h2>
+        <ol>
+            <li>Kambhampati, S., Valmeekam, V., & Stechly, K. (2024). LLM-Modulo: An LLM-Based Framework for Planning with Formal Verification. <em>AAAI 2024</em>.</li>
+            <li>Katz, M., Kokel, H., & Muise, C. (2025). Planning in the Era of Language Models. <em>NeurIPS 2025 Tutorial</em>.</li>
+            <li>Silver, T., Hariprasad, V., Shuttleworth, R. S., Kumar, N., Lozano-Pérez, T., & Kaelbling, L. P. (2024). Generalized Planning in PDDL Domains with Pretrained Large Language Models. <em>AAAI 2024</em>.</li>
+            <li>Valmeekam, V., Stechly, K., & Kambhampati, S. (2024). LLMs Still Can't Plan; Can LLMs Help Planning? <em>AAAI 2024 Workshop</em>.</li>
+            <li>Hao, S., Gu, Y., Ma, H., et al. (2023). Reasoning with Language Model is Planning with World Model. <em>EMNLP 2023</em>.</li>
+            <li>Helmert, M. (2006). The Fast Downward Planning System. <em>JAIR</em>, 26, 191–246.</li>
+            <li>Hoffmann, J. (2001). FF: The Fast-Forward Planning System. <em>AI Magazine</em>, 22(3), 57.</li>
+        </ol>
+    </div>
+
+    <!-- Download All -->
+    <div class="download-all-container">
+        <button class="download-all-btn" onclick="downloadAllVis()">⬇ Download All Visualizations as PNG</button>
+        <p>Downloads all static diagrams and charts from this post.</p>
+    </div>
+
+</article>
+
+<footer>
+    Planning in the Era of LLMs — Part 5 of 7
+</footer>
+
+<script>
+/* === Download functionality === */
+function downloadVis(btn) {
+    const container = btn.closest('.download-btn-wrapper').previousElementSibling;
+    html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+        const link = document.createElement('a');
+        const name = container.getAttribute('data-download-name') || 'visualization';
+        link.download = name + '.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
+function downloadAllVis() {
+    document.querySelectorAll('.vis-container[data-download-name]').forEach((container, i) => {
+        setTimeout(() => {
+            html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = container.getAttribute('data-download-name') + '.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }, i * 500);
+    });
+}
+
+/* === LLM-Modulo Interactive Demo === */
+const moduloRounds = [
+    {
+        gen: {
+            badge: 'attempt',
+            badgeText: 'Round 1',
+            steps: [
+                { text: 'move(home, shelf-a)', valid: true },
+                { text: 'pick(L1, shelf-a)', valid: true },
+                { text: 'move(shelf-a, build-zone)', valid: true },
+                { text: 'place-on-platform(L1)', valid: true },
+                { text: 'move → pick(L2) → move → place(L2)', valid: true },
+                { text: 'move(build-zone, shelf-c) → pick(Roof)', valid: true },
+                { text: 'place-on-piece(Roof, Beam)', valid: false },
+                { text: 'pick(Beam) → place-on-piece(Beam, L1)', valid: false },
+                { text: 'pick(Flag) → place-on-piece(Flag, Roof)', valid: false },
+            ]
+        },
+        ver: {
+            badge: 'feedback',
+            badgeText: 'Verification Failed',
+            message: 'Step 7: place-on-piece(Roof, Beam) FAILS.\nPrecondition violated: (placed beam) is FALSE.\nBeam has not been placed yet.\n\nFeedback: Place Beam before Roof.\nReorder steps 6-8.'
+        }
+    },
+    {
+        gen: {
+            badge: 'attempt',
+            badgeText: 'Round 2',
+            steps: [
+                { text: 'move(home, shelf-a) → pick(L1) → place-on-platform(L1)', valid: true },
+                { text: 'move → pick(L2) → move → place-on-platform(L2)', valid: true },
+                { text: 'move(build-zone, shelf-b) → pick(Beam)', valid: true },
+                { text: 'move → place-on-piece(Beam, L1)', valid: true },
+                { text: 'move(build-zone, shelf-c) → pick(Roof)', valid: true },
+                { text: 'move → place-on-piece(Roof, Beam)', valid: true },
+                { text: 'move → pick(Flag, shelf-c)', valid: true },
+                { text: 'move → place-on-piece(Flag, Roof)', valid: true },
+            ]
+        },
+        ver: {
+            badge: 'success',
+            badgeText: 'Verification Passed',
+            message: 'All 8 action groups verified.\nAll preconditions satisfied.\nGoal state reached: all 5 pieces placed.\n\n✓ VALID PLAN in 2 iterations.'
+        }
+    }
+];
+
+function runModuloDemo() {
+    const btn = document.getElementById('moduloRunBtn');
+    const resetBtn = document.getElementById('moduloResetBtn');
+    btn.disabled = true;
+    btn.textContent = 'Running...';
+
+    showModuloRound(0, () => {
+        setTimeout(() => {
+            showModuloRound(1, () => {
+                btn.style.display = 'none';
+                resetBtn.style.display = 'inline-block';
+            });
+        }, 1500);
+    });
+}
+
+function showModuloRound(roundIdx, callback) {
+    const round = moduloRounds[roundIdx];
+    const genContent = document.getElementById('genContent');
+    const verContent = document.getElementById('verContent');
+    const counter = document.getElementById('roundCounter');
+
+    counter.textContent = 'Round ' + (roundIdx + 1) + ' of 2';
+
+    let genHTML = '<span class="round-badge ' + round.gen.badge + '">' + round.gen.badgeText + '</span>';
+    genHTML += '<div style="margin-top: 8px;">';
+    round.gen.steps.forEach(s => {
+        genHTML += '<div class="step-item ' + (s.valid ? 'valid' : 'invalid') + '">' +
+            '<span style="font-weight:700; color: ' + (s.valid ? '#228b22' : '#b22222') + ';">' +
+            (s.valid ? '✓' : '✗') + '</span> ' + s.text + '</div>';
+    });
+    genHTML += '</div>';
+    genContent.innerHTML = genHTML;
+
+    setTimeout(() => {
+        let verHTML = '<span class="round-badge ' + round.ver.badge + '">' + round.ver.badgeText + '</span>';
+        verHTML += '<pre style="font-size: 0.78rem; margin-top: 8px; padding: 12px; white-space: pre-wrap;">' +
+            round.ver.message + '</pre>';
+        verContent.innerHTML = verHTML;
+
+        if (callback) setTimeout(callback, 800);
+    }, 800);
+}
+
+function resetModuloDemo() {
+    document.getElementById('genContent').innerHTML = '<div style="color: #888; font-style: italic; font-size: 0.82rem;">Waiting to generate...</div>';
+    document.getElementById('verContent').innerHTML = '<div style="color: #888; font-style: italic; font-size: 0.82rem;">Waiting for candidate plan...</div>';
+    document.getElementById('roundCounter').textContent = '';
+    document.getElementById('moduloRunBtn').style.display = 'inline-block';
+    document.getElementById('moduloRunBtn').disabled = false;
+    document.getElementById('moduloRunBtn').textContent = '▶ Run LLM-Modulo';
+    document.getElementById('moduloResetBtn').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
