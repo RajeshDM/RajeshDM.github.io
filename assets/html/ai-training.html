@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop Prompting. Start Architecting. — Rajesh Mangannavar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark: #1E1530;
+  --bg-purple: #2D2044;
+  --gold: #C5A55A;
+  --gold-soft: rgba(197,165,90,.12);
+  --white: #FFFFFF;
+  --text-muted: #B0A8C0;
+  --text-light: #E8E0F0;
+  --text-body: #3a3450;
+  --cream: #FAF8F5;
+  --red: #dc2626;
+  --green: #16a34a;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  color: var(--text-body);
+  background: var(--cream);
+  line-height: 1.7;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--bg-dark);
+  color: var(--white);
+  padding: 120px 24px 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--gold);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(197,165,90,.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+.hero h1 span { color: var(--gold); }
+.hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+.hero .byline { margin-top: 28px; font-size: .95rem; opacity: .5; }
+
+/* ─── SECTIONS ─── */
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+section { padding: 80px 0; }
+section.dark { background: var(--bg-dark); color: var(--white); }
+section.dark p, section.dark li { color: var(--text-light); }
+section.purple { background: var(--bg-purple); color: var(--white); }
+section.purple p, section.purple li { color: var(--text-light); }
+
+/* ─── TYPOGRAPHY ─── */
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+section.dark h2, section.purple h2 { color: var(--white); }
+h2 span { color: var(--gold); }
+h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  color: var(--bg-purple);
+}
+section.dark h3, section.purple h3 { color: var(--gold); }
+.concept-label {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+p { margin-bottom: 16px; }
+.gold { color: var(--gold); font-weight: 600; }
+.mono { font-family: 'JetBrains Mono', monospace; font-size: .9em; }
+.muted { color: #999; }
+section.dark .muted { color: var(--text-muted); }
+strong { font-weight: 700; }
+blockquote {
+  border-left: 4px solid var(--gold);
+  padding: 16px 24px;
+  margin: 24px 0;
+  background: var(--gold-soft);
+  border-radius: 0 8px 8px 0;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+section.dark blockquote, section.purple blockquote {
+  background: rgba(197,165,90,.1);
+}
+
+/* ─── GOLD DIVIDER ─── */
+.gold-line {
+  width: 80px; height: 4px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin: 12px 0 24px;
+}
+
+/* ─── CARDS ─── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.card {
+  border-top: 3px solid var(--gold);
+  border-radius: 8px;
+  padding: 20px;
+  background: #f7f5f0;
+}
+section.dark .card, section.purple .card {
+  background: rgba(255,255,255,.06);
+}
+.card h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.card p { font-size: .95rem; margin-bottom: 4px; }
+.card .hint { font-size: .85rem; color: #888; font-style: italic; }
+section.dark .card .hint { color: var(--text-muted); }
+
+/* ─── EXAMPLE BLOCKS ─── */
+.example {
+  margin: 32px 0;
+  padding: 28px;
+  border-radius: 12px;
+  border-left: 5px solid var(--gold);
+  background: #f7f5f0;
+}
+section.dark .example { background: rgba(255,255,255,.04); }
+.example .step-label {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.example p { margin-bottom: 10px; }
+
+/* ─── IMAGES ─── */
+.img-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 28px 0;
+}
+@media (max-width: 600px) { .img-row { grid-template-columns: 1fr; } }
+.img-row figure { text-align: center; }
+.img-row img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+.img-row figcaption { font-size: .85rem; color: #888; margin-top: 8px; }
+
+/* ─── SIDE BY SIDE (prompts) ─── */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+@media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
+.compare > div {
+  border-radius: 8px;
+  padding: 20px;
+}
+.compare .bad { border: 2px solid var(--red); background: #fef2f2; }
+.compare .good { border: 2px solid var(--green); background: #f0fdf4; }
+.compare .tag {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.compare .bad .tag { color: var(--red); }
+.compare .good .tag { color: var(--green); }
+
+/* ─── FLOW DIAGRAM ─── */
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 24px 0;
+}
+.flow .box {
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+  min-width: 90px;
+}
+.flow .chat-box { background: #f7f5f0; border: 2px solid var(--gold); }
+.flow .you-box { background: var(--bg-dark); color: var(--white); }
+section.dark .flow .chat-box { background: rgba(255,255,255,.06); border-color: var(--gold); }
+.flow .arrow { font-size: 1.3rem; color: var(--gold); }
+.flow .box .lbl { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
+.flow .box .nm { font-size: .95rem; font-weight: 700; }
+.flow .you-box .nm { color: var(--white); }
+
+/* ─── LOOP CALLOUT ─── */
+.loop-callout {
+  border: 2px dashed var(--gold);
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin: 20px auto;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(197,165,90,.06);
+}
+.loop-callout .icon { font-size: 2rem; }
+
+/* ─── RECAP ─── */
+.recap-list {
+  list-style: none;
+  counter-reset: recap;
+  margin: 24px 0;
+}
+.recap-list li {
+  counter-increment: recap;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.recap-list li::before {
+  content: counter(recap);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--gold);
+  min-width: 28px;
+}
+.recap-list li span { color: var(--gold); }
+
+/* ─── PILL TAGS ─── */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+.pill {
+  background: rgba(197,165,90,.15);
+  color: var(--gold);
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: .95rem;
+}
+
+/* ─── NAV BAR ─── */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-dark);
+  border-bottom: 1px solid rgba(197,165,90,.2);
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+.topnav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+}
+.topnav a:hover, .topnav a.active {
+  color: var(--white);
+  border-bottom-color: var(--gold);
+}
+@media (max-width: 600px) {
+  .topnav { flex-wrap: wrap; }
+  .topnav a { padding: 10px 12px; font-size: .7rem; }
+}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── IMG+TEXT SIDE BY SIDE ─── */
+.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: center;
+  margin: 28px 0;
+}
+@media (max-width: 600px) { .side-by-side { grid-template-columns: 1fr; } }
+.side-by-side img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="wrap">
+    <h1>Stop Prompting.<br><span>Start Architecting.</span></h1>
+    <p>You are the architect. AI is the contractor. 5 concepts that will change how you <em>see</em> the tool — not just how you use it.</p>
+    <p class="byline">Rajesh Mangannavar · AI Training Session · 2026</p>
+  </div>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="topnav">
+  <a href="#context">Context</a>
+  <a href="#c1">Buildable</a>
+  <a href="#c2">Decomposition</a>
+  <a href="#c3">One Role</a>
+  <a href="#c4">Judgment</a>
+  <a href="#c5">Compound</a>
+  <a href="#recap">Recap</a>
+</nav>
+
+<!-- ═══ CONTEXT ═══ -->
+<section id="context">
+  <div class="wrap">
+    <h2 class="reveal">What's <span>Possible</span></h2>
+    <div class="gold-line reveal"></div>
+    <div class="img-row reveal">
+      <figure>
+        <img src="./images/phd-defense.png" alt="PhD defense presentation">
+        <figcaption>45-slide PhD defense — built without knowing HTML</figcaption>
+      </figure>
+      <figure>
+        <img src="./images/trackmind.jpg" alt="TrackMind app">
+        <figcaption>TrackMind — public planner + habit tracker</figcaption>
+      </figure>
+    </div>
+    <p class="reveal">This isn't about what I built. It's about a <strong class="gold">way of thinking</strong> that made it possible — a way you already have as coders but probably aren't applying to AI yet.</p>
+    <p class="reveal muted">5 concepts that build on each other. Each one makes the next click.</p>
+  </div>
+</section>
+
+<!-- ═══ CONCEPT 1: Everything is Buildable ═══ -->
+<section class="dark" id="c1">
+  <div class="wrap">
+    <p class="concept-label reveal">Concept 1</p>
+    <h2 class="reveal">Everything Is <span>Buildable</span></h2>
+    <div class="gold-line reveal"></div>
+    <p class="reveal">Most people use AI for text — summarize, email, brainstorm. That's using <strong>10% of the tool</strong>.</p>
+    <p class="reveal">AI is exceptional at writing <strong class="gold">code</strong>. Code solves structured problems. Financial tracking, meal planning, a PhD defense — these aren't "software projects." They're problems that <em>become</em> software once you see them that way.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h3 class="reveal">Example: The Finance Tracker</h3>
+    <div class="side-by-side reveal">
+      <div>
+        <div class="example" style="margin:0">
+          <p class="step-label">What I Wanted</p>
+          <p><strong>"I want to visualize my finances."</strong> See where money goes. Spot trends.</p>
+          <p class="step-label">The Reasoning</p>
+          <p>Visualize finances → what are the codable chunks? Data model, input form, charts, trend analysis → took inspiration from <strong>Intuit QuickBooks</strong> → described each piece to AI separately → <strong class="gold">each chunk is a problem AI can solve</strong>.</p>
+          <p class="step-label">The Shift</p>
+          <p><em>"Oh — there's a LOT that can be done here."</em> This was the moment AI went from chatbot to <strong class="gold">builder</strong>.</p>
+        </div>
+      </div>
+      <img src="./images/finance-tracker.jpg" alt="Finance tracker app">
+    </div>
+
+    <h3 class="reveal" style="margin-top:40px">Example: TrackMind</h3>
+    <div class="example reveal">
+      <p class="step-label">What I Wanted</p>
+      <p><strong>"I need to plan my week better."</strong> The real problem was <strong class="gold">complex planning logic</strong> — recurring tasks, habit streaks, time blocking, goal dependencies. No single app handled all of this.</p>
+      <p class="step-label">The Reasoning</p>
+      <p>What are the codable chunks? Scheduling engine, habit tracker, UI for daily/weekly views → took inspiration from existing planner + habit apps, cherry-picked the best ideas → first built a <strong>terminal-only app</strong> (just the logic) → then moved to a web app for convenience. <strong class="gold">Each chunk is a problem AI can solve.</strong></p>
+      <p class="step-label">The Result</p>
+      <p><strong class="gold">Made it public.</strong> Real people use it at <a href="https://track-mind.netlify.app" class="mono" style="color:var(--gold);text-decoration:underline" target="_blank" rel="noopener">track-mind.netlify.app</a></p>
+    </div>
+
+    <h3 class="reveal" style="margin-top:40px">Example: The PhD Defense</h3>
+    <div class="example reveal">
+      <p class="step-label">What I Wanted</p>
+      <p><strong>"I need to defend my PhD."</strong> What is a defense, really? It's a <strong class="gold">story</strong>. A story is best told visually. But even better — <em>interactively</em>.</p>
+      <p class="step-label">The Reasoning</p>
+      <p>Tell a story → tell it visually → tell it interactively → what are the codable chunks? Content structure, narrative flow, visual design, individual slides, custom visualizations, integration, review. <strong class="gold">Each chunk is a problem AI can solve.</strong></p>
+      <p class="step-label">The Pattern</p>
+      <p>Finance, the planner, and the PhD look like <em>completely different</em> problems. But the abstract reframe is <strong class="gold">identical</strong>: what do I actually want? → break it into codable chunks → solve each chunk with AI. The specific technology is incidental.</p>
+    </div>
+
+    <blockquote class="reveal">Most people: "I wish there was an app for this." &nbsp; You: <strong class="gold">"I can describe this app to AI and have it built in 20 minutes."</strong> You can take inspiration from already-solved problems — QuickBooks for finance, existing planners for scheduling — cherry-pick the best ideas, and break them into codable chunks for AI.</blockquote>
+  </div>
+</section>
+
+<!-- ═══ CONCEPT 2: Decomposition ═══ -->
+<section class="dark" id="c2">
+  <div class="wrap">
+    <p class="concept-label reveal">Concept 2</p>
+    <h2 class="reveal">Decomposition Is <span>the Real Skill</span></h2>
+    <div class="gold-line reveal"></div>
+    <p class="reveal">The real work isn't prompting — it's what happens <strong>before</strong> you prompt.</p>
+    <blockquote class="reveal">You are the architect. AI is the contractor. An architect who lays bricks builds a bad house. A bricklayer with no blueprint builds a worse one.</blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h3 class="reveal">PhD Defense: 7 Workstreams, 50+ Chats</h3>
+    <p class="muted reveal">Each workstream = different thinking = separate AI chats</p>
+    <div class="card-grid reveal">
+      <div class="card"><h3>1 · Content</h3><p>Structure the argument. Started from thesis.</p></div>
+      <div class="card"><h3>2 · Narrative</h3><p>Flow & storytelling. Like a colleague reviewing your talk.</p></div>
+      <div class="card"><h3>3 · Visuals</h3><p>Colors, fonts, mood. One chat just for the palette.</p></div>
+      <div class="card"><h3>4 · Slides</h3><p>Per-slide construction. Each in its own chat.</p></div>
+      <div class="card"><h3>5 · Visualizations</h3><p>Custom animated diagrams. Running example invented for the defense.</p></div>
+      <div class="card"><h3>6 · Integration</h3><p>Assembling the engine. Iframe architecture emerged after Plan A failed.</p></div>
+      <div class="card"><h3>7 · Review</h3><p>Critic role — tear apart the assembled whole.</p></div>
+    </div>
+    <p class="reveal"><strong>If you dump all 7 into one conversation, AI tries everything at once and does everything poorly.</strong></p>
+
+    <h3 class="reveal" style="margin-top:40px">The Pivot: When the Approach Is Wrong</h3>
+    <div class="example reveal">
+      <p class="step-label">Plan A</p>
+      <p>Asked Claude to generate visualizations in React. Original plan: put them in PowerPoint.</p>
+      <p class="step-label">The Problem</p>
+      <p>Can't put React in PowerPoint. OK — make it all HTML. But combining existing visualizations with slides kept failing. <strong>Same error, 2-3 times.</strong></p>
+      <p class="step-label">My Judgment Call</p>
+      <p>I didn't understand the error. But I saw the pattern: <strong class="gold">if this method is so hard, why not remake the base in something more compatible?</strong> Instead of adjusting the presentation to fit the visualizations — recreate the visualizations to fit the presentation.</p>
+      <p>I was a product manager saying "simplify the approach." AI had the coding ability. <strong class="gold">It couldn't see the strategy was wrong.</strong></p>
+    </div>
+
+    <h3 class="reveal" style="margin-top:40px">Inventing the Running Example</h3>
+    <div class="example reveal">
+      <p>My thesis is about planning in observable environments. I needed a <strong>concrete example</strong> that didn't exist in the thesis. I gave Claude 3-4 existing examples and said: <span class="mono">"Generate candidate examples that can convey this story."</span></p>
+      <p>It generated many. <strong class="gold">I selected one</strong> — because only I knew what would resonate with my committee. Then kept improving it in a different chat. AI generated options. I made the judgment call.</p>
+    </div>
+
+    <blockquote class="reveal"><strong class="gold">Decomposition is the skill.</strong> Prompting is just the delivery mechanism. AI cannot decompose your problem for you — it doesn't know your constraints, your taste, what "done" looks like for you.</blockquote>
+  </div>
+</section>
+
+<!-- ═══ CONCEPT 3: One Piece, One Chat, One Role ═══ -->
+<section class="purple" id="c3">
+  <div class="wrap">
+    <p class="concept-label reveal">Concept 3</p>
+    <h2 class="reveal">One Piece, One Chat, <span>One Role</span></h2>
+    <div class="gold-line reveal"></div>
+    <p class="reveal">In any given chat, ask AI to play <strong>ONE role</strong> and it will excel. Separation of concerns. Single responsibility principle. A function that does one thing well beats a function that does five things badly.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h3 class="reveal">The Role Taxonomy</h3>
+    <div class="card-grid reveal">
+      <div class="card"><h3>🧭 Strategist</h3><p>"Help me structure this problem."</p><p class="hint">PhD: thesis advisor shaped the arc</p></div>
+      <div class="card"><h3>💡 Brainstormer</h3><p>"Generate 5 options. I'll pick."</p><p class="hint">PhD: generated candidate examples</p></div>
+      <div class="card"><h3>🎨 Designer</h3><p>"I want this to feel [mood]."</p><p class="hint">PhD: separate chat for colors + fonts</p></div>
+      <div class="card"><h3>💻 Builder</h3><p>"Here's what I need. Build it."</p><p class="hint">PhD: each slide in its own chat</p></div>
+      <div class="card"><h3>🔍 Critic</h3><p>"Tear this apart. Don't hold back."</p><p class="hint">PhD: final critic reviewed everything</p></div>
+      <div class="card"><h3>✏️ Editor</h3><p>"This is 80% there. Polish it."</p><p class="hint">PhD: flow reviewer improved narrative</p></div>
+    </div>
+
+    <h3 class="reveal" style="margin-top:40px">Why Mixing Roles Fails</h3>
+    <div class="compare reveal">
+      <div class="bad">
+        <p class="tag">❌ Mixed Roles</p>
+        <p class="mono" style="font-size:.9rem">"Brainstorm layouts, critique each, then build the best one."</p>
+        <p class="muted" style="font-size:.9rem;font-style:italic;margin:0">AI hedges. Generates an idea, immediately qualifies it. Everything mediocre.</p>
+      </div>
+      <div class="good">
+        <p class="tag">✅ Single Role</p>
+        <p class="mono" style="font-size:.9rem">"You are a harsh design critic. Tear this apart — what's weak? Don't hold back."</p>
+        <p style="font-size:.9rem;font-style:italic;color:#555;margin:0">AI commits fully. Same AI — dramatically different because you gave it <strong>permission to focus</strong>.</p>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="margin-top:40px">You Are the Integration Layer</h3>
+    <p class="reveal">It's not a straight line — it's a loop. You go back, update, add and remove roles.</p>
+    <div class="flow reveal">
+      <div class="box chat-box"><p class="lbl">Chat 1</p><p class="nm" style="color:var(--bg-purple)">Strategy</p></div>
+      <span class="arrow">→</span>
+      <div class="box you-box"><p class="lbl" style="color:var(--gold)">YOU</p><p class="nm">Filter</p></div>
+      <span class="arrow">→</span>
+      <div class="box chat-box"><p class="lbl">Chat 2</p><p class="nm" style="color:var(--bg-purple)">Design</p></div>
+      <span class="arrow">→</span>
+      <div class="box you-box"><p class="lbl" style="color:var(--gold)">YOU</p><p class="nm">Approve</p></div>
+      <span class="arrow">→</span>
+      <div class="box chat-box"><p class="lbl">Chat 3</p><p class="nm" style="color:var(--bg-purple)">Build</p></div>
+    </div>
+    <div class="loop-callout reveal">
+      <span class="icon">↩</span>
+      <div>
+        <p><strong>After building a few pieces, loop back.</strong> Update structure (Strategy). Revisit colors (Design). Maybe add a new role — Critic — that didn't exist in round 1. Roles evolve as you learn what the project actually needs.</p>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="margin-top:40px">Decomposition Is Recursive</h3>
+    <p class="reveal">Two orthogonal axes: <strong>sub-problems</strong> and <strong>roles</strong>. They recurse. A problem breaks into sub-problems. Each sub-problem has its own set of roles. Each role can reveal new sub-problems. And those sub-problems get their own roles. It goes as deep as the complexity demands — you decide when to stop.</p>
+  </div>
+</section>
+
+<!-- ═══ CONCEPT 4: Judgment ═══ -->
+<section class="dark" id="c4">
+  <div class="wrap">
+    <p class="concept-label reveal">Concept 4</p>
+    <h2 class="reveal">Your Judgment Is <span>the Multiplier</span></h2>
+    <div class="gold-line reveal"></div>
+    <p class="reveal">AI is an <strong>exponential multiplier</strong> of what you already bring. Expertise in → excellence out. Nothing in → confident-sounding garbage out — <em>and you can't tell the difference.</em></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h3 class="reveal">Three Judgment Calls Only You Can Make</h3>
+
+    <div class="example reveal">
+      <p class="step-label">Pattern Recognition</p>
+      <p>Same error 3 times? <strong>The approach is wrong.</strong> Redirect entirely. I didn't understand the error code in the React → HTML pivot. I understood the pattern. "If this method is so hard, why not remake the base?"</p>
+    </div>
+    <div class="example reveal">
+      <p class="step-label">Quality Judgment</p>
+      <p>AI output looks polished. <strong>Is it actually good?</strong> A beautiful chart with wrong data is worse than an ugly chart with right data. Only domain knowledge tells you which.</p>
+    </div>
+    <div class="example reveal">
+      <p class="step-label">Strategic Redirection</p>
+      <p>AI does exactly what you asked — but <strong>what you asked for is wrong</strong>. Stop, step back, reframe. AI will cheerfully optimize the wrong thing forever.</p>
+    </div>
+
+    <blockquote class="reveal">The more you use AI, the <strong class="gold">MORE important</strong> your own judgment becomes. Make sure you don't outsource all thinking to AI. <strong>You will get dumber.</strong></blockquote>
+
+    <p class="reveal">But when your judgment IS engaged — you build things you could <strong class="gold">never build alone</strong>. AI handled the parts you couldn't do (writing HTML, coding animations). You handled the parts it couldn't (knowing your audience, making taste calls, seeing when the approach was wrong). <strong>That combination is the multiplier. Neither side alone gets you there.</strong></p>
+  </div>
+</section>
+
+<!-- ═══ CONCEPT 5: Compound ═══ -->
+<section class="purple" id="c5">
+  <div class="wrap">
+    <p class="concept-label reveal">Concept 5</p>
+    <h2 class="reveal">Compound <span>Your Learning</span></h2>
+    <div class="gold-line reveal"></div>
+    <p class="reveal">You know you've gotten good when you feel <strong>AI could replace you</strong>. That's the progress signal. But AI didn't change between attempt 1 and attempt 100. <strong class="gold">YOU got better</strong> — at decomposing, defining roles, giving context, judging output. The skill is the guiding, not the doing.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h3 class="reveal">Before / After Awareness</h3>
+    <div class="compare reveal">
+      <div class="bad">
+        <p class="tag">❌ Simple Prompt</p>
+        <p class="mono">"Make me a job tracker."</p>
+        <p class="muted" style="font-size:.9rem;margin:0">No role. No context. AI guesses everything.</p>
+      </div>
+      <div class="good">
+        <p class="tag">✅ Structured Prompt</p>
+        <p class="mono" style="font-size:.85rem">"You are a frontend designer specializing in clean productivity tools. Build a single-page HTML job tracker. Kanban layout. Columns: Applied, Phone Screen, Interview, Offer, Rejected, Ghosted. Dark theme, compact cards, counter badges."</p>
+      </div>
+    </div>
+    <p class="reveal"><strong>Same AI. The difference is <span class="gold">you</span>.</strong></p>
+
+    <h3 class="reveal" style="margin-top:40px">Build a Personal Playbook</h3>
+    <div class="example reveal">
+      <p>When you solve a hard problem with AI, <strong class="gold">make AI document what worked</strong>. Role definitions, decomposition patterns, what went wrong.</p>
+      <p>PhD presentation: every bug, fix, and architecture decision got captured into a <strong class="gold">skill file</strong> — fully AI-generated. Every time we fixed a problem, I'd say <span class="mono">"Update the skill file with what we learned."</span> The iframe architecture, the CSS isolation trick, the presenter view bug — all captured. Next project starts from lesson 50, not lesson 1.</p>
+    </div>
+
+    <h3 class="reveal" style="margin-top:40px">But What About All the New Tools?</h3>
+    <p class="reveal">New AI tools every week. New models. New features. <strong>How do you keep up?</strong></p>
+    <blockquote class="reveal"><strong class="gold">You don't.</strong> The core skill is still breaking down problems into codable chunks. Once you have the chunks, finding the right tool for each one is the easy part. No tool will do everything in one go. The person who decomposes well can plug in <em>any</em> tool. The person chasing tools without decomposition gets nothing from any of them.</blockquote>
+
+    <h3 class="reveal" style="margin-top:40px">The Bigger Picture</h3>
+    <p class="reveal">The first 10 things you learn to do with AI come from sessions like this — someone shows you. But once you've seen those 10, your <strong class="gold">mental model shifts</strong>. You stop seeing "a chatbot" and start seeing "a universal builder that constructs anything you can describe."</p>
+    <p class="reveal">After that shift, <strong class="gold">YOU</strong> discover uses 11 through 100 from your own problems and creativity. Nobody teaches you those — you discover them because you now see the tool differently. <strong>That's what this is really about.</strong></p>
+  </div>
+</section>
+
+<!-- ═══ RECAP ═══ -->
+<section class="dark" id="recap">
+  <div class="wrap" style="text-align:center">
+    <p class="concept-label reveal">The 5 Concepts</p>
+    <ul class="recap-list reveal">
+      <li>Everything is <span>buildable</span></li>
+      <li>Decomposition is <span>the real skill</span></li>
+      <li>One piece, one chat, <span>one role</span></li>
+      <li>Your judgment is <span>the multiplier</span></li>
+      <li>Compound <span>your learning</span></li>
+    </ul>
+
+    <div class="reveal" style="margin-top:48px">
+      <p style="font-size:1.3rem;color:var(--text-light)">This entire session — the structure, the narrative, the slides, the engine — was put together <strong class="gold">in under an hour. On a plane. On my phone.</strong></p>
+      <p style="font-size:1.1rem;color:var(--text-muted);margin-top:16px">Using the exact 5 concepts above. And now it's <strong class="gold">your turn</strong>.</p>
+    </div>
+
+    <div class="reveal" style="margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)">
+      <p style="font-size:.95rem;color:var(--text-muted)">Want the full slide deck with animations? <a href="presentation/" style="color:var(--gold)">Run the interactive presentation →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCROLL REVEAL ═══ -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Sticky nav highlight
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.topnav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
