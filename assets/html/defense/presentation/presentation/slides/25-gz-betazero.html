@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;position:relative}
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+.my-step{opacity:0;transition:opacity 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+<svg viewBox="0 0 1600 900" style="position:absolute;top:0;left:0;width:100%;height:100%" preserveAspectRatio="xMidYMid meet">
+
+<text x="70" y="62" font-family="'Playfair Display',serif" font-size="40" font-weight="700" fill="#2D2044">BetaZero: MCTS on Belief States</text>
+<rect x="70" y="76" width="80" height="4" rx="2" fill="#C5A55A"/>
+
+<defs>
+<marker id="ar2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" orient="auto">
+<path d="M1 1L9 5L1 9" fill="none" stroke="#2D2044" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+
+<!-- ════════ LEFT: Fully Observable state tree (greyed) ════════ -->
+<g transform="translate(70,100)">
+
+<text x="200" y="0" text-anchor="middle" font-size="24" fill="#ccc" font-weight="700">Fully Observable</text>
+<text x="200" y="28" text-anchor="middle" font-size="20" fill="#ccc">nodes = states</text>
+
+<!-- Root s₀ -->
+<circle cx="200" cy="90" r="42" fill="#fff" stroke="#ccc" stroke-width="2.5"/>
+<text x="200" y="82" text-anchor="middle" font-size="22" font-weight="700" fill="#ccc">s₀</text>
+<text x="200" y="104" text-anchor="middle" font-size="17" fill="#ccc">Bot@A</text>
+
+<!-- Edges -->
+<line x1="168" y1="124" x2="90" y2="218" stroke="#ccc" stroke-width="2"/>
+<line x1="232" y1="124" x2="310" y2="218" stroke="#ccc" stroke-width="2"/>
+
+<!-- s₁ -->
+<circle cx="90" cy="258" r="38" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="90" y="250" text-anchor="middle" font-size="20" font-weight="700" fill="#ccc">s₁</text>
+<text x="90" y="272" text-anchor="middle" font-size="16" fill="#ccc">Bot@B</text>
+
+<!-- s₂ -->
+<circle cx="310" cy="258" r="38" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="310" y="250" text-anchor="middle" font-size="20" font-weight="700" fill="#ccc">s₂</text>
+<text x="310" y="272" text-anchor="middle" font-size="16" fill="#ccc">Bot@C</text>
+
+<!-- Deeper nodes -->
+<line x1="62" y1="290" x2="30" y2="368" stroke="#ccc" stroke-width="1.5"/>
+<line x1="118" y1="290" x2="160" y2="368" stroke="#ccc" stroke-width="1.5"/>
+
+<circle cx="30" cy="400" r="30" fill="#fff" stroke="#ccc" stroke-width="1.5"/>
+<text x="30" y="406" text-anchor="middle" font-size="18" fill="#ccc">s₃</text>
+<circle cx="160" cy="400" r="30" fill="#fff" stroke="#ccc" stroke-width="1.5"/>
+<text x="160" y="406" text-anchor="middle" font-size="18" fill="#ccc">s₄</text>
+
+<!-- Formulas -->
+<text x="200" y="494" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="24" fill="#ccc">P<tspan font-size="16" dy="3">θ</tspan><tspan dy="-3">(· | </tspan><tspan font-weight="700">s</tspan><tspan>)</tspan></text>
+<text x="200" y="534" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="24" fill="#ccc">V<tspan font-size="16" dy="3">θ</tspan><tspan dy="-3">(</tspan><tspan font-weight="700">s</tspan><tspan>)</tspan></text>
+</g>
+
+
+<!-- ════════ CENTER: Arrow ════════ -->
+<g class="my-step" data-step="1">
+<line x1="490" y1="396" x2="610" y2="396" stroke="#2D2044" stroke-width="5" marker-end="url(#ar2)"/>
+<text x="552" y="370" text-anchor="middle" font-size="24" fill="#2D2044" font-weight="700">partial</text>
+<text x="552" y="430" text-anchor="middle" font-size="24" fill="#2D2044" font-weight="700">observability</text>
+</g>
+
+
+<!-- ════════ RIGHT: Belief tree (BetaZero) ════════ -->
+<g class="my-step" data-step="1">
+<g transform="translate(640,100)">
+
+<text x="260" y="0" text-anchor="middle" font-size="24" fill="#2D2044" font-weight="700">Partially Observable</text>
+<text x="260" y="28" text-anchor="middle" font-size="20" fill="#6B5B7B">nodes = belief states</text>
+
+<!-- Root b₀ -->
+<circle cx="260" cy="90" r="44" fill="#fff" stroke="#2D2044" stroke-width="3.5"/>
+<text x="260" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#2D2044">b₀</text>
+<text x="260" y="104" text-anchor="middle" font-size="17" fill="#6B5B7B">Bot@A</text>
+<text x="318" y="78" font-size="16" fill="#888">Pkg ∈ {B,C,D}</text>
+
+<!-- Edges from root -->
+<line x1="224" y1="126" x2="120" y2="226" stroke="#2D2044" stroke-width="2.5"/>
+<line x1="296" y1="126" x2="440" y2="226" stroke="#2D2044" stroke-width="2.5"/>
+
+<!-- Action labels with white background -->
+<rect x="124" y="160" width="110" height="24" rx="4" fill="#fff" fill-opacity=".9"/>
+<text x="179" y="178" text-anchor="middle" font-size="19" fill="#2D2044" font-weight="600">Move(A,B)</text>
+<rect x="326" y="160" width="110" height="24" rx="4" fill="#fff" fill-opacity=".9"/>
+<text x="381" y="178" text-anchor="middle" font-size="19" fill="#2D2044" font-weight="600">Move(A,C)</text>
+
+<!-- b₁ -->
+<circle cx="120" cy="268" r="40" fill="#fff" stroke="#2D2044" stroke-width="3"/>
+<text x="120" y="258" text-anchor="middle" font-size="21" font-weight="700" fill="#2D2044">b₁</text>
+<text x="120" y="282" text-anchor="middle" font-size="16" fill="#6B5B7B">Bot@B</text>
+
+<!-- b₂ -->
+<circle cx="440" cy="268" r="40" fill="#fff" stroke="#2D2044" stroke-width="3"/>
+<text x="440" y="258" text-anchor="middle" font-size="21" font-weight="700" fill="#2D2044">b₂</text>
+<text x="440" y="282" text-anchor="middle" font-size="16" fill="#6B5B7B">Bot@C</text>
+
+<!-- Observation branches from b₁ -->
+<line x1="88" y1="300" x2="40" y2="388" stroke="#2D2044" stroke-width="2"/>
+<line x1="152" y1="300" x2="220" y2="388" stroke="#2D2044" stroke-width="2"/>
+
+<!-- Observation labels (offset from line) -->
+<text x="42" y="348" text-anchor="middle" font-size="18" fill="#D68910" font-weight="700">see pkg</text>
+<text x="210" y="348" text-anchor="middle" font-size="18" fill="#D68910" font-weight="700">empty</text>
+
+<!-- b₃ -->
+<circle cx="40" cy="430" r="36" fill="#fff" stroke="#2D2044" stroke-width="2.5"/>
+<text x="40" y="420" text-anchor="middle" font-size="20" font-weight="700" fill="#2D2044">b₃</text>
+<text x="40" y="446" text-anchor="middle" font-size="14" fill="#6B5B7B">Pkg@B(.95)</text>
+
+<!-- b₄ -->
+<circle cx="220" cy="430" r="36" fill="#fff" stroke="#2D2044" stroke-width="2.5"/>
+<text x="220" y="420" text-anchor="middle" font-size="20" font-weight="700" fill="#2D2044">b₄</text>
+<text x="220" y="446" text-anchor="middle" font-size="14" fill="#6B5B7B">Pkg∈{C,D}</text>
+
+<!-- Formulas -->
+<text x="260" y="524" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="26" fill="#2D2044">P<tspan font-size="17" dy="3">θ</tspan><tspan dy="-3">(· | </tspan><tspan font-weight="700" fill="#2563eb">b</tspan><tspan>)</tspan></text>
+<text x="260" y="566" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="26" fill="#2D2044">V<tspan font-size="17" dy="3">θ</tspan><tspan dy="-3">(</tspan><tspan font-weight="700" fill="#2563eb">b</tspan><tspan>)</tspan></text>
+
+</g>
+</g>
+
+
+<!-- ════════ WAREHOUSE (top-right, partially observable) ════════ -->
+<g class="my-step" data-step="1">
+<g transform="translate(1220,100)">
+<text x="180" y="0" text-anchor="middle" font-size="16" fill="#6B5B7B" font-weight="700" letter-spacing="1.5">NOW PARTIALLY OBSERVABLE</text>
+<rect x="0" y="14" width="360" height="230" rx="10" fill="#3D2E58" stroke="#4A3360" stroke-width="1.5"/>
+
+<!-- Zone A: visible -->
+<rect x="8" y="22" width="168" height="100" rx="5" fill="#F0EDF3" stroke="#D4CDE0" stroke-width=".8"/>
+<text x="92" y="112" text-anchor="middle" font-size="17" fill="#6B5B7B" font-weight="600">Zone A</text>
+<!-- Zone B: fogged -->
+<rect x="184" y="22" width="168" height="100" rx="5" fill="#F0EDF3"/>
+<rect x="184" y="22" width="168" height="100" rx="5" fill="#2E1A38" opacity=".45"/>
+<text x="268" y="62" text-anchor="middle" font-size="28" fill="rgba(255,255,255,.5)" font-weight="700">?</text>
+<text x="268" y="84" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.4)">p = 0.40</text>
+<text x="268" y="112" text-anchor="middle" font-size="17" fill="rgba(255,255,255,.65)" font-weight="600">Zone B</text>
+<!-- Zone C: fogged -->
+<rect x="8" y="130" width="168" height="100" rx="5" fill="#F0EDF3"/>
+<rect x="8" y="130" width="168" height="100" rx="5" fill="#2E1A38" opacity=".45"/>
+<text x="92" y="170" text-anchor="middle" font-size="28" fill="rgba(255,255,255,.5)" font-weight="700">?</text>
+<text x="92" y="192" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.4)">p = 0.35</text>
+<text x="92" y="220" text-anchor="middle" font-size="17" fill="rgba(255,255,255,.65)" font-weight="600">Zone C</text>
+<!-- Zone D: fogged -->
+<rect x="184" y="130" width="168" height="100" rx="5" fill="#F0EDF3"/>
+<rect x="184" y="130" width="168" height="100" rx="5" fill="#2E1A38" opacity=".45"/>
+<text x="268" y="170" text-anchor="middle" font-size="28" fill="rgba(255,255,255,.5)" font-weight="700">?</text>
+<text x="268" y="192" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.4)">p = 0.25</text>
+<text x="268" y="220" text-anchor="middle" font-size="17" fill="rgba(255,255,255,.65)" font-weight="600">Zone D</text>
+
+<!-- Walls -->
+<rect x="178" y="22" width="6" height="42" rx="2" fill="#5C4A6E"/><rect x="178" y="80" width="6" height="42" rx="2" fill="#5C4A6E"/>
+<rect x="8" y="122" width="78" height="6" rx="2" fill="#5C4A6E"/><rect x="98" y="122" width="78" height="6" rx="2" fill="#5C4A6E"/>
+<rect x="178" y="122" width="6" height="6" rx="2" fill="#5C4A6E"/><rect x="184" y="122" width="78" height="6" rx="2" fill="#5C4A6E"/>
+<rect x="274" y="122" width="78" height="6" rx="2" fill="#5C4A6E"/><rect x="178" y="130" width="6" height="42" rx="2" fill="#5C4A6E"/>
+<rect x="178" y="188" width="6" height="42" rx="2" fill="#5C4A6E"/>
+
+<!-- Robot -->
+<g transform="translate(60,58) scale(1.1)"><line x1="0" y1="-21.3" x2="0" y2="-16.4" stroke="#4A3360" stroke-width="1.3"/><circle cx="0" cy="-22.9" r="2.0" fill="#4A3360"/><rect x="-9.8" y="-16.4" width="19.6" height="11.5" rx="3.3" fill="#7B5E99" stroke="#4A3360" stroke-width="1.5"/><circle cx="-3.3" cy="-10.6" r="2.0" fill="#E6E0EC"/><circle cx="3.3" cy="-10.6" r="2.0" fill="#E6E0EC"/><circle cx="-2.5" cy="-10.6" r="0.8" fill="#2E1A38"/><circle cx="4.1" cy="-10.6" r="0.8" fill="#2E1A38"/><rect x="-11.5" y="-4.9" width="22.9" height="18.0" rx="2.5" fill="#7B5E99" stroke="#4A3360" stroke-width="1.5"/><rect x="-13.9" y="-3.3" width="2.5" height="6.5" rx="1.3" fill="#4A3360" opacity=".7"/><rect x="11.5" y="-3.3" width="2.5" height="6.5" rx="1.3" fill="#4A3360" opacity=".7"/><rect x="-4.9" y="13.1" width="2.5" height="3.3" rx="1.0" fill="#4A3360" opacity=".6"/><rect x="2.5" y="13.1" width="2.5" height="3.3" rx="1.0" fill="#4A3360" opacity=".6"/></g>
+
+<!-- Goal -->
+<rect x="236" y="172" width="52" height="20" rx="4" fill="rgba(30,132,73,.15)" stroke="#1E8449" stroke-width="1.2" stroke-dasharray="4 2"/>
+<text x="262" y="187" text-anchor="middle" font-size="12" fill="#1E8449" font-weight="700">GOAL</text>
+
+<text x="180" y="264" text-anchor="middle" font-size="16" fill="#B0A8C0" font-weight="600">Package location unknown!</text>
+</g>
+</g>
+
+
+<!-- ════════ BOTTOM: Key differences ════════ -->
+<g class="my-step" data-step="2">
+<line x1="70" y1="720" x2="1530" y2="720" stroke="#E8E4ED" stroke-width="1.5"/>
+<text x="70" y="760" font-size="24" fill="#2D2044" font-weight="700">Key Differences in BetaZero:</text>
+
+<rect x="70" y="778" width="440" height="70" rx="10" fill="#2563eb" fill-opacity=".05" stroke="#2563eb" stroke-width="1.5"/>
+<text x="92" y="808" font-size="20" fill="#2D2044" font-weight="600">Nodes are <tspan fill="#2563eb" font-weight="700">belief states</tspan> (probability</text>
+<text x="92" y="834" font-size="20" fill="#2D2044" font-weight="600">distributions over states)</text>
+
+<rect x="540" y="778" width="440" height="70" rx="10" fill="#D68910" fill-opacity=".06" stroke="#D68910" stroke-width="1.5"/>
+<text x="562" y="808" font-size="20" fill="#2D2044" font-weight="600">Tree branches on <tspan fill="#D68910" font-weight="700">observations</tspan></text>
+<text x="562" y="834" font-size="20" fill="#2D2044" font-weight="600">(what the agent perceives)</text>
+
+<rect x="1010" y="778" width="520" height="70" rx="10" fill="#16a34a" fill-opacity=".05" stroke="#16a34a" stroke-width="1.5"/>
+<text x="1032" y="808" font-size="20" fill="#2D2044" font-weight="600">Networks take <tspan fill="#16a34a" font-weight="700">beliefs as input</tspan></text>
+<text x="1032" y="834" font-size="20" fill="#2D2044" font-weight="600">P<tspan font-size="15" dy="2">θ</tspan><tspan dy="-2">(·|b) and V</tspan><tspan font-size="15" dy="2">θ</tspan><tspan dy="-2">(b) instead of P</tspan><tspan font-size="15" dy="2">θ</tspan><tspan dy="-2">(·|s), V</tspan><tspan font-size="15" dy="2">θ</tspan><tspan dy="-2">(s)</tspan></text>
+</g>
+
+</svg>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item active">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+<script>
+(function(){
+  var currentStep=0, totalSteps=2, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} } }
+    else if (e.key === 'a' || e.key === 'A') { if (window.__slideNav) window.__slideNav.revealAll(); }
+    else if ('fFpPtTbB?'.indexOf(e.key)>=0) { try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {} }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) { if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} } }
+    else { if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) { el.style.cursor = 'pointer'; el.addEventListener('click', function(e) { e.stopPropagation(); try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {} }); });
+})();
+</script>
+</body></html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0;padding:40px 70px 16px;overflow:hidden}
+
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;color:#2D2044;margin-bottom:.3em}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:10px;border-radius:2px}
+
+.subtitle{color:#888;font-size:1.5rem;margin-bottom:18px;max-width:700px}
+
+.main-area{flex:1;display:flex;gap:36px;min-height:0;align-items:stretch}
+
+/* Left: Task visual */
+.task-panel{flex:1;display:flex;flex-direction:column;gap:10px}
+.task-label{font-size:.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:2px}
+.warehouse-wrap{flex:1;background:#FDFCFE;border:1.5px solid #E8E4ED;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:12px;position:relative;overflow:hidden}
+.task-desc{font-size:1.3rem;color:#666;line-height:1.5;padding:8px 12px;background:#F8F6FA;border-radius:8px;border-left:3px solid var(--gold)}
+
+/* Right: Search tree */
+.tree-panel{flex:1.1;display:flex;flex-direction:column;gap:10px}
+.tree-wrap{flex:1;background:#FDFCFE;border:1.5px solid #E8E4ED;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:12px;overflow:hidden}
+
+/* Bottom properties */
+.props-row{display:flex;gap:16px;margin-top:12px}
+.prop-card{flex:1;background:#F8F6FA;border-radius:8px;padding:14px 18px;border-top:3px solid var(--gold)}
+.prop-card h3{font-family:'Playfair Display',serif;font-size:1.55rem;color:#2D2044;margin-bottom:4px}
+.prop-card p{font-size:1.3rem;color:#666;line-height:1.4}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+
+    <h2>Planning</h2>
+    <p class="subtitle">Agents choose actions whose consequences unfold over time — a <strong style="color:#2D2044">plan</strong> is a sequence of actions from a start state to a goal state.</p>
+
+    <div class="main-area">
+      <!-- LEFT: Task visual -->
+      <div class="task-panel my-step" data-step="1">
+        <div class="task-label">Running Example — Warehouse Delivery</div>
+        <div class="warehouse-wrap">
+          <svg viewBox="0 0 320 220" style="width:100%;height:100%;max-height:100%" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="tiles" width="14" height="14" patternUnits="userSpaceOnUse">
+                <rect width="14" height="14" fill="#F0EDF3"/>
+                <line x1="0" y1="14" x2="14" y2="14" stroke="#D4CDE0" stroke-width=".2" opacity=".3"/>
+                <line x1="14" y1="0" x2="14" y2="14" stroke="#D4CDE0" stroke-width=".2" opacity=".3"/>
+              </pattern>
+            </defs>
+            <!-- Grid border -->
+            <rect x="18" y="8" width="284" height="188" rx="5" fill="none" stroke="#D4CDE0" stroke-width="1"/>
+            <!-- Zone A -->
+            <rect x="20" y="10" width="138" height="90" rx="3" fill="url(#tiles)" stroke="#D4CDE0" stroke-width=".5"/>
+            <text x="89" y="84" text-anchor="middle" fill="#B0A8C0" font-size="10" font-weight="600">Zone A</text>
+            <!-- Zone B -->
+            <rect x="164" y="10" width="136" height="90" rx="3" fill="url(#tiles)" stroke="#D4CDE0" stroke-width=".5"/>
+            <text x="232" y="84" text-anchor="middle" fill="#B0A8C0" font-size="10" font-weight="600">Zone B</text>
+            <!-- Zone C -->
+            <rect x="20" y="106" width="138" height="88" rx="3" fill="url(#tiles)" stroke="#D4CDE0" stroke-width=".5"/>
+            <text x="89" y="178" text-anchor="middle" fill="#B0A8C0" font-size="10" font-weight="600">Zone C</text>
+            <!-- Shelf + Package in C -->
+            <rect x="73" y="118" width="32" height="4" rx="1" fill="#8B7FA0" stroke="#6B5B7B" stroke-width=".4" opacity=".5"/>
+            <rect x="75" y="124" width="28" height="18" rx="3" fill="#D68910" stroke="#B7770A" stroke-width=".8"/>
+            <text x="89" y="136" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">PKG</text>
+            <!-- Zone D -->
+            <rect x="164" y="106" width="136" height="88" rx="3" fill="url(#tiles)" stroke="#D4CDE0" stroke-width=".5"/>
+            <text x="232" y="178" text-anchor="middle" fill="#B0A8C0" font-size="10" font-weight="600">Zone D</text>
+            <!-- Shelf in D + goal ghost -->
+            <rect x="216" y="118" width="32" height="4" rx="1" fill="#8B7FA0" stroke="#6B5B7B" stroke-width=".4" opacity=".5"/>
+            <rect x="218" y="124" width="28" height="18" rx="3" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.2" stroke-dasharray="4 3" opacity=".6"/>
+            <text x="232" y="135" text-anchor="middle" fill="#1E8449" font-size="6" font-weight="700" opacity=".7">GOAL</text>
+
+            <!-- Robot in Zone A -->
+            <g transform="translate(89,48)">
+              <line x1="0" y1="-16.5" x2="0" y2="-12.7" stroke="#4A3360" stroke-width="1.0"/><circle cx="0" cy="-17.8" r="1.5" fill="#4A3360"/><rect x="-7.6" y="-12.7" width="15.3" height="8.9" rx="2.5" fill="#7B5E99" stroke="#4A3360" stroke-width=".8"/><circle cx="-2.5" cy="-8.3" r="1.5" fill="#E6E0EC"/><circle cx="2.5" cy="-8.3" r="1.5" fill="#E6E0EC"/><circle cx="-1.9" cy="-8.3" r="0.6" fill="#2E1A38"/><circle cx="3.2" cy="-8.3" r="0.6" fill="#2E1A38"/><rect x="-8.9" y="-3.8" width="17.8" height="14.0" rx="1.9" fill="#7B5E99" stroke="#4A3360" stroke-width=".8"/><rect x="-10.8" y="-2.5" width="1.9" height="5.1" rx="1.0" fill="#4A3360" opacity=".7"/><rect x="8.9" y="-2.5" width="1.9" height="5.1" rx="1.0" fill="#4A3360" opacity=".7"/><rect x="-3.8" y="10.2" width="1.9" height="2.5" rx="0.8" fill="#4A3360" opacity=".6"/><rect x="1.9" y="10.2" width="1.9" height="2.5" rx="0.8" fill="#4A3360" opacity=".6"/>
+
+              <circle cx="2" cy="-4" r=".8" fill="#2E1A38"/>
+              <circle cx="2" cy="3" r=".8" fill="#2E1A38"/>
+            </g>
+
+            <!-- Dashed connectors between zones -->
+            <line x1="160" y1="14" x2="160" y2="96" stroke="#C0A8CC" stroke-width=".5" stroke-dasharray="5 4" opacity=".3"/>
+            <line x1="24" y1="102" x2="154" y2="102" stroke="#C0A8CC" stroke-width=".5" stroke-dasharray="5 4" opacity=".3"/>
+            <line x1="160" y1="110" x2="160" y2="190" stroke="#C0A8CC" stroke-width=".5" stroke-dasharray="5 4" opacity=".3"/>
+            <line x1="168" y1="102" x2="296" y2="102" stroke="#C0A8CC" stroke-width=".5" stroke-dasharray="5 4" opacity=".3"/>
+
+            <!-- Planned path overlay -->
+            <polyline points="89,62 89,102 89,135 160,135 232,135" fill="none" stroke="#C5A55A" stroke-width="2" stroke-dasharray="8 5" opacity=".7" stroke-linecap="round"/>
+            <circle cx="89" cy="62" r="4" fill="#C5A55A" opacity=".5"/>
+            <circle cx="232" cy="135" r="4" fill="#1E8449" opacity=".5"/>
+
+            <!-- Label -->
+            <text x="160" y="210" text-anchor="middle" fill="#B0A8C0" font-size="9">Robot in A → Pick package in C → Deliver to D</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- RIGHT: Search tree -->
+      <div class="tree-panel my-step" data-step="2">
+        <div class="task-label">Search-Based Planning</div>
+        <div class="tree-wrap">
+          <svg viewBox="0 0 360 240" style="width:100%;height:100%;max-height:100%" preserveAspectRatio="xMidYMid meet">
+            <!-- Edges first (behind nodes) -->
+            <!-- Level 0 → 1 -->
+            <line x1="180" y1="30" x2="80" y2="78" stroke="#D4CDE0" stroke-width="1.2"/>
+            <line x1="180" y1="30" x2="180" y2="78" stroke="#D4CDE0" stroke-width="1.2"/>
+            <line x1="180" y1="30" x2="280" y2="78" stroke="#D4CDE0" stroke-width="1.2"/>
+            <!-- Level 1 → 2 (from first child) -->
+            <line x1="80" y1="98" x2="40" y2="148" stroke="#D4CDE0" stroke-width="1"/>
+            <line x1="80" y1="98" x2="110" y2="148" stroke="#D4CDE0" stroke-width="1"/>
+            <!-- Level 1 → 2 (from second child) -->
+            <line x1="180" y1="98" x2="160" y2="148" stroke="#D4CDE0" stroke-width="1"/>
+            <line x1="180" y1="98" x2="210" y2="148" stroke="#D4CDE0" stroke-width="1"/>
+            <!-- Level 1 → 2 (from third child - pruned) -->
+            <line x1="280" y1="98" x2="260" y2="148" stroke="#D4CDE0" stroke-width="1" opacity=".4"/>
+            <line x1="280" y1="98" x2="310" y2="148" stroke="#D4CDE0" stroke-width="1" opacity=".4"/>
+            <!-- Optimal path highlight -->
+            <line x1="180" y1="30" x2="80" y2="78" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
+            <line x1="80" y1="98" x2="110" y2="148" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
+            <line x1="110" y1="168" x2="120" y2="205" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
+            <!-- Leaf from optimal -->
+            <line x1="110" y1="168" x2="120" y2="205" stroke="#D4CDE0" stroke-width="1"/>
+
+            <!-- NODES -->
+            <!-- Root: s0 -->
+            <circle cx="180" cy="28" r="16" fill="#fff" stroke="#2D2044" stroke-width="1.5"/>
+            <text x="180" y="32" text-anchor="middle" fill="#2D2044" font-size="10" font-weight="700">s₀</text>
+            <text x="180" y="8" text-anchor="middle" fill="#C5A55A" font-size="8" font-weight="600">Bot:A, Pkg:C</text>
+
+            <!-- Level 1 -->
+            <circle cx="80" cy="88" r="14" fill="#fff" stroke="#2D2044" stroke-width="1.2"/>
+            <text x="80" y="92" text-anchor="middle" fill="#2D2044" font-size="9" font-weight="600">s₁</text>
+            <text x="48" y="68" text-anchor="middle" fill="#2471A3" font-size="8" font-weight="600">Move(A→C)</text>
+
+            <circle cx="180" cy="88" r="14" fill="#fff" stroke="#D4CDE0" stroke-width="1.2"/>
+            <text x="180" y="92" text-anchor="middle" fill="#888" font-size="9" font-weight="600">s₂</text>
+            <text x="180" y="68" text-anchor="middle" fill="#888" font-size="8">Move(A→B)</text>
+
+            <circle cx="280" cy="88" r="14" fill="#fff" stroke="#D4CDE0" stroke-width="1.2" opacity=".5"/>
+            <text x="280" y="92" text-anchor="middle" fill="#aaa" font-size="9" font-weight="600">s₃</text>
+            <text x="310" y="68" text-anchor="middle" fill="#aaa" font-size="8">Move(A→D)</text>
+
+            <!-- Level 2 -->
+            <circle cx="40" cy="155" r="12" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".5"/>
+            <text x="40" y="159" text-anchor="middle" fill="#aaa" font-size="8">s₄</text>
+
+            <circle cx="110" cy="155" r="12" fill="#fff" stroke="#2D2044" stroke-width="1.2"/>
+            <text x="110" y="159" text-anchor="middle" fill="#2D2044" font-size="8" font-weight="600">s₅</text>
+            <text x="136" y="142" text-anchor="middle" fill="#2471A3" font-size="7.5" font-weight="600">Pick(Pkg)</text>
+
+            <circle cx="160" cy="155" r="12" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".4"/>
+            <text x="160" y="159" text-anchor="middle" fill="#bbb" font-size="8">s₆</text>
+            <circle cx="210" cy="155" r="12" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".4"/>
+            <text x="210" y="159" text-anchor="middle" fill="#bbb" font-size="8">s₇</text>
+
+            <circle cx="260" cy="155" r="12" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".25"/>
+            <circle cx="310" cy="155" r="12" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".25"/>
+
+            <!-- Goal node -->
+            <circle cx="120" cy="210" r="13" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.5"/>
+            <text x="120" y="213" text-anchor="middle" fill="#1E8449" font-size="8" font-weight="700">GOAL</text>
+            <text x="148" y="197" text-anchor="middle" fill="#2471A3" font-size="7.5" font-weight="600">Move(C→D)</text>
+
+            <!-- Pruned subtree indicators -->
+            <text x="280" y="190" text-anchor="middle" fill="#ccc" font-size="22">⋯</text>
+            <text x="185" y="190" text-anchor="middle" fill="#ccc" font-size="22">⋯</text>
+
+            <!-- Legend -->
+            <rect x="8" y="218" width="8" height="3" rx="1" fill="#C5A55A" opacity=".6"/>
+            <text x="20" y="222" fill="#888" font-size="7.5">Optimal path</text>
+            <circle cx="85" cy="220" r="4" fill="#fff" stroke="#D4CDE0" stroke-width=".8" opacity=".5"/>
+            <text x="93" y="222" fill="#888" font-size="7.5">Explored states</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: Key properties -->
+    <div class="props-row my-step" data-step="3">
+      <div class="prop-card">
+        <h3>Complete</h3>
+        <p>Finds a solution if one exists — guarantees correctness.</p>
+      </div>
+      <div class="prop-card">
+        <h3>Generalizable</h3>
+        <p>Works on new configurations without retraining — same algorithm, any layout.</p>
+      </div>
+      <div class="prop-card">
+        <h3>Optimal</h3>
+        <p>Can find shortest plans — A* with admissible heuristics guarantees optimality.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item active">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+// ═══ Step-through animation logic ═══
+(function(){
+  var currentStep=0, totalSteps=3, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+
+<script>
+// ═══ Unified PPT-style navigation — COPY THIS BLOCK UNCHANGED INTO EVERY SLIDE ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+
+</body></html>

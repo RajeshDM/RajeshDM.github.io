@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+.slide{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(100vw,177.78vh);height:min(100vh,56.25vw);background:#fff;overflow:hidden}
+.gold-bar{position:absolute;top:0;left:0;right:0;height:4px;background:#C5A55A;z-index:10}
+.nav-bar{position:absolute;bottom:0;left:0;right:0;height:44px;background:#2D2044;display:flex;align-items:stretch;z-index:10}
+.nav-section{flex:1;text-align:center;font-size:0.85rem;font-family:'Source Sans 3',sans-serif;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em;position:relative;cursor:default;display:flex;align-items:center;justify-content:center}
+.nav-section.active{color:#C5A55A}
+.nav-section.active::before{content:'';position:absolute;top:0;left:5%;right:5%;height:3px;background:#C5A55A}
+.ms{opacity:0;transition:opacity 0.6s ease, transform 0.5s ease;transform:translateY(4px)}
+.ms.shown{opacity:1;transform:translateY(0)}
+.fa{opacity:0;transition:opacity 0.45s ease 0.18s}
+.fa.shown{opacity:1}
+</style>
+</head><body>
+<div class="slide" id="S">
+<div class="gold-bar"></div>
+<svg viewBox="0 0 1600 852" style="position:absolute;top:0;left:0;width:100%;height:calc(100% - 48px)" preserveAspectRatio="xMidYMid meet">
+<defs>
+<marker id="fa" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="10" markerHeight="8" orient="auto"><path d="M1 1L12 5L1 9" fill="none" stroke="#C5A55A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+<marker id="ga" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 2L7 5L1 8" fill="none" stroke="#999" stroke-width="1.2" stroke-linecap="round"/></marker>
+<marker id="pA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="#2471A3" stroke-width="1.5" stroke-linecap="round"/></marker>
+<marker id="vA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/></marker>
+<pattern id="wt" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#F0EDF3"/><line x1="0" y1="14" x2="14" y2="14" stroke="#D4CDE0" stroke-width=".2" opacity=".25"/><line x1="14" y1="0" x2="14" y2="14" stroke="#D4CDE0" stroke-width=".2" opacity=".25"/></pattern>
+<radialGradient id="fg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2E1A38" stop-opacity=".4"/><stop offset="100%" stop-color="#2E1A38" stop-opacity=".72"/></radialGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FDECEA"/><stop offset="50%" stop-color="#e67e22"/><stop offset="100%" stop-color="#27ae60"/></linearGradient>
+</defs>
+
+<!-- TITLE -->
+<text x="800" y="52" text-anchor="middle" font-family="'Playfair Display',serif" font-size="42" font-weight="900" fill="#2D2044">GammaZero: Full Pipeline</text>
+<rect x="720" y="64" width="160" height="4" rx="2" fill="#C5A55A"/>
+
+<!-- Section headers -->
+<text x="148" y="100" text-anchor="middle" font-size="17" font-weight="700" fill="#6B5B7B" letter-spacing=".05em">Warehouse Scenario</text>
+<text x="490" y="100" text-anchor="middle" font-size="17" font-weight="700" fill="#6B5B7B" letter-spacing=".05em">Belief Graph G</text>
+<text x="830" y="100" text-anchor="middle" font-size="17" font-weight="700" fill="#6B5B7B" letter-spacing=".05em">GNN Encoder</text>
+<text x="1310" y="100" text-anchor="middle" font-size="17" font-weight="700" fill="#6B5B7B" letter-spacing=".05em">MCTS Integration</text>
+
+<!-- ================================================================ -->
+<!-- STEP 1                                                           -->
+<!-- ================================================================ -->
+<g class="ms" data-step="1">
+<g transform="translate(28,116)">
+<rect x="0" y="0" width="240" height="185" rx="5" fill="none" stroke="#D4CDE0" stroke-width="1"/>
+<rect x="1" y="1" width="117" height="89" rx="3" fill="url(#wt)" stroke="#D4CDE0" stroke-width=".4"/>
+<text x="59" y="82" text-anchor="middle" fill="#6B5B7B" font-size="12" font-weight="600">Zone A</text>
+<rect x="122" y="1" width="117" height="89" rx="3" fill="url(#wt)" stroke="#D4CDE0" stroke-width=".4"/>
+<text x="180" y="82" text-anchor="middle" fill="#6B5B7B" font-size="12" font-weight="600">Zone B</text>
+<rect x="1" y="94" width="117" height="90" rx="3" fill="url(#wt)" stroke="#D4CDE0" stroke-width=".4"/>
+<text x="59" y="176" text-anchor="middle" fill="#6B5B7B" font-size="12" font-weight="600">Zone C</text>
+<rect x="39" y="104" width="40" height="5" rx="1.5" fill="#8B7FA0" stroke="#6B5B7B" stroke-width=".4" opacity=".5"/>
+<rect x="122" y="94" width="117" height="90" rx="3" fill="url(#wt)" stroke="#D4CDE0" stroke-width=".4"/>
+<text x="180" y="176" text-anchor="middle" fill="#6B5B7B" font-size="12" font-weight="600">Zone D</text>
+<rect x="160" y="104" width="40" height="5" rx="1.5" fill="#8B7FA0" stroke="#6B5B7B" stroke-width=".4" opacity=".5"/>
+<rect x="163" y="114" width="30" height="18" rx="3" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.2" stroke-dasharray="3 2" opacity=".6"/>
+<text x="178" y="125" text-anchor="middle" fill="#1E8449" font-size="8" font-weight="700">GOAL</text>
+<!-- Walls -->
+<rect x="118" y="1" width="5" height="35" rx="1" fill="#5C4A6E"/><rect x="118" y="55" width="5" height="35" rx="1" fill="#5C4A6E"/>
+<rect x="1" y="89" width="50" height="5" rx="1" fill="#5C4A6E"/><rect x="70" y="89" width="48" height="5" rx="1" fill="#5C4A6E"/>
+<rect x="122" y="89" width="48" height="5" rx="1" fill="#5C4A6E"/><rect x="192" y="89" width="47" height="5" rx="1" fill="#5C4A6E"/>
+<rect x="118" y="94" width="5" height="35" rx="1" fill="#5C4A6E"/><rect x="118" y="148" width="5" height="36" rx="1" fill="#5C4A6E"/>
+<rect x="118" y="89" width="5" height="5" rx="1" fill="#5C4A6E"/>
+<!-- Fog -->
+<rect x="122" y="1" width="117" height="89" rx="3" fill="url(#fg)"/>
+<text x="180" y="38" text-anchor="middle" fill="#fff" font-size="24" font-weight="700" opacity=".5">?</text>
+<text x="180" y="56" text-anchor="middle" fill="#fff" font-size="10.5" opacity=".5">p=0.40</text>
+<rect x="1" y="94" width="117" height="90" rx="3" fill="url(#fg)"/>
+<text x="59" y="132" text-anchor="middle" fill="#fff" font-size="24" font-weight="700" opacity=".5">?</text>
+<text x="59" y="150" text-anchor="middle" fill="#fff" font-size="10.5" opacity=".5">p=0.35</text>
+<rect x="122" y="94" width="117" height="90" rx="3" fill="url(#fg)"/>
+<text x="180" y="132" text-anchor="middle" fill="#fff" font-size="24" font-weight="700" opacity=".5">?</text>
+<text x="180" y="150" text-anchor="middle" fill="#fff" font-size="10.5" opacity=".5">p=0.25</text>
+<!-- Robot -->
+<g transform="translate(59,42)"><line x1="0" y1="-14.2" x2="0" y2="-10.9" stroke="#4A3360" stroke-width="0.9"/><circle cx="0" cy="-15.3" r="1.3" fill="#4A3360"/><rect x="-6.5" y="-10.9" width="13.1" height="7.6" rx="2.2" fill="#7B5E99" stroke="#4A3360" stroke-width=".6"/><circle cx="-2.2" cy="-7.1" r="1.3" fill="#E6E0EC"/><circle cx="2.2" cy="-7.1" r="1.3" fill="#E6E0EC"/><circle cx="-1.6" cy="-7.1" r="0.5" fill="#2E1A38"/><circle cx="2.7" cy="-7.1" r="0.5" fill="#2E1A38"/><rect x="-7.6" y="-3.3" width="15.3" height="12.0" rx="1.6" fill="#7B5E99" stroke="#4A3360" stroke-width=".6"/><rect x="-9.3" y="-2.2" width="1.6" height="4.4" rx="0.9" fill="#4A3360" opacity=".7"/><rect x="7.6" y="-2.2" width="1.6" height="4.4" rx="0.9" fill="#4A3360" opacity=".7"/><rect x="-3.3" y="8.7" width="1.6" height="2.2" rx="0.7" fill="#4A3360" opacity=".6"/><rect x="1.6" y="8.7" width="1.6" height="2.2" rx="0.7" fill="#4A3360" opacity=".6"/></g>
+<polygon points="68,39 72,42 68,45" fill="#4A3360" opacity=".6"/>
+<circle cx="60" cy="37" r="2" fill="#E6E0EC"/><circle cx="60" cy="43" r="2" fill="#E6E0EC"/>
+<text x="120" y="204" text-anchor="middle" fill="#C0A8CC" font-size="10" font-weight="600">Robot in A · Package location unknown</text>
+</g>
+<!-- Particles -->
+<g transform="translate(20,346)">
+<text x="128" y="-4" text-anchor="middle" font-size="16" font-weight="700" fill="#2D2044">Particle Belief b</text>
+<rect x="0" y="6" width="256" height="340" rx="6" fill="#FDFCFE" stroke="#D4CDE0" stroke-width="1"/>
+<g transform="translate(12,22)">
+<rect x="-4" y="-6" width="240" height="64" rx="4" fill="#fff" stroke="#D4CDE0" stroke-width=".6"/>
+<text x="0" y="10" font-size="16" fill="#E65100" font-weight="700">s₁</text><text x="20" y="10" font-size="13" fill="#999" font-weight="600">(w=0.40)</text>
+<text x="8" y="28" font-size="12.5" fill="#555">robot@A, HandEmpty</text>
+<text x="8" y="44" font-size="12.5" fill="#555">Pkg @ <tspan fill="#D68910" font-weight="700">Zone B</tspan></text>
+<rect x="174" y="-2" width="54" height="48" rx="2" fill="#F8F6FA" stroke="#D4CDE0" stroke-width=".4"/>
+<rect x="176" y="0" width="24" height="21" rx="1" fill="#F0EDF3"/><rect x="202" y="0" width="24" height="21" rx="1" fill="#D68910" fill-opacity=".15"/>
+<rect x="176" y="23" width="24" height="21" rx="1" fill="#F0EDF3"/><rect x="202" y="23" width="24" height="21" rx="1" fill="#F0EDF3"/>
+<circle cx="184" cy="10" r="3.5" fill="#7B5E99"/><rect x="207" y="5" width="12" height="8" rx="1.5" fill="#D68910" opacity=".8"/>
+</g>
+<g transform="translate(12,96)">
+<rect x="-4" y="-6" width="240" height="64" rx="4" fill="#fff" stroke="#D4CDE0" stroke-width=".6"/>
+<text x="0" y="10" font-size="16" fill="#7C4DFF" font-weight="700">s₂</text><text x="20" y="10" font-size="13" fill="#999" font-weight="600">(w=0.35)</text>
+<text x="8" y="28" font-size="12.5" fill="#555">robot@A, HandEmpty</text>
+<text x="8" y="44" font-size="12.5" fill="#555">Pkg @ <tspan fill="#D68910" font-weight="700">Zone C</tspan></text>
+<rect x="174" y="-2" width="54" height="48" rx="2" fill="#F8F6FA" stroke="#D4CDE0" stroke-width=".4"/>
+<rect x="176" y="0" width="24" height="21" rx="1" fill="#F0EDF3"/><rect x="202" y="0" width="24" height="21" rx="1" fill="#F0EDF3"/>
+<rect x="176" y="23" width="24" height="21" rx="1" fill="#D68910" fill-opacity=".15"/><rect x="202" y="23" width="24" height="21" rx="1" fill="#F0EDF3"/>
+<circle cx="184" cy="10" r="3.5" fill="#7B5E99"/><rect x="181" y="28" width="12" height="8" rx="1.5" fill="#D68910" opacity=".8"/>
+</g>
+<g transform="translate(12,170)">
+<rect x="-4" y="-6" width="240" height="64" rx="4" fill="#fff" stroke="#D4CDE0" stroke-width=".6"/>
+<text x="0" y="10" font-size="16" fill="#00897B" font-weight="700">s₃</text><text x="20" y="10" font-size="13" fill="#999" font-weight="600">(w=0.25)</text>
+<text x="8" y="28" font-size="12.5" fill="#555">robot@A, HandEmpty</text>
+<text x="8" y="44" font-size="12.5" fill="#555">Pkg @ <tspan fill="#D68910" font-weight="700">Zone D</tspan></text>
+<rect x="174" y="-2" width="54" height="48" rx="2" fill="#F8F6FA" stroke="#D4CDE0" stroke-width=".4"/>
+<rect x="176" y="0" width="24" height="21" rx="1" fill="#F0EDF3"/><rect x="202" y="0" width="24" height="21" rx="1" fill="#F0EDF3"/>
+<rect x="176" y="23" width="24" height="21" rx="1" fill="#F0EDF3"/><rect x="202" y="23" width="24" height="21" rx="1" fill="#D68910" fill-opacity=".15"/>
+<circle cx="184" cy="10" r="3.5" fill="#7B5E99"/><rect x="207" y="28" width="12" height="8" rx="1.5" fill="#D68910" opacity=".8"/>
+</g>
+<g transform="translate(12,244)" opacity=".35">
+<rect x="-4" y="-6" width="240" height="64" rx="4" fill="#fafafa" stroke="#B71C1C" stroke-width=".5" stroke-opacity=".3"/>
+<text x="0" y="10" font-size="16" fill="#B0BEC5" font-weight="700">s₄</text><text x="20" y="10" font-size="13" fill="#B71C1C" font-weight="600">(w=0.00)</text>
+<rect x="190" y="0" width="36" height="16" rx="2" fill="#B71C1C" fill-opacity=".1"/><text x="208" y="11" text-anchor="middle" font-size="10.5" fill="#B71C1C" font-weight="800">ZERO</text>
+<text x="8" y="28" font-size="12.5" fill="#999">robot@A, HandEmpty</text><text x="8" y="44" font-size="12.5" fill="#999">Pkg @ Zone A</text>
+</g>
+<text x="128" y="330" text-anchor="middle" font-size="12" fill="#C0A8CC">Each particle is a complete possible world</text>
+</g>
+</g>
+
+<!-- φ(b) arrow -->
+<g class="fa" data-step="2">
+<line x1="284" y1="450" x2="340" y2="450" stroke="#C5A55A" stroke-width="2.5" marker-end="url(#fa)"/>
+<text x="312" y="440" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="14" fill="#C5A55A" font-weight="600">φ(b)</text>
+</g>
+
+<!-- ================================================================ -->
+<!-- STEP 2: Belief Graph — simplified                                -->
+<!-- ================================================================ -->
+<g class="ms" data-step="2">
+<g transform="translate(350,116)">
+<rect x="0" y="0" width="290" height="580" rx="7" fill="#FDFCFE" stroke="#D4CDE0" stroke-width="1"/>
+
+<!-- ACTIONS -->
+<text x="145" y="24" text-anchor="middle" font-size="12" fill="#2471A3" font-weight="700" opacity=".5" letter-spacing=".06em">ACTIONS</text>
+<text x="72" y="44" text-anchor="middle" font-size="10" fill="#999" font-style="italic">Move</text>
+<rect x="12" y="52" width="72" height="28" rx="5" fill="rgba(36,113,163,.1)" stroke="#2471A3" stroke-width="1.2"/>
+<text x="48" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#2471A3">Move(A→B)</text>
+<rect x="92" y="52" width="72" height="28" rx="5" fill="rgba(36,113,163,.1)" stroke="#2471A3" stroke-width="1.2"/>
+<text x="128" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#2471A3">Move(A→C)</text>
+<text x="230" y="44" text-anchor="middle" font-size="10" fill="#999" font-style="italic">Sense</text>
+<rect x="176" y="52" width="52" height="28" rx="5" fill="rgba(36,113,163,.1)" stroke="#2471A3" stroke-width="1.2"/>
+<text x="202" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#2471A3">Look(B)</text>
+<rect x="236" y="52" width="48" height="28" rx="5" fill="rgba(36,113,163,.1)" stroke="#2471A3" stroke-width="1.2"/>
+<text x="260" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#2471A3">Look(C)</text>
+
+<!-- OBJECTS -->
+<text x="145" y="116" text-anchor="middle" font-size="12" fill="#B08E2A" font-weight="700" opacity=".5" letter-spacing=".06em">OBJECTS</text>
+<circle cx="40" cy="152" r="22" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1.2"/><text x="40" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="#B08E2A">Robot</text>
+<circle cx="105" cy="152" r="22" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1.2"/><text x="105" y="148" text-anchor="middle" font-size="11" font-weight="600" fill="#B08E2A">Zone</text><text x="105" y="160" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B08E2A">A</text>
+<circle cx="170" cy="152" r="22" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1.2"/><text x="170" y="148" text-anchor="middle" font-size="11" font-weight="600" fill="#B08E2A">Zone</text><text x="170" y="160" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B08E2A">B</text>
+<circle cx="235" cy="152" r="22" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1.2"/><text x="235" y="148" text-anchor="middle" font-size="11" font-weight="600" fill="#B08E2A">Zone</text><text x="235" y="160" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B08E2A">C</text>
+<circle cx="105" cy="218" r="22" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1.2"/><text x="105" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="#B08E2A">Pkg</text>
+<circle cx="195" cy="218" r="22" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1.2"/><text x="195" y="214" text-anchor="middle" font-size="11" font-weight="600" fill="#B08E2A">Zone</text><text x="195" y="226" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B08E2A">D</text>
+
+<!-- Key action→object edges only -->
+<line x1="48" y1="80" x2="105" y2="130" stroke="#2471A3" stroke-width="1" opacity=".22"/>
+<line x1="48" y1="80" x2="170" y2="130" stroke="#2471A3" stroke-width="1" opacity=".22"/>
+<line x1="128" y1="80" x2="105" y2="130" stroke="#2471A3" stroke-width="1" opacity=".22"/>
+<line x1="128" y1="80" x2="235" y2="130" stroke="#2471A3" stroke-width="1" opacity=".22"/>
+<line x1="202" y1="80" x2="170" y2="130" stroke="#2471A3" stroke-width="1" opacity=".18"/>
+<line x1="260" y1="80" x2="235" y2="130" stroke="#2471A3" stroke-width="1" opacity=".18"/>
+
+<!-- ATTRIBUTES -->
+<text x="145" y="272" text-anchor="middle" font-size="12" fill="#C0392B" font-weight="700" opacity=".5" letter-spacing=".06em">ATTRIBUTES</text>
+<rect x="16" y="290" width="84" height="30" rx="5" fill="rgba(192,57,43,.06)" stroke="#C0392B" stroke-width="1.2"/>
+<text x="58" y="309" text-anchor="middle" font-size="12" font-weight="600" fill="#C0392B">At(Pkg)=B</text>
+<rect x="24" y="324" width="68" height="17" rx="3" fill="#e67e22"/>
+<text x="58" y="337" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">b = 0.40</text>
+<rect x="116" y="290" width="84" height="30" rx="5" fill="rgba(192,57,43,.06)" stroke="#C0392B" stroke-width="1.2"/>
+<text x="158" y="309" text-anchor="middle" font-size="12" font-weight="600" fill="#C0392B">At(Pkg)=C</text>
+<rect x="124" y="324" width="68" height="17" rx="3" fill="#e67e22"/>
+<text x="158" y="337" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">b = 0.35</text>
+<!-- Implicit others as text -->
+<text x="240" y="300" font-size="10" fill="#999" font-style="italic">+ At(Bot)=A</text>
+<text x="240" y="314" font-size="10" fill="#999" font-style="italic">  (b=1.0)</text>
+<text x="240" y="332" font-size="10" fill="#999" font-style="italic">+ HandEmpty</text>
+<text x="240" y="346" font-size="10" fill="#999" font-style="italic">  (b=1.0)</text>
+<!-- Attr→Obj edges -->
+<line x1="58" y1="290" x2="105" y2="240" stroke="#C0392B" stroke-width="1.4" opacity=".22"/>
+<line x1="58" y1="290" x2="170" y2="174" stroke="#C0392B" stroke-width="1" opacity=".18"/>
+<line x1="158" y1="290" x2="105" y2="240" stroke="#C0392B" stroke-width="1" opacity=".18"/>
+<line x1="158" y1="290" x2="235" y2="174" stroke="#C0392B" stroke-width="1" opacity=".18"/>
+
+<!-- τ -->
+<rect x="20" y="362" width="250" height="28" rx="5" fill="#E67E22" fill-opacity=".08" stroke="#E67E22" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="145" y="380" text-anchor="middle" font-size="11.5" fill="#E67E22" font-weight="600">τ = 0.3 — At(Pkg)=D dropped (b=0.25 &lt; τ)</text>
+
+<!-- GOAL -->
+<rect x="85" y="410" width="120" height="30" rx="5" fill="rgba(30,132,73,.08)" stroke="#1E8449" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="115" y="422" font-size="8.5" fill="#1E8449" opacity=".7">GOAL</text>
+<text x="145" y="434" text-anchor="middle" font-size="13" font-weight="600" fill="#1E8449">On(Pkg, D)</text>
+<line x1="120" y1="410" x2="105" y2="240" stroke="#1E8449" stroke-width="1" opacity=".18" stroke-dasharray="4 3"/>
+<line x1="170" y1="410" x2="195" y2="240" stroke="#1E8449" stroke-width="1" opacity=".18" stroke-dasharray="4 3"/>
+
+<!-- Legend -->
+<g transform="translate(14,468)">
+<rect x="-2" y="-4" width="10" height="10" rx="2" fill="rgba(36,113,163,.1)" stroke="#2471A3" stroke-width=".8"/><text x="14" y="4" font-size="10.5" fill="#555">Action</text>
+<circle cx="68" cy="1" r="5" fill="#FDF6E3" stroke="#B08E2A" stroke-width=".8"/><text x="78" y="4" font-size="10.5" fill="#555">Object</text>
+<rect x="118" y="-4" width="10" height="10" rx="2" fill="rgba(192,57,43,.06)" stroke="#C0392B" stroke-width=".8"/><text x="134" y="4" font-size="10.5" fill="#555">Attribute</text>
+<rect x="188" y="-4" width="10" height="10" rx="2" fill="rgba(30,132,73,.06)" stroke="#1E8449" stroke-width=".8" stroke-dasharray="2 1.5"/><text x="204" y="4" font-size="10.5" fill="#555">Goal</text>
+</g>
+<g transform="translate(14,488)">
+<line x1="0" y1="0" x2="18" y2="0" stroke="#2471A3" stroke-width="1.5"/><text x="24" y="3" font-size="10.5" fill="#555">Action-Arg</text>
+<line x1="96" y1="0" x2="114" y2="0" stroke="#C0392B" stroke-width="1.5"/><text x="120" y="3" font-size="10.5" fill="#555">Attr-Obj</text>
+<text x="176" y="3" font-size="10.5" fill="#555">Belief</text>
+<rect x="204" y="-5" width="40" height="8" rx="2" fill="url(#bg)"/>
+</g>
+<text x="145" y="530" text-anchor="middle" font-size="14" fill="#2D2044" font-weight="600">(a) Belief → Graph Construction</text>
+</g>
+</g>
+
+<!-- arrow 2→3 -->
+<g class="fa" data-step="3">
+<line x1="650" y1="420" x2="690" y2="420" stroke="#C5A55A" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#fa)"/>
+</g>
+
+<!-- ================================================================ -->
+<!-- STEP 3: GNN Encoder — text inside circles                        -->
+<!-- ================================================================ -->
+<g class="ms" data-step="3">
+<g transform="translate(700,140)">
+<rect x="0" y="0" width="230" height="290" rx="7" fill="#F8F6FA" stroke="#D4CDE0" stroke-width="1"/>
+<text x="210" y="120" font-size="15" fill="#6B5B7B" font-weight="700" font-style="italic" transform="rotate(90,210,120)">L layers</text>
+<path d="M198 25 Q192 25 192 33 L192 208 Q192 216 198 216" fill="none" stroke="#6B5B7B" stroke-width="1.2"/>
+<text x="30" y="20" font-size="12" fill="#999" font-weight="600">Input</text>
+<text x="145" y="20" font-size="12" fill="#999" font-weight="600">Output</text>
+
+<circle cx="45" cy="52" r="18" fill="#E8E4ED" stroke="#999" stroke-width="1.2"/>
+<text x="45" y="56" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#444" font-weight="600">g⁽ˡ⁾</text>
+<line x1="63" y1="52" x2="117" y2="52" stroke="#bbb" stroke-width="1" marker-end="url(#ga)"/>
+<text x="90" y="44" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#6B5B7B" font-style="italic">φ_g</text>
+<circle cx="137" cy="52" r="18" fill="#E8E4ED" stroke="#999" stroke-width="1.2"/>
+<text x="137" y="56" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#444" font-weight="600">g⁽ˡ⁺¹⁾</text>
+
+<circle cx="45" cy="120" r="18" fill="#E8E4ED" stroke="#999" stroke-width="1.2"/>
+<text x="45" y="124" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#444" font-weight="600">v_i⁽ˡ⁾</text>
+<line x1="63" y1="120" x2="117" y2="120" stroke="#bbb" stroke-width="1" marker-end="url(#ga)"/>
+<text x="90" y="112" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#6B5B7B" font-style="italic">φ_v</text>
+<circle cx="137" cy="120" r="18" fill="#E8E4ED" stroke="#999" stroke-width="1.2"/>
+<text x="137" y="124" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#444" font-weight="600">v_i⁽ˡ⁺¹⁾</text>
+
+<circle cx="45" cy="188" r="18" fill="#E8E4ED" stroke="#999" stroke-width="1.2"/>
+<text x="45" y="192" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#444" font-weight="600">e_ij⁽ˡ⁾</text>
+<line x1="63" y1="188" x2="117" y2="188" stroke="#bbb" stroke-width="1" marker-end="url(#ga)"/>
+<text x="90" y="180" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#6B5B7B" font-style="italic">φ_e</text>
+<circle cx="137" cy="188" r="18" fill="#E8E4ED" stroke="#999" stroke-width="1.2"/>
+<text x="137" y="192" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#444" font-weight="600">e_ij⁽ˡ⁺¹⁾</text>
+
+<!-- g(L) -->
+<line x1="90" y1="216" x2="90" y2="240" stroke="#999" stroke-width="1" stroke-dasharray="3 2"/>
+<circle cx="90" cy="258" r="22" fill="#fff" stroke="#16a34a" stroke-width="2.5"/>
+<text x="90" y="262" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="15" fill="#16a34a" font-weight="700">g⁽ᴸ⁾</text>
+
+<text x="115" y="300" text-anchor="middle" font-size="14" fill="#2D2044" font-weight="600">(b) GNN Processing</text>
+</g>
+</g>
+
+<!-- ================================================================ -->
+<!-- STEP 4: P_θ/V_θ between GNN and MCTS + MCTS Tree                -->
+<!-- ================================================================ -->
+<g class="ms" data-step="4">
+
+<!-- P_θ box — absolute coords -->
+<!-- g(L) is at absolute (790,398). P_θ box at (950,190). Root b₀ at (1300,170). -->
+<line x1="790" y1="398" x2="936" y2="210" stroke="#2471A3" stroke-width="1.5" stroke-dasharray="4 3" opacity=".4"/>
+<rect x="934" y="182" width="96" height="54" rx="8" fill="rgba(36,113,163,.06)" stroke="#2471A3" stroke-width="2"/>
+<text x="982" y="210" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="20" fill="#2471A3" font-weight="700">P<tspan font-size="11" dy="3">θ</tspan><tspan dy="-3">(b)</tspan></text>
+<text x="982" y="228" text-anchor="middle" font-size="11.5" fill="#2471A3" opacity=".7">Policy</text>
+<!-- Arrow from P_θ right edge to root b₀ -->
+<line x1="1030" y1="206" x2="1274" y2="172" stroke="#2471A3" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#pA)" opacity=".55"/>
+
+<!-- V_θ box — absolute coords -->
+<!-- g(L) at (790,398). V_θ box at (950,490). Leaf nodes around (1090-1200, 408-474). -->
+<line x1="790" y1="398" x2="936" y2="504" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4 3" opacity=".4"/>
+<rect x="934" y="486" width="96" height="54" rx="8" fill="rgba(22,163,74,.06)" stroke="#16a34a" stroke-width="2"/>
+<text x="982" y="514" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="20" fill="#16a34a" font-weight="700">V<tspan font-size="11" dy="3">θ</tspan><tspan dy="-3">(b)</tspan></text>
+<text x="982" y="532" text-anchor="middle" font-size="11.5" fill="#16a34a" opacity=".7">Value</text>
+<!-- Arrow from V_θ right edge to leaf area (~1150,430 midpoint of leaves) -->
+<line x1="1030" y1="510" x2="1120" y2="440" stroke="#16a34a" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#vA)" opacity=".55"/>
+
+<!-- ======== MCTS Tree ======== -->
+<g transform="translate(1100,130)">
+<!-- b0 root -->
+<circle cx="200" cy="40" r="26" fill="#fff" stroke="#7c3aed" stroke-width="2.5"/>
+<text x="200" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#7c3aed">N=8</text>
+<text x="200" y="49" text-anchor="middle" font-size="11" fill="#7c3aed">Bot@A</text>
+<text x="200" y="16" text-anchor="middle" font-size="12" fill="#bbb" font-weight="600">b₀</text>
+<text x="240" y="28" font-size="10" fill="#ccc">Pkg ∈ {B,C,D}</text>
+<text x="340" y="24" font-size="12" fill="#7c3aed" font-weight="700">① root</text>
+<text x="340" y="36" font-size="11" fill="#7c3aed">selection</text>
+
+<line x1="178" y1="60" x2="88" y2="118" stroke="#bbb" stroke-width="1.3"/>
+<text x="118" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#bbb">Move(A→B)</text>
+<line x1="222" y1="60" x2="316" y2="118" stroke="#bbb" stroke-width="1.3"/>
+<text x="284" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#bbb">Move(A→C)</text>
+
+<circle cx="88" cy="140" r="24" fill="#fff" stroke="#bbb" stroke-width="1.5"/>
+<text x="88" y="136" text-anchor="middle" font-size="12.5" font-weight="700" fill="#bbb">N=5</text>
+<text x="88" y="149" text-anchor="middle" font-size="11" fill="#bbb">Bot@B</text>
+<circle cx="316" cy="140" r="24" fill="#fff" stroke="#bbb" stroke-width="1.5"/>
+<text x="316" y="136" text-anchor="middle" font-size="12.5" font-weight="700" fill="#bbb">N=3</text>
+<text x="316" y="149" text-anchor="middle" font-size="11" fill="#bbb">Bot@C</text>
+<text x="390" y="128" font-size="12" fill="#2471A3" font-weight="700">② expansion</text>
+<text x="390" y="140" font-size="11" fill="#2471A3">ranking</text>
+
+<line x1="68" y1="160" x2="18" y2="204" stroke="#bbb" stroke-width="1"/>
+<text x="32" y="182" text-anchor="middle" font-size="11.5" fill="#bbb" font-weight="600">Look(B)</text>
+<line x1="108" y1="160" x2="170" y2="204" stroke="#bbb" stroke-width="1"/>
+<text x="150" y="182" text-anchor="middle" font-size="11.5" fill="#bbb" font-weight="600">Move(B→C)</text>
+
+<circle cx="18" cy="218" r="8" fill="#fff" stroke="#bbb" stroke-width=".8"/>
+<line x1="12" y1="226" x2="-10" y2="256" stroke="#bbb" stroke-width=".8"/>
+<text x="-4" y="244" text-anchor="middle" font-size="10" fill="#bbb">see</text>
+<line x1="24" y1="226" x2="50" y2="256" stroke="#bbb" stroke-width=".8"/>
+<text x="42" y="244" text-anchor="middle" font-size="10" fill="#bbb">empty</text>
+
+<circle cx="-10" cy="278" r="20" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<text x="-10" y="274" text-anchor="middle" font-size="11" font-weight="700" fill="#bbb">N=3</text>
+<text x="-10" y="287" text-anchor="middle" font-size="9" fill="#bbb">Pkg@B(.92)</text>
+<circle cx="50" cy="278" r="20" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<text x="50" y="274" text-anchor="middle" font-size="11" font-weight="700" fill="#bbb">N=2</text>
+<text x="50" y="287" text-anchor="middle" font-size="9" fill="#bbb">Pkg∈{C,D}</text>
+
+<line x1="-10" y1="298" x2="-10" y2="324" stroke="#bbb" stroke-width=".8"/>
+<text x="18" y="316" font-size="11" fill="#bbb" font-weight="600">Pick(Pkg)</text>
+<circle cx="-10" cy="344" r="18" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<text x="-10" y="340" text-anchor="middle" font-size="10" font-weight="700" fill="#bbb">N=2</text>
+<text x="-10" y="352" text-anchor="middle" font-size="9" fill="#bbb">Holding</text>
+
+<circle cx="170" cy="218" r="8" fill="#fff" stroke="#bbb" stroke-width=".8"/>
+
+<line x1="298" y1="160" x2="268" y2="204" stroke="#bbb" stroke-width="1"/>
+<text x="276" y="182" text-anchor="middle" font-size="11.5" fill="#bbb" font-weight="600">Look(C)</text>
+<circle cx="268" cy="218" r="8" fill="#fff" stroke="#bbb" stroke-width=".8"/>
+<line x1="262" y1="226" x2="240" y2="256" stroke="#bbb" stroke-width=".8"/>
+<text x="244" y="244" text-anchor="middle" font-size="10" fill="#bbb">see</text>
+<line x1="274" y1="226" x2="300" y2="256" stroke="#bbb" stroke-width=".8"/>
+<text x="294" y="244" text-anchor="middle" font-size="10" fill="#bbb">empty</text>
+<circle cx="240" cy="278" r="20" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<text x="240" y="274" text-anchor="middle" font-size="11" font-weight="700" fill="#bbb">N=2</text>
+<text x="240" y="287" text-anchor="middle" font-size="9" fill="#bbb">Pkg@C(.88)</text>
+<circle cx="300" cy="278" r="20" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<text x="300" y="274" text-anchor="middle" font-size="11" font-weight="700" fill="#bbb">N=1</text>
+<text x="300" y="287" text-anchor="middle" font-size="9" fill="#bbb">Pkg@D</text>
+
+<path d="M50 298 Q58 318 46 332 Q40 342 52 358" stroke="#ccc" stroke-width="1.2" fill="none" stroke-dasharray="4 3"/>
+<text x="68" y="340" font-size="10" fill="#ccc">rollout</text>
+<rect x="34" y="362" width="38" height="18" rx="3" fill="#fff" stroke="#ccc" stroke-width=".8"/>
+<text x="53" y="375" text-anchor="middle" font-size="10.5" fill="#ccc">r=-1</text>
+
+<text x="200" y="440" text-anchor="middle" font-size="14" fill="#2D2044" font-weight="600">(c) MCTS with Learned Guidance</text>
+</g>
+</g>
+
+<!-- ================================================================ -->
+<!-- STEP 5: Overlay highlights                                       -->
+<!-- ================================================================ -->
+<g class="ms" data-step="5">
+<g transform="translate(1100,130)">
+<circle cx="200" cy="40" r="32" fill="#2471A3" fill-opacity=".07" stroke="#2471A3" stroke-width="2.5"/>
+<circle cx="88" cy="140" r="30" fill="#2471A3" fill-opacity=".07" stroke="#2471A3" stroke-width="2.5"/>
+<circle cx="316" cy="140" r="30" fill="#2471A3" fill-opacity=".07" stroke="#2471A3" stroke-width="2.5"/>
+
+<circle cx="-10" cy="278" r="26" fill="#16a34a" fill-opacity=".05" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+<circle cx="-10" cy="344" r="24" fill="#16a34a" fill-opacity=".05" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+<circle cx="170" cy="218" r="14" fill="#16a34a" fill-opacity=".05" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+<circle cx="240" cy="278" r="26" fill="#16a34a" fill-opacity=".05" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+<circle cx="300" cy="278" r="26" fill="#16a34a" fill-opacity=".05" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+
+<line x1="30" y1="300" x2="78" y2="380" stroke="#C0392B" stroke-width="2" opacity=".5"/>
+<line x1="78" y1="300" x2="30" y2="380" stroke="#C0392B" stroke-width="2" opacity=".5"/>
+
+<text x="390" y="278" font-size="12" fill="#16a34a" font-weight="700">③ leaf</text>
+<text x="390" y="290" font-size="11" fill="#16a34a">evaluation</text>
+<text x="380" y="336" font-family="'JetBrains Mono',monospace" font-size="15" fill="#16a34a" font-weight="700">V<tspan font-size="9" dy="2">θ</tspan><tspan dy="-2">(φ(b))</tspan></text>
+</g>
+</g>
+
+
+
+</svg>
+
+<div class="nav-bar">
+<div class="nav-section">Introduction</div>
+<div class="nav-section">GABAR</div>
+<div class="nav-section active">GammaZero</div>
+<div class="nav-section">Conclusion</div>
+</div>
+</div>
+
+<script>
+(function(){
+var cur=0,tot=5,root=document.getElementById('S');
+
+function show(n){document.querySelectorAll('.ms[data-step="'+n+'"],.fa[data-step="'+n+'"]').forEach(function(e){e.classList.add('shown')})}
+function hide(n){document.querySelectorAll('.ms[data-step="'+n+'"],.fa[data-step="'+n+'"]').forEach(function(e){e.classList.remove('shown')})}
+
+
+
+  // Expose nav to parent scope
+  window.__slideNav = {
+    advance: function() { var s = cur; if(cur<tot){cur++;show(cur)}; return cur !== s; },
+    retreat: function() { var s = cur; if(cur>0){hide(cur);cur--}; return cur !== s; },
+    revealAll: function() { while(window.__slideNav.advance()) {} }
+  };
+
+})();
+</script>
+
+
+
+
+
+<script>
+// ═══ Unified PPT-style navigation ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body></html>

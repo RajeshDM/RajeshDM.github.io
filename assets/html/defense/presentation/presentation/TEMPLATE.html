@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  /* CHANGE BACKGROUND: #fff for light, var(--bg-dark) for dark, var(--bg-darker) for darker */
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+
+.pres-content{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:50px 80px 16px;overflow:hidden}
+
+/* HEADINGS: use color:#2D2044 on light bg, #fff on dark bg */
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;color:#2D2044;margin-bottom:.5em}
+/* Gold underline — remove this block for dark slides */
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:10px;border-radius:2px}
+
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+/* CHANGE ACTIVE: set the right section */
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+
+/* ANIMATION: add this class to elements you want to reveal step-by-step */
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+
+    <h2>Slide Title Here</h2>
+
+    <!-- Step 1: appears on first click/arrow -->
+    <p class="my-step" data-step="1">First point appears here.</p>
+
+    <!-- Step 2: appears on second click/arrow -->
+    <p class="my-step" data-step="2">Second point appears here.</p>
+
+    <!-- Step 3: appears on third click/arrow -->
+    <p class="my-step" data-step="3">Third point appears here.</p>
+
+    <!-- For NO animation: just remove the my-step class and data-step attribute -->
+    <!-- <p>This text is always visible.</p> -->
+
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item">GammaZero</div>
+    <!-- CHANGE ACTIVE: move "active" class to the current section -->
+    <div class="nav-item active">Conclusion</div>
+  </div>
+</div>
+
+<script>
+// ═══ Step-through animation logic ═══
+// CHANGE totalSteps to match the highest data-step number in your HTML
+(function(){
+  var currentStep=0, totalSteps=3, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+
+  // Expose for the bridge
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+
+<script>
+// ═══ Unified PPT-style navigation — COPY THIS BLOCK UNCHANGED INTO EVERY SLIDE ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if (e.key === 'f' || e.key === 'F' || e.key === 'p' || e.key === 'P') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+
+</body></html>
+<!--
+╔══════════════════════════════════════════════════════════════════════╗
+║                    HOW TO CREATE A NEW SLIDE                        ║
+╠══════════════════════════════════════════════════════════════════════╣
+║                                                                      ║
+║  1. Copy this template file                                          ║
+║  2. Name it: NN-your-slide-name.html (NN = number for ordering)      ║
+║  3. Edit the HTML content inside .pres-content                        ║
+║  4. Set totalSteps to your highest data-step number (or 0 if static)  ║
+║  5. Set the active nav section                                        ║
+║  6. Set the background (light/dark/darker)                            ║
+║  7. Add the filename to the SLIDE_FILES array in index.html           ║
+║                                                                      ║
+║  FOR STATIC SLIDES (no animation):                                    ║
+║  - Set totalSteps = 0                                                 ║
+║  - Don't use data-step or my-step class                               ║
+║  - Every arrow/click goes straight to next/prev slide                 ║
+║                                                                      ║
+║  FOR ANIMATED SLIDES:                                                 ║
+║  - Add class="my-step" data-step="N" to each element                  ║
+║  - Same data-step number = appear together                             ║
+║  - Set totalSteps to the highest N                                     ║
+║                                                                      ║
+║  THE TWO <script> BLOCKS AT THE BOTTOM ARE REQUIRED:                  ║
+║  - First block: your slide's step logic + window.__slideNav            ║
+║  - Second block: unified navigation bridge (NEVER MODIFY THIS)         ║
+║                                                                      ║
+║  COLORS:                                                               ║
+║  - Gold: #C5A55A    Dark purple: #2D2044    Darker: #1E1530           ║
+║  - Muted text: #B0A8C0 (dark bg) or #888 (light bg)                   ║
+║  - Card bg: #f7f5f0 (light) or rgba(255,255,255,0.07) (dark)          ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+-->

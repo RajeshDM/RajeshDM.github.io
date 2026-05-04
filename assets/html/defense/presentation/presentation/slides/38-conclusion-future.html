@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0;padding:28px 44px 8px}
+
+.slide-heading{font-family:'Playfair Display',serif;font-weight:700;font-size:3.2rem;color:#2D2044;flex-shrink:0}
+.slide-heading::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:8px;border-radius:2px}
+
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:default}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+
+/* Premise */
+.fut-premise{
+  margin-top:14px;padding:14px 24px;flex-shrink:0;
+  background:#F3F0FA;border-left:4px solid #7E57C2;border-radius:0 8px 8px 0;
+  font-size:1.5rem;color:#2D2044;line-height:1.5;
+}
+
+/* Card row */
+.fut-row{display:flex;gap:24px;margin-top:18px;flex:1;min-height:0}
+.fut-card{
+  flex:1;display:flex;flex-direction:column;
+  border-radius:10px;overflow:hidden;border:1.5px solid #E8E4ED;
+}
+.fut-header{padding:12px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.fut-header.robot{background:linear-gradient(135deg,#E8F5E9,#E0F2F1)}
+.fut-header.open{background:linear-gradient(135deg,#FFF3E0,#FBE9E7)}
+.fut-header.multi{background:linear-gradient(135deg,#EDE7F6,#E8EAF6)}
+.fut-header h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:#2D2044;font-weight:700}
+
+.fut-body{flex:1;padding:12px 20px 14px;display:flex;flex-direction:column;gap:6px}
+
+/* Viz area inside card */
+.fut-viz{display:flex;justify-content:center;padding:6px 0 10px;flex-shrink:0}
+.fut-viz svg{display:block;width:100%;height:auto}
+
+/* Bullet list */
+.fut-bullets{list-style:none;margin:0;padding:0}
+.fut-bullets li{font-size:1.4rem;color:#444;line-height:1.5;padding:4px 0 4px 18px;position:relative}
+.fut-bullets li::before{content:'';position:absolute;left:0;top:12px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.fut-bullets li strong{color:#2D2044;font-weight:700}
+
+/* Bottom callout */
+.fut-callout{
+  flex-shrink:0;margin-top:14px;padding:14px 24px;
+  background:#2D2044;border-radius:6px;
+  display:flex;align-items:center;gap:16px;
+}
+.fut-callout-icon{font-size:1.55rem;flex-shrink:0}
+.fut-callout p{font-size:1.45rem;color:rgba(255,255,255,.9);line-height:1.45}
+.fut-callout strong{color:#C5A55A}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+    <div class="slide-heading">Future Directions</div>
+
+    <div class="fut-premise my-step" data-step="1">
+      Graph representations that grow with problem size open a path from benchmark planning to real-world autonomous systems.
+    </div>
+
+    <div class="fut-row">
+      <!-- Card 1: Robotics -->
+      <div class="fut-card my-step" data-step="2">
+        <div class="fut-header robot">
+          <h3>Robotics &amp; Sim-to-Real</h3>
+        </div>
+        <div class="fut-body">
+          <div class="fut-viz">
+            <svg viewBox="0 0 300 110">
+              <!-- Sim box -->
+              <rect x="4" y="22" width="80" height="66" rx="8" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+              <text x="44" y="48" text-anchor="middle" font-size="14" fill="#2D2044" font-weight="700" font-family="'Source Sans 3'">Sim</text>
+              <text x="44" y="68" text-anchor="middle" font-size="11" fill="#666" font-family="'Source Sans 3'">Graph Policy</text>
+              <!-- Arrow -->
+              <line x1="88" y1="55" x2="118" y2="55" stroke="#C5A55A" stroke-width="2.5" marker-end="url(#arrowG)"/>
+              <!-- Abstraction layer -->
+              <rect x="124" y="30" width="50" height="50" rx="6" fill="#FFF9C4" stroke="#F9A825" stroke-width="1.5"/>
+              <text x="149" y="52" text-anchor="middle" font-size="11" fill="#5D4037" font-weight="600" font-family="'Source Sans 3'">Abstract</text>
+              <text x="149" y="66" text-anchor="middle" font-size="11" fill="#5D4037" font-family="'Source Sans 3'">Layer</text>
+              <!-- Arrow -->
+              <line x1="178" y1="55" x2="210" y2="55" stroke="#C5A55A" stroke-width="2.5" marker-end="url(#arrowG)"/>
+              <!-- Real robot -->
+              <rect x="216" y="22" width="80" height="66" rx="8" fill="#E3F2FD" stroke="#1976D2" stroke-width="2"/>
+              <text x="256" y="48" text-anchor="middle" font-size="14" fill="#2D2044" font-weight="700" font-family="'Source Sans 3'">Real</text>
+              <text x="256" y="68" text-anchor="middle" font-size="11" fill="#666" font-family="'Source Sans 3'">Robot Ctrl</text>
+              <!-- Label -->
+              <text x="150" y="14" text-anchor="middle" font-size="11" fill="#888" font-family="'Source Sans 3'" font-style="italic">same planner, swap controller</text>
+              <defs><marker id="arrowG" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C5A55A"/></marker></defs>
+            </svg>
+          </div>
+          <ul class="fut-bullets">
+            <li><strong>Modular design</strong> separates planning from control</li>
+            <li>Swap low-level controller for real hardware</li>
+            <li>Graph planner transfers <strong>without retraining</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 2: Open-World -->
+      <div class="fut-card my-step" data-step="3">
+        <div class="fut-header open">
+          <h3>Open-World Planning</h3>
+        </div>
+        <div class="fut-body">
+          <div class="fut-viz">
+            <svg viewBox="0 0 300 110">
+              <!-- Existing graph nodes -->
+              <circle cx="50" cy="55" r="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+              <text x="50" y="60" text-anchor="middle" font-size="14" fill="#5D4037" font-weight="600" font-family="'Source Sans 3'">A</text>
+              <circle cx="130" cy="36" r="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+              <text x="130" y="41" text-anchor="middle" font-size="14" fill="#5D4037" font-weight="600" font-family="'Source Sans 3'">B</text>
+              <circle cx="130" cy="78" r="20" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+              <text x="130" y="83" text-anchor="middle" font-size="14" fill="#5D4037" font-weight="600" font-family="'Source Sans 3'">C</text>
+              <line x1="70" y1="48" x2="110" y2="40" stroke="#B0A8C0" stroke-width="1.8"/>
+              <line x1="70" y1="63" x2="110" y2="73" stroke="#B0A8C0" stroke-width="1.8"/>
+              <line x1="130" y1="56" x2="130" y2="58" stroke="#B0A8C0" stroke-width="1.8"/>
+              <!-- New node from perception -->
+              <circle cx="228" cy="55" r="20" fill="#E8F5E9" stroke="#43A047" stroke-width="2.5" stroke-dasharray="5,3"/>
+              <text x="228" y="61" text-anchor="middle" font-size="16" fill="#1B5E20" font-weight="700" font-family="'Source Sans 3'">?</text>
+              <!-- Dashed edges to new node -->
+              <line x1="150" y1="40" x2="208" y2="52" stroke="#43A047" stroke-width="1.8" stroke-dasharray="5,3"/>
+              <line x1="150" y1="74" x2="208" y2="58" stroke="#43A047" stroke-width="1.8" stroke-dasharray="5,3"/>
+              <!-- Camera icon -->
+              <text x="268" y="42" font-size="24" fill="#43A047">📷</text>
+              <text x="228" y="92" text-anchor="middle" font-size="11" fill="#43A047" font-weight="600" font-family="'Source Sans 3'">new node</text>
+              <text x="80" y="14" text-anchor="middle" font-size="11" fill="#888" font-family="'Source Sans 3'" font-style="italic">known graph</text>
+              <text x="245" y="14" text-anchor="middle" font-size="11" fill="#43A047" font-family="'Source Sans 3'" font-style="italic">perceived</text>
+            </svg>
+          </div>
+          <ul class="fut-bullets">
+            <li><strong>New object nodes</strong> from perception at runtime</li>
+            <li>GNN processes larger graph <strong>without retraining</strong></li>
+            <li>Handles unknown entities discovered during execution</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 3: Multi-Agent -->
+      <div class="fut-card my-step" data-step="4">
+        <div class="fut-header multi">
+          <h3>Multi-Agent Systems</h3>
+        </div>
+        <div class="fut-body">
+          <div class="fut-viz">
+            <svg viewBox="0 0 300 110">
+              <!-- Agent 1 graph -->
+              <rect x="8" y="20" width="80" height="70" rx="10" fill="none" stroke="#7E57C2" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <circle cx="30" cy="46" r="12" fill="#EDE7F6" stroke="#7E57C2" stroke-width="1.3"/>
+              <circle cx="64" cy="38" r="12" fill="#EDE7F6" stroke="#7E57C2" stroke-width="1.3"/>
+              <circle cx="48" cy="72" r="12" fill="#EDE7F6" stroke="#7E57C2" stroke-width="1.3"/>
+              <line x1="40" y1="43" x2="53" y2="40" stroke="#B39DDB" stroke-width="1.3"/>
+              <line x1="36" y1="54" x2="44" y2="64" stroke="#B39DDB" stroke-width="1.3"/>
+              <text x="48" y="14" text-anchor="middle" font-size="12" fill="#7E57C2" font-weight="600" font-family="'Source Sans 3'">Agent 1</text>
+              <!-- Agent 2 graph -->
+              <rect x="212" y="20" width="80" height="70" rx="10" fill="none" stroke="#1976D2" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <circle cx="234" cy="46" r="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="1.3"/>
+              <circle cx="268" cy="38" r="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="1.3"/>
+              <circle cx="252" cy="72" r="12" fill="#E3F2FD" stroke="#1976D2" stroke-width="1.3"/>
+              <line x1="244" y1="43" x2="257" y2="40" stroke="#90CAF9" stroke-width="1.3"/>
+              <line x1="240" y1="54" x2="248" y2="64" stroke="#90CAF9" stroke-width="1.3"/>
+              <text x="252" y="14" text-anchor="middle" font-size="12" fill="#1976D2" font-weight="600" font-family="'Source Sans 3'">Agent 2</text>
+              <!-- Merge arrows -->
+              <line x1="92" y1="55" x2="120" y2="55" stroke="#C5A55A" stroke-width="2" marker-end="url(#arrowM)"/>
+              <line x1="208" y1="55" x2="180" y2="55" stroke="#C5A55A" stroke-width="2" marker-end="url(#arrowM2)"/>
+              <!-- Merged node -->
+              <circle cx="150" cy="55" r="24" fill="#FFF9C4" stroke="#C5A55A" stroke-width="2.5"/>
+              <text x="150" y="51" text-anchor="middle" font-size="11" fill="#5D4037" font-weight="700" font-family="'Source Sans 3'">Joint</text>
+              <text x="150" y="64" text-anchor="middle" font-size="11" fill="#5D4037" font-family="'Source Sans 3'">Graph</text>
+              <text x="150" y="100" text-anchor="middle" font-size="11" fill="#888" font-family="'Source Sans 3'" font-style="italic">shared structure</text>
+              <defs>
+                <marker id="arrowM" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C5A55A"/></marker>
+                <marker id="arrowM2" markerWidth="8" markerHeight="6" refX="1" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#C5A55A"/></marker>
+              </defs>
+            </svg>
+          </div>
+          <ul class="fut-bullets">
+            <li><strong>Merge local belief graphs</strong> into joint representation</li>
+            <li>Same GNN model coordinates multiple agents</li>
+            <li>Scales naturally with <strong>agent count</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="fut-callout my-step" data-step="5">
+      <div class="fut-callout-icon">🔗</div>
+      <p><strong>Unifying thread:</strong> the same principle &mdash; learn from small, generalize to large &mdash; extends to richer domains once perception can populate the graph at runtime.</p>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item">GammaZero</div>
+    <div class="nav-item active">Conclusion</div>
+  </div>
+</div>
+<script>
+(function(){
+  var currentStep=0,totalSteps=5,root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} }
+    } else if (e.key === 'ArrowLeft') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} }
+    } else if (e.key === 'a' || e.key === 'A') { if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) { try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {} }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) { if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} }
+    } else { if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) { el.style.cursor = 'pointer'; el.addEventListener('click', function(e) { e.stopPropagation(); try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {} }); });
+})();
+</script>
+</body></html>

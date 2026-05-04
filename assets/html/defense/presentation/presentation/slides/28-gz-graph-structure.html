@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:#f0f0f0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw,177.78vh);height:min(100vh,56.25vw);
+  background:#fff;color:#1a1a2e;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:#C5A55A;z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;padding:40px 60px 16px;min-height:0;overflow:hidden}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.1rem;margin-bottom:.1em;color:#2D2044}
+h2::after{content:'';display:block;width:80px;height:4px;background:#C5A55A;margin-top:8px;border-radius:2px}
+.subtitle{color:#888;font-size:1.15rem;margin-bottom:14px}
+
+.main-layout{display:flex;gap:36px;flex:1;min-height:0;align-items:center}
+
+.graph-panel{flex:1;background:#F8F6FA;border:1px solid #D4CDE0;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;max-height:100%}
+.graph-label{font-size:.72rem;font-weight:700;color:#6B5B7B;letter-spacing:.1em;text-align:center;padding:8px 0 2px;text-transform:uppercase}
+.graph-wrap{flex:1;min-height:0;padding:0 10px 8px;display:flex;align-items:center;justify-content:center}
+.graph-wrap svg{width:100%;height:100%;max-height:100%}
+
+.summary-panel{flex:1;display:flex;flex-direction:column;gap:18px;justify-content:center}
+.section-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.4rem;color:#2D2044;margin-bottom:6px}
+
+.node-row{display:flex;gap:14px;margin-bottom:6px}
+.node-pill{display:flex;align-items:center;gap:8px}
+.node-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.95rem;flex-shrink:0}
+.node-name{font-weight:600;font-size:1.1rem;color:#2D2044}
+
+.edge-col{display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
+.edge-pill{display:flex;align-items:center;gap:10px}
+.edge-line{width:28px;height:3px;border-radius:2px;flex-shrink:0}
+.edge-name{font-weight:600;font-size:1.05rem;color:#2D2044}
+
+.desc{color:#666;font-size:1.1rem;line-height:1.55}
+
+.insight-box{background:#2D2044;border-radius:10px;padding:18px 22px;margin-top:8px}
+.insight-box .lbl{text-transform:uppercase;letter-spacing:2px;font-size:.72rem;font-weight:600;color:#C5A55A;margin-bottom:5px}
+.insight-box p{color:rgba(255,255,255,.88);font-size:1.2rem;line-height:1.5}
+.insight-box strong{color:#C5A55A}
+
+.anim{opacity:0;transition:opacity 0.5s ease, transform 0.4s ease;transform:translateY(8px)}
+.anim.show{opacity:1;transform:translateY(0)}
+
+.nav-bar{height:44px;background:#1E1530;display:flex;align-items:center;flex-shrink:0}
+.nav-section{flex:1;text-align:center;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em;position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+.nav-section.active{color:#fff;background:#2D2044}
+.nav-section.active::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#C5A55A}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content">
+    <h2>Belief Graph Structure</h2>
+    <p class="subtitle">Encoding uncertainty in both nodes and edges</p>
+
+    <div class="main-layout">
+      <!-- LEFT: Full graph, always visible -->
+      <div class="graph-panel">
+        <div class="graph-label">Example: Warehouse Belief Graph</div>
+        <div class="graph-wrap">
+          <svg viewBox="0 0 480 230" preserveAspectRatio="xMidYMid meet">
+            <!-- Row labels -->
+            <text x="6" y="22" fill="#2471A3" font-size="9" font-weight="700" opacity=".5" transform="rotate(-90,6,22)" text-anchor="end">Actions</text>
+            <text x="6" y="95" fill="#B08E2A" font-size="9" font-weight="700" opacity=".5" transform="rotate(-90,6,95)" text-anchor="end">Objects</text>
+            <text x="6" y="185" fill="#C0392B" font-size="9" font-weight="700" opacity=".5" transform="rotate(-90,6,185)" text-anchor="end">Attr</text>
+
+            <!-- Attr→Obj edges -->
+            <line x1="52" y1="180" x2="42" y2="95" stroke="#C0392B" stroke-width="3" stroke-opacity=".2"/>
+            <line x1="52" y1="180" x2="110" y2="95" stroke="#C0392B" stroke-width="3" stroke-opacity=".2"/>
+            <line x1="148" y1="180" x2="42" y2="95" stroke="#C0392B" stroke-width="3" stroke-opacity=".2"/>
+            <line x1="260" y1="180" x2="335" y2="95" stroke="#C0392B" stroke-width="1.2" stroke-opacity=".2"/>
+            <line x1="260" y1="180" x2="180" y2="95" stroke="#C0392B" stroke-width="1.2" stroke-opacity=".2"/>
+            <line x1="360" y1="180" x2="335" y2="95" stroke="#C0392B" stroke-width="1" stroke-opacity=".2"/>
+            <line x1="360" y1="180" x2="250" y2="95" stroke="#C0392B" stroke-width="1" stroke-opacity=".2"/>
+            <!-- Goal edges -->
+            <line x1="448" y1="185" x2="335" y2="95" stroke="#1E8449" stroke-width="1" stroke-opacity=".25" stroke-dasharray="4 2"/>
+            <line x1="448" y1="185" x2="405" y2="95" stroke="#1E8449" stroke-width="1" stroke-opacity=".25" stroke-dasharray="4 2"/>
+            <!-- Act→Obj edges -->
+            <line x1="55" y1="25" x2="42" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="55" y1="25" x2="110" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="55" y1="25" x2="180" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="165" y1="25" x2="42" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="165" y1="25" x2="110" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="165" y1="25" x2="250" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="290" y1="25" x2="42" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="290" y1="25" x2="180" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="390" y1="25" x2="42" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+            <line x1="390" y1="25" x2="250" y2="80" stroke="#2471A3" stroke-width="1" stroke-opacity=".18"/>
+
+            <!-- ACTION NODES -->
+            <rect x="14" y="10" width="82" height="24" rx="4" fill="#E8F0F8" stroke="#2471A3" stroke-width="1"/>
+            <text x="55" y="27" text-anchor="middle" fill="#2471A3" font-size="10" font-weight="600">Move(A→B)</text>
+            <rect x="122" y="10" width="86" height="24" rx="4" fill="#E8F0F8" stroke="#2471A3" stroke-width="1"/>
+            <text x="165" y="27" text-anchor="middle" fill="#2471A3" font-size="10" font-weight="600">Move(A→C)</text>
+            <rect x="248" y="10" width="84" height="24" rx="4" fill="#E8F0F8" stroke="#2471A3" stroke-width="1"/>
+            <text x="290" y="27" text-anchor="middle" fill="#2471A3" font-size="10" font-weight="600">Look(B)</text>
+            <rect x="348" y="10" width="84" height="24" rx="4" fill="#E8F0F8" stroke="#2471A3" stroke-width="1"/>
+            <text x="390" y="27" text-anchor="middle" fill="#2471A3" font-size="10" font-weight="600">Look(C)</text>
+
+            <!-- OBJECT NODES -->
+            <circle cx="42" cy="92" r="18" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1"/>
+            <text x="42" y="96" text-anchor="middle" fill="#B08E2A" font-size="9" font-weight="600">Robot</text>
+            <circle cx="110" cy="92" r="18" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1"/>
+            <text x="110" y="96" text-anchor="middle" fill="#B08E2A" font-size="9" font-weight="600">Zone A</text>
+            <circle cx="180" cy="92" r="18" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1"/>
+            <text x="180" y="96" text-anchor="middle" fill="#B08E2A" font-size="9" font-weight="600">Zone B</text>
+            <circle cx="250" cy="92" r="18" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1"/>
+            <text x="250" y="96" text-anchor="middle" fill="#B08E2A" font-size="9" font-weight="600">Zone C</text>
+            <circle cx="335" cy="92" r="18" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1"/>
+            <text x="335" y="96" text-anchor="middle" fill="#B08E2A" font-size="9" font-weight="600">Pkg</text>
+            <circle cx="405" cy="92" r="18" fill="#FDF6E3" stroke="#B08E2A" stroke-width="1"/>
+            <text x="405" y="96" text-anchor="middle" fill="#B08E2A" font-size="9" font-weight="600">Zone D</text>
+
+            <!-- CERTAIN ATTRIBUTES -->
+            <rect x="12" y="168" width="80" height="24" rx="4" fill="#FDECEA" stroke="#C0392B" stroke-width="1"/>
+            <text x="52" y="184" text-anchor="middle" fill="#C0392B" font-size="9" font-weight="600">At(Bot)=A</text>
+            <rect x="106" y="168" width="84" height="24" rx="4" fill="#FDECEA" stroke="#C0392B" stroke-width="1"/>
+            <text x="148" y="184" text-anchor="middle" fill="#C0392B" font-size="9" font-weight="600">HandEmpty</text>
+
+            <!-- UNCERTAIN ATTRIBUTES -->
+            <rect x="210" y="164" width="100" height="32" rx="6" fill="none" stroke="#E67E22" stroke-width="1.8" stroke-dasharray="4 2" opacity=".6"/>
+            <rect x="210" y="164" width="100" height="32" rx="6" fill="#E67E22" opacity=".05"/>
+            <rect x="214" y="168" width="92" height="24" rx="4" fill="#FDECEA" stroke="#C0392B" stroke-width="1"/>
+            <text x="260" y="184" text-anchor="middle" fill="#C0392B" font-size="8.5" font-weight="600">At(Pkg)=B (.40)</text>
+            <text x="260" y="205" text-anchor="middle" fill="#E67E22" font-size="7.5" font-weight="700" font-style="italic">uncertain</text>
+
+            <rect x="318" y="164" width="100" height="32" rx="6" fill="none" stroke="#E67E22" stroke-width="1.8" stroke-dasharray="4 2" opacity=".6"/>
+            <rect x="318" y="164" width="100" height="32" rx="6" fill="#E67E22" opacity=".05"/>
+            <rect x="322" y="168" width="92" height="24" rx="4" fill="#FDECEA" stroke="#C0392B" stroke-width="1"/>
+            <text x="368" y="184" text-anchor="middle" fill="#C0392B" font-size="8.5" font-weight="600">At(Pkg)=C (.35)</text>
+            <text x="368" y="205" text-anchor="middle" fill="#E67E22" font-size="7.5" font-weight="700" font-style="italic">uncertain</text>
+
+            <!-- GOAL -->
+            <rect x="424" y="172" width="52" height="22" rx="4" fill="#E3F5EC" stroke="#1E8449" stroke-width="1" stroke-dasharray="3 2"/>
+            <text x="450" y="179" text-anchor="middle" fill="#1E8449" font-size="5.5" opacity=".6">GOAL</text>
+            <text x="450" y="189" text-anchor="middle" fill="#1E8449" font-size="8" font-weight="600">On(Pkg,D)</text>
+
+            <!-- Legend -->
+            <line x1="16" y1="222" x2="30" y2="222" stroke="#C0392B" stroke-width="3" stroke-opacity=".3"/>
+            <text x="34" y="225" fill="#999" font-size="7.5">= high belief</text>
+            <line x1="110" y1="222" x2="124" y2="222" stroke="#C0392B" stroke-width="1" stroke-opacity=".3"/>
+            <text x="128" y="225" fill="#999" font-size="7.5">= low belief</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- RIGHT: Progressive reveal summary -->
+      <div class="summary-panel">
+        <div class="anim" data-step="1">
+          <div class="section-title">Three Node Types</div>
+          <div class="node-row">
+            <div class="node-pill"><div class="node-icon" style="background:#B08E2A">O</div><div class="node-name">Object</div></div>
+            <div class="node-pill"><div class="node-icon" style="background:#C0392B">A</div><div class="node-name">Attribute</div></div>
+            <div class="node-pill"><div class="node-icon" style="background:#2471A3">&#x25CF;</div><div class="node-name">Action</div></div>
+          </div>
+          <p class="desc">Attribute nodes are created <strong>only</strong> when belief &ge; &tau;. Graph topology encodes what the agent believes is plausible.</p>
+        </div>
+
+        <div class="anim" data-step="2">
+          <div class="section-title">Three Edge Types</div>
+          <div class="edge-col">
+            <div class="edge-pill"><div class="edge-line" style="background:#C0392B"></div><div class="edge-name">Attribute &harr; Object</div></div>
+            <div class="edge-pill"><div class="edge-line" style="background:#2471A3"></div><div class="edge-name">Action &harr; Object</div></div>
+            <div class="edge-pill"><div class="edge-line" style="background:#E67E22"></div><div class="edge-name">Attribute &harr; Action</div></div>
+          </div>
+          <p class="desc">Edge weights carry belief probability. Thicker edge = stronger belief.</p>
+        </div>
+
+        <div class="anim" data-step="3">
+          <div class="insight-box">
+            <div class="lbl">Why This Matters</div>
+            <p>Graph <strong>size scales</strong> with the problem &mdash; more objects just means more nodes. Same GNN works for <strong>any</strong> instance size.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-section">Introduction</div>
+    <div class="nav-section">GABAR</div>
+    <div class="nav-section active">GammaZero</div>
+    <div class="nav-section">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var stage = 0;
+  var maxS = 3;
+
+  function render() {
+    document.querySelectorAll('.anim').forEach(function(el) {
+      var s = parseInt(el.getAttribute('data-step'));
+      if (s <= stage) el.classList.add('show');
+      else el.classList.remove('show');
+    });
+  }
+
+  render();
+
+  window.__slideNav = {
+    advance: function() {
+      if (stage < maxS) { stage++; render(); return true; }
+      return false;
+    },
+    retreat: function() {
+      if (stage > 0) { stage--; render(); return true; }
+      return false;
+    },
+    revealAll: function() {
+      while (window.__slideNav.advance()) {}
+    }
+  };
+})();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body></html>

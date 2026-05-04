@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C5A55A;
+  --blue:#2471A3;--blue-bg:#EBF2F8;
+  --teal:#0e897a;--teal-bg:#e6f5f3;
+  --warm:#c97a1e;--warm-bg:#fdf3e4;
+  --green:#1a8a42;--green-bg:#e8f5eb;
+  --coral:#c0392b;--coral-bg:#fcecea;
+  --purple:#2D2044;--purple-bg:#f3f0f7;
+  --text:#1a1a2e;--muted:#6B5B7B;--dim:#a0a0b0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.12);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+
+.pres-content{flex:1;display:flex;flex-direction:column;justify-content:flex-start;min-height:0;padding:40px 60px 10px;overflow:hidden}
+
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;color:var(--purple);margin-bottom:0.15em}
+h2::after{content:'';display:block;width:70px;height:4px;background:var(--gold);margin-top:8px;border-radius:2px}
+
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:#1E1530;color:rgba(255,255,255,.35);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--gold);border-top-color:var(--gold);background:var(--purple)}
+
+.my-step{opacity:0;transform:translateY(10px);transition:opacity 0.5s ease, transform 0.5s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+
+.diagram-area{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.diagram-area svg{width:100%;height:100%;max-height:100%}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+
+    <h2>Data Collection and Training</h2>
+
+    <div class="diagram-area">
+      <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#a0a0b0"/></marker>
+          <marker id="arr-teal" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#0e897a"/></marker>
+          <marker id="arr-gold" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#C5A55A"/></marker>
+        </defs>
+
+        <!-- ═══ STEP 1: Problems ═══ -->
+        <g class="my-step" data-step="1">
+          <rect x="16" y="60" width="130" height="48" rx="8" fill="var(--warm-bg)" stroke="var(--warm)" stroke-width="1.8"/>
+          <text x="81" y="90" text-anchor="middle" fill="var(--warm)" font-family="'Source Sans 3'" font-size="18" font-weight="700">Problem 1</text>
+
+          <rect x="16" y="128" width="130" height="48" rx="8" fill="var(--warm-bg)" stroke="var(--warm)" stroke-width="1.8"/>
+          <text x="81" y="158" text-anchor="middle" fill="var(--warm)" font-family="'Source Sans 3'" font-size="18" font-weight="700">Problem 2</text>
+
+          <text x="81" y="210" text-anchor="middle" fill="var(--warm)" font-size="26" font-weight="900" opacity="0.5">⋮</text>
+
+          <rect x="16" y="238" width="130" height="48" rx="8" fill="var(--warm-bg)" stroke="var(--warm)" stroke-width="1.8"/>
+          <text x="81" y="268" text-anchor="middle" fill="var(--warm)" font-family="'Source Sans 3'" font-size="18" font-weight="700">Problem K</text>
+
+          <text x="81" y="316" text-anchor="middle" fill="var(--muted)" font-family="'Source Sans 3'" font-size="14" font-weight="600">Small POMDP instances</text>
+        </g>
+
+        <!-- ═══ STEP 2: Expert Planner (POMCPOW) ═══ -->
+        <g class="my-step" data-step="2">
+          <line x1="146" y1="84" x2="210" y2="168" stroke="#a0a0b0" stroke-width="1.8" marker-end="url(#arr)"/>
+          <line x1="146" y1="152" x2="210" y2="174" stroke="#a0a0b0" stroke-width="1.8" marker-end="url(#arr)"/>
+          <line x1="146" y1="262" x2="210" y2="184" stroke="#a0a0b0" stroke-width="1.8" marker-end="url(#arr)"/>
+
+          <rect x="214" y="140" width="142" height="68" rx="8" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="1.8"/>
+          <text x="285" y="172" text-anchor="middle" fill="var(--blue)" font-family="'Source Sans 3'" font-size="18" font-weight="700">Expert</text>
+          <text x="285" y="196" text-anchor="middle" fill="var(--blue)" font-family="'Source Sans 3'" font-size="18" font-weight="700">Planner</text>
+          <text x="285" y="234" text-anchor="middle" fill="var(--muted)" font-family="'Source Sans 3'" font-size="13" font-weight="600">POMCPOW</text>
+        </g>
+
+        <!-- ═══ STEP 3: Training Data (belief, value, action) ═══ -->
+        <g class="my-step" data-step="3">
+          <line x1="356" y1="178" x2="408" y2="178" stroke="#a0a0b0" stroke-width="1.8" marker-end="url(#arr)"/>
+
+          <rect x="412" y="52" width="168" height="262" rx="10" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="1.8"/>
+          <text x="496" y="84" text-anchor="middle" fill="var(--teal)" font-family="'Source Sans 3'" font-size="17" font-weight="700" letter-spacing="0.4">Training Data</text>
+          <line x1="428" y1="98" x2="564" y2="98" stroke="rgba(14,137,122,0.2)" stroke-width="1.2"/>
+
+          <text x="496" y="134" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="15">(b₁ , v₁*, a₁*)</text>
+          <text x="496" y="170" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="15">(b₂ , v₂*, a₂*)</text>
+          <text x="496" y="206" text-anchor="middle" fill="var(--text)" font-size="20" opacity="0.3">⋮</text>
+          <text x="496" y="242" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="15">(bₙ , vₙ*, aₙ*)</text>
+          <text x="496" y="280" text-anchor="middle" fill="var(--teal)" font-family="'Source Sans 3'" font-size="12" opacity="0.6">belief + value + action</text>
+
+          <text x="496" y="342" text-anchor="middle" fill="var(--muted)" font-family="'Source Sans 3'" font-size="13" font-weight="600">Belief-value-action tuples</text>
+        </g>
+
+        <!-- ═══ STEP 4: GammaZero GNN ═══ -->
+        <g class="my-step" data-step="4">
+          <line x1="580" y1="178" x2="624" y2="178" stroke="#a0a0b0" stroke-width="1.8" marker-end="url(#arr)"/>
+
+          <rect x="628" y="132" width="142" height="86" rx="9" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="2"/>
+          <text x="699" y="168" text-anchor="middle" fill="var(--purple)" font-family="'Source Sans 3'" font-size="21" font-weight="800">GammaZero</text>
+          <text x="699" y="192" text-anchor="middle" fill="var(--muted)" font-family="'Source Sans 3'" font-size="12">GNN Encoder</text>
+          <text x="699" y="208" text-anchor="middle" fill="var(--muted)" font-family="'Source Sans 3'" font-size="12">+ MLP Heads</text>
+        </g>
+
+        <!-- ═══ STEP 5: GT and Predicted outputs ═══ -->
+        <g class="my-step" data-step="5">
+          <!-- Arrow to GT (top) -->
+          <line x1="770" y1="152" x2="822" y2="68" stroke="#a0a0b0" stroke-width="1.8" marker-end="url(#arr)"/>
+          <!-- Arrow to Predicted (bottom) -->
+          <line x1="770" y1="200" x2="822" y2="350" stroke="#a0a0b0" stroke-width="1.8" marker-end="url(#arr)"/>
+
+          <!-- Ground Truth: value + action (top) -->
+          <rect x="826" y="22" width="168" height="100" rx="8" fill="rgba(36,113,163,0.04)" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="7 4"/>
+          <text x="836" y="42" fill="var(--blue)" font-family="'Source Sans 3'" font-size="12" font-weight="700" letter-spacing="1" opacity="0.65">GROUND TRUTH</text>
+          <text x="910" y="70" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="14" font-weight="600">v* = 15.2</text>
+          <text x="910" y="96" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="14" font-weight="600">a* = check(rock3)</text>
+          <line x1="845" y1="80" x2="975" y2="80" stroke="rgba(36,113,163,0.15)" stroke-width="1"/>
+
+          <!-- Predicted: value + action (bottom) -->
+          <rect x="826" y="340" width="168" height="100" rx="8" fill="var(--green-bg)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="836" y="360" fill="var(--green)" font-family="'Source Sans 3'" font-size="12" font-weight="700" letter-spacing="1" opacity="0.65">PREDICTED</text>
+          <text x="910" y="390" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="14" font-weight="600">v̂ = 13.8</text>
+          <text x="910" y="416" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="14" font-weight="600">â = move(east)</text>
+          <line x1="845" y1="400" x2="975" y2="400" stroke="rgba(26,138,66,0.15)" stroke-width="1"/>
+
+          <!-- Data source line to GT -->
+          <path d="M 496 52 L 496 10 L 910 10 L 910 20" stroke="var(--teal)" stroke-width="1.4" fill="none" stroke-dasharray="6 4" marker-end="url(#arr-teal)" opacity="0.5"/>
+          <text x="703" y="4" text-anchor="middle" fill="var(--teal)" font-family="'Source Sans 3'" font-size="12" font-weight="600" opacity="0.6">(v*, a*) from dataset</text>
+        </g>
+
+        <!-- ═══ STEP 6: Combined Loss ═══ -->
+        <g class="my-step" data-step="6">
+          <!-- Loss box between GT and Predicted -->
+          <rect x="836" y="142" width="158" height="178" rx="8" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="1.5"/>
+
+          <!-- Connector lines -->
+          <line x1="886" y1="122" x2="886" y2="142" stroke="var(--coral)" stroke-width="1.3" opacity="0.4"/>
+          <line x1="950" y1="122" x2="950" y2="142" stroke="var(--coral)" stroke-width="1.3" opacity="0.4"/>
+          <line x1="886" y1="320" x2="886" y2="340" stroke="var(--coral)" stroke-width="1.3" opacity="0.4"/>
+          <line x1="950" y1="320" x2="950" y2="340" stroke="var(--coral)" stroke-width="1.3" opacity="0.4"/>
+
+          <!-- Loss content -->
+          <text x="915" y="168" text-anchor="middle" fill="var(--coral)" font-family="'Source Sans 3'" font-size="17" font-weight="700">Combined Loss</text>
+
+          <!-- MSE part -->
+          <rect x="850" y="182" width="130" height="42" rx="5" fill="rgba(192,57,43,0.06)" stroke="var(--coral)" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <text x="915" y="200" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="11" font-weight="500">λᵥ ‖V(G) - v*‖²</text>
+          <text x="915" y="218" text-anchor="middle" fill="var(--muted)" font-family="'Source Sans 3'" font-size="10">MSE (value)</text>
+
+          <!-- CE part -->
+          <rect x="850" y="232" width="130" height="42" rx="5" fill="rgba(192,57,43,0.06)" stroke="var(--coral)" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <text x="915" y="250" text-anchor="middle" fill="var(--text)" font-family="'JetBrains Mono'" font-size="11" font-weight="500">λₚ CE(P(·|G), a*)</text>
+          <text x="915" y="268" text-anchor="middle" fill="var(--muted)" font-family="'Source Sans 3'" font-size="10">Cross-Entropy (policy)</text>
+
+          <!-- Full formula -->
+          <text x="915" y="300" text-anchor="middle" fill="var(--coral)" font-family="'JetBrains Mono'" font-size="10" font-weight="500" opacity="0.7">L = L_value + L_policy</text>
+
+          <!-- Gradient update arrow back to GammaZero -->
+          <path d="M 836 240 L 806 240 L 806 470 L 699 470 L 699 222" stroke="var(--gold)" stroke-width="1.8" fill="none" stroke-dasharray="6 4" marker-end="url(#arr-gold)" opacity="0.6"/>
+          <text x="790" y="470" text-anchor="end" fill="var(--gold)" font-family="'Source Sans 3'" font-size="14" font-weight="600" opacity="0.75">∇ update weights</text>
+        </g>
+
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item active">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0, totalSteps=6, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+
+<script>
+// ═══ Unified PPT-style navigation — COPY THIS BLOCK UNCHANGED INTO EVERY SLIDE ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+
+</body></html>

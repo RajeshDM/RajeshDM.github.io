@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Related Work – GABAR</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C5A55A;
+    --purple-dark: #2D2044;
+    --purple-darker: #1E1530;
+    --purple-muted: #6B5B7B;
+    --purple-light: #D4CDE0;
+    --bg-light: #FAF8FC;
+    --card-bg: #FFFFFF;
+    --card-border: #E8E4ED;
+    --card-shadow: rgba(45,32,68,0.08);
+    --text-primary: #2D2044;
+    --text-secondary: #6B5B7B;
+    --gabar-bg: linear-gradient(135deg, #C5A55A 0%, #D4B96A 100%);
+    --gabar-shadow: rgba(197,165,90,0.35);
+    --search-bg: linear-gradient(135deg, #6B5B7B 0%, #8A7A9B 100%);
+    --policy-bg: linear-gradient(135deg, #2D2044 0%, #3D3054 100%);
+    --branch-color: #D4CDE0;
+    --branch-active: #6B5B7B;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .pres-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: min(100vw, 177.78vh);
+    height: min(100vh, 56.25vw);
+    background: var(--bg-light);
+    box-shadow: 0 2px 20px rgba(0,0,0,.15);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .pres-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--gold);
+    z-index: 10;
+  }
+
+  .slide-header {
+    padding: 44px 70px 0;
+    flex: 0 0 auto;
+  }
+
+  .slide-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: var(--text-primary);
+    position: relative;
+    display: inline-block;
+  }
+
+  .slide-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 90px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .slide-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 60px 70px;
+    min-height: 0;
+  }
+
+  .tree {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+  }
+
+  .branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    max-width: 580px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .branch.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .branch-header {
+    padding: 18px 48px;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+    text-align: center;
+    z-index: 2;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    min-width: 260px;
+  }
+
+  .branch-header.search { background: var(--search-bg); }
+  .branch-header.policy { background: var(--policy-bg); }
+
+  .v-line {
+    width: 3px;
+    height: 20px;
+    background: var(--branch-color);
+    transition: background 0.4s;
+    flex-shrink: 0;
+  }
+
+  .branch.visible .v-line { background: var(--branch-active); }
+
+  .papers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .paper-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-border);
+    border-radius: 12px;
+    padding: 18px 28px;
+    text-align: center;
+    font-size: 1.55rem;
+    line-height: 1.45;
+    color: var(--text-primary);
+    font-weight: 600;
+    width: 92%;
+    box-shadow: 0 2px 10px var(--card-shadow);
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  }
+
+  .paper-card:hover {
+    border-color: var(--purple-muted);
+    box-shadow: 0 4px 16px rgba(45,32,68,0.12);
+    transform: translateY(-1px);
+  }
+
+  .paper-card .ref {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 1.4rem;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .gabar-card {
+    background: var(--gabar-bg);
+    border: 2.5px solid var(--gold);
+    border-radius: 14px;
+    padding: 20px 30px;
+    text-align: center;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--purple-dark);
+    width: 92%;
+    box-shadow: 0 6px 24px var(--gabar-shadow);
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .gabar-card.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .gabar-card .gabar-sub {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--purple-dark);
+    opacity: 0.7;
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+
+  .nav-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 44px;
+    background: var(--purple-darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+  }
+
+  .nav-section {
+    padding: 0 28px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+    cursor: default;
+    position: relative;
+  }
+
+  .nav-section.active {
+    color: #fff;
+    background: var(--purple-dark);
+  }
+
+  .nav-section.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<div class="pres-wrapper">
+  <div class="slide-header">
+    <h2>Related Work</h2>
+  </div>
+
+  <div class="slide-content">
+    <div class="tree">
+
+      <div class="branch" id="branchSearch">
+        <div class="branch-header search">Learning to<br>guide Search</div>
+        <div class="v-line"></div>
+        <div class="papers">
+          <div class="paper-card">
+            Goose: Learning domain-independent heuristics
+            <span class="ref">Chen et al., 2023</span>
+          </div>
+          <div class="v-line"></div>
+          <div class="paper-card">
+            Learning domain-independent planning heuristics with hypergraph networks
+            <span class="ref">Ståhlberg et al., 2022</span>
+          </div>
+          <div class="v-line"></div>
+          <div class="paper-card">
+            ASNets: Deep learning for generalised planning
+            <span class="ref">Toyer et al., 2020</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="branch" id="branchPolicy">
+        <div class="branch-header policy">Learning<br>policy</div>
+        <div class="v-line"></div>
+        <div class="papers">
+          <div class="paper-card">
+            Symmetries and expressive requirements for learning general policies
+            <span class="ref">Drexler et al., 2024</span>
+          </div>
+          <div class="v-line"></div>
+          <div class="paper-card">
+            Learning generalized policies without supervision using GNNs
+            <span class="ref">Ståhlberg et al., 2022</span>
+          </div>
+          <div class="v-line"></div>
+          <div class="paper-card">
+            Learning generalized relational heuristic networks for model-agnostic planning
+            <span class="ref">Karia et al., 2021</span>
+          </div>
+          <div class="v-line"></div>
+          <div class="gabar-card" id="gabarCard">
+            GABAR
+            <div class="gabar-sub">Graph-based Action Ranking (Ours)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-section">Introduction</div>
+    <div class="nav-section active">GABAR</div>
+    <div class="nav-section">GammaZero</div>
+    <div class="nav-section">Conclusion</div>
+  </div>
+</div>
+
+<script>
+  let step = 0;
+  const maxStep = 3;
+
+  const branchSearch = document.getElementById('branchSearch');
+  const branchPolicy = document.getElementById('branchPolicy');
+  const gabarCard = document.getElementById('gabarCard');
+
+  function updateView() {
+    branchSearch.classList.toggle('visible', step >= 1);
+    branchPolicy.classList.toggle('visible', step >= 2);
+    gabarCard.classList.toggle('visible', step >= 3);
+  }
+
+  function forward() {
+    if (step < maxStep) { step++; updateView(); }
+  }
+
+  function backward() {
+    if (step > 0) { step--; updateView(); }
+  }
+
+  
+
+  
+
+  updateView();
+
+  // Expose nav for unified bridge
+  window.__slideNav = {
+    advance: function() { var s = step; forward(); return step !== s; },
+    retreat: function() { var s = step; backward(); return step !== s; },
+    revealAll: function() { while(window.__slideNav.advance()) {} }
+  };
+</script>
+
+
+
+
+
+
+<script>
+// ═══ Unified PPT-style navigation ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+
+.pres-content{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:50px 80px 16px;overflow:hidden}
+
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;color:#2D2044;margin-bottom:.5em}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:10px;border-radius:2px}
+
+.subtitle{font-size:1.0rem;color:#888;margin-bottom:24px;line-height:1.5}
+
+.card-row{display:flex;gap:22px;margin-top:8px}
+
+.card{flex:1;border-top:3px solid var(--gold);background:#f7f5f0;border-radius:0 0 8px 8px;padding:26px 24px;display:flex;flex-direction:column}
+
+.card .dc-label{font-size:1.0rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);font-weight:700;margin-bottom:8px}
+.card h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:#2D2044;margin-bottom:16px}
+
+.eval-group{margin-bottom:12px}
+.eval-group:last-child{margin-bottom:0}
+
+.eval-tag{display:inline-block;font-size:1.0rem;text-transform:uppercase;letter-spacing:2px;font-weight:700;padding:3px 10px;border-radius:3px;margin-bottom:6px}
+.eval-tag.baseline{background:rgba(45,32,68,.1);color:#2D2044}
+.eval-tag.ablation{background:rgba(231,76,60,.1);color:#E74C3C}
+
+.eval-name{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:600;margin-bottom:3px}
+.eval-name.baseline-name{color:#2D2044}
+.eval-name.ablation-name{color:#E74C3C}
+
+.eval-desc{font-size:1.3rem;color:#888;line-height:1.4}
+
+.divider{width:100%;height:1px;background:#e0dcd4;margin:10px 0}
+
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:1.0rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+
+    <h2>Evaluation Strategy</h2>
+    <p class="subtitle">Each design choice is validated by a baseline comparison and an ablation that removes the component.</p>
+
+    <div class="card-row">
+
+      <!-- Card 1: Action Ranking -->
+      <div class="card my-step" data-step="1">
+        <p class="dc-label">Action Ranking</p>
+        <h3>Rank vs. Value</h3>
+        <div class="eval-group">
+          <div class="eval-tag baseline">Baseline</div>
+          <div class="eval-name baseline-name">GPL</div>
+          <p class="eval-desc">Learns global value functions over actions</p>
+        </div>
+        <div class="divider"></div>
+        <div class="eval-group">
+          <div class="eval-tag ablation">Ablation</div>
+          <div class="eval-name ablation-name">GABAR‑RANK</div>
+          <p class="eval-desc">Replaces ranking head with value regression</p>
+        </div>
+      </div>
+
+      <!-- Card 2: Conditional Decoding -->
+      <div class="card my-step" data-step="2">
+        <p class="dc-label">Conditional Decoding</p>
+        <h3>Sequential vs. Independent</h3>
+        <div class="eval-group">
+          <div class="eval-tag baseline">Baseline</div>
+          <div class="eval-name baseline-name">GRAPL</div>
+          <p class="eval-desc">Selects parameters independently, no dependencies</p>
+        </div>
+        <div class="divider"></div>
+        <div class="eval-group">
+          <div class="eval-tag ablation">Ablation</div>
+          <div class="eval-name ablation-name">GABAR‑CD</div>
+          <p class="eval-desc">Removes GRU decoder, selects parameters in isolation</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Action-Centric Graph -->
+      <div class="card my-step" data-step="3">
+        <p class="dc-label">Action‑Centric Graph</p>
+        <h3>Explicit vs. Implicit</h3>
+        <div class="eval-group">
+          <div class="eval-tag baseline">Baseline</div>
+          <div class="eval-name baseline-name">ASNets</div>
+          <p class="eval-desc">Implicit action representation in graph structure</p>
+        </div>
+        <div class="divider"></div>
+        <div class="eval-group">
+          <div class="eval-tag ablation">Ablation</div>
+          <div class="eval-name ablation-name">GABAR‑ACT</div>
+          <p class="eval-desc">Removes explicit action nodes from the graph</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item active">GABAR</div>
+    <div class="nav-item">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+// ═══ Step-through animation logic ═══
+(function(){
+  var currentStep=0, totalSteps=3, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+
+<script>
+// ═══ Unified PPT-style navigation — COPY THIS BLOCK UNCHANGED INTO EVERY SLIDE ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+
+</body></html>

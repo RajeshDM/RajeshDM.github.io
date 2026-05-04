@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;position:relative}
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+.my-step{opacity:0;transition:opacity 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+<svg viewBox="0 0 1600 900" style="position:absolute;top:0;left:0;width:100%;height:100%" preserveAspectRatio="xMidYMid meet">
+
+<text x="70" y="62" font-family="'Playfair Display',serif" font-size="40" font-weight="700" fill="#2D2044">MCTS with Learned Heuristics</text>
+<rect x="70" y="76" width="80" height="4" rx="2" fill="#C5A55A"/>
+
+<!-- ════════ TREE (left side, ghost) ════════ -->
+<g transform="translate(60,120)">
+
+<!-- Root -->
+<text x="400" y="-4" text-anchor="middle" font-size="17" fill="#ccc" font-weight="600">s₀</text>
+<circle cx="400" cy="24" r="36" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="400" y="18" text-anchor="middle" font-size="17" font-weight="700" fill="#ccc">N=10</text>
+<text x="400" y="36" text-anchor="middle" font-size="15" fill="#ccc">Bot@A</text>
+
+<line x1="370" y1="54" x2="190" y2="128" stroke="#ccc" stroke-width="1.8"/>
+<text x="256" y="84" text-anchor="middle" font-size="17" font-weight="600" fill="#ccc">Move(A,B)</text>
+<line x1="430" y1="54" x2="610" y2="128" stroke="#ccc" stroke-width="1.8"/>
+<text x="544" y="84" text-anchor="middle" font-size="17" font-weight="600" fill="#ccc">Move(A,C)</text>
+
+<circle cx="190" cy="160" r="34" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="190" y="154" text-anchor="middle" font-size="16" font-weight="700" fill="#ccc">N=7</text>
+<text x="190" y="172" text-anchor="middle" font-size="15" fill="#ccc">Bot@B</text>
+
+<circle cx="610" cy="160" r="34" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="610" y="154" text-anchor="middle" font-size="16" font-weight="700" fill="#ccc">N=3</text>
+<text x="610" y="172" text-anchor="middle" font-size="15" fill="#ccc">Bot@C</text>
+
+<line x1="162" y1="188" x2="80" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="104" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Pick(Pkg)</text>
+<line x1="218" y1="188" x2="330" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="290" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Move(B,D)</text>
+
+<circle cx="80" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="80" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=5</text>
+<text x="80" y="298" text-anchor="middle" font-size="14" fill="#ccc">Holding</text>
+
+<circle cx="330" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="330" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=2</text>
+<text x="330" y="298" text-anchor="middle" font-size="14" fill="#ccc">Bot@D</text>
+
+<line x1="80" y1="320" x2="80" y2="380" stroke="#ccc" stroke-width="1.5"/>
+<text x="128" y="356" text-anchor="start" font-size="16" fill="#ccc" font-weight="600">Move(B,D)</text>
+
+<circle cx="80" cy="414" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="80" y="408" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=4</text>
+<text x="80" y="424" text-anchor="middle" font-size="14" fill="#ccc">Bot@D+Pkg</text>
+
+<line x1="584" y1="188" x2="516" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="534" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Move(C,B)</text>
+<line x1="636" y1="188" x2="704" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="688" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Move(C,D)</text>
+
+<circle cx="516" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="516" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=2</text>
+<text x="516" y="298" text-anchor="middle" font-size="14" fill="#ccc">Bot@B</text>
+
+<circle cx="704" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="704" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=1</text>
+<text x="704" y="298" text-anchor="middle" font-size="14" fill="#ccc">Bot@D</text>
+
+<!-- Rollout (greyed out, will be crossed out) -->
+<line x1="56" y1="440" x2="10" y2="488" stroke="#ccc" stroke-width="1.8"/>
+<text x="8" y="470" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Place</text>
+<circle cx="0" cy="520" r="28" fill="#fff" stroke="#ccc" stroke-width="1.5"/>
+<text x="0" y="516" text-anchor="middle" font-size="14" font-weight="700" fill="#ccc">N=1</text>
+<text x="0" y="530" text-anchor="middle" font-size="13" fill="#ccc">leaf</text>
+
+<path d="M0 548 Q8 572 -6 592 Q-14 606 0 626" stroke="#ccc" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
+<text x="26" y="590" font-size="15" fill="#ccc">rollout</text>
+<rect x="-26" y="634" width="52" height="26" rx="4" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+<text x="0" y="652" text-anchor="middle" font-size="14" fill="#ccc">r=-1</text>
+
+
+<!-- ──── Step 1: Action Prioritization (blue highlights) ──── -->
+<g class="my-step" data-step="1">
+<!-- Blue halos on internal nodes where Pθ guides selection -->
+<circle cx="400" cy="24" r="42" fill="#2563eb" fill-opacity=".08" stroke="#2563eb" stroke-width="3.5"/>
+<circle cx="190" cy="160" r="40" fill="#2563eb" fill-opacity=".08" stroke="#2563eb" stroke-width="3.5"/>
+<circle cx="610" cy="160" r="40" fill="#2563eb" fill-opacity=".08" stroke="#2563eb" stroke-width="3.5"/>
+<circle cx="80" cy="288" r="38" fill="#2563eb" fill-opacity=".08" stroke="#2563eb" stroke-width="3.5"/>
+
+<!-- Badge -->
+<rect x="440" y="48" width="32" height="26" rx="6" fill="#2563eb"/>
+<text x="456" y="68" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">1</text>
+</g>
+
+
+<!-- ──── Step 2: Value Estimation (green, cross out rollout) ──── -->
+<g class="my-step" data-step="2">
+<!-- Cross out the rollout -->
+<line x1="-20" y1="540" x2="20" y2="660" stroke="#C0392B" stroke-width="3.5" opacity=".7"/>
+<line x1="20" y1="540" x2="-20" y2="660" stroke="#C0392B" stroke-width="3.5" opacity=".7"/>
+
+<!-- Green halos on leaf nodes where Vθ provides value -->
+<circle cx="0" cy="520" r="36" fill="#16a34a" fill-opacity=".06" stroke="#16a34a" stroke-width="3.5" stroke-dasharray="7 4"/>
+<circle cx="330" cy="288" r="38" fill="#16a34a" fill-opacity=".06" stroke="#16a34a" stroke-width="3.5" stroke-dasharray="7 4"/>
+<circle cx="516" cy="288" r="38" fill="#16a34a" fill-opacity=".06" stroke="#16a34a" stroke-width="3.5" stroke-dasharray="7 4"/>
+<circle cx="704" cy="288" r="38" fill="#16a34a" fill-opacity=".06" stroke="#16a34a" stroke-width="3.5" stroke-dasharray="7 4"/>
+<circle cx="80" cy="414" r="38" fill="#16a34a" fill-opacity=".06" stroke="#16a34a" stroke-width="3.5" stroke-dasharray="7 4"/>
+
+<!-- Badge -->
+<rect x="46" y="500" width="32" height="26" rx="6" fill="#16a34a"/>
+<text x="62" y="520" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">2</text>
+</g>
+
+
+<!-- ──── Step 3: Root Action Selection (gold) ──── -->
+<g class="my-step" data-step="3">
+<circle cx="400" cy="24" r="46" fill="#C5A55A" fill-opacity=".1" stroke="#C5A55A" stroke-width="4"/>
+
+<rect x="444" y="2" width="32" height="26" rx="6" fill="#C5A55A"/>
+<text x="460" y="22" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">3</text>
+</g>
+
+</g>
+
+
+<!-- ════════ RIGHT SIDE: explanation cards ════════ -->
+<g transform="translate(880,120)">
+
+<!-- Card 1: Action Prioritization -->
+<g class="my-step" data-step="1">
+<rect x="0" y="0" width="640" height="175" rx="12" fill="#2563eb" fill-opacity=".04" stroke="#2563eb" stroke-width="2"/>
+<rect x="20" y="22" width="36" height="30" rx="7" fill="#2563eb"/>
+<text x="38" y="44" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">1</text>
+<text x="68" y="46" font-size="24" fill="#2D2044" font-weight="700">Action Prioritization</text>
+
+<text x="36" y="90" font-family="'JetBrains Mono',monospace" font-size="22" fill="#2E1A38">a ~ <tspan fill="#2563eb" font-weight="700">P</tspan><tspan fill="#2563eb" font-weight="700" font-size="15" dy="3">θ</tspan><tspan fill="#2563eb" font-weight="700" dy="-3">(· | s)</tspan></text>
+
+<text x="36" y="130" font-family="'JetBrains Mono',monospace" font-size="18" fill="#6B5B7B">PUCT: Q + c · <tspan fill="#2563eb" font-weight="700">P</tspan><tspan fill="#2563eb" font-weight="700" font-size="13" dy="3">θ</tspan><tspan fill="#2563eb" font-weight="700" dy="-3">(a|s)</tspan> · √N/(1+N(a))</text>
+
+<text x="36" y="158" font-size="17" fill="#888" font-style="italic">Focus search on promising actions</text>
+</g>
+
+<!-- Card 2: Value Estimation -->
+<g class="my-step" data-step="2">
+<rect x="0" y="200" width="640" height="155" rx="12" fill="#16a34a" fill-opacity=".04" stroke="#16a34a" stroke-width="2"/>
+<rect x="20" y="222" width="36" height="30" rx="7" fill="#16a34a"/>
+<text x="38" y="244" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">2</text>
+<text x="68" y="246" font-size="24" fill="#2D2044" font-weight="700">Value Estimation</text>
+
+<text x="36" y="294" font-family="'JetBrains Mono',monospace" font-size="22" fill="#2E1A38">v = <tspan fill="#16a34a" font-weight="700">V</tspan><tspan fill="#16a34a" font-weight="700" font-size="15" dy="3">θ</tspan><tspan fill="#16a34a" font-weight="700" dy="-3">(s)</tspan></text>
+<text x="260" y="294" font-size="19" fill="#6B5B7B" font-style="italic">replaces rollout</text>
+
+<text x="36" y="336" font-size="17" fill="#888" font-style="italic">Instant evaluation at leaf nodes</text>
+</g>
+
+<!-- Card 3: Root Action Selection -->
+<g class="my-step" data-step="3">
+<rect x="0" y="380" width="640" height="175" rx="12" fill="#C5A55A" fill-opacity=".06" stroke="#C5A55A" stroke-width="2"/>
+<rect x="20" y="402" width="36" height="30" rx="7" fill="#C5A55A"/>
+<text x="38" y="424" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">3</text>
+<text x="68" y="426" font-size="24" fill="#2D2044" font-weight="700">Root Action Selection</text>
+
+<text x="36" y="478" font-family="'JetBrains Mono',monospace" font-size="22" fill="#2E1A38">π(a|s) ∝ <tspan fill="#C5A55A" font-weight="700">N(a)</tspan><tspan font-size="14" dy="-7">z_n</tspan><tspan dy="7"> · exp(</tspan><tspan fill="#C5A55A" font-weight="700">z_q</tspan><tspan>·Q(a))</tspan></text>
+
+<text x="36" y="526" font-size="17" fill="#888" font-style="italic">N, Q shaped by both P<tspan font-size="13" dy="2">θ</tspan><tspan dy="-2"> and V</tspan><tspan font-size="13" dy="2">θ</tspan><tspan dy="-2"> during search</tspan></text>
+</g>
+
+</g>
+
+
+<!-- ════════ BOTTOM LEGEND ════════ -->
+<line x1="70" y1="790" x2="1530" y2="790" stroke="#E8E4ED" stroke-width="1"/>
+<g class="my-step" data-step="1">
+<rect x="70" y="808" width="32" height="26" rx="6" fill="#2563eb"/>
+<text x="86" y="828" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">1</text>
+<text x="114" y="828" font-size="18" fill="#2E1A38" font-weight="600">P<tspan font-size="13" dy="2">θ</tspan><tspan dy="-2"> guides expansion + selection</tspan></text>
+</g>
+<g class="my-step" data-step="2">
+<rect x="530" y="808" width="32" height="26" rx="6" fill="#16a34a"/>
+<text x="546" y="828" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">2</text>
+<text x="574" y="828" font-size="18" fill="#2E1A38" font-weight="600">V<tspan font-size="13" dy="2">θ</tspan><tspan dy="-2"> replaces rollout</tspan></text>
+</g>
+<g class="my-step" data-step="3">
+<rect x="910" y="808" width="32" height="26" rx="6" fill="#C5A55A"/>
+<text x="926" y="828" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">3</text>
+<text x="954" y="828" font-size="18" fill="#2E1A38" font-weight="600">Root selection shaped by both networks</text>
+</g>
+
+</svg>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item active">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+<script>
+(function(){
+  var currentStep=0, totalSteps=3, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} } }
+    else if (e.key === 'a' || e.key === 'A') { if (window.__slideNav) window.__slideNav.revealAll(); }
+    else if ('fFpPtTbB?'.indexOf(e.key)>=0) { try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {} }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) { if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} } }
+    else { if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) { el.style.cursor = 'pointer'; el.addEventListener('click', function(e) { e.stopPropagation(); try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {} }); });
+})();
+</script>
+</body></html>

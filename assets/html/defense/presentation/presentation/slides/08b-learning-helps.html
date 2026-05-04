@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0;--danger:#C0392B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw,177.78vh);height:min(100vh,56.25vw);background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.pc{flex:1;display:flex;flex-direction:column;min-height:0;padding:32px 50px 10px;overflow:hidden}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2rem;color:#2D2044;margin-bottom:.15em}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:8px;border-radius:2px}
+.sub{color:#888;font-size:1.4rem;margin-bottom:12px}
+.main{flex:1;display:flex;gap:30px;min-height:0;align-items:stretch}
+.side{flex:1;display:flex;flex-direction:column;min-height:0}
+.side-label{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:#2D2044;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.side-label .dot{width:10px;height:10px;border-radius:50%}
+.svg-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;border:1.5px solid #E8E4ED;border-radius:12px;padding:8px 12px;background:#FAFAFA}
+.svg-wrap svg{width:100%;height:100%;max-height:100%}
+.caption{padding:6px 14px;background:#F8F6FA;border-radius:0 0 10px 10px;margin-top:-2px;border:1.5px solid #E8E4ED;border-top:none}
+.caption .cl{font-size:.82rem;color:#2D2044;font-weight:600}
+.caption .cs{font-size:.72rem;color:#888;margin-top:1px}
+.divider{width:2px;background:#E8E4ED;flex-shrink:0;border-radius:1px;align-self:stretch;margin:30px 0}
+.ins{margin-top:10px;padding:12px 24px;background:linear-gradient(135deg,#2D2044,#1E1530);border-radius:12px;display:flex;gap:20px;align-items:center;flex-shrink:0}
+.ins-q{font-family:'Playfair Display',serif;font-size:1.4rem;color:#C5A55A;font-weight:700;flex-shrink:0;line-height:1.3}
+.ins p{font-size:1.2rem;color:rgba(255,255,255,.75);line-height:1.45} .ins strong{color:#C5A55A}
+.ms{opacity:0;transform:translateY(10px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.ms.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+.nb{height:44px;display:flex;align-items:stretch;font-size:1.2rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.ni{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.ni.ac{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+</style>
+</head><body>
+<div class="pres-wrapper"><div class="pc" id="myRoot">
+<h2>Idea: Learn to Avoid Bad Actions</h2>
+<p class="sub">Instead of searching all paths, learn which actions to take at each state.</p>
+
+<div class="main">
+  <!-- LEFT: Classical Search (full tree) -->
+  <div class="side ms" data-step="1">
+    <div class="side-label"><div class="dot" style="background:#C0392B"></div> Classical Search</div>
+    <div class="svg-wrap">
+      <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="arN" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><polygon points="0 0,6 2.5,0 5" fill="#2D2044"/></marker>
+          <marker id="arG" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><polygon points="0 0,6 2.5,0 5" fill="#999"/></marker>
+        </defs>
+
+        <!-- s0: robot in A -->
+        <circle cx="210" cy="30" r="22" fill="#fff" stroke="#2D2044" stroke-width="2.5"/>
+        <text x="210" y="27" text-anchor="middle" fill="#888" font-size="8">robot@A</text>
+        <text x="210" y="39" text-anchor="middle" fill="#2D2044" font-size="13" font-weight="700" font-family="'JetBrains Mono'">s₀</text>
+
+        <!-- Action labels from s0 -->
+        <text x="75" y="68" text-anchor="middle" fill="#2D2044" font-size="10.5" font-weight="600">move(A→C)</text>
+        <text x="210" y="68" text-anchor="middle" fill="#2D2044" font-size="10.5" font-weight="600">move(A→B)</text>
+        <text x="345" y="68" text-anchor="middle" fill="#888" font-size="10.5" font-weight="600">move(A→D)</text>
+
+        <!-- Arrows from s0 -->
+        <line x1="192" y1="46" x2="90" y2="95" stroke="#2D2044" stroke-width="1.8" marker-end="url(#arN)"/>
+        <line x1="210" y1="52" x2="210" y2="95" stroke="#2D2044" stroke-width="1.8" marker-end="url(#arN)"/>
+        <line x1="228" y1="46" x2="335" y2="95" stroke="#999" stroke-width="1.3" marker-end="url(#arG)"/>
+
+        <!-- s1: robot in C (where package is!) -->
+        <circle cx="75" cy="115" r="20" fill="#fff" stroke="#2D2044" stroke-width="2"/>
+        <text x="75" y="112" text-anchor="middle" fill="#888" font-size="7.5">robot@C</text>
+        <text x="75" y="124" text-anchor="middle" fill="#2D2044" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₁</text>
+
+        <!-- s2: robot in B (dead end) -->
+        <circle cx="210" cy="115" r="20" fill="#fff" stroke="#999" stroke-width="1.5" opacity=".5"/>
+        <text x="210" y="112" text-anchor="middle" fill="#999" font-size="7.5">robot@B</text>
+        <text x="210" y="124" text-anchor="middle" fill="#999" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₂</text>
+
+        <!-- s3: robot in D (no package) -->
+        <circle cx="340" cy="115" r="20" fill="#fff" stroke="#999" stroke-width="1.3" opacity=".35"/>
+        <text x="340" y="112" text-anchor="middle" fill="#999" font-size="7.5">robot@D</text>
+        <text x="340" y="124" text-anchor="middle" fill="#999" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₃</text>
+
+        <!-- From s1: actions (pick vs move) -->
+        <text x="28" y="162" text-anchor="middle" fill="#2D2044" font-size="10.5" font-weight="600">pick(pkg)</text>
+        <text x="130" y="162" text-anchor="middle" fill="#888" font-size="10.5" font-weight="600">move(C→A)</text>
+
+        <line x1="60" y1="131" x2="35" y2="175" stroke="#2D2044" stroke-width="1.8" marker-end="url(#arN)"/>
+        <line x1="90" y1="131" x2="125" y2="175" stroke="#999" stroke-width="1.3" marker-end="url(#arG)"/>
+
+        <!-- From s2: subtree (wasted exploration) -->
+        <line x1="195" y1="131" x2="170" y2="175" stroke="#999" stroke-width="1" opacity=".3"/>
+        <line x1="225" y1="131" x2="250" y2="175" stroke="#999" stroke-width="1" opacity=".3"/>
+        <circle cx="170" cy="190" r="14" fill="#fff" stroke="#999" stroke-width="1" opacity=".25"/>
+        <circle cx="250" cy="190" r="14" fill="#fff" stroke="#999" stroke-width="1" opacity=".25"/>
+        <text x="170" y="194" text-anchor="middle" fill="#999" font-size="9" opacity=".4">...</text>
+        <text x="250" y="194" text-anchor="middle" fill="#999" font-size="9" opacity=".4">...</text>
+
+        <!-- From s3: subtree (wasted exploration) -->
+        <line x1="325" y1="131" x2="305" y2="175" stroke="#999" stroke-width="1" opacity=".25"/>
+        <line x1="355" y1="131" x2="375" y2="175" stroke="#999" stroke-width="1" opacity=".25"/>
+        <circle cx="305" cy="190" r="14" fill="#fff" stroke="#999" stroke-width="1" opacity=".2"/>
+        <circle cx="375" cy="190" r="14" fill="#fff" stroke="#999" stroke-width="1" opacity=".2"/>
+
+        <!-- s4: holding pkg at C -->
+        <circle cx="30" cy="196" r="20" fill="#fff" stroke="#2D2044" stroke-width="2"/>
+        <text x="30" y="193" text-anchor="middle" fill="#888" font-size="7.5">hold@C</text>
+        <text x="30" y="205" text-anchor="middle" fill="#2D2044" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₄</text>
+
+        <!-- back-to-A circle (wasted) -->
+        <circle cx="125" cy="196" r="14" fill="#fff" stroke="#999" stroke-width="1" opacity=".3"/>
+
+        <!-- From s4: move(C→D) vs move(C→A) vs move(C→B) -->
+        <text x="30" y="240" text-anchor="middle" fill="#2D2044" font-size="10" font-weight="600">move(C→D)</text>
+        <text x="100" y="248" text-anchor="middle" fill="#888" font-size="9" font-weight="600">move(C→A)</text>
+        <text x="100" y="260" text-anchor="middle" fill="#888" font-size="9" font-weight="600">move(C→B)</text>
+
+        <line x1="30" y1="216" x2="30" y2="268" stroke="#2D2044" stroke-width="1.8" marker-end="url(#arN)"/>
+        <line x1="45" y1="212" x2="85" y2="240" stroke="#999" stroke-width="1" opacity=".3"/>
+
+        <!-- s5: robot at D with pkg -->
+        <circle cx="30" cy="290" r="20" fill="#fff" stroke="#2D2044" stroke-width="2"/>
+        <text x="30" y="287" text-anchor="middle" fill="#888" font-size="7.5">hold@D</text>
+        <text x="30" y="299" text-anchor="middle" fill="#2D2044" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₅</text>
+
+        <!-- place action -->
+        <text x="30" y="325" text-anchor="middle" fill="#1E8449" font-size="10" font-weight="600">place(pkg)</text>
+        <line x1="30" y1="310" x2="30" y2="338" stroke="#1E8449" stroke-width="1.8"/>
+
+        <!-- GOAL -->
+        <circle cx="30" cy="352" r="14" fill="#E3F5EC" stroke="#1E8449" stroke-width="2"/>
+        <text x="30" y="356" text-anchor="middle" fill="#1E8449" font-size="8" font-weight="700">GOAL</text>
+
+        <!-- Annotation -->
+        <text x="210" y="345" text-anchor="middle" fill="#C0392B" font-size="12" font-weight="700">Must explore all branches to find this path</text>
+      </svg>
+    </div>
+    <div class="caption"><div class="cl">Exhaustive search</div><div class="cs">Explores exponentially many states</div></div>
+  </div>
+
+  <div class="divider ms" data-step="2"></div>
+
+  <!-- RIGHT: Learned Policy (pruned tree) -->
+  <div class="side ms" data-step="2">
+    <div class="side-label"><div class="dot" style="background:#1E8449"></div> With Learned Policy</div>
+    <div class="svg-wrap" style="border-color:rgba(30,132,73,.3);background:#F8FDF9">
+      <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="arP" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#7B5E99"/></marker>
+          <marker id="arX" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><polygon points="0 0,6 2.5,0 5" fill="#D4CDE0"/></marker>
+        </defs>
+
+        <!-- s0: robot in A -->
+        <circle cx="210" cy="30" r="22" fill="#fff" stroke="#2D2044" stroke-width="2.5"/>
+        <text x="210" y="27" text-anchor="middle" fill="#888" font-size="8">robot@A</text>
+        <text x="210" y="39" text-anchor="middle" fill="#2D2044" font-size="13" font-weight="700" font-family="'JetBrains Mono'">s₀</text>
+
+        <!-- Action labels -->
+        <text x="100" y="68" text-anchor="middle" fill="#7B5E99" font-size="10.5" font-weight="700">move(A→C)</text>
+        <text x="240" y="68" text-anchor="middle" fill="#D4CDE0" font-size="10.5" font-weight="600">move(A→B)</text>
+        <text x="345" y="68" text-anchor="middle" fill="#D4CDE0" font-size="10.5" font-weight="600">move(A→D)</text>
+
+        <!-- CHOSEN arrow: s0 → s1 -->
+        <line x1="192" y1="46" x2="110" y2="95" stroke="#7B5E99" stroke-width="3.5" marker-end="url(#arP)"/>
+        <!-- PRUNED arrows -->
+        <line x1="210" y1="52" x2="210" y2="95" stroke="#D4CDE0" stroke-width="1.3" marker-end="url(#arX)" opacity=".5"/>
+        <line x1="228" y1="46" x2="335" y2="95" stroke="#D4CDE0" stroke-width="1" opacity=".3"/>
+
+        <!-- X marks on pruned -->
+        <g transform="translate(214,78)"><line x1="-7" y1="-7" x2="7" y2="7" stroke="#C5A55A" stroke-width="3.5" stroke-linecap="round"/><line x1="7" y1="-7" x2="-7" y2="7" stroke="#C5A55A" stroke-width="3.5" stroke-linecap="round"/></g>
+        <g transform="translate(290,74)"><line x1="-7" y1="-7" x2="7" y2="7" stroke="#C5A55A" stroke-width="3.5" stroke-linecap="round"/><line x1="7" y1="-7" x2="-7" y2="7" stroke="#C5A55A" stroke-width="3.5" stroke-linecap="round"/></g>
+
+        <!-- s1: robot in C (chosen) -->
+        <circle cx="95" cy="115" r="20" fill="#F4F1F8" stroke="#7B5E99" stroke-width="2.5"/>
+        <text x="95" y="112" text-anchor="middle" fill="#888" font-size="7.5">robot@C</text>
+        <text x="95" y="124" text-anchor="middle" fill="#2D2044" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₁</text>
+
+        <!-- Faded pruned states -->
+        <circle cx="210" cy="115" r="20" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".2"/>
+        <circle cx="340" cy="115" r="20" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".15"/>
+
+        <!-- From s1: pick chosen, move pruned -->
+        <text x="55" y="162" text-anchor="middle" fill="#7B5E99" font-size="10.5" font-weight="700">pick(pkg)</text>
+        <text x="150" y="162" text-anchor="middle" fill="#D4CDE0" font-size="10.5" font-weight="600">move(C→A)</text>
+
+        <line x1="80" y1="131" x2="55" y2="175" stroke="#7B5E99" stroke-width="3.5" marker-end="url(#arP)"/>
+        <line x1="110" y1="131" x2="145" y2="175" stroke="#D4CDE0" stroke-width="1.3" marker-end="url(#arX)" opacity=".5"/>
+
+        <!-- X on move(C→A) -->
+        <g transform="translate(134,152)"><line x1="-6" y1="-6" x2="6" y2="6" stroke="#C5A55A" stroke-width="3.5" stroke-linecap="round"/><line x1="6" y1="-6" x2="-6" y2="6" stroke="#C5A55A" stroke-width="3.5" stroke-linecap="round"/></g>
+
+        <!-- s4: holding pkg at C (chosen) -->
+        <circle cx="45" cy="196" r="20" fill="#F4F1F8" stroke="#7B5E99" stroke-width="2.5"/>
+        <text x="45" y="193" text-anchor="middle" fill="#888" font-size="7.5">hold@C</text>
+        <text x="45" y="205" text-anchor="middle" fill="#2D2044" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₄</text>
+
+        <!-- faded pruned state -->
+        <circle cx="148" cy="196" r="14" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".15"/>
+
+        <!-- From s4: move(C→D) chosen, others pruned -->
+        <text x="45" y="240" text-anchor="middle" fill="#7B5E99" font-size="10" font-weight="700">move(C→D)</text>
+        <text x="130" y="240" text-anchor="middle" fill="#D4CDE0" font-size="9" font-weight="600">move(C→A)</text>
+
+        <line x1="45" y1="216" x2="45" y2="268" stroke="#7B5E99" stroke-width="3.5" marker-end="url(#arP)"/>
+        <line x1="60" y1="212" x2="115" y2="232" stroke="#D4CDE0" stroke-width="1" opacity=".3"/>
+
+        <!-- X on move(C→A) -->
+        <g transform="translate(98,230)"><line x1="-5" y1="-5" x2="5" y2="5" stroke="#C5A55A" stroke-width="3" stroke-linecap="round"/><line x1="5" y1="-5" x2="-5" y2="5" stroke="#C5A55A" stroke-width="3" stroke-linecap="round"/></g>
+
+        <!-- s5: robot at D with pkg (chosen) -->
+        <circle cx="45" cy="290" r="20" fill="#F4F1F8" stroke="#7B5E99" stroke-width="2.5"/>
+        <text x="45" y="287" text-anchor="middle" fill="#888" font-size="7.5">hold@D</text>
+        <text x="45" y="299" text-anchor="middle" fill="#2D2044" font-size="12" font-weight="700" font-family="'JetBrains Mono'">s₅</text>
+
+        <!-- place action -->
+        <text x="45" y="325" text-anchor="middle" fill="#1E8449" font-size="10" font-weight="700">place(pkg)</text>
+        <line x1="45" y1="310" x2="45" y2="338" stroke="#1E8449" stroke-width="3"/>
+
+        <!-- GOAL -->
+        <circle cx="45" cy="352" r="14" fill="#E3F5EC" stroke="#1E8449" stroke-width="2.5"/>
+        <text x="45" y="356" text-anchor="middle" fill="#1E8449" font-size="8" font-weight="700">GOAL</text>
+
+        <!-- Big purple path glow -->
+        <path d="M210,50 Q155,80 95,100 Q70,140 45,180 L45,340" fill="none" stroke="#7B5E99" stroke-width="22" opacity=".05" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Annotation box -->
+        <rect x="200" y="180" width="180" height="72" rx="10" fill="#F4F1F8" stroke="#7B5E99" stroke-width="1.5"/>
+        <text x="290" y="202" text-anchor="middle" fill="#2D2044" font-size="12" font-weight="700">Learned ranking</text>
+        <text x="290" y="220" text-anchor="middle" fill="#6B5B7B" font-size="10.5">At each state, picks the</text>
+        <text x="290" y="236" text-anchor="middle" fill="#6B5B7B" font-size="10.5">best action — no search</text>
+        <!-- pointer line -->
+        <line x1="200" y1="216" x2="67" y2="200" stroke="#7B5E99" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+
+        <!-- Legend -->
+        <g transform="translate(210,280)">
+          <line x1="0" y1="0" x2="20" y2="0" stroke="#7B5E99" stroke-width="3.5"/><text x="26" y="4" fill="#2D2044" font-size="10" font-weight="600">Chosen by policy</text>
+          <g transform="translate(0,20)"><line x1="-5" y1="-5" x2="5" y2="5" stroke="#C5A55A" stroke-width="3" stroke-linecap="round"/><line x1="5" y1="-5" x2="-5" y2="5" stroke="#C5A55A" stroke-width="3" stroke-linecap="round"/><text x="26" y="4" fill="#888" font-size="10">Pruned (ranked low)</text></g>
+        </g>
+
+        <!-- Bottom annotation -->
+        <text x="290" y="345" text-anchor="middle" fill="#1E8449" font-size="12" font-weight="700">Greedy execution — no backtracking</text>
+      </svg>
+    </div>
+    <div class="caption" style="border-color:rgba(30,132,73,.3)"><div class="cl">Guided action selection</div><div class="cs">Learned policy prunes bad branches → linear-time execution</div></div>
+  </div>
+</div>
+
+<div class="ins ms" data-step="3"><div class="ins-q">Goal</div><div><p><strong>Rank actions per state</strong> &mdash; no search, just greedy forward selection.</p></div></div>
+</div>
+<div class="nb"><div class="ni">Introduction</div><div class="ni ac">GABAR</div><div class="ni">GammaZero</div><div class="ni">Conclusion</div></div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0,totalSteps=3,root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav={advance:function(){var s=currentStep;if(currentStep<totalSteps){currentStep++;revealStep(currentStep)};return currentStep!==s;},retreat:function(){var s=currentStep;if(currentStep>0){hideStep(currentStep);currentStep--};return currentStep!==s;},revealAll:function(){while(window.__slideNav.advance()){}}};
+})();
+</script>
+
+<script>
+// ═══ Unified PPT-style navigation — COPY THIS BLOCK UNCHANGED INTO EVERY SLIDE ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+</body></html>

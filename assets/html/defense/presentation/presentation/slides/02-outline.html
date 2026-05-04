@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:#f0f0f0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw,177.78vh);height:min(100vh,56.25vw);
+  background:#fff;color:#1a1a2e;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:#C5A55A;z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:50px 80px 16px;min-height:0;overflow:hidden}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:3rem;line-height:1.15;margin-bottom:.3em}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;margin-bottom:.5em;color:#2D2044;}
+
+h2::after{content:'';display:block;width:80px;height:4px;background:#C5A55A;margin-top:10px;border-radius:2px}
+
+h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:1.45rem;margin-bottom:.3em}
+p,li{font-size:1.55rem;line-height:1.6}
+.subtitle{font-style:italic;color:#C5A55A;font-size:1.55rem;margin-bottom:.8em}
+.label{text-transform:uppercase;letter-spacing:3px;font-size:.85rem;font-weight:600;color:#C5A55A}
+.muted{color:#888}
+.card-row{display:flex;gap:24px;margin-top:20px}
+.card{flex:1;background:#f7f5f0;box-shadow:0 2px 12px rgba(0,0,0,.06);border-top:3px solid #C5A55A;border-radius:6px;padding:24px 20px}
+.card h3{font-family:'Playfair Display',serif;font-size:1.65rem;margin-bottom:6px}
+.nav-bar{height:44px;background:#1E1530;display:flex;align-items:center;flex-shrink:0}
+.nav-section{flex:1;text-align:center;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em;position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+.nav-section.active{color:#fff;background:#2D2044}
+.nav-section.active::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#C5A55A}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content">
+    <h2>Outline</h2>
+    <div style="max-width:800px;margin-top:12px">
+      <div style="display:flex;align-items:center;gap:20px;padding:18px 24px;margin-bottom:12px;border-left:4px solid #C5A55A;background:rgba(197,165,90,0.06);border-radius:0 8px 8px 0">
+        <span style="font-family:JetBrains Mono,monospace;font-size:1.55rem;font-weight:700;color:#C5A55A;min-width:36px">01</span>
+        <div><div style="font-family:Playfair Display,serif;font-size:1.65rem;font-weight:700;color:#2D2044">Introduction and Motivation</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;padding:18px 24px;margin-bottom:12px;border-left:4px solid transparent;border-radius:0 8px 8px 0">
+        <span style="font-family:JetBrains Mono,monospace;font-size:1.55rem;font-weight:700;color:#C5A55A;min-width:36px">02</span>
+        <div><div style="font-family:Playfair Display,serif;font-size:1.65rem;font-weight:700;color:#2D2044">GABAR: Graph-Based Action Ranking</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;padding:18px 24px;margin-bottom:12px;border-left:4px solid transparent;border-radius:0 8px 8px 0">
+        <span style="font-family:JetBrains Mono,monospace;font-size:1.55rem;font-weight:700;color:#C5A55A;min-width:36px">03</span>
+        <div><div style="font-family:Playfair Display,serif;font-size:1.65rem;font-weight:700;color:#2D2044">GammaZero: Belief-Space Search</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;padding:18px 24px;border-left:4px solid transparent;border-radius:0 8px 8px 0">
+        <span style="font-family:JetBrains Mono,monospace;font-size:1.55rem;font-weight:700;color:#C5A55A;min-width:36px">04</span>
+        <div><div style="font-family:Playfair Display,serif;font-size:1.65rem;font-weight:700;color:#2D2044">Conclusions and Future Work</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bar">
+<div class="nav-section active">Introduction</div>
+<div class="nav-section ">GABAR</div>
+<div class="nav-section ">GammaZero</div>
+<div class="nav-section ">Conclusion</div>
+
+  </div>
+</div>
+
+<script>
+// ═══ Navigation bridge: all keys to parent ═══
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    try { window.parent.postMessage({ type: 'boundary', direction: 'next' }, '*'); } catch(err) {}
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    try { window.parent.postMessage({ type: 'boundary', direction: 'prev' }, '*'); } catch(err) {}
+  } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+    try { window.parent.postMessage({ type: 'passthrough', key: e.key }, '*'); } catch(err) {}
+  }
+});
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body></html>

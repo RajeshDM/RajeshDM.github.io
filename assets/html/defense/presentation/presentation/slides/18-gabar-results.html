@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Source Sans 3',sans-serif}
+.presentation{width:100vw;height:100vh;position:relative;overflow:hidden;max-width:177.78vh;max-height:56.25vw;margin:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;padding:32px 56px 52px;opacity:0;transform:translateX(40px);transition:opacity .4s ease,transform .4s ease;pointer-events:none;overflow:hidden;background:#fff;color:#1a1a2e}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:2}
+.slide.prev{opacity:0;transform:translateX(-40px);z-index:1}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem;color:#2D2044;margin-bottom:4px}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:8px;border-radius:2px}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:200;transition:width .3s ease}
+.slide-counter{position:fixed;bottom:8px;right:16px;font-size:1.35rem;color:rgba(255,255,255,.3);z-index:100;font-family:'JetBrains Mono',monospace}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;height:44px;display:flex;align-items:stretch;z-index:100;font-size:.85rem;font-weight:600;letter-spacing:.03em;background:#2D2044}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);border-top:3px solid transparent}
+.nav-item.active{color:#C5A55A;border-top-color:#C5A55A}
+.slide-body{flex:1;display:flex;gap:28px;min-height:0;margin-top:12px}
+.chart-area{flex:2.2;display:flex;flex-direction:column;min-height:0}
+.chart-area svg{width:100%;flex:1;min-height:0}
+.chart-legend{display:flex;align-items:center;gap:18px;justify-content:center;padding:8px 0 0;flex-shrink:0}
+.chart-legend .leg-item{display:flex;align-items:center;gap:5px;font-size:1.2rem;color:#888}
+.chart-legend .leg-item.primary{font-weight:700;color:#2D2044}
+.chart-legend .leg-line{width:20px;height:0;border:none;flex-shrink:0}
+.chart-legend .leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.side-panel{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.dc-card{border-top:3px solid var(--gold);background:#F8F6FA;border-radius:0 0 8px 8px;padding:18px 20px}
+.dc-card .dc-label{font-size:.7rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);font-weight:700;margin-bottom:4px}
+.dc-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:#2D2044;margin-bottom:4px}
+.dc-card p{font-size:1.15rem;color:#666;line-height:1.4}
+.tk-card{background:#2D2044;border-radius:8px;padding:18px 20px;color:rgba(255,255,255,.9)}
+.tk-card .tk-num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1}
+.tk-card .tk-label{font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.5);font-weight:600;margin-top:4px}
+.tk-card .tk-desc{font-size:1.15rem;margin-top:8px;line-height:1.4;color:rgba(255,255,255,.75)}
+.sub-row{display:flex;align-items:baseline;gap:12px;margin-top:10px}
+.sub-row .subtitle{font-size:1.25rem;color:#888;margin:0}
+.sub-row .axis-tag{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);font-weight:700;background:rgba(197,165,90,.12);padding:3px 10px;border-radius:10px;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter"></div>
+<div class="presentation" id="presentation">
+
+<!-- SLIDE 1: Action Ranking -->
+<div class="slide active">
+<h2>Results: Action Ranking</h2>
+<div class="sub-row"><div class="axis-tag">Design Choice 1</div><p class="subtitle">Ranking actions locally vs. learning global value functions — Combined coverage (%)</p></div>
+<div class="slide-body">
+<div class="chart-area">
+<svg viewBox="0 0 520 320" preserveAspectRatio="xMidYMid meet">
+<g stroke="#eee" stroke-width=".5"><line x1="70" y1="24" x2="480" y2="24"/><line x1="70" y1="84" x2="480" y2="84"/><line x1="70" y1="144" x2="480" y2="144"/><line x1="70" y1="204" x2="480" y2="204"/><line x1="70" y1="264" x2="480" y2="264"/></g>
+<g font-family="JetBrains Mono" font-size="10" fill="#bbb" text-anchor="end"><text x="64" y="28">100</text><text x="64" y="88">80</text><text x="64" y="148">60</text><text x="64" y="208">40</text><text x="64" y="268">20</text><text x="64" y="298">0</text></g>
+<text transform="rotate(-90)" x="-160" y="18" font-family="Source Sans 3" font-size="11" fill="#aaa" text-anchor="middle">Coverage (%)</text>
+<g font-family="Source Sans 3" font-size="13" fill="#444" text-anchor="middle" font-weight="600"><text x="150" y="312">Easy</text><text x="275" y="312">Medium</text><text x="400" y="312">Hard</text></g>
+<defs><linearGradient id="gf1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2D2044" stop-opacity=".12"/><stop offset="100%" stop-color="#2D2044" stop-opacity=".02"/></linearGradient></defs>
+<path d="M150,30.6 L275,33.4 L400,36.2 L400,294 L150,294Z" fill="url(#gf1)"/>
+<!-- GPL -->
+<polyline points="150,103.3 275,211.6 400,276.4" fill="none" stroke="#E67E22" stroke-width="2.5" stroke-dasharray="8,5" opacity=".75"/>
+<circle cx="150" cy="103.3" r="5" fill="#E67E22" opacity=".75"/><circle cx="275" cy="211.6" r="5" fill="#E67E22" opacity=".75"/><circle cx="400" cy="276.4" r="5" fill="#E67E22" opacity=".75"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#E67E22" font-weight="600"><text x="150" y="96" text-anchor="middle">79.1</text><text x="275" y="226" text-anchor="middle">28.5</text><text x="400" y="270" text-anchor="middle">6.5</text></g>
+<!-- GABAR-RANK -->
+<polyline points="150,174.5 275,214.3 400,261.4" fill="none" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="4,4" opacity=".7"/>
+<circle cx="150" cy="174.5" r="5" fill="#E74C3C" opacity=".7"/><circle cx="275" cy="214.3" r="5" fill="#E74C3C" opacity=".7"/><circle cx="400" cy="261.4" r="5" fill="#E74C3C" opacity=".7"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#E74C3C" font-weight="600"><text x="150" y="168" text-anchor="middle">40.2</text><text x="262" y="230" text-anchor="end">27.8</text><text x="387" y="256" text-anchor="end">12.1</text></g>
+<!-- GABAR -->
+<polyline points="150,30.6 275,33.4 400,36.2" fill="none" stroke="#2D2044" stroke-width="3.5"/>
+<circle cx="150" cy="30.6" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="275" cy="33.4" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="400" cy="36.2" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/>
+<g font-family="JetBrains Mono" font-size="11" fill="#2D2044" font-weight="700"><text x="150" y="22" text-anchor="middle">95.5</text><text x="275" y="25" text-anchor="middle">92.2</text><text x="400" y="28" text-anchor="middle">89.2</text></g>
+</svg>
+<div class="chart-legend">
+<div class="leg-item primary"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#2D2044" stroke-width="3.5"/><circle cx="10" cy="6" r="3" fill="#2D2044"/></svg>GABAR</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#E67E22" stroke-width="2.5" stroke-dasharray="8,5"/></svg>GPL</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="4,4"/></svg>GABAR-RANK</div>
+</div>
+</div>
+<div class="side-panel">
+<div class="dc-card"><div class="dc-label">Design Choice</div><h3>Action Ranking</h3><p>Rank actions locally per state, avoiding brittle global value functions.</p></div>
+<div class="tk-card"><div class="tk-num">~14×</div><div class="tk-label">Gap on Hard</div><div class="tk-desc">GPL: 6.5%. GABAR-RANK: 12.1%. Ranking is the key differentiator.</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 2: Conditional Decoding -->
+<div class="slide">
+<h2>Results: Conditional Decoding</h2>
+<div class="sub-row"><div class="axis-tag">Design Choice 2</div><p class="subtitle">Sequential parameter selection vs. independent decoding — Combined coverage (%)</p></div>
+<div class="slide-body">
+<div class="chart-area">
+<svg viewBox="0 0 520 320" preserveAspectRatio="xMidYMid meet">
+<g stroke="#eee" stroke-width=".5"><line x1="70" y1="24" x2="480" y2="24"/><line x1="70" y1="84" x2="480" y2="84"/><line x1="70" y1="144" x2="480" y2="144"/><line x1="70" y1="204" x2="480" y2="204"/><line x1="70" y1="264" x2="480" y2="264"/></g>
+<g font-family="JetBrains Mono" font-size="10" fill="#bbb" text-anchor="end"><text x="64" y="28">100</text><text x="64" y="88">80</text><text x="64" y="148">60</text><text x="64" y="208">40</text><text x="64" y="268">20</text><text x="64" y="298">0</text></g>
+<text transform="rotate(-90)" x="-160" y="18" font-family="Source Sans 3" font-size="11" fill="#aaa" text-anchor="middle">Coverage (%)</text>
+<g font-family="Source Sans 3" font-size="13" fill="#444" text-anchor="middle" font-weight="600"><text x="150" y="312">Easy</text><text x="275" y="312">Medium</text><text x="400" y="312">Hard</text></g>
+<defs><linearGradient id="gf2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2D2044" stop-opacity=".12"/><stop offset="100%" stop-color="#2D2044" stop-opacity=".02"/></linearGradient></defs>
+<path d="M150,30.6 L275,33.4 L400,36.2 L400,294 L150,294Z" fill="url(#gf2)"/>
+<!-- GRAPL -->
+<polyline points="150,165.1 275,206.5 400,229.6" fill="none" stroke="#8E44AD" stroke-width="2.5" stroke-dasharray="8,5" opacity=".75"/>
+<circle cx="150" cy="165.1" r="5" fill="#8E44AD" opacity=".75"/><circle cx="275" cy="206.5" r="5" fill="#8E44AD" opacity=".75"/><circle cx="400" cy="229.6" r="5" fill="#8E44AD" opacity=".75"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#8E44AD" font-weight="600"><text x="150" y="158" text-anchor="middle">43.5</text><text x="275" y="220" text-anchor="middle">29.3</text><text x="400" y="244" text-anchor="middle">22.1</text></g>
+<!-- GABAR-CD -->
+<polyline points="150,87.4 275,100.8 400,132" fill="none" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="4,4" opacity=".7"/>
+<circle cx="150" cy="87.4" r="5" fill="#E74C3C" opacity=".7"/><circle cx="275" cy="100.8" r="5" fill="#E74C3C" opacity=".7"/><circle cx="400" cy="132" r="5" fill="#E74C3C" opacity=".7"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#E74C3C" font-weight="600"><text x="137" y="82" text-anchor="end">78.0</text><text x="262" y="95" text-anchor="end">72.7</text><text x="387" y="126" text-anchor="end">60.0</text></g>
+<!-- GABAR -->
+<polyline points="150,30.6 275,33.4 400,36.2" fill="none" stroke="#2D2044" stroke-width="3.5"/>
+<circle cx="150" cy="30.6" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="275" cy="33.4" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="400" cy="36.2" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/>
+<g font-family="JetBrains Mono" font-size="11" fill="#2D2044" font-weight="700"><text x="150" y="22" text-anchor="middle">95.5</text><text x="275" y="25" text-anchor="middle">92.2</text><text x="400" y="28" text-anchor="middle">89.2</text></g>
+</svg>
+<div class="chart-legend">
+<div class="leg-item primary"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#2D2044" stroke-width="3.5"/><circle cx="10" cy="6" r="3" fill="#2D2044"/></svg>GABAR</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#8E44AD" stroke-width="2.5" stroke-dasharray="8,5"/></svg>GRAPL</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="4,4"/></svg>GABAR-CD</div>
+</div>
+</div>
+<div class="side-panel">
+<div class="dc-card"><div class="dc-label">Design Choice</div><h3>Conditional Decoding</h3><p>GRU-based sequential parameter selection, each conditioned on prior choices.</p></div>
+<div class="tk-card"><div class="tk-num">~4×</div><div class="tk-label">Gap on Hard</div><div class="tk-desc">GRAPL (no dependencies): 22.1%. Removing GRU decoder drops 29 pts.</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 3: Action-Centric Graph -->
+<div class="slide">
+<h2>Results: Action-Centric Graph</h2>
+<div class="sub-row"><div class="axis-tag">Design Choice 3</div><p class="subtitle">Explicit action nodes vs. implicit action representation — Combined coverage (%)</p></div>
+<div class="slide-body">
+<div class="chart-area">
+<svg viewBox="0 0 520 320" preserveAspectRatio="xMidYMid meet">
+<g stroke="#eee" stroke-width=".5"><line x1="70" y1="24" x2="480" y2="24"/><line x1="70" y1="84" x2="480" y2="84"/><line x1="70" y1="144" x2="480" y2="144"/><line x1="70" y1="204" x2="480" y2="204"/><line x1="70" y1="264" x2="480" y2="264"/></g>
+<g font-family="JetBrains Mono" font-size="10" fill="#bbb" text-anchor="end"><text x="64" y="28">100</text><text x="64" y="88">80</text><text x="64" y="148">60</text><text x="64" y="208">40</text><text x="64" y="268">20</text><text x="64" y="298">0</text></g>
+<text transform="rotate(-90)" x="-160" y="18" font-family="Source Sans 3" font-size="11" fill="#aaa" text-anchor="middle">Coverage (%)</text>
+<g font-family="Source Sans 3" font-size="13" fill="#444" text-anchor="middle" font-weight="600"><text x="150" y="312">Easy</text><text x="275" y="312">Medium</text><text x="400" y="312">Hard</text></g>
+<defs><linearGradient id="gf3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2D2044" stop-opacity=".12"/><stop offset="100%" stop-color="#2D2044" stop-opacity=".02"/></linearGradient></defs>
+<path d="M150,30.6 L275,33.4 L400,36.2 L400,294 L150,294Z" fill="url(#gf3)"/>
+<!-- ASNets -->
+<polyline points="150,89 275,117.3 400,162.9" fill="none" stroke="#27AE60" stroke-width="2.5" stroke-dasharray="8,5" opacity=".75"/>
+<circle cx="150" cy="89" r="5" fill="#27AE60" opacity=".75"/><circle cx="275" cy="117.3" r="5" fill="#27AE60" opacity=".75"/><circle cx="400" cy="162.9" r="5" fill="#27AE60" opacity=".75"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#27AE60" font-weight="600"><text x="150" y="82" text-anchor="middle">76.0</text><text x="275" y="131" text-anchor="middle">65.4</text><text x="400" y="177" text-anchor="middle">48.5</text></g>
+<!-- GABAR-ACT -->
+<polyline points="150,191.4 275,231.8 400,272" fill="none" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="4,4" opacity=".7"/>
+<circle cx="150" cy="191.4" r="5" fill="#E74C3C" opacity=".7"/><circle cx="275" cy="231.8" r="5" fill="#E74C3C" opacity=".7"/><circle cx="400" cy="272" r="5" fill="#E74C3C" opacity=".7"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#E74C3C" font-weight="600"><text x="150" y="184" text-anchor="middle">33.5</text><text x="275" y="246" text-anchor="middle">18.4</text><text x="400" y="266" text-anchor="middle">7.4</text></g>
+<!-- GABAR -->
+<polyline points="150,30.6 275,33.4 400,36.2" fill="none" stroke="#2D2044" stroke-width="3.5"/>
+<circle cx="150" cy="30.6" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="275" cy="33.4" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="400" cy="36.2" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/>
+<g font-family="JetBrains Mono" font-size="11" fill="#2D2044" font-weight="700"><text x="150" y="22" text-anchor="middle">95.5</text><text x="275" y="25" text-anchor="middle">92.2</text><text x="400" y="28" text-anchor="middle">89.2</text></g>
+</svg>
+<div class="chart-legend">
+<div class="leg-item primary"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#2D2044" stroke-width="3.5"/><circle cx="10" cy="6" r="3" fill="#2D2044"/></svg>GABAR</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#27AE60" stroke-width="2.5" stroke-dasharray="8,5"/></svg>ASNets</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="4,4"/></svg>GABAR-ACT</div>
+</div>
+</div>
+<div class="side-panel">
+<div class="dc-card"><div class="dc-label">Design Choice</div><h3>Action-Centric Graph</h3><p>Actions as explicit graph nodes, connected to objects via parameter role edges.</p></div>
+<div class="tk-card"><div class="tk-num">~12×</div><div class="tk-label">Gap on Hard</div><div class="tk-desc">Without action nodes: 89.2%→7.4%. ASNets limited to 48.5%.</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 4: LLMs -->
+<div class="slide">
+<h2>Results: GABAR vs. LLMs</h2>
+<div class="sub-row"><div class="axis-tag">Structure vs. Scale</div><p class="subtitle">Structural inductive bias vs. pattern matching from training data — Combined coverage (%)</p></div>
+<div class="slide-body">
+<div class="chart-area">
+<svg viewBox="0 0 520 320" preserveAspectRatio="xMidYMid meet">
+<g stroke="#eee" stroke-width=".5"><line x1="70" y1="24" x2="480" y2="24"/><line x1="70" y1="84" x2="480" y2="84"/><line x1="70" y1="144" x2="480" y2="144"/><line x1="70" y1="204" x2="480" y2="204"/><line x1="70" y1="264" x2="480" y2="264"/></g>
+<g font-family="JetBrains Mono" font-size="10" fill="#bbb" text-anchor="end"><text x="64" y="28">100</text><text x="64" y="88">80</text><text x="64" y="148">60</text><text x="64" y="208">40</text><text x="64" y="268">20</text><text x="64" y="298">0</text></g>
+<text transform="rotate(-90)" x="-160" y="18" font-family="Source Sans 3" font-size="11" fill="#aaa" text-anchor="middle">Coverage (%)</text>
+<g font-family="Source Sans 3" font-size="13" fill="#444" text-anchor="middle" font-weight="600"><text x="150" y="312">Easy</text><text x="275" y="312">Medium</text><text x="400" y="312">Hard</text></g>
+<defs><linearGradient id="gf4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2D2044" stop-opacity=".12"/><stop offset="100%" stop-color="#2D2044" stop-opacity=".02"/></linearGradient></defs>
+<path d="M150,30.6 L275,33.4 L400,36.2 L400,294 L150,294Z" fill="url(#gf4)"/>
+<!-- O3 -->
+<polyline points="150,193.8 275,260.1 400,292.9" fill="none" stroke="#4A90D9" stroke-width="2.5" stroke-dasharray="8,5" opacity=".75"/>
+<circle cx="150" cy="193.8" r="5" fill="#4A90D9" opacity=".75"/><circle cx="275" cy="260.1" r="5" fill="#4A90D9" opacity=".75"/><circle cx="400" cy="292.9" r="5" fill="#4A90D9" opacity=".75"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#4A90D9" font-weight="600"><text x="150" y="187" text-anchor="middle">33.4</text><text x="275" y="274" text-anchor="middle">11.6</text><text x="400" y="287" text-anchor="middle">0.4</text></g>
+<!-- Gemini -->
+<polyline points="150,175.2 275,248 400,285.9" fill="none" stroke="#34A853" stroke-width="2.5" stroke-dasharray="4,4" opacity=".7"/>
+<circle cx="150" cy="175.2" r="5" fill="#34A853" opacity=".7"/><circle cx="275" cy="248" r="5" fill="#34A853" opacity=".7"/><circle cx="400" cy="285.9" r="5" fill="#34A853" opacity=".7"/>
+<g font-family="JetBrains Mono" font-size="10" fill="#34A853" font-weight="600"><text x="137" y="169" text-anchor="end">44.0</text><text x="262" y="243" text-anchor="end">17.1</text><text x="387" y="281" text-anchor="end">3.0</text></g>
+<!-- GABAR -->
+<polyline points="150,30.6 275,33.4 400,36.2" fill="none" stroke="#2D2044" stroke-width="3.5"/>
+<circle cx="150" cy="30.6" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="275" cy="33.4" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/><circle cx="400" cy="36.2" r="6" fill="#2D2044" stroke="#fff" stroke-width="2"/>
+<g font-family="JetBrains Mono" font-size="11" fill="#2D2044" font-weight="700"><text x="150" y="22" text-anchor="middle">95.5</text><text x="275" y="25" text-anchor="middle">92.2</text><text x="400" y="28" text-anchor="middle">89.2</text></g>
+</svg>
+<div class="chart-legend">
+<div class="leg-item primary"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#2D2044" stroke-width="3.5"/><circle cx="10" cy="6" r="3" fill="#2D2044"/></svg>GABAR</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#4A90D9" stroke-width="2.5" stroke-dasharray="8,5"/></svg>OpenAI O3</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#34A853" stroke-width="2.5" stroke-dasharray="4,4"/></svg>Gemini 2.5 Pro</div>
+</div>
+</div>
+<div class="side-panel">
+<div class="dc-card"><div class="dc-label">Comparison</div><h3>LLMs as Planners</h3><p>One-shot prompted. Pattern matching fails as problems scale.</p></div>
+<div class="tk-card"><div class="tk-num">89% vs 3%</div><div class="tk-label">Hard Coverage</div><div class="tk-desc">O3: 0.4%. Gemini: 3.0%. Plan quality: 0.51 vs GABAR's 0.99.</div></div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="nav-bar" id="navBar">
+<div class="nav-item">Introduction</div>
+<div class="nav-item active">GABAR</div>
+<div class="nav-item">GammaZero</div>
+<div class="nav-item">Conclusion</div>
+</div>
+<script>
+(function(){
+var slides=Array.from(document.querySelectorAll('.slide')),current=0;
+var pbar=document.getElementById('progressBar'),ctr=document.getElementById('slideCounter');
+function show(n,dir){if(n<0||n>=slides.length||n===current)return;var out=slides[current],inc=slides[n];out.classList.remove('active');out.classList.add('prev');out.style.transform=dir==='next'?'translateX(-40px)':'translateX(40px)';slides.forEach(function(s){if(s!==out&&s!==inc){s.classList.remove('active','prev');s.style.transform=''}});inc.classList.remove('prev');inc.classList.add('active');inc.style.transform='translateX(0)';current=n;upd()}
+function upd(){pbar.style.width=((current+1)/slides.length*100)+'%';ctr.textContent=(current+1)+' / '+slides.length}
+
+var tx=0;document.addEventListener('touchstart',function(e){tx=e.changedTouches[0].screenX},{passive:true});document.addEventListener('touchend',function(e){var dx=e.changedTouches[0].screenX-tx;if(Math.abs(dx)>50){if(dx<0&&current<slides.length-1)show(current+1,'next');if(dx>0&&current>0)show(current-1,'prev')}},{passive:true});
+upd()
+  // Expose nav to parent scope
+  window.__slideNav = {
+    advance: function() { var s = current; if(current<slides.length-1)show(current+1,"next"); return current !== s; },
+    retreat: function() { var s = current; if(current>0)show(current-1,"prev"); return current !== s; },
+    revealAll: function() { while(window.__slideNav.advance()) {} }
+  };
+
+})();
+</script>
+
+
+
+
+<script>
+// ═══ Unified PPT-style navigation ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body></html>
