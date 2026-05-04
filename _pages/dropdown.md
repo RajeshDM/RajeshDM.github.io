@@ -7,4 +7,6 @@ dropdown: true
 children:
   - title: publications
     permalink: /publications/
+  - title: defense
+    permalink: /assets/html/defense/
 ---
