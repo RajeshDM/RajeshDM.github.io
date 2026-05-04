@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:#f0f0f0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw,177.78vh);height:min(100vh,56.25vw);
+  background:#2D2044;color:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:#C5A55A;z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:50px 80px 16px;min-height:0;overflow:hidden}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;margin-bottom:.5em;}
+p,li{font-size:1.55rem;line-height:1.6}
+.muted{color:#B0A8C0}
+.nav-bar{height:44px;background:#1E1530;display:flex;align-items:center;flex-shrink:0}
+.nav-section{flex:1;text-align:center;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em;position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+.nav-section.active{color:#fff;background:#2D2044}
+.nav-section.active::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#C5A55A}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+    <h2 style="color:#C5A55A">GABAR: What We Established</h2>
+    <div style="max-width:750px;margin-top:16px">
+      <div class="my-step" data-step="1" style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><p style="color:rgba(255,255,255,.85);font-size:1.5rem"><span style="color:#C5A55A;font-weight:700">Action-centric graph</span> is the most critical component</p></div>
+      <div class="my-step" data-step="2" style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><p style="color:rgba(255,255,255,.85);font-size:1.5rem"><span style="color:#C5A55A;font-weight:700">Action ranking</span> with <span style="color:#C5A55A;font-weight:700">conditional decoding</span> outperforms value functions</p></div>
+      <div class="my-step" data-step="3" style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><p style="color:rgba(255,255,255,.85);font-size:1.5rem">Generalization to <span style="color:#C5A55A;font-weight:700">8x larger</span> problems, <span style="color:#C5A55A;font-weight:700">89.2%</span> coverage on hard instances</p></div>
+      <div class="my-step" data-step="4" style="padding:12px 0"><p style="color:rgba(255,255,255,.85);font-size:1.5rem">Outperforms both L4P baselines and <span style="color:#C5A55A;font-weight:700">state-of-the-art LLMs</span></p></div>
+    </div>
+    <p class="my-step" data-step="5" style="color:#B0A8C0;font-size:1.5rem;margin-top:24px;font-style:italic">But GABAR assumes full observability. What happens when we drop that assumption?</p>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-section">Introduction</div>
+    <div class="nav-section active">GABAR</div>
+    <div class="nav-section">GammaZero</div>
+    <div class="nav-section">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0, totalSteps=5, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+</body></html>

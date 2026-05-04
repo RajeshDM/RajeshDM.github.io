@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* === Original viz styles === */
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f0f0;color:#2E1A38;height:100vh;display:flex;align-items:center;justify-content:center;user-select:none;overflow:hidden}
+button{font-family:inherit}
+.hdr{text-align:center;padding:8px 16px 2px}
+.hdr h1{font-size:20px;font-weight:700;color:#2D2044}
+.hdr p{font-size:11px;color:#888;margin-top:2px}
+.stage-box{display:inline-block;background:#F8F6FA;border:1px solid #D4CDE0;border-radius:7px;padding:5px 16px;margin-top:4px}
+.stage-box .st{font-size:13px;font-weight:700;color:#2D2044}
+.stage-box .ss{font-size:10px;color:#6B5B7B;margin-top:1px}
+.main{flex:1;display:flex;flex-direction:column;gap:4px;padding:4px 14px;min-height:0}
+.panel{flex-shrink:0;display:flex;flex-direction:column}
+.panel-label{font-size:9px;font-weight:700;color:#6B5B7B;letter-spacing:.08em;margin-bottom:2px;text-align:center}
+.panel-wrap{background:#FDFCFE;border:1px solid #D4CDE0;border-radius:9px;overflow:hidden}
+.tree-panel{flex:1;display:flex;flex-direction:column;min-height:0}
+.tree-wrap{flex:1;background:#F8F6FA;border:1px solid #D4CDE0;border-radius:9px;overflow:hidden;min-height:0}
+.ctrls{display:flex;justify-content:space-between;align-items:center;padding:4px 14px 8px;flex-wrap:wrap;gap:6px}
+.btn{padding:4px 12px;font-size:11px;font-weight:600;background:#E5DFE8;color:#2E1A38;border:1px solid #C0A8CC;border-radius:5px;cursor:pointer}
+.btn:disabled{opacity:.35;cursor:default}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin:0 2px;cursor:pointer;transition:all .2s}
+.legend{display:flex;align-items:center;gap:3px;font-size:9px;color:#6B5B7B}
+.legend-shape{width:12px;height:8px;border-radius:2px}
+.legend-circle{width:8px;height:8px;border-radius:50%}
+
+
+
+/* === Presentation chrome overrides === */
+html,body{font-family:'Source Sans 3',sans-serif !important}
+
+/* Wrapper layout */
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);
+  height:min(100vh, 56.25vw);
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);
+  overflow:hidden;
+}
+.gold-top-bar{height:4px;background:#C5A55A;flex-shrink:0}
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0}
+
+/* Restyle original header fonts */
+.pres-content h1,.pres-content [style*="font-size:19px"],.pres-content [style*="font-size:18px"],.pres-content [style*="font-size:20px"],.hdr h1{
+  font-family:'Playfair Display',serif !important;color:#2D2044 !important
+}
+
+/* Restyle original buttons to match presentation */
+.pres-content button,.ctrls button{
+  font-family:'Source Sans 3',sans-serif !important;
+  background:#2D2044 !important;
+  color:rgba(255,255,255,.85) !important;
+  border:none !important;
+  border-radius:4px !important;
+  padding:5px 16px !important;
+  font-size:0.75rem !important;
+  font-weight:600 !important;
+  cursor:pointer !important;
+  transition:all .2s !important;
+}
+.pres-content button:hover{background:#3D2E58 !important;color:#fff !important}
+.pres-content button:disabled{opacity:.25 !important;cursor:default !important}
+
+/* Demo button special style */
+.pres-content button[id$="demoB"],
+.pres-content button[id$="demoB"]{
+  background:rgba(197,165,90,.15) !important;
+  color:#2D2044 !important;
+  border:1.5px solid rgba(197,165,90,.4) !important;
+  font-weight:700 !important;
+}
+
+/* Restyle dots container */
+.pres-content span[id$="dots"]{display:flex;align-items:center;gap:3px}
+
+/* Bottom nav bar */
+.nav-bar{height:44px;background:#2D2044;display:flex;align-items:center;flex-shrink:0}
+.nav-section{flex:1;text-align:center;padding:12px 0;font-size:0.85rem;font-family:'Source Sans 3',sans-serif;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em;position:relative;cursor:default}
+.nav-section.active{color:#C5A55A}
+.nav-section.active::before{content:'';position:absolute;top:0;left:15%;right:15%;height:3px;background:#C5A55A;border-radius:0 0 2px 2px}
+
+/* Controls area restyle */
+.ctrls,.pres-content > div:last-child{
+  background:#F8F6FA;border-top:1px solid #E8E4ED;padding:5px 28px !important
+}
+
+</style></head><body>
+<div class="pres-wrapper">
+  <div class="gold-top-bar"></div>
+  <div class="pres-content" style="flex:1;display:flex;flex-direction:column;min-height:0">
+    
+<div class="hdr">
+<h1>GABAR: Beam Search Decoding over Graph Node Embeddings</h1>
+<p>The GRU decoder ranks graph node embeddings level by level, like beam search in language models</p>
+<div class="stage-box"><div class="st" id="stTitle">Overview</div><div class="ss" id="stSub">The GNN processes the state graph and produces an embedding for each node</div></div>
+</div>
+<div class="main">
+<div class="panel" style="flex:0 0 auto;height:35%;min-height:120px">
+<div class="panel-label">STATE GRAPH</div>
+<div class="panel-wrap" style="flex:1"><svg id="graphSvg" viewBox="0 0 370 160" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"></svg></div>
+</div>
+<div class="tree-panel" style="min-height:0">
+<div class="panel-label" style="color:#8E44AD">BEAM SEARCH DECODING TREE</div>
+<div class="tree-wrap" style="min-height:0"><svg id="treeSvg" viewBox="0 0 710 260" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"></svg></div>
+</div>
+</div>
+<div class="ctrls">
+<div style="display:flex;align-items:center;gap:6px">
+<button class="btn" id="prevBtn">&#8592; Prev</button>
+<span id="dots"></span>
+<button class="btn" id="nextBtn">Next &#8594;</button>
+</div>
+<div style="display:flex;gap:14px;align-items:center">
+<div class="legend"><div class="legend-shape" style="background:rgba(36,113,163,.13);border:1px solid #2471A3"></div>Action schema</div>
+<div class="legend"><div class="legend-circle" style="background:#B08E2A"></div>Object</div>
+<div class="legend"><div class="legend-shape" style="background:rgba(192,57,43,.13);border:1px solid #C0392B"></div>Predicate</div>
+<div class="legend"><div class="legend-shape" style="background:rgba(30,132,73,.13);border:1px solid #1E8449;border-style:dashed"></div>Goal pred.</div>
+</div>
+</div>
+<script>
+var co={action:'#2471A3',actionDim:'#E8F0F8',object:'#B08E2A',objectDim:'#FDF6E3',pred:'#C0392B',predDim:'#FDECEA',goal:'#1E8449',goalDim:'#E8F8F0',text:'#2E1A38',muted:'#6B5B7B',dim:'#C0A8CC',gru:'#8E44AD',gruDim:'#F4ECF7',selected:'#27AE60',selectedBg:'#EAFAF1',pruned:'#BDC3C7',star:'#F39C12'};
+var gColor={action:co.action,object:co.object,pred:co.pred,goal:co.goal};
+var gDim={action:co.actionDim,object:co.objectDim,pred:co.predDim,goal:co.goalDim};
+
+// State graph
+var GN=[{id:'move',x:95,y:30,l:'Move',t:'action'},{id:'pick',x:255,y:30,l:'Pick',t:'action'},{id:'robot',x:25,y:85,l:'Robot',t:'object'},{id:'rm_a',x:85,y:85,l:'A',t:'object'},{id:'rm_b',x:145,y:85,l:'B',t:'object'},{id:'pkg',x:205,y:85,l:'Pkg',t:'object'},{id:'rm_c',x:265,y:85,l:'C',t:'object'},{id:'rm_d',x:325,y:85,l:'D',t:'object'},{id:'at_bot',x:50,y:140,l:'At(Bot,A)',t:'pred'},{id:'hand_e',x:145,y:140,l:'HandEmpty',t:'pred'},{id:'on_pkg',x:235,y:140,l:'On(Pkg,C)',t:'pred'},{id:'g_on',x:330,y:140,l:'G-On(Pkg,D)',t:'goal'}];
+var GE=[['move','robot'],['move','rm_a'],['move','rm_b'],['pick','robot'],['pick','pkg'],['at_bot','robot'],['at_bot','rm_a'],['on_pkg','pkg'],['on_pkg','rm_c'],['hand_e','robot'],['g_on','pkg'],['g_on','rm_d']];
+var GNM={};GN.forEach(function(n){GNM[n.id]=n;});
+
+// Beam tree
+var LX=[48,170,310,440],RX=570,RW=120;
+var TREE=[
+{id:'root',lv:0,y:130,pa:null,gr:null,sc:null},
+{id:'t_move',l:'Move',lv:1,y:80,pa:'root',gr:'move',sc:.85},
+{id:'t_pick',l:'Pick',lv:1,y:210,pa:'root',gr:'pick',sc:.10},
+{id:'t_m_a',l:'A',lv:2,y:55,pa:'t_move',gr:'rm_a',sc:.92},
+{id:'t_m_b',l:'B',lv:2,y:125,pa:'t_move',gr:'rm_b',sc:.04,pruned:true},
+{id:'t_p_pkg',l:'Pkg',lv:2,y:210,pa:'t_pick',gr:'pkg',sc:.80,terminal:true,action:'Pick(Pkg)',cumSc:.080},
+{id:'t_ma_b',l:'B',lv:3,y:38,pa:'t_m_a',gr:'rm_b',sc:.78,terminal:true,action:'Move(A,B)',cumSc:.610,best:true},
+{id:'t_ma_c',l:'C',lv:3,y:90,pa:'t_m_a',gr:'rm_c',sc:.18,terminal:true,action:'Move(A,C)',cumSc:.141}
+];
+var TM={};TREE.forEach(function(n){TM[n.id]=n;});
+var RANKED=[{action:'Move(A,B)',sc:.610,rank:1,best:true,fn:'t_ma_b'},{action:'Move(A,C)',sc:.141,rank:2,fn:'t_ma_c'},{action:'Pick(Pkg)',sc:.080,rank:3,fn:'t_p_pkg'}];
+
+var STAGES=[
+{t:'Overview: Graph \u2192 GNN \u2192 Node Embeddings',s:'The GNN processes the state graph and produces an embedding for each node. The decoder ranks these to construct grounded actions.',hl:null},
+{t:'Step 1: Rank Action Schema Nodes',s:'Score each action schema using the graph-level embedding (like picking the first token). Beam width = 2.',hl:'action'},
+{t:'Step 2: Rank Objects for Param 1 (?from)',s:'The GRU hidden state is conditioned on the selected schema. It scores object nodes for the first parameter.',hl:'object'},
+{t:'Step 3: Rank Objects for Param 2 (?to)',s:'The GRU state is updated with param 1. It scores objects for the second slot. Each choice is conditioned on all prior selections.',hl:'object'},
+{t:'Result: Ranked Grounded Actions',s:'Multiply scores along each beam path to get cumulative probabilities. The top-ranked applicable action is executed.',hl:null}
+];
+var maxStep=STAGES.length-1;
+var VIS=[new Set(['root']),new Set(['root','t_move','t_pick']),new Set(['root','t_move','t_pick','t_m_a','t_m_b','t_p_pkg']),new Set(['root','t_move','t_pick','t_m_a','t_m_b','t_p_pkg','t_ma_b','t_ma_c']),new Set(['root','t_move','t_pick','t_m_a','t_m_b','t_p_pkg','t_ma_b','t_ma_c'])];
+
+var step=0;
+document.getElementById('nextBtn').onclick=function(){if(step<maxStep){step++;render();}};
+document.getElementById('prevBtn').onclick=function(){if(step>0){step--;render();}};
+
+
+function render(){
+  document.getElementById('stTitle').textContent=STAGES[step].t;
+  document.getElementById('stSub').textContent=STAGES[step].s;
+  document.getElementById('prevBtn').disabled=step===0;
+  document.getElementById('nextBtn').disabled=step===maxStep;
+  var dots='';for(var i=0;i<=maxStep;i++){dots+='<span class="dot" style="width:'+(i===step?10:7)+'px;height:'+(i===step?10:7)+'px;background:'+(i===step?co.text:i<step?co.muted:co.dim)+'"></span>';}
+  document.getElementById('dots').innerHTML=dots;
+  var hl=STAGES[step].hl;
+
+  // State graph
+  var g='';
+  g+='<text x="5" y="33" fill="'+co.action+'" font-size="7" font-weight="600" opacity=".5">Actions</text>';
+  g+='<text x="5" y="88" fill="'+co.object+'" font-size="7" font-weight="600" opacity=".5">Objects</text>';
+  g+='<text x="5" y="143" fill="'+co.pred+'" font-size="7" font-weight="600" opacity=".5">State</text>';
+  if(hl==='action')g+='<rect x="60" y="12" width="228" height="36" rx="5" fill="'+co.action+'08" stroke="'+co.action+'" stroke-width="1.2" stroke-dasharray="5 3"/><text x="174" y="10" text-anchor="middle" fill="'+co.action+'" font-size="7" font-weight="700">\u2191 ranking these</text>';
+  if(hl==='object')g+='<rect x="8" y="67" width="348" height="36" rx="5" fill="'+co.object+'08" stroke="'+co.object+'" stroke-width="1.2" stroke-dasharray="5 3"/><text x="182" y="65" text-anchor="middle" fill="'+co.object+'" font-size="7" font-weight="700">\u2191 ranking these</text>';
+  GE.forEach(function(e){var f=GNM[e[0]],t=GNM[e[1]];g+='<line x1="'+f.x+'" y1="'+f.y+'" x2="'+t.x+'" y2="'+t.y+'" stroke="#9B8DAB" stroke-width=".9" stroke-opacity=".4"/>';});
+  GN.forEach(function(n){
+    var c=gColor[n.t],bg=gDim[n.t],isObj=n.t==='object',isGoal=n.t==='goal',isPred=n.t==='pred',isAct=n.t==='action';
+    var thl=(hl==='action'&&isAct)||(hl==='object'&&isObj);var dim2=hl&&!thl;
+    if(isObj)g+='<circle cx="'+n.x+'" cy="'+n.y+'" r="14" fill="'+bg+'" stroke="'+c+'" stroke-width="'+(thl?1.5:1)+'" opacity="'+(dim2?.2:1)+'"/>';
+    else{var w=isGoal?72:isPred?58:56;g+='<rect x="'+(n.x-w/2)+'" y="'+(n.y-11)+'" width="'+w+'" height="22" rx="4" fill="'+bg+'" stroke="'+c+'" stroke-width="'+(thl?1.5:1)+'" stroke-dasharray="'+(isGoal?'4 2':'none')+'" opacity="'+(dim2?.2:1)+'"/>';}
+    g+='<text x="'+n.x+'" y="'+(n.y+4)+'" text-anchor="middle" fill="'+c+'" font-size="'+(isObj?9:isGoal?8:9)+'" font-weight="600" opacity="'+(dim2?.2:1)+'">'+n.l+'</text>';
+  });
+  document.getElementById('graphSvg').innerHTML=g;
+
+  // Beam tree
+  var vis=VIS[step],h='';
+  // Column headers
+  if(step>=1){h+='<text x="'+LX[1]+'" y="14" text-anchor="middle" fill="'+co.action+'" font-size="9" font-weight="700">Action Schema</text>';h+='<text x="'+LX[1]+'" y="25" text-anchor="middle" fill="'+co.action+'88" font-size="8">"which action?"</text>';}
+  if(step>=2){h+='<text x="'+LX[2]+'" y="14" text-anchor="middle" fill="'+co.object+'" font-size="9" font-weight="700">Param 1 (?from)</text>';h+='<text x="'+LX[2]+'" y="25" text-anchor="middle" fill="'+co.object+'88" font-size="8">"which object?"</text>';}
+  if(step>=3){h+='<text x="'+LX[3]+'" y="14" text-anchor="middle" fill="'+co.object+'" font-size="9" font-weight="700">Param 2 (?to)</text>';h+='<text x="'+LX[3]+'" y="25" text-anchor="middle" fill="'+co.object+'88" font-size="8">"which dest?"</text>';}
+  if(step>=4)h+='<text x="'+(RX+RW/2)+'" y="16" text-anchor="middle" fill="'+co.selected+'" font-size="9" font-weight="700">Ranked Actions</text>';
+  h+='<text x="'+LX[0]+'" y="16" text-anchor="middle" fill="'+co.gru+'" font-size="9" font-weight="700">Embeddings</text>';
+
+  // Best path
+  var bestPath=new Set();
+  if(step>=4){var bn=TM['t_ma_b'];while(bn){bestPath.add(bn.id);bn=bn.pa?TM[bn.pa]:null;}}
+
+  // Tree edges
+  TREE.forEach(function(n){
+    if(!n.pa||!vis.has(n.id))return;
+    var p=TM[n.pa],schW=56,schH=28,nodeR=16,rootW=62;
+    var px=LX[p.lv]+(p.lv===0?rootW/2+2:p.lv===1?schW/2+2:nodeR+2);
+    var nx=LX[n.lv]-(n.lv===1?schW/2+2:nodeR+2);
+    var isBP=bestPath.has(n.id)&&bestPath.has(n.pa);
+    h+='<path d="M'+px+','+p.y+' C'+((px+nx)/2)+','+p.y+' '+((px+nx)/2)+','+n.y+' '+nx+','+n.y+'" fill="none" stroke="'+(n.pruned?co.pruned:isBP?co.selected:'#9B8DAB')+'" stroke-width="'+(isBP?2.5:1)+'" stroke-opacity="'+(n.pruned?.25:isBP?.7:.35)+'" stroke-dasharray="'+(n.pruned?'4 3':'none')+'"/>';
+  });
+
+  // Arrows to ranked + cumulative scores
+  if(step>=4){
+    RANKED.forEach(function(r,i){
+      var fn=TM[r.fn];if(!fn||!vis.has(r.fn))return;
+      var ry=50+i*80,fx=LX[fn.lv]+16+2,fy=fn.y;
+      h+='<path d="M'+fx+','+fy+' C'+(fx+50)+','+fy+' '+(RX-50)+','+ry+' '+(RX-5)+','+ry+'" fill="none" stroke="'+(r.best?co.selected:co.muted)+'" stroke-width="'+(r.best?2:1)+'" stroke-opacity="'+(r.best?.55:.3)+'"/>';
+      var t=.45,mx=fx+(RX-5-fx)*t,my=fy+(ry-fy)*t;
+      h+='<rect x="'+(mx-22)+'" y="'+(my-8)+'" width="44" height="15" rx="3" fill="'+(r.best?co.selectedBg:'#FDFCFE')+'" stroke="'+(r.best?co.selected+'55':co.border)+'" stroke-width=".5"/>';
+      h+='<text x="'+mx+'" y="'+(my+3)+'" text-anchor="middle" fill="'+(r.best?co.selected:co.muted)+'" font-size="8" font-weight="600">= '+r.sc.toFixed(3)+'</text>';
+    });
+  }
+
+  // Tree nodes
+  TREE.forEach(function(n){
+    if(!vis.has(n.id))return;
+    var x=LX[n.lv],isRoot=n.lv===0,isSch=n.lv===1;
+    var c=isRoot?co.gru:isSch?co.action:co.object;
+    var bg=isRoot?co.gruDim:isSch?co.actionDim:co.objectDim;
+    if(isRoot){h+='<rect x="'+(x-31)+'" y="'+(n.y-17)+'" width="62" height="34" rx="7" fill="'+bg+'" stroke="'+c+'" stroke-width="1"/>';h+='<text x="'+x+'" y="'+(n.y-2)+'" text-anchor="middle" fill="'+c+'" font-size="9" font-weight="700">GNN</text>';h+='<text x="'+x+'" y="'+(n.y+9)+'" text-anchor="middle" fill="'+c+'" font-size="8" font-weight="600">Output</text>';}
+    else if(isSch){h+='<rect x="'+(x-28)+'" y="'+(n.y-14)+'" width="56" height="28" rx="4" fill="'+bg+'" stroke="'+c+'" stroke-width="'+(bestPath.has(n.id)?2:1)+'"/>';h+='<text x="'+x+'" y="'+(n.y+4)+'" text-anchor="middle" fill="'+c+'" font-size="11" font-weight="600">'+n.l+'</text>';}
+    else{h+='<circle cx="'+x+'" cy="'+n.y+'" r="16" fill="'+bg+'" stroke="'+c+'" stroke-width="'+(bestPath.has(n.id)?2:1)+'" opacity="'+(n.pruned?.3:1)+'"/>';h+='<text x="'+x+'" y="'+(n.y+4)+'" text-anchor="middle" fill="'+c+'" font-size="10" font-weight="600" opacity="'+(n.pruned?.3:1)+'">'+n.l+'</text>';}
+    if(n.sc!=null&&!n.pruned){
+      if(isSch){h+='<rect x="'+(x+28+5)+'" y="'+(n.y-8)+'" width="32" height="16" rx="3" fill="'+c+'12" stroke="'+c+'40" stroke-width=".5"/>';h+='<text x="'+(x+28+21)+'" y="'+(n.y+3)+'" text-anchor="middle" fill="'+c+'" font-size="9" font-weight="700">'+n.sc.toFixed(2)+'</text>';}
+      else if(!isRoot){h+='<rect x="'+(x-16)+'" y="'+(n.y+16+3)+'" width="32" height="14" rx="3" fill="'+c+'12" stroke="'+c+'40" stroke-width=".5"/>';h+='<text x="'+x+'" y="'+(n.y+16+13)+'" text-anchor="middle" fill="'+c+'" font-size="8" font-weight="700">'+n.sc.toFixed(2)+'</text>';}
+    }
+    if(n.pruned){h+='<line x1="'+(x-16)+'" y1="'+n.y+'" x2="'+(x+16)+'" y2="'+n.y+'" stroke="'+co.pruned+'" stroke-width="1.5" opacity=".6"/>';h+='<text x="'+(x+22)+'" y="'+(n.y+4)+'" fill="'+co.pruned+'" font-size="8" font-style="italic">pruned</text>';}
+    if(n.best&&step>=4)h+='<text x="'+(x-26)+'" y="'+(n.y+5)+'" fill="'+co.star+'" font-size="15">\u2605</text>';
+  });
+
+  // Ranked output boxes
+  if(step>=4){
+    RANKED.forEach(function(r,i){
+      var ry=50+i*80;
+      h+='<rect x="'+RX+'" y="'+(ry-26)+'" width="'+RW+'" height="52" rx="7" fill="'+(r.best?co.selectedBg:'#fff')+'" stroke="'+(r.best?co.selected:co.border)+'" stroke-width="'+(r.best?2.2:.8)+'"/>';
+      h+='<text x="'+(RX+11)+'" y="'+(ry-7)+'" fill="'+(r.best?co.selected:co.muted)+'" font-size="10" font-weight="800">#'+r.rank+'</text>';
+      h+='<text x="'+(RX+RW/2+8)+'" y="'+(ry-7)+'" text-anchor="middle" fill="'+(r.best?co.selected:co.text)+'" font-size="11" font-weight="700" font-family="Consolas,monospace">'+r.action+'</text>';
+      h+='<rect x="'+(RX+11)+'" y="'+(ry+6)+'" width="'+(RW-22)+'" height="9" rx="3" fill="#EDEAF0"/>';
+      h+='<rect x="'+(RX+11)+'" y="'+(ry+6)+'" width="'+((RW-22)*r.sc/.65)+'" height="9" rx="3" fill="'+(r.best?co.selected:co.dim)+'"/>';
+      h+='<text x="'+(RX+RW-11)+'" y="'+(ry+14)+'" text-anchor="end" fill="'+(r.best?co.selected:co.muted)+'" font-size="8.5" font-weight="600">'+r.sc.toFixed(3)+'</text>';
+    });
+  }
+
+  if(step===0)h+='<text x="380" y="130" text-anchor="middle" fill="'+co.dim+'" font-size="13" font-style="italic">Press \u2192 to begin beam search decoding</text>';
+  document.getElementById('treeSvg').innerHTML=h;
+}
+render();
+</script>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-section">Introduction</div>
+    <div class="nav-section active">GABAR</div>
+    <div class="nav-section">GammaZero</div>
+    <div class="nav-section">Conclusion</div>
+  </div>
+</div>
+<script>
+
+// Override dot colors to match presentation gold theme
+(function(){
+  var _origCreateElement = document.createElement;
+  // Use MutationObserver to restyle dots after they're rendered
+  var obs = new MutationObserver(function(mutations){
+    document.querySelectorAll('[id$="dots"] span').forEach(function(dot){
+      var w = parseInt(dot.style.width);
+      var isActive = w >= 9;
+      var bg = dot.style.background || dot.style.backgroundColor;
+      var isDone = !isActive && bg && bg !== '#D4CDE0' && bg !== '#C0A8CC' && bg !== 'rgb(192, 168, 204)';
+      dot.style.borderRadius = '50%';
+      dot.style.display = 'inline-block';
+      dot.style.margin = '0 2px';
+      dot.style.transition = 'all .25s';
+      dot.style.cursor = 'pointer';
+      if(isActive){
+        dot.style.width = '9px';
+        dot.style.height = '9px';
+        dot.style.background = '#C5A55A';
+      } else if(isDone){
+        dot.style.width = '7px';
+        dot.style.height = '7px';
+        dot.style.background = '#6B5B7B';
+      } else {
+        dot.style.width = '7px';
+        dot.style.height = '7px';
+        dot.style.background = '#D4CDE0';
+      }
+    });
+  });
+  obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['style']});
+
+  // Expose nav to parent scope
+  window.__slideNav = {
+    advance: function() { var s = step; if(step<maxStep){step++;render()}; return step !== s; },
+    retreat: function() { var s = step; if(step>0){step--;render()}; return step !== s; },
+    revealAll: function() { while(window.__slideNav.advance()) {} }
+  };
+
+})();
+
+</script>
+
+
+
+
+<script>
+// ═══ Unified PPT-style navigation ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body></html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;position:relative}
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+.my-step{opacity:0;transition:opacity 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+<svg viewBox="0 0 1600 900" style="position:absolute;top:0;left:0;width:100%;height:100%" preserveAspectRatio="xMidYMid meet">
+
+<text x="70" y="62" font-family="'Playfair Display',serif" font-size="40" font-weight="700" fill="#2D2044">Monte Carlo Tree Search</text>
+<rect x="70" y="76" width="80" height="4" rx="2" fill="#C5A55A"/>
+
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+<path d="M1 1L9 5L1 9" fill="none" stroke="#2E1A38" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<!-- Pipeline -->
+<path d="M70 105 L700 105" stroke="#2E1A38" stroke-width="1.5" fill="none"/>
+<path d="M840 105 L1530 105 L1530 128" stroke="#2E1A38" stroke-width="1.5" fill="none"/>
+<polygon points="1526,126 1530,135 1534,126" fill="#2E1A38"/>
+<path d="M70 105 L70 128" stroke="#2E1A38" stroke-width="1.5" fill="none"/>
+<polygon points="66,126 70,135 74,126" fill="#2E1A38"/>
+<text x="770" y="102" text-anchor="middle" font-size="17" fill="#2E1A38" font-weight="500">Repeated N times</text>
+
+<g class="my-step" data-step="1">
+<rect x="70" y="130" width="310" height="44" rx="5" fill="#1E8449" fill-opacity=".12" stroke="#1E8449" stroke-width="2.5"/>
+<text x="225" y="160" text-anchor="middle" font-size="24" fill="#1E8449" font-weight="700">Selection</text>
+</g>
+<g class="my-step" data-step="1"><line x1="380" y1="152" x2="420" y2="152" stroke="#2E1A38" stroke-width="1.5" marker-end="url(#ar)"/></g>
+<g class="my-step" data-step="2">
+<rect x="430" y="130" width="310" height="44" rx="5" fill="none" stroke="#1E8449" stroke-width="2"/>
+<text x="585" y="160" text-anchor="middle" font-size="24" fill="#2E1A38" font-weight="600">Expansion</text>
+</g>
+<g class="my-step" data-step="2"><line x1="740" y1="152" x2="780" y2="152" stroke="#2E1A38" stroke-width="1.5" marker-end="url(#ar)"/></g>
+<g class="my-step" data-step="3">
+<rect x="790" y="130" width="310" height="44" rx="5" fill="none" stroke="#1E8449" stroke-width="2"/>
+<text x="945" y="160" text-anchor="middle" font-size="24" fill="#2E1A38" font-weight="600">Simulation</text>
+</g>
+<g class="my-step" data-step="3"><line x1="1100" y1="152" x2="1140" y2="152" stroke="#2E1A38" stroke-width="1.5" marker-end="url(#ar)"/></g>
+<g class="my-step" data-step="4">
+<rect x="1150" y="130" width="380" height="44" rx="5" fill="none" stroke="#1E8449" stroke-width="2"/>
+<text x="1340" y="160" text-anchor="middle" font-size="24" fill="#2E1A38" font-weight="600">Backpropagation</text>
+</g>
+
+<g class="my-step" data-step="1">
+<text x="225" y="198" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">Traverse tree from root</text>
+<text x="225" y="218" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">to reach a leaf node</text>
+</g>
+<g class="my-step" data-step="2">
+<text x="585" y="198" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">Add new child node</text>
+<text x="585" y="218" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">to expand the tree</text>
+</g>
+<g class="my-step" data-step="3">
+<text x="945" y="198" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">Random rollout to</text>
+<text x="945" y="218" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">estimate value</text>
+</g>
+<g class="my-step" data-step="4">
+<text x="1340" y="198" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">Update statistics</text>
+<text x="1340" y="218" text-anchor="middle" font-size="17" fill="#D68910" font-weight="600">along selected path</text>
+</g>
+
+<!-- Warehouse -->
+<g transform="translate(1140,270)">
+<text x="220" y="0" text-anchor="middle" font-size="18" fill="#6B5B7B" font-weight="700" letter-spacing="1.5">WAREHOUSE</text>
+<rect x="0" y="16" width="440" height="280" rx="10" fill="#F7F5FA" stroke="#D4CDE0" stroke-width="1.5"/>
+<rect x="10" y="26" width="206" height="122" rx="5" fill="#F0EDF3" stroke="#D4CDE0" stroke-width=".8"/>
+<text x="113" y="136" text-anchor="middle" font-size="20" fill="#6B5B7B" font-weight="600">Zone A</text>
+<rect x="224" y="26" width="206" height="122" rx="5" fill="#F0EDF3" stroke="#D4CDE0" stroke-width=".8"/>
+<text x="327" y="136" text-anchor="middle" font-size="20" fill="#6B5B7B" font-weight="600">Zone B</text>
+<rect x="10" y="156" width="206" height="122" rx="5" fill="#F0EDF3" stroke="#D4CDE0" stroke-width=".8"/>
+<text x="113" y="266" text-anchor="middle" font-size="20" fill="#6B5B7B" font-weight="600">Zone C</text>
+<rect x="224" y="156" width="206" height="122" rx="5" fill="#F0EDF3" stroke="#D4CDE0" stroke-width=".8"/>
+<text x="327" y="266" text-anchor="middle" font-size="20" fill="#6B5B7B" font-weight="600">Zone D</text>
+<rect x="218" y="26" width="8" height="50" rx="2" fill="#B0A8C0"/><rect x="218" y="98" width="8" height="50" rx="2" fill="#B0A8C0"/>
+<rect x="10" y="148" width="96" height="8" rx="2" fill="#B0A8C0"/><rect x="120" y="148" width="96" height="8" rx="2" fill="#B0A8C0"/>
+<rect x="218" y="148" width="8" height="8" rx="2" fill="#B0A8C0"/><rect x="224" y="148" width="96" height="8" rx="2" fill="#B0A8C0"/>
+<rect x="334" y="148" width="96" height="8" rx="2" fill="#B0A8C0"/><rect x="218" y="156" width="8" height="50" rx="2" fill="#B0A8C0"/>
+<rect x="218" y="228" width="8" height="50" rx="2" fill="#B0A8C0"/>
+<!-- Robot -->
+<g transform="translate(80,74) scale(1.3)"><line x1="0" y1="-21.3" x2="0" y2="-16.4" stroke="#4A3360" stroke-width="1.3"/><circle cx="0" cy="-22.9" r="2.0" fill="#4A3360"/><rect x="-9.8" y="-16.4" width="19.6" height="11.5" rx="3.3" fill="#7B5E99" stroke="#4A3360" stroke-width="1.5"/><circle cx="-3.3" cy="-10.6" r="2.0" fill="#E6E0EC"/><circle cx="3.3" cy="-10.6" r="2.0" fill="#E6E0EC"/><circle cx="-2.5" cy="-10.6" r="0.8" fill="#2E1A38"/><circle cx="4.1" cy="-10.6" r="0.8" fill="#2E1A38"/><rect x="-11.5" y="-4.9" width="22.9" height="18.0" rx="2.5" fill="#7B5E99" stroke="#4A3360" stroke-width="1.5"/><rect x="-13.9" y="-3.3" width="2.5" height="6.5" rx="1.3" fill="#4A3360" opacity=".7"/><rect x="11.5" y="-3.3" width="2.5" height="6.5" rx="1.3" fill="#4A3360" opacity=".7"/><rect x="-4.9" y="13.1" width="2.5" height="3.3" rx="1.0" fill="#4A3360" opacity=".6"/><rect x="2.5" y="13.1" width="2.5" height="3.3" rx="1.0" fill="#4A3360" opacity=".6"/></g>
+<!-- Package -->
+<rect x="296" y="54" width="44" height="36" rx="5" fill="#C5A55A" stroke="#A8893D" stroke-width="1.8"/>
+<line x1="296" y1="72" x2="340" y2="72" stroke="#A8893D" stroke-width="1.2"/><line x1="318" y1="54" x2="318" y2="90" stroke="#A8893D" stroke-width="1.2"/>
+<text x="318" y="108" text-anchor="middle" font-size="16" fill="#A8893D" font-weight="700">PKG</text>
+<!-- Goal -->
+<rect x="286" y="208" width="64" height="26" rx="5" fill="rgba(30,132,73,.15)" stroke="#1E8449" stroke-width="1.5" stroke-dasharray="4 2"/>
+<text x="318" y="227" text-anchor="middle" font-size="15" fill="#1E8449" font-weight="700">GOAL</text>
+<text x="220" y="318" text-anchor="middle" font-size="19" fill="#7B5E99" font-weight="600">Robot @ A, Package @ B</text>
+<text x="220" y="342" text-anchor="middle" font-size="17" fill="#6B5B7B">Task: pick package, deliver to D</text>
+</g>
+
+<!-- Search Tree -->
+<g transform="translate(80,265) scale(0.88)">
+<!-- Ghost tree -->
+<text x="440" y="-6" text-anchor="middle" font-size="17" fill="#ccc" font-weight="600">s₀</text>
+<circle cx="440" cy="24" r="36" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="440" y="18" text-anchor="middle" font-size="17" font-weight="700" fill="#ccc">N=10</text>
+<text x="440" y="36" text-anchor="middle" font-size="15" fill="#ccc">Bot@A</text>
+<line x1="410" y1="54" x2="230" y2="128" stroke="#ccc" stroke-width="1.8"/>
+<text x="296" y="84" text-anchor="middle" font-size="17" font-weight="600" fill="#ccc">Move(A,B)</text>
+<line x1="470" y1="54" x2="650" y2="128" stroke="#ccc" stroke-width="1.8"/>
+<text x="584" y="84" text-anchor="middle" font-size="17" font-weight="600" fill="#ccc">Move(A,C)</text>
+<circle cx="230" cy="160" r="34" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="230" y="154" text-anchor="middle" font-size="16" font-weight="700" fill="#ccc">N=7</text>
+<text x="230" y="172" text-anchor="middle" font-size="15" fill="#ccc">Bot@B</text>
+<circle cx="650" cy="160" r="34" fill="#fff" stroke="#ccc" stroke-width="2"/>
+<text x="650" y="154" text-anchor="middle" font-size="16" font-weight="700" fill="#ccc">N=3</text>
+<text x="650" y="172" text-anchor="middle" font-size="15" fill="#ccc">Bot@C</text>
+<line x1="202" y1="188" x2="120" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="144" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Pick(Pkg)</text>
+<line x1="258" y1="188" x2="370" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="330" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Move(B,D)</text>
+<circle cx="120" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="120" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=5</text>
+<text x="120" y="298" text-anchor="middle" font-size="14" fill="#ccc">Holding</text>
+<circle cx="370" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="370" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=2</text>
+<text x="370" y="298" text-anchor="middle" font-size="14" fill="#ccc">Bot@D</text>
+<line x1="120" y1="320" x2="120" y2="380" stroke="#ccc" stroke-width="1.5"/>
+<text x="168" y="356" text-anchor="start" font-size="16" fill="#ccc" font-weight="600">Move(B,D)</text>
+<circle cx="120" cy="414" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="120" y="408" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=4</text>
+<text x="120" y="424" text-anchor="middle" font-size="14" fill="#ccc">Bot@D+Pkg</text>
+<line x1="624" y1="188" x2="556" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="574" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Move(C,B)</text>
+<line x1="676" y1="188" x2="744" y2="256" stroke="#ccc" stroke-width="1.5"/>
+<text x="728" y="224" text-anchor="middle" font-size="16" fill="#ccc" font-weight="600">Move(C,D)</text>
+<circle cx="556" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="556" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=2</text>
+<text x="556" y="298" text-anchor="middle" font-size="14" fill="#ccc">Bot@B</text>
+<circle cx="744" cy="288" r="32" fill="#fff" stroke="#ccc" stroke-width="1.8"/>
+<text x="744" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#ccc">N=1</text>
+<text x="744" y="298" text-anchor="middle" font-size="14" fill="#ccc">Bot@D</text>
+
+<!-- Step 1: Selection -->
+<g class="my-step" data-step="1">
+<circle cx="440" cy="24" r="36" fill="none" stroke="#2E1A38" stroke-width="4"/>
+<text x="440" y="18" text-anchor="middle" font-size="17" font-weight="700" fill="#2E1A38">N=10</text>
+<text x="440" y="36" text-anchor="middle" font-size="15" fill="#2E1A38">Bot@A</text>
+<text x="440" y="-6" text-anchor="middle" font-size="17" fill="#2E1A38" font-weight="600">s₀</text>
+<line x1="410" y1="54" x2="236" y2="125" stroke="#2E1A38" stroke-width="4.5"/>
+<text x="296" y="84" text-anchor="middle" font-size="17" font-weight="700" fill="#2E1A38">Move(A,B)</text>
+<circle cx="230" cy="160" r="34" fill="none" stroke="#2E1A38" stroke-width="4"/>
+<text x="230" y="154" text-anchor="middle" font-size="16" font-weight="700" fill="#2E1A38">N=7</text>
+<text x="230" y="172" text-anchor="middle" font-size="15" fill="#2E1A38">Bot@B</text>
+<line x1="202" y1="188" x2="126" y2="253" stroke="#2E1A38" stroke-width="4.5"/>
+<text x="144" y="224" text-anchor="middle" font-size="16" fill="#2E1A38" font-weight="700">Pick(Pkg)</text>
+<circle cx="120" cy="288" r="32" fill="none" stroke="#2E1A38" stroke-width="4"/>
+<text x="120" y="282" text-anchor="middle" font-size="15" font-weight="700" fill="#2E1A38">N=5</text>
+<text x="120" y="298" text-anchor="middle" font-size="14" fill="#2E1A38">Holding</text>
+<line x1="120" y1="320" x2="120" y2="377" stroke="#2E1A38" stroke-width="4.5"/>
+<text x="168" y="356" text-anchor="start" font-size="16" fill="#2E1A38" font-weight="700">Move(B,D)</text>
+<circle cx="120" cy="414" r="32" fill="none" stroke="#2E1A38" stroke-width="4"/>
+<text x="120" y="408" text-anchor="middle" font-size="15" font-weight="700" fill="#2E1A38">N=4</text>
+<text x="120" y="424" text-anchor="middle" font-size="14" fill="#2E1A38">Bot@D+Pkg</text>
+</g>
+
+<!-- Step 2: Expansion -->
+<g class="my-step" data-step="2">
+<line x1="96" y1="440" x2="50" y2="488" stroke="#2E1A38" stroke-width="3.5"/>
+<text x="48" y="470" text-anchor="middle" font-size="16" fill="#2E1A38" font-weight="700">Place</text>
+<circle cx="40" cy="520" r="30" fill="#fff" stroke="#2E1A38" stroke-width="4"/>
+<text x="40" y="526" text-anchor="middle" font-size="16" font-weight="700" fill="#2E1A38">new</text>
+<text x="82" y="526" text-anchor="start" font-size="18" fill="#1E8449" font-weight="700">expanded</text>
+</g>
+
+<!-- Step 3: Simulation -->
+<g class="my-step" data-step="3">
+<path d="M40 550 Q48 574 34 594 Q26 608 40 630" stroke="#999" stroke-width="2.5" fill="none" stroke-dasharray="6 5"/>
+<text x="70" y="588" font-size="18" fill="#D68910" font-weight="700">rollout</text>
+<rect x="14" y="638" width="56" height="30" rx="5" fill="#fff" stroke="#2E1A38" stroke-width="2"/>
+<text x="42" y="659" text-anchor="middle" font-size="17" font-weight="700" fill="#1E8449">r = 5</text>
+</g>
+
+<!-- Step 4: Backpropagation -->
+<g class="my-step" data-step="4">
+<line x1="50" y1="492" x2="102" y2="446" stroke="#C5A55A" stroke-width="7" opacity=".55"/>
+<line x1="120" y1="382" x2="120" y2="324" stroke="#C5A55A" stroke-width="7" opacity=".55"/>
+<line x1="126" y1="256" x2="206" y2="194" stroke="#C5A55A" stroke-width="7" opacity=".55"/>
+<line x1="240" y1="128" x2="420" y2="58" stroke="#C5A55A" stroke-width="7" opacity=".55"/>
+<polygon points="100,446 92,456 108,454" fill="#C5A55A" opacity=".55"/>
+<polygon points="116,328 124,318 128,332" fill="#C5A55A" opacity=".55"/>
+<polygon points="204,198 196,192 200,206" fill="#C5A55A" opacity=".55"/>
+<polygon points="418,60 410,52 412,66" fill="#C5A55A" opacity=".55"/>
+<text x="300" y="380" font-size="19" fill="#C5A55A" font-weight="700">update N, Q</text>
+<text x="300" y="404" font-size="19" fill="#C5A55A" font-weight="700">along path</text>
+</g>
+</g>
+</svg>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item active">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+<script>
+(function(){
+  var currentStep=0, totalSteps=4, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} } }
+    else if (e.key === 'a' || e.key === 'A') { if (window.__slideNav) window.__slideNav.revealAll(); }
+    else if ('fFpPtTbB?'.indexOf(e.key)>=0) { try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {} }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) { if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} } }
+    else { if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) { el.style.cursor = 'pointer'; el.addEventListener('click', function(e) { e.stopPropagation(); try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {} }); });
+})();
+</script>
+</body></html>

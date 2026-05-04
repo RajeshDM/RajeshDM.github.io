@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  background:var(--bg-dark);color:var(--white);
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+
+.pres-content{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:50px 80px 16px;overflow:hidden}
+
+.label{text-transform:uppercase;letter-spacing:3px;font-size:.85rem;font-weight:600;color:var(--gold);margin-bottom:12px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:3.2rem;color:var(--white);line-height:1.15;margin-bottom:16px}
+.subtitle{font-size:1.35rem;color:var(--text-muted);margin-bottom:32px}
+
+.card-row{display:flex;gap:28px;margin-bottom:28px}
+.card{flex:1;background:rgba(255,255,255,0.07);border-top:3px solid var(--gold);border-radius:6px;padding:28px 28px 32px}
+.card .card-label{text-transform:uppercase;letter-spacing:3px;font-size:.8rem;font-weight:600;color:var(--gold);margin-bottom:10px}
+.card h3{font-family:'Playfair Display',serif;font-weight:700;font-size:1.65rem;color:var(--white);margin-bottom:14px}
+.card p{font-size:1.3rem;color:var(--text-muted);line-height:1.55}
+
+.bottom-line{text-align:center;font-style:italic;color:var(--gold);font-size:1.2rem}
+
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+
+    <p class="label">Key Insight</p>
+    <h1>Planning is effective at small scale.</h1>
+    <p class="subtitle">Two complementary strategies exploit this effectiveness:</p>
+
+    <div class="card-row">
+      <div class="card my-step" data-step="1">
+        <p class="card-label">Strategy 1</p>
+        <h3>Learn from Small Problems</h3>
+        <p>Train on small instances where planners produce optimal solutions. Transfer learned knowledge to larger instances where direct planning is too expensive.</p>
+      </div>
+      <div class="card my-step" data-step="2">
+        <p class="card-label">Strategy 2</p>
+        <h3>Abstract Large Problems</h3>
+        <p>Use structured abstraction to reduce a large problem to a smaller one the planner can handle directly.</p>
+      </div>
+    </div>
+
+    <div class="bottom-line my-step" data-step="3">Both strategies exploit the same strength: the planner's effectiveness at small scale.</div>
+
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item active">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0, totalSteps=3, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* === Original viz styles === */
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f0f0;color:#2E1A38;height:100vh;display:flex;align-items:center;justify-content:center;user-select:none;overflow:hidden}
+button{font-family:inherit}
+
+
+
+/* === Presentation chrome overrides === */
+html,body{font-family:'Source Sans 3',sans-serif !important}
+
+/* Wrapper layout */
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);
+  height:min(100vh, 56.25vw);
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);
+  overflow:hidden;
+}
+.gold-top-bar{height:4px;background:#C5A55A;flex-shrink:0}
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0}
+
+/* Restyle original header fonts */
+.pres-content h1,.pres-content [style*="font-size:19px"],.pres-content [style*="font-size:18px"],.pres-content [style*="font-size:20px"],.hdr h1{
+  font-family:'Playfair Display',serif !important;color:#2D2044 !important
+}
+
+/* Restyle original buttons to match presentation */
+.pres-content button,.ctrls button{
+  font-family:'Source Sans 3',sans-serif !important;
+  background:#2D2044 !important;
+  color:rgba(255,255,255,.85) !important;
+  border:none !important;
+  border-radius:4px !important;
+  padding:5px 16px !important;
+  font-size:0.75rem !important;
+  font-weight:600 !important;
+  cursor:pointer !important;
+  transition:all .2s !important;
+}
+.pres-content button:hover{background:#3D2E58 !important;color:#fff !important}
+.pres-content button:disabled{opacity:.25 !important;cursor:default !important}
+
+/* Demo button special style */
+.pres-content button[id$="demoB"],
+.pres-content button[id$="demoB"]{
+  background:rgba(197,165,90,.15) !important;
+  color:#2D2044 !important;
+  border:1.5px solid rgba(197,165,90,.4) !important;
+  font-weight:700 !important;
+}
+
+/* Restyle dots container */
+.pres-content span[id$="dots"]{display:flex;align-items:center;gap:3px}
+
+/* Bottom nav bar */
+.nav-bar{height:44px;background:#2D2044;display:flex;align-items:center;flex-shrink:0}
+.nav-section{flex:1;text-align:center;padding:12px 0;font-size:1rem;font-family:'Source Sans 3',sans-serif;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em;position:relative;cursor:default}
+.nav-section.active{color:#C5A55A}
+.nav-section.active::before{content:'';position:absolute;top:0;left:15%;right:15%;height:3px;background:#C5A55A;border-radius:0 0 2px 2px}
+
+/* Controls area restyle */
+.ctrls,.pres-content > div:last-child{
+  background:#F8F6FA;border-top:1px solid #E8E4ED;padding:5px 28px !important
+}
+
+</style></head><body>
+<div class="pres-wrapper">
+  <div class="gold-top-bar"></div>
+  <div class="pres-content" style="flex:1;display:flex;flex-direction:column;min-height:0">
+    
+<div style="text-align:center;padding:8px 16px 4px">
+<div style="font-size:28px;font-weight:700;color:#2D2044">GABAR: Converting a Planning State into a Graph</div>
+<div id="stT" style="display:none"></div><div id="stS" style="display:none"></div>
+</div>
+
+<div style="flex:1;display:flex;flex-direction:column;gap:4px;padding:2px 10px;min-height:0">
+<!-- TOP: Start State + Goal State -->
+<div style="display:flex;gap:10px;flex-shrink:0;height:45%">
+  <!-- Start State -->
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="font-size:18px;font-weight:700;color:#6B5B7B;letter-spacing:.1em;margin-bottom:2px;text-align:center">START STATE</div>
+    <div style="flex:1;background:#FDFCFE;border:1px solid #D4CDE0;border-radius:9px;overflow:hidden;position:relative">
+      <svg id="startSvg" viewBox="0 0 280 200" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet">
+        <g id="startBg"></g><g id="robotG" style="transition:transform 0.9s ease-in-out"></g>
+      </svg>
+    </div>
+  </div>
+  <!-- Goal State -->
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div style="font-size:18px;font-weight:700;color:#1E8449;letter-spacing:.1em;margin-bottom:2px;text-align:center">GOAL STATE</div>
+    <div style="flex:1;background:#FDFCFE;border:1px solid #D4CDE0;border-radius:9px;overflow:hidden">
+      <svg id="goalSvg" viewBox="0 0 280 200" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+  </div>
+</div>
+<!-- Info panel -->
+<div style="background:#F8F6FA;border:1px solid #D4CDE0;border-radius:6px;padding:4px 8px;min-height:24px;flex-shrink:0" id="infoP">
+<div style="font-size:12px;color:#C0A8CC;text-align:center">Hover over any element for details</div>
+</div>
+<!-- BOTTOM: Graph -->
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+  <div style="font-size:15px;font-weight:700;color:#6B5B7B;letter-spacing:.1em;margin-bottom:2px;text-align:center">GRAPH REPRESENTATION</div>
+  <div style="flex:1;background:#F8F6FA;border:1px solid #D4CDE0;border-radius:9px;overflow:hidden">
+    <svg id="grSvg" viewBox="0 0 700 280" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+</div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 10px 6px;flex-wrap:wrap;gap:6px">
+<div style="display:flex;align-items:center;gap:5px">
+<button id="prevB" style="padding:5px 14px;font-size:13px;font-weight:600;background:#E5DFE8;color:#2E1A38;border:1px solid #C0A8CC;border-radius:4px;cursor:pointer">&#8592; Prev</button>
+<span id="dots"></span>
+<button id="nextB" style="padding:5px 14px;font-size:13px;font-weight:600;background:#E5DFE8;color:#2E1A38;border:1px solid #C0A8CC;border-radius:4px;cursor:pointer">Next &#8594;</button>
+<button id="demoB" style="padding:5px 14px;font-size:13px;font-weight:700;background:#E8F0F8;color:#2471A3;border:1.5px solid rgba(36,113,163,.27);border-radius:5px;cursor:pointer;display:none">&#9654; Watch Task</button>
+<span id="demoL" style="font-size:13px;color:#6B5B7B;font-style:italic;display:none">Demo playing...</span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+<div style="display:flex;align-items:center;gap:4px;font-size:12px;color:#6B5B7B"><div style="width:14px;height:10px;border-radius:2px;background:rgba(36,113,163,.13);border:1px solid #2471A3"></div>Action Schema</div>
+<div style="display:flex;align-items:center;gap:4px;font-size:12px;color:#6B5B7B"><div style="width:10px;height:10px;border-radius:50%;background:#B08E2A"></div>Object</div>
+<div style="display:flex;align-items:center;gap:4px;font-size:12px;color:#6B5B7B"><div style="width:14px;height:10px;border-radius:2px;background:rgba(192,57,43,.13);border:1px solid #C0392B"></div>Predicate</div>
+<div style="display:flex;align-items:center;gap:4px;font-size:12px;color:#6B5B7B"><div style="width:14px;height:10px;border-radius:2px;background:rgba(30,132,73,.13);border:1px solid #1E8449;border-style:dashed"></div>Goal Pred.</div>
+</div>
+</div>
+<script>
+var co={action:'#2471A3',aD:'#E8F0F8',object:'#B08E2A',oD:'#FDF6E3',pred:'#C0392B',pD:'#FDECEA',goal:'#1E8449',gD:'#E3F5EC',text:'#2E1A38',muted:'#6B5B7B',dim:'#C0A8CC',robot:'#7B5E99',rD:'#4A3360',pkg:'#D68910',pkD:'#B7770A',floor:'#F0EDF3',border:'#D4CDE0',shelf:'#8B7FA0',shB:'#6B5B7B'};
+var tC={object:co.object,pred:co.pred,goal:co.goal,action:co.action};
+var tD={object:co.oD,pred:co.pD,goal:co.gD,action:co.aD};
+
+// Warehouse grid params (for both start and goal)
+var CW=120,CH=80,GA=6,WW=280,GW=CW*2+GA,GH=CH*2+GA,GX=(WW-GW)/2,GY=8;
+var ShW=30,ShH=3,PkW=24,PkH=16;
+var cls=[{id:'a',r:0,c:0},{id:'b',r:0,c:1},{id:'c',r:1,c:0},{id:'d',r:1,c:1}].map(function(c){var x=GX+c.c*(CW+GA),y=GY+c.r*(CH+GA);return{id:c.id,x:x,y:y,cx:x+CW/2,cy:y+CH/2,ri:x+CW,bo:y+CH};});
+var CM={};cls.forEach(function(c){CM[c.id]=c;});
+function sfp(c){return{x:c.cx-ShW/2,y:c.y+12};}
+function pkp(c){var s=sfp(c);return{x:c.cx-PkW/2,y:s.y+ShH+2};}
+function cc(id){return{x:CM[id].cx,y:CM[id].cy+6};}
+var PP=pkp(CM.c),GP=pkp(CM.d);
+
+function drawWarehouseBase(){
+  var s='<defs><pattern id="tl" width="13" height="13" patternUnits="userSpaceOnUse"><rect width="13" height="13" fill="'+co.floor+'"/><line x1="0" y1="13" x2="13" y2="13" stroke="'+co.border+'" stroke-width=".2" opacity=".2"/><line x1="13" y1="0" x2="13" y2="13" stroke="'+co.border+'" stroke-width=".2" opacity=".2"/></pattern></defs>';
+  s+='<rect x="'+(GX-2)+'" y="'+(GY-2)+'" width="'+(GW+4)+'" height="'+(GH+4)+'" rx="4" fill="none" stroke="'+co.border+'" stroke-width=".8"/>';
+  cls.forEach(function(c){
+    var hs=c.id==='c'||c.id==='d';
+    s+='<rect x="'+c.x+'" y="'+c.y+'" width="'+CW+'" height="'+CH+'" rx="2" fill="url(#tl)" stroke="'+co.border+'" stroke-width=".4"/>';
+    s+='<text x="'+c.cx+'" y="'+(c.bo-4)+'" text-anchor="middle" fill="'+co.muted+'" font-size="13" font-weight="600">Zone '+'ABCD'['abcd'.indexOf(c.id)]+'</text>';
+    if(hs){var sp=sfp(c);s+='<g opacity=".45"><rect x="'+sp.x+'" y="'+sp.y+'" width="'+ShW+'" height="'+ShH+'" rx="1" fill="'+co.shelf+'" stroke="'+co.shB+'" stroke-width=".3"/><rect x="'+(sp.x-1)+'" y="'+(sp.y-.5)+'" width="2" height="'+(ShH+1)+'" rx=".5" fill="'+co.shB+'"/><rect x="'+(sp.x+ShW-1)+'" y="'+(sp.y-.5)+'" width="2" height="'+(ShH+1)+'" rx=".5" fill="'+co.shB+'"/></g>';}
+  });
+  [{f:'a',d:'h'},{f:'a',d:'v'},{f:'b',d:'v'},{f:'c',d:'h'}].forEach(function(j){var a=CM[j.f];if(j.d==='h')s+='<line x1="'+(a.ri+GA/2)+'" y1="'+(a.y+3)+'" x2="'+(a.ri+GA/2)+'" y2="'+(a.bo-3)+'" stroke="'+co.dim+'" stroke-width=".4" stroke-dasharray="4 3" opacity=".25"/>';else s+='<line x1="'+(a.x+3)+'" y1="'+(a.bo+GA/2)+'" x2="'+(a.ri-3)+'" y2="'+(a.bo+GA/2)+'" stroke="'+co.dim+'" stroke-width=".4" stroke-dasharray="4 3" opacity=".25"/>';});
+  return s;
+}
+
+// Goal state SVG (static, package on D, robot on A)
+function drawGoalState(){
+  var s=drawWarehouseBase();
+  // Package on D - big and prominent
+  s+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".8"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">PKG</text>';
+  // Delivered badge
+  s+='<rect x="'+(CM.d.cx-28)+'" y="'+(GP.y+PkH+3)+'" width="56" height="16" rx="4" fill="'+co.gD+'" stroke="'+co.goal+'" stroke-width=".6"/><text x="'+CM.d.cx+'" y="'+(GP.y+PkH+14)+'" text-anchor="middle" fill="'+co.goal+'" font-size="10" font-weight="700">\u2713 DELIVERED</text>';
+  // Robot faded in A
+  var rp=cc('a');
+  s+='<g transform="translate('+rp.x+','+rp.y+')" opacity=".25"><line x1="0" y1="-12" x2="0" y2="-9" stroke="'+co.robot+'" stroke-width=".8"/><circle cx="0" cy="-13" r="1" fill="'+co.robot+'"/><rect x="-5" y="-9" width="10" height="6" rx="2" fill="'+co.robot+'"/><circle cx="-1.5" cy="-6.5" r="1" fill="#E6E0EC"/><circle cx="1.5" cy="-6.5" r="1" fill="#E6E0EC"/><rect x="-6" y="-3" width="12" height="9" rx="1.5" fill="'+co.robot+'"/><rect x="-7.5" y="-2" width="1.5" height="5" rx=".8" fill="'+co.robot+'" opacity=".6"/><rect x="6" y="-2" width="1.5" height="5" rx=".8" fill="'+co.robot+'" opacity=".6"/></g>';
+  s+='<text x="'+(WW/2)+'" y="195" text-anchor="middle" fill="'+co.dim+'" font-size="12">Package delivered to Zone D</text>';
+  return s;
+}
+
+var STAGES=[
+{t:'The Problem',s:'A robot in Zone A must deliver a package from Zone C to Zone D'},
+{t:'Objects',s:'Every entity (robot, package, zones) becomes an object node'},
+{t:'Predicates',s:'Current state facts become predicate nodes connected to argument objects'},
+{t:'Goal Predicates',s:'Desired outcome becomes goal predicate nodes (dashed border)'},
+{t:'Action Schemas',s:'Ungrounded action schemas (Move, Pick) connect to parameter objects'}
+];
+// Graph nodes - repositioned for wider viewBox
+var NODES=[
+{id:'robot',x:70,y:148,l:'Robot',t:'object',s:1},{id:'rm_a',x:175,y:148,l:'Zone A',t:'object',s:1},
+{id:'rm_b',x:280,y:148,l:'Zone B',t:'object',s:1},{id:'rm_c',x:395,y:148,l:'Zone C',t:'object',s:1},
+{id:'pkg',x:510,y:148,l:'Pkg',t:'object',s:1},{id:'rm_d',x:625,y:148,l:'Zone D',t:'object',s:1},
+{id:'at_bot',x:115,y:245,l:'At(Bot,A)',t:'pred',s:2},{id:'hand_e',x:270,y:245,l:'HandEmpty',t:'pred',s:2},
+{id:'on_pkg',x:450,y:245,l:'On(Pkg,C)',t:'pred',s:2},
+{id:'goal_pkg',x:625,y:245,l:'On(Pkg,D)',t:'goal',s:3},
+{id:'move',x:165,y:48,l:'Move',t:'action',s:4},{id:'pick',x:395,y:48,l:'Pick',t:'action',s:4}
+];
+var EDGES=[
+{f:'at_bot',t:'robot',s:2,ty:'pred'},{f:'at_bot',t:'rm_a',s:2,ty:'pred'},{f:'hand_e',t:'robot',s:2,ty:'pred'},
+{f:'on_pkg',t:'pkg',s:2,ty:'pred'},{f:'on_pkg',t:'rm_c',s:2,ty:'pred'},
+{f:'goal_pkg',t:'pkg',s:3,ty:'goal'},{f:'goal_pkg',t:'rm_d',s:3,ty:'goal'},
+{f:'move',t:'robot',s:4,ty:'action'},{f:'move',t:'rm_a',s:4,ty:'action'},{f:'move',t:'rm_b',s:4,ty:'action'},
+{f:'pick',t:'robot',s:4,ty:'action'},{f:'pick',t:'pkg',s:4,ty:'action'}
+];
+var NM={};NODES.forEach(function(n){NM[n.id]=n;});
+var maxS=4,stage=0;
+var demoActive=false,demoTimers=[],demoState=null;
+
+document.getElementById('nextB').onclick=function(){if(!demoActive&&stage<maxS){stage++;ren();}};
+document.getElementById('prevB').onclick=function(){if(!demoActive&&stage>0){stage--;ren();}};
+document.getElementById('demoB').onclick=runDemo;
+
+
+function runDemo(){
+  if(demoActive)return;demoActive=true;
+  var pA=cc('a'),pC=cc('c'),pD=cc('d');
+  var init={rx:pA.x,ry:pA.y,facing:1,held:false,placed:false,phase:'start',done:false};
+  demoState=init;
+  var steps=[[0,init],[300,{phase:'moving'}],[400,{rx:pC.x,ry:pC.y}],[1400,{phase:'reaching',facing:0}],[1800,{held:true,phase:'grabbing'}],[2100,{phase:'holding',facing:1}],[2400,{rx:pD.x,ry:pD.y,phase:'moving'}],[3300,{phase:'placing',facing:0}],[3700,{held:false,placed:true,phase:'placed'}],[4000,{done:true,phase:'done',facing:1}],[5400,null]];
+  demoTimers=steps.map(function(s){return setTimeout(function(){if(!s[1]){demoActive=false;demoState=null;ren();return;}demoState=Object.assign({},demoState||init,s[1]);ren();},s[0]);});
+}
+
+function ren(){
+  document.getElementById('stT').textContent=STAGES[stage].t;
+  document.getElementById('stS').textContent=STAGES[stage].s;
+  document.getElementById('prevB').disabled=stage===0||demoActive;
+  document.getElementById('nextB').disabled=stage===maxS||demoActive;
+  document.getElementById('demoB').style.display=(!demoActive&&stage===0)?'inline-block':'none';
+  document.getElementById('demoL').style.display=demoActive?'inline':'none';
+  var dots='';for(var i=0;i<=maxS;i++)dots+='<span style="width:'+(i===stage?9:6)+'px;height:'+(i===stage?9:6)+'px;border-radius:50%;display:inline-block;margin:0 2px;background:'+(i===stage?co.text:i<stage?co.muted:co.dim)+';transition:all .2s"></span>';
+  document.getElementById('dots').innerHTML=dots;
+
+  var da=demoActive,ds=demoState;
+  var robX=da?ds.rx:cc('a').x,robY=da?ds.ry:cc('a').y;
+  var facing=da?(ds.facing||1):1,held=da&&ds.held,placed=da&&ds.placed;
+  var showPkgC=da?(!held&&!placed):true;
+  var showPkgD=da&&placed&&!held;
+
+  // Start state SVG
+  var s=drawWarehouseBase();
+  if(showPkgC)s+='<rect x="'+PP.x+'" y="'+PP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".7"/><text x="'+(PP.x+PkW/2)+'" y="'+(PP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">PKG</text>';
+  if(showPkgD)s+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".7"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">PKG</text>';
+  if(!showPkgD)s+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.gD+'" stroke="'+co.goal+'" stroke-width="1.5" stroke-dasharray="4 3" opacity=".6"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+4)+'" text-anchor="middle" fill="'+co.goal+'" font-size="10" font-weight="700" opacity=".7">GOAL</text>';
+  if(da&&ds&&ds.done)s+='<circle cx="'+CM.d.cx+'" cy="'+(GP.y+PkH+10)+'" r="6" fill="'+co.goal+'" opacity=".9"/><polyline points="'+(CM.d.cx-2)+','+(GP.y+PkH+10)+' '+CM.d.cx+','+(GP.y+PkH+12.5)+' '+(CM.d.cx+2.5)+','+(GP.y+PkH+7)+'" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/>';
+  s+='<text x="'+(WW/2)+'" y="195" text-anchor="middle" fill="'+co.dim+'" font-size="12">Robot in A, package on C</text>';
+  document.getElementById('startBg').innerHTML=s;
+
+  // Robot (persistent)
+  var rg=document.getElementById('robotG');
+  rg.style.transform='translate('+robX+'px,'+robY+'px)';
+  var r='<line x1="0" y1="-12" x2="0" y2="-9" stroke="'+co.rD+'" stroke-width="1"/><circle cx="0" cy="-13" r="1.2" fill="'+co.rD+'"/><rect x="-6" y="-9" width="12" height="7" rx="2.5" fill="'+co.robot+'" stroke="'+co.rD+'" stroke-width=".5"/><circle cx="'+(facing>=0?-1.5:-3)+'" cy="-6" r="1.2" fill="#E6E0EC"/><circle cx="'+(facing>=0?3:1.5)+'" cy="-6" r="1.2" fill="#E6E0EC"/><rect x="-7" y="-2" width="14" height="11" rx="2" fill="'+co.robot+'" stroke="'+co.rD+'" stroke-width=".5"/><rect x="-9" y="-1" width="2" height="6" rx="1" fill="'+co.rD+'" opacity=".7"/><rect x="7" y="-1" width="2" height="6" rx="1" fill="'+co.rD+'" opacity=".7"/><rect x="-4" y="9" width="2" height="4" rx=".8" fill="'+co.rD+'" opacity=".6"/><rect x="2" y="9" width="2" height="4" rx=".8" fill="'+co.rD+'" opacity=".6"/>';
+  if(held)r+='<rect x="'+(facing>=0?11:-11-PkW+5)+'" y="'+(-PkH/2)+'" width="'+(PkW-4)+'" height="'+(PkH-3)+'" rx="2" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".4"/><text x="'+(facing>=0?11+(PkW-4)/2:-11-(PkW-4)/2+5)+'" y="2" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">PKG</text>';
+  rg.innerHTML=r;
+
+  // Goal state (static)
+  document.getElementById('goalSvg').innerHTML=drawGoalState();
+
+  // Info panel
+  if(da){var ph=ds?ds.phase:'',msg=ds&&ds.done?'\u2713 Delivered!':ph==='moving'?'Moving...':ph==='reaching'?'Reaching...':ph==='grabbing'?'Picking up...':ph==='placing'?'Placing...':'Starting...';document.getElementById('infoP').innerHTML='<div style="font-size:13px;color:'+(ds&&ds.done?co.goal:co.action)+';text-align:center;font-weight:600">'+msg+'</div>';}
+  else document.getElementById('infoP').innerHTML='<div style="font-size:12px;color:'+co.dim+';text-align:center">Hover over any element for details</div>';
+
+  // Graph
+  var g='';
+  if(stage>=4)g+='<text x="14" y="52" fill="'+co.action+'" font-size="13" font-weight="600" opacity=".35">Action Schemas</text>';
+  if(stage>=1)g+='<text x="14" y="152" fill="'+co.object+'" font-size="13" font-weight="600" opacity=".35">Objects</text>';
+  if(stage>=2)g+='<text x="14" y="249" fill="'+co.pred+'" font-size="13" font-weight="600" opacity=".35">Predicates</text>';
+  EDGES.forEach(function(e){if(e.s>stage)return;var f=NM[e.f],t=NM[e.t];g+='<line x1="'+f.x+'" y1="'+f.y+'" x2="'+t.x+'" y2="'+t.y+'" stroke="'+tC[e.ty]+'" stroke-width="1.3" stroke-opacity=".22" stroke-dasharray="'+(e.ty==='goal'?'6 4':'none')+'"/>';});
+  NODES.forEach(function(n){if(n.s>stage)return;var c=tC[n.t],bg=tD[n.t],isObj=n.t==='object',isGoal=n.t==='goal';var w=isObj?0:Math.max(n.l.length*8+24,isGoal?120:90);if(isObj)g+='<circle cx="'+n.x+'" cy="'+n.y+'" r="26" fill="'+bg+'" stroke="'+c+'" stroke-width="1.3"/>';else g+='<rect x="'+(n.x-w/2)+'" y="'+(n.y-16)+'" width="'+w+'" height="32" rx="6" fill="'+bg+'" stroke="'+c+'" stroke-width="1.3" stroke-dasharray="'+(isGoal?'5 3':'none')+'"/>';if(isGoal)g+='<text x="'+n.x+'" y="'+(n.y-4)+'" text-anchor="middle" fill="'+c+'" font-size="9" opacity=".65">GOAL</text>';g+='<text x="'+n.x+'" y="'+(isGoal?n.y+9:n.y+4.5)+'" text-anchor="middle" fill="'+c+'" font-size="13" font-weight="600">'+n.l+'</text>';});
+  if(stage===0)g+='<text x="350" y="148" text-anchor="middle" fill="'+co.dim+'" font-size="16" font-style="italic">Press \u2192 to begin graph construction</text>';
+  document.getElementById('grSvg').innerHTML=g;
+}
+ren();
+</script>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-section">Introduction</div>
+    <div class="nav-section active">GABAR</div>
+    <div class="nav-section">GammaZero</div>
+    <div class="nav-section">Conclusion</div>
+  </div>
+</div>
+<script>
+
+// Override dot colors to match presentation gold theme
+(function(){
+  var _origCreateElement = document.createElement;
+  // Use MutationObserver to restyle dots after they're rendered
+  var obs = new MutationObserver(function(mutations){
+    document.querySelectorAll('[id$="dots"] span').forEach(function(dot){
+      var w = parseInt(dot.style.width);
+      var isActive = w >= 9;
+      var bg = dot.style.background || dot.style.backgroundColor;
+      var isDone = !isActive && bg && bg !== '#D4CDE0' && bg !== '#C0A8CC' && bg !== 'rgb(192, 168, 204)';
+      dot.style.borderRadius = '50%';
+      dot.style.display = 'inline-block';
+      dot.style.margin = '0 2px';
+      dot.style.transition = 'all .25s';
+      dot.style.cursor = 'pointer';
+      if(isActive){
+        dot.style.width = '9px';
+        dot.style.height = '9px';
+        dot.style.background = '#C5A55A';
+      } else if(isDone){
+        dot.style.width = '7px';
+        dot.style.height = '7px';
+        dot.style.background = '#6B5B7B';
+      } else {
+        dot.style.width = '7px';
+        dot.style.height = '7px';
+        dot.style.background = '#D4CDE0';
+      }
+    });
+  });
+  obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['style']});
+
+  // Expose nav to parent scope
+  window.__slideNav = {
+    advance: function() { var s = stage; if(!demoActive&&stage<maxS){stage++;ren()}; return stage !== s; },
+    retreat: function() { var s = stage; if(!demoActive&&stage>0){stage--;ren()}; return stage !== s; },
+    revealAll: function() { while(window.__slideNav.advance()) {} }
+  };
+
+})();
+
+</script>
+
+
+
+
+<script>
+// ═══ Unified PPT-style navigation ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body></html>

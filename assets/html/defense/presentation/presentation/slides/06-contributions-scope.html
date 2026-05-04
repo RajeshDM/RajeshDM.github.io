@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thesis Contributions & Scope</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark: #2D2044;
+  --bg-darker: #1E1530;
+  --gold: #C5A55A;
+  --white: #FFFFFF;
+  --text-muted: #B0A8C0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  height:100vh; display:flex; align-items:center; justify-content:center;
+  background:#f0f0f0; overflow:hidden;
+  font-family:'Source Sans 3', sans-serif;
+}
+.pres-wrapper {
+  display:flex; flex-direction:column;
+  width: min(100vw, 177.78vh);
+  height: min(100vh, 56.25vw);
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);
+  overflow:hidden; position:relative;
+}
+.pres-wrapper::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:4px; background:var(--gold); z-index:10;
+}
+
+/* ═══ PHASES ═══ */
+.phase {
+  position:absolute; top:0; left:0; right:0; bottom:44px;
+  display:flex; flex-direction:column;
+  padding:28px 44px 8px;
+  opacity:0; pointer-events:none;
+  transition: opacity 0.5s ease;
+}
+.phase.active { opacity:1; pointer-events:auto; }
+
+.slide-heading {
+  font-family:'Playfair Display', serif;
+  font-weight:700; font-size:3.2rem;
+  color:#2D2044; flex-shrink:0;
+}
+.slide-heading::after {
+  content:''; display:block; width:80px; height:4px;
+  background:var(--gold); margin-top:8px; border-radius:2px;
+}
+
+.cs-step {
+  opacity:0; transform:translateY(12px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events:none;
+}
+.cs-step.shown { opacity:1; transform:translateY(0); pointer-events:auto; }
+
+/* ═══ CONTRIBUTIONS ═══ */
+.contrib-area { flex:1; display:flex; align-items:center; min-height:0; }
+.contrib-row { display:flex; gap:28px; width:100%; }
+.contrib-card {
+  flex:1; background:#f7f5f0;
+  border-top:3px solid var(--gold);
+  border-radius:6px; padding:28px 26px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.c-label {
+  text-transform:uppercase; letter-spacing:2.5px;
+  font-size:1.1rem; font-weight:600; color:var(--gold); margin-bottom:8px;
+}
+.c-title {
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem; font-weight:700; color:#2D2044; margin-bottom:5px;
+}
+.c-fullname {
+  font-style:italic; font-size:1.55rem; color:#6B5B7B; margin-bottom:12px;
+}
+.c-desc {
+  font-size:1.45rem; line-height:1.5; color:#444; margin-bottom:14px;
+}
+.c-venue { font-size:1.5rem; font-weight:600; color:#2D2044; margin-bottom:5px; }
+.c-venue span { background:rgba(45,32,68,0.08); padding:3px 12px; border-radius:4px; }
+.c-authors { font-size:1.4rem; color:#888; line-height:1.4; }
+
+/* ═══ FLYING BUBBLES (overlay layer) ═══ */
+.fly-layer {
+  position:absolute; top:0; left:0; right:0; bottom:44px;
+  pointer-events:none; z-index:30;
+}
+.fly-bubble {
+  position:absolute;
+  background: rgba(215,190,120,0.4);
+  border:2.5px solid rgba(175,145,60,0.7);
+  border-radius:22px;
+  padding:6px 28px 8px;
+  white-space:nowrap;
+  opacity:0;
+  /* Smooth flight animation */
+  transition: left 1s cubic-bezier(0.4,0,0.2,1),
+              top 1s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.4s ease;
+}
+.fly-bubble.visible { opacity:1; }
+.fly-bubble .bname {
+  font-family:'Playfair Display',serif;
+  font-weight:700; font-size:1.65rem; color:#2D2044;
+  font-style:italic;
+}
+.fly-bubble .byear {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.4rem; color:#6B5B7B; margin-left:5px;
+}
+
+/* ═══ SCOPE ═══ */
+.scope-body {
+  flex:1; min-height:0;
+  display:flex; align-items:center; justify-content:center;
+  padding-top:4px;
+}
+.scope-wrapper {
+  position:relative;
+  width:100%; height:100%;
+}
+
+.box-L {
+  position:absolute; left:0; top:0;
+  width:58%; height:52%;
+  background: rgba(255,220,120,0.22);
+  border:2.5px solid rgba(200,170,60,0.45);
+  border-radius:14px;
+}
+.box-R {
+  position:absolute; right:0; top:0;
+  width:68%; height:52%;
+  background: rgba(150,190,240,0.18);
+  border:2.5px solid rgba(90,140,210,0.4);
+  border-radius:14px;
+}
+.box-P {
+  position:absolute;
+  left:5%; right:5%;
+  top:38%; bottom:10%;
+  background: rgba(140,220,170,0.18);
+  border:2.5px solid rgba(50,170,90,0.4);
+  border-radius:18px;
+}
+
+.scope-lbl {
+  position:absolute; font-weight:700; z-index:15;
+  font-size:1.65rem;
+}
+.scope-lbl.lbl-L { color:#8B7000; left:16px; top:10px; }
+.scope-lbl.lbl-R { color:#1155cc; right:16px; top:10px; }
+.scope-lbl.lbl-P { color:#1a8f3c; left:50%; bottom:12%; transform:translateX(-50%); font-size:1.55rem; }
+
+.scope-cite {
+  position:absolute; font-size:1.45rem; color:#333;
+  white-space:nowrap; z-index:15; font-weight:400;
+}
+
+/* Static bubbles in scope (hidden until flight completes) */
+.bubble {
+  position:absolute;
+  background: rgba(215,190,120,0.4);
+  border:2.5px solid rgba(175,145,60,0.7);
+  border-radius:22px;
+  padding:6px 28px 8px;
+  z-index:20; white-space:nowrap;
+  opacity:0; transition: opacity 0.3s ease;
+}
+.bubble.landed { opacity:1; }
+.bubble .bname {
+  font-family:'Playfair Display',serif;
+  font-weight:700; font-size:1.65rem; color:#2D2044;
+  font-style:italic;
+}
+.bubble .byear {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.4rem; color:#6B5B7B; margin-left:5px;
+}
+
+.nav-bar {
+  position:absolute; bottom:0; left:0; right:0;
+  height:44px; display:flex; align-items:stretch;
+  font-size:0.85rem; font-weight:600; letter-spacing:1px; z-index:50;
+}
+.nav-item {
+  flex:1; display:flex; align-items:center; justify-content:center;
+  background:var(--bg-darker); color:var(--text-muted);
+  cursor:pointer; transition:all 0.3s;
+  border-top:3px solid transparent;
+}
+.nav-item.active { color:var(--white); border-top-color:var(--gold); background:var(--bg-dark); }
+
+.step-indicator {
+  position:absolute; bottom:52px; right:16px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem; color:rgba(0,0,0,0.18); z-index:20;
+}
+</style>
+</head>
+<body>
+<div class="pres-wrapper">
+
+  <!-- ═══ PHASE 1: CONTRIBUTIONS ═══ -->
+  <div class="phase active" id="phaseContrib">
+    <div class="slide-heading">Thesis Contributions</div>
+    <div class="contrib-area">
+      <div class="contrib-row">
+        <div class="contrib-card cs-step" data-step="1" id="card-gabar">
+          <div class="c-label">Learning (Fully Observable)</div>
+          <div class="c-title">GABAR</div>
+          <div class="c-fullname">Graph Attention-Based Action Ranking</div>
+          <div class="c-desc">Fully observable classical planning. Learns to rank actions from small solved instances using action-centric graphs. Generalizes to problems up to 8x larger.</div>
+          <div class="c-venue"><span>NeurIPS 2025</span></div>
+          <div class="c-authors">R. Mangannavar, A. Fern, S. Lee, P. Tadepalli</div>
+        </div>
+        <div class="contrib-card cs-step" data-step="2" id="card-gz">
+          <div class="c-label">Learning (Partially Observable)</div>
+          <div class="c-title">GammaZero</div>
+          <div class="c-fullname">Graph-Based Learning for POMDP Planning</div>
+          <div class="c-desc">Transforms beliefs into uncertainty-aware graphs. Learned value and policy guide MCTS. Zero-shot generalization to 2-6x larger POMDP instances.</div>
+          <div class="c-venue"><span>ICAPS 2026</span></div>
+          <div class="c-authors">R. Mangannavar, P. Tadepalli</div>
+        </div>
+        <div class="contrib-card cs-step" data-step="3" id="card-hoo">
+          <div class="c-label">Abstraction (Partially Observable)</div>
+          <div class="c-title">HOO-POMDP</div>
+          <div class="c-fullname">Hierarchical Object-Oriented POMDP Planning</div>
+          <div class="c-desc">Partially observable rearrangement. Three forms of abstraction make POMDP planning tractable for 10-20 objects across multi-room environments.</div>
+          <div class="c-venue"><span>NeurIPS SpaLVE 2025</span></div>
+          <div class="c-authors">R. Mangannavar, A. Fern, P. Tadepalli</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FLYING BUBBLES (overlay, always present) ═══ -->
+  <div class="fly-layer" id="flyLayer">
+    <div class="fly-bubble" id="fly-gabar">
+      <span class="bname">GABAR</span><span class="byear">(2025)</span>
+    </div>
+    <div class="fly-bubble" id="fly-hoo">
+      <span class="bname">HOO-POMDP</span><span class="byear">(2025)</span>
+    </div>
+    <div class="fly-bubble" id="fly-gz">
+      <span class="bname">GammaZero</span><span class="byear">(2026)</span>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 2: SCOPE ═══ -->
+  <div class="phase" id="phaseScope">
+    <div class="slide-heading">Thesis Scope</div>
+    <div class="scope-body">
+      <div class="scope-wrapper" id="scopeWrapper">
+
+        <!-- Static bubbles (shown after flight completes) -->
+        <div class="bubble" id="bub-gabar" style="left:8%; top:28%;">
+          <span class="bname">GABAR</span><span class="byear">(2025)</span>
+        </div>
+        <div class="bubble" id="bub-gz" style="left:35%; top:42%;">
+          <span class="bname">GammaZero</span><span class="byear">(2026)</span>
+        </div>
+        <div class="bubble" id="bub-hoo" style="left:60%; top:42%;">
+          <span class="bname">HOO-POMDP</span><span class="byear">(2025)</span>
+        </div>
+
+        <!-- Step 5: Learning for Planning -->
+        <div class="box-L cs-step" data-step="5"></div>
+        <span class="scope-lbl lbl-L cs-step" data-step="5">Learning for Planning</span>
+        <span class="scope-cite cs-step" data-step="5" style="top:12%; left:3%;">Toyer et al. (2020)</span>
+        <span class="scope-cite cs-step" data-step="5" style="top:12%; left:20%;">Stahlberg et al. (2022)</span>
+        <span class="scope-cite cs-step" data-step="5" style="top:22%; left:3%;">Chen et al. (2025)</span>
+        <span class="scope-cite cs-step" data-step="5" style="top:22%; left:20%;">Rivlin et al. (2020)</span>
+
+        <!-- Step 6: Rearrangement -->
+        <div class="box-R cs-step" data-step="6"></div>
+        <span class="scope-lbl lbl-R cs-step" data-step="6">Rearrangement</span>
+        <span class="scope-cite cs-step" data-step="6" style="top:12%; right:3%;">Batra et al. (2022)</span>
+        <span class="scope-cite cs-step" data-step="6" style="top:12%; right:24%;">Deitke et al. (2022)</span>
+        <span class="scope-cite cs-step" data-step="6" style="top:22%; right:3%;">Mirakhor et al. (2024)</span>
+        <span class="scope-cite cs-step" data-step="6" style="top:22%; right:24%;">Gu et al. (2021)</span>
+
+        <!-- Step 7: Partially Observable Planning -->
+        <div class="box-P cs-step" data-step="7"></div>
+        <span class="scope-lbl lbl-P cs-step" data-step="7">Partially Observable Planning</span>
+        <!-- L∩P intersection — BetaZero -->
+        <span class="scope-cite cs-step" data-step="7" style="top:40%; left:7%;">BetaZero, Moss et al. (2024)</span>
+        <!-- P-only citations spread out -->
+        <span class="scope-cite cs-step" data-step="7" style="top:55%; left:10%;">Silver &amp; Veness (2010)</span>
+        <span class="scope-cite cs-step" data-step="7" style="top:55%; right:10%;">Wandzel et al. (2019)</span>
+        <span class="scope-cite cs-step" data-step="7" style="top:65%; left:10%;">Ye et al. (2017)</span>
+        <span class="scope-cite cs-step" data-step="7" style="top:65%; left:35%;">Zheng et al. (2022)</span>
+        <span class="scope-cite cs-step" data-step="7" style="top:65%; right:10%;">Serrano et al. (2022)</span>
+        <span class="scope-cite cs-step" data-step="7" style="top:75%; left:10%;">Sunberg &amp; Kochenderfer (2018)</span>
+        <span class="scope-cite cs-step" data-step="7" style="top:75%; right:10%;">Wu et al. (2021)</span>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="step-indicator" id="stepInd"></div>
+
+  <div class="nav-bar">
+    <div class="nav-item active">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  /*
+    1-3: Cards appear
+    4:   Cards fade out, bubbles fly from card centers to scope positions
+    5:   Learning for Planning box + citations
+    6:   Rearrangement box + citations
+    7:   Partially Observable box + citations
+  */
+  var currentStep = 0, totalSteps = 7;
+  var phaseContrib = document.getElementById('phaseContrib');
+  var phaseScope = document.getElementById('phaseScope');
+  var stepInd = document.getElementById('stepInd');
+
+  var flyGabar = document.getElementById('fly-gabar');
+  var flyHoo = document.getElementById('fly-hoo');
+  var flyGz = document.getElementById('fly-gz');
+  var bubGabar = document.getElementById('bub-gabar');
+  var bubHoo = document.getElementById('bub-hoo');
+  var bubGz = document.getElementById('bub-gz');
+  var scopeWrapper = document.getElementById('scopeWrapper');
+
+  var fliesVisible = false;
+  var flightDone = false;
+
+  function getCardCenter(id) {
+    var card = document.getElementById(id);
+    var wrapper = document.querySelector('.pres-wrapper');
+    var wr = wrapper.getBoundingClientRect();
+    var cr = card.getBoundingClientRect();
+    return {
+      left: (cr.left + cr.width / 2 - wr.left) + 'px',
+      top: (cr.top + cr.height / 2 - wr.top) + 'px'
+    };
+  }
+
+  function getScopeTarget(bubId) {
+    var bub = document.getElementById(bubId);
+    var wrapper = scopeWrapper;
+    var wr = wrapper.getBoundingClientRect();
+    var pw = document.querySelector('.pres-wrapper').getBoundingClientRect();
+    // Parse the percentage positions from the bubble's inline style
+    var style = bub.style;
+    var leftPct = parseFloat(style.left) / 100;
+    var topPct = parseFloat(style.top) / 100;
+    // Convert to pixels relative to pres-wrapper
+    var targetLeft = (wr.left - pw.left) + leftPct * wr.width;
+    var targetTop = (wr.top - pw.top) + topPct * wr.height;
+    return { left: targetLeft + 'px', top: targetTop + 'px' };
+  }
+
+  function startFlight() {
+    if (fliesVisible) return;
+    fliesVisible = true;
+
+    // Position at card centers (no transition yet)
+    var cg = getCardCenter('card-gabar');
+    var ch = getCardCenter('card-hoo');
+    var cgz = getCardCenter('card-gz');
+
+    flyGabar.style.transition = 'none';
+    flyHoo.style.transition = 'none';
+    flyGz.style.transition = 'none';
+
+    flyGabar.style.left = cg.left;
+    flyGabar.style.top = cg.top;
+    flyHoo.style.left = ch.left;
+    flyHoo.style.top = ch.top;
+    flyGz.style.left = cgz.left;
+    flyGz.style.top = cgz.top;
+
+    // Make visible
+    flyGabar.classList.add('visible');
+    flyHoo.classList.add('visible');
+    flyGz.classList.add('visible');
+
+    // After a tick, fade out contrib and start flying
+    requestAnimationFrame(function() {
+      phaseContrib.classList.remove('active');
+
+      // Show scope phase (but boxes/citations still hidden via cs-step)
+      phaseScope.classList.add('active');
+
+      // After scope is rendered, compute targets and fly
+      requestAnimationFrame(function() {
+        var tg = getScopeTarget('bub-gabar');
+        var th = getScopeTarget('bub-hoo');
+        var tgz = getScopeTarget('bub-gz');
+
+        flyGabar.style.transition = 'left 1s cubic-bezier(0.4,0,0.2,1), top 1s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease';
+        flyHoo.style.transition = 'left 1s cubic-bezier(0.4,0,0.2,1), top 1s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease';
+        flyGz.style.transition = 'left 1s cubic-bezier(0.4,0,0.2,1), top 1s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease';
+
+        flyGabar.style.left = tg.left;
+        flyGabar.style.top = tg.top;
+        flyHoo.style.left = th.left;
+        flyHoo.style.top = th.top;
+        flyGz.style.left = tgz.left;
+        flyGz.style.top = tgz.top;
+
+        // After flight, show static bubbles and hide flyers
+        setTimeout(function() {
+          flightDone = true;
+          bubGabar.classList.add('landed');
+          bubHoo.classList.add('landed');
+          bubGz.classList.add('landed');
+          flyGabar.classList.remove('visible');
+          flyHoo.classList.remove('visible');
+          flyGz.classList.remove('visible');
+        }, 1050);
+      });
+    });
+  }
+
+  function resetFlight() {
+    fliesVisible = false;
+    flightDone = false;
+    flyGabar.classList.remove('visible');
+    flyHoo.classList.remove('visible');
+    flyGz.classList.remove('visible');
+    flyGabar.style.transition = 'none';
+    flyHoo.style.transition = 'none';
+    flyGz.style.transition = 'none';
+    bubGabar.classList.remove('landed');
+    bubHoo.classList.remove('landed');
+    bubGz.classList.remove('landed');
+  }
+
+  function applyState() {
+    if (currentStep <= 3) {
+      // Contributions phase
+      phaseContrib.classList.toggle('active', currentStep >= 1);
+      phaseScope.classList.remove('active');
+      resetFlight();
+    } else if (currentStep === 4) {
+      // Trigger flight
+      startFlight();
+    } else {
+      // Scope phase — ensure bubbles are landed
+      phaseContrib.classList.remove('active');
+      phaseScope.classList.add('active');
+      if (!flightDone) {
+        // Jumped past step 4 (e.g. pressing 'a')
+        fliesVisible = true;
+        flightDone = true;
+        flyGabar.classList.remove('visible');
+        flyHoo.classList.remove('visible');
+        flyGz.classList.remove('visible');
+        bubGabar.classList.add('landed');
+        bubHoo.classList.add('landed');
+        bubGz.classList.add('landed');
+      }
+    }
+
+    document.querySelectorAll('.cs-step').forEach(function(el) {
+      el.classList.toggle('shown', parseInt(el.getAttribute('data-step')) <= currentStep);
+    });
+    stepInd.textContent = currentStep + ' / ' + totalSteps;
+  }
+
+  function advance() { if (currentStep < totalSteps) { currentStep++; applyState(); } }
+  function retreat() { if (currentStep > 0) { currentStep--; applyState(); } }
+
+  
+
+  
+
+  applyState();
+
+  // Expose nav to parent scope
+  window.__slideNav = {
+    advance: function() { var s = currentStep; if(currentStep<totalSteps){currentStep++;applyState()}; return currentStep !== s; },
+    retreat: function() { var s = currentStep; if(currentStep>0){currentStep--;applyState()}; return currentStep !== s; },
+    revealAll: function() { while(window.__slideNav.advance()) {} }
+  };
+
+})();
+</script>
+
+
+
+
+
+<script>
+// ═══ Unified PPT-style navigation ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body>
+</html>

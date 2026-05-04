@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:#f0f0f0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw,177.78vh);height:min(100vh,56.25vw);background:#fff;color:#1a1a2e;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;padding:34px 56px 12px;min-height:0;overflow:hidden}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;margin-bottom:.25em;color:#2D2044}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:8px;border-radius:2px}
+.muted{color:#888}
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+
+.domain-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0;margin-top:10px}
+
+.card{background:#f7f5f0;border-top:3px solid var(--gold);border-radius:6px;padding:18px 22px;display:flex;gap:16px;align-items:center;min-height:0;overflow:hidden}
+.card-text{flex:0.9;min-width:0}
+.card-text h3{font-family:'Playfair Display',serif;font-size:1.55rem;color:#2D2044;margin-bottom:5px}
+.card-text p{font-size:1.15rem;color:#666;line-height:1.35;margin-bottom:8px}
+.card-text .train-test{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--gold);font-weight:600;line-height:1.6}
+.card-viz{flex:1.1;display:flex;align-items:center;justify-content:center}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+    <h2>Experimental Domains</h2>
+    <p class="muted" style="font-size:1.2rem">4 POMDP benchmarks &mdash; partial observability, zero-shot generalization</p>
+
+    <div class="domain-grid">
+      <!-- LIGHTDARK -->
+      <div class="card my-step" data-step="1">
+        <div class="card-text">
+          <h3>LightDark(d)</h3>
+          <p>1D localization. Must visit light region to reduce uncertainty before reaching goal.</p>
+          <div class="train-test">Train: LD(5)<br/>Test: LD(10)</div>
+        </div>
+        <div class="card-viz">
+          <svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <defs>
+              <linearGradient id="lgBg" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#2D2044" stop-opacity="0.9"/>
+                <stop offset="55%" stop-color="#2D2044" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#C5A55A" stop-opacity="0.2"/>
+              </linearGradient>
+              <marker id="arwGZ" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#C5A55A"/></marker>
+            </defs>
+            <rect x="8" y="25" width="95" height="80" rx="8" fill="#2D2044" opacity="0.85"/>
+            <text x="55" y="58" text-anchor="middle" font-size="16" fill="#B0A8C0" font-weight="600">Dark</text>
+            <text x="55" y="78" text-anchor="middle" font-size="12" fill="#B0A8C0">High noise</text>
+            <rect x="103" y="25" width="110" height="80" rx="8" fill="url(#lgBg)" stroke="#C5A55A" stroke-width="1.5"/>
+            <text x="158" y="58" text-anchor="middle" font-size="16" fill="#C5A55A" font-weight="600">Light</text>
+            <text x="158" y="78" text-anchor="middle" font-size="12" fill="#C5A55A">Low noise</text>
+            <circle cx="32" cy="94" r="10" fill="#D4785C" stroke="#c06a4e" stroke-width="1.5"/>
+            <text x="32" y="98" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">A</text>
+            <circle cx="195" cy="94" r="10" fill="none" stroke="#C5A55A" stroke-width="2.5"/>
+            <text x="195" y="98" text-anchor="middle" font-size="10" fill="#C5A55A" font-weight="700">G</text>
+            <line x1="45" y1="94" x2="182" y2="94" stroke="#C5A55A" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arwGZ)"/>
+            <text x="110" y="130" text-anchor="middle" font-size="11" fill="#888" font-style="italic">Navigate → localize → commit</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ROCKSAMPLE -->
+      <div class="card my-step" data-step="1">
+        <div class="card-text">
+          <h3>RockSample(n,k)</h3>
+          <p>n×n grid, k rocks of unknown quality. Noisy distance-dependent sensor. Up to 400M+ states.</p>
+          <div class="train-test">Train: RS(5,5)–(10,10)<br/>Test: RS(15,15)–(25,25)</div>
+        </div>
+        <div class="card-viz">
+          <svg viewBox="0 0 200 155" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect x="10" y="12" width="140" height="140" rx="5" fill="#f0ede6" stroke="#2D2044" stroke-width="1.5"/>
+            <line x1="38" y1="12" x2="38" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="66" y1="12" x2="66" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="94" y1="12" x2="94" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="122" y1="12" x2="122" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="40" x2="150" y2="40" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="68" x2="150" y2="68" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="96" x2="150" y2="96" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="124" x2="150" y2="124" stroke="#ddd" stroke-width="1"/>
+            <!-- Rocks -->
+            <polygon points="52,56 58,40 64,56" fill="#C5A55A" stroke="#b08f3e" stroke-width="1.3"/>
+            <text x="58" y="65" text-anchor="middle" font-size="10" fill="#C5A55A" font-weight="700">?</text>
+            <polygon points="105,82 111,66 117,82" fill="#8B6FA3" stroke="#7a5f91" stroke-width="1.3"/>
+            <text x="111" y="91" text-anchor="middle" font-size="10" fill="#8B6FA3" font-weight="700">?</text>
+            <polygon points="72,118 78,102 84,118" fill="#5B8FB9" stroke="#4a7a9e" stroke-width="1.3"/>
+            <text x="78" y="127" text-anchor="middle" font-size="10" fill="#5B8FB9" font-weight="700">?</text>
+            <!-- Rover -->
+            <rect x="16" y="106" width="20" height="18" rx="4" fill="#2D2044"/>
+            <text x="26" y="119" text-anchor="middle" font-size="10" fill="#C5A55A" font-weight="700">R</text>
+            <!-- Sensor -->
+            <path d="M 36,112 Q 65,88 105,76" fill="none" stroke="#C5A55A" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/>
+            <!-- Exit -->
+            <rect x="152" y="68" width="9" height="28" rx="3" fill="#C5A55A" opacity="0.5"/>
+            <text x="157" y="62" text-anchor="middle" font-size="10" fill="#C5A55A" font-weight="600">Exit</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- MOS -->
+      <div class="card my-step" data-step="2">
+        <div class="card-text">
+          <h3>MultiObjectSearch</h3>
+          <p>Find k hidden objects on n×n grid. Range-limited sensor.</p>
+          <div class="train-test">Train: MOS(3,2)–(4,3)<br/>Test: MOS(6,4)–(8,6)</div>
+        </div>
+        <div class="card-viz">
+          <svg viewBox="0 0 200 155" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect x="10" y="12" width="140" height="140" rx="5" fill="#f0ede6" stroke="#2D2044" stroke-width="1.5"/>
+            <line x1="45" y1="12" x2="45" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="80" y1="12" x2="80" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="115" y1="12" x2="115" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="47" x2="150" y2="47" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="82" x2="150" y2="82" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="117" x2="150" y2="117" stroke="#ddd" stroke-width="1"/>
+            <!-- Robot -->
+            <rect x="17" y="20" width="20" height="20" rx="4" fill="#2D2044"/>
+            <text x="27" y="34" text-anchor="middle" font-size="11" fill="#C5A55A" font-weight="700">R</text>
+            <!-- Sensor cone -->
+            <path d="M 37,30 L 72,16 L 72,44 Z" fill="#C5A55A" opacity="0.15" stroke="#C5A55A" stroke-width="1"/>
+            <!-- Hidden objects -->
+            <circle cx="62" cy="64" r="11" fill="#D4785C" opacity="0.3" stroke="#D4785C" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="62" y="68" text-anchor="middle" font-size="11" fill="#D4785C" font-weight="700">?</text>
+            <circle cx="97" cy="99" r="11" fill="#5B8FB9" opacity="0.3" stroke="#5B8FB9" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="97" y="103" text-anchor="middle" font-size="11" fill="#5B8FB9" font-weight="700">?</text>
+            <circle cx="132" cy="30" r="11" fill="#8B6FA3" opacity="0.3" stroke="#8B6FA3" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="132" y="34" text-anchor="middle" font-size="11" fill="#8B6FA3" font-weight="700">?</text>
+            <circle cx="62" cy="134" r="11" fill="#C5A55A" opacity="0.3" stroke="#C5A55A" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="62" y="138" text-anchor="middle" font-size="11" fill="#C5A55A" font-weight="700">?</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- REARRANGEMENT -->
+      <div class="card my-step" data-step="2">
+        <div class="card-text">
+          <h3>Rearrangement</h3>
+          <p>Locate k objects, transport to goals. Perception + manipulation.</p>
+          <div class="train-test">Train: RG(3,2)–(4,3)<br/>Test: RG(6,4)–(8,5)</div>
+        </div>
+        <div class="card-viz">
+          <svg viewBox="0 0 200 155" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect x="10" y="12" width="140" height="140" rx="5" fill="#f0ede6" stroke="#2D2044" stroke-width="1.5"/>
+            <line x1="45" y1="12" x2="45" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="80" y1="12" x2="80" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="115" y1="12" x2="115" y2="152" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="47" x2="150" y2="47" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="82" x2="150" y2="82" stroke="#ddd" stroke-width="1"/>
+            <line x1="10" y1="117" x2="150" y2="117" stroke="#ddd" stroke-width="1"/>
+            <!-- Robot -->
+            <rect x="17" y="90" width="20" height="20" rx="4" fill="#2D2044"/>
+            <text x="27" y="104" text-anchor="middle" font-size="11" fill="#C5A55A" font-weight="700">R</text>
+            <!-- Objects -->
+            <rect x="89" y="22" width="18" height="18" rx="3" fill="#D4785C" opacity="0.6" stroke="#D4785C" stroke-width="1.8"/>
+            <text x="98" y="35" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">1</text>
+            <rect x="54" y="125" width="18" height="18" rx="3" fill="#5B8FB9" opacity="0.6" stroke="#5B8FB9" stroke-width="1.8"/>
+            <text x="63" y="138" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">2</text>
+            <!-- Goals -->
+            <rect x="122" y="125" width="18" height="18" rx="3" fill="none" stroke="#D4785C" stroke-width="2.5" stroke-dasharray="4,3"/>
+            <text x="131" y="138" text-anchor="middle" font-size="10" fill="#D4785C" font-weight="600">G1</text>
+            <rect x="122" y="90" width="18" height="18" rx="3" fill="none" stroke="#5B8FB9" stroke-width="2.5" stroke-dasharray="4,3"/>
+            <text x="131" y="103" text-anchor="middle" font-size="10" fill="#5B8FB9" font-weight="600">G2</text>
+            <!-- Path -->
+            <path d="M 37,98 Q 60,55 89,32" fill="none" stroke="#C5A55A" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arwGZ)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item active">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0, totalSteps=2, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} }
+    } else if (e.key === 'ArrowLeft') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} }
+    } else if (e.key === 'a' || e.key === 'A') { if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) { try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {} }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) { if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} }
+    } else { if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) { el.style.cursor='pointer'; el.addEventListener('click', function(e) { e.stopPropagation(); try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {} }); });
+})();
+</script>
+</body></html>

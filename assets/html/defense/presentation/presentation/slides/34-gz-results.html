@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Source Sans 3',sans-serif}
+.presentation{width:100vw;height:100vh;position:relative;overflow:hidden;max-width:177.78vh;max-height:56.25vw;margin:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;padding:32px 56px 52px;opacity:0;transform:translateX(40px);transition:opacity .4s ease,transform .4s ease;pointer-events:none;overflow:hidden;background:#fff;color:#1a1a2e}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:2}
+.slide.prev{opacity:0;transform:translateX(-40px);z-index:1}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem;color:#2D2044;margin-bottom:4px}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:8px;border-radius:2px}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:200;transition:width .3s ease}
+.slide-counter{position:fixed;bottom:8px;right:16px;font-size:1.35rem;color:rgba(255,255,255,.3);z-index:100;font-family:'JetBrains Mono',monospace}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;height:44px;display:flex;align-items:stretch;z-index:100;font-size:.85rem;font-weight:600;letter-spacing:.03em;background:#2D2044}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);border-top:3px solid transparent}
+.nav-item.active{color:#C5A55A;border-top-color:#C5A55A}
+.slide-body{flex:1;display:flex;gap:28px;min-height:0;margin-top:12px}
+.chart-area{flex:2.2;display:flex;flex-direction:column;min-height:0}
+.chart-area svg{width:100%;flex:1;min-height:0}
+.chart-legend{display:flex;align-items:center;gap:18px;justify-content:center;padding:8px 0 0;flex-shrink:0}
+.chart-legend .leg-item{display:flex;align-items:center;gap:5px;font-size:1.2rem;color:#888}
+.chart-legend .leg-item.primary{font-weight:700;color:#2D2044}
+.chart-legend .leg-swatch{width:14px;height:12px;border-radius:2px;flex-shrink:0}
+.side-panel{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.dc-card{border-top:3px solid var(--gold);background:#F8F6FA;border-radius:0 0 8px 8px;padding:18px 20px}
+.dc-card .dc-label{font-size:.7rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);font-weight:700;margin-bottom:4px}
+.dc-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:#2D2044;margin-bottom:4px}
+.dc-card p{font-size:1.15rem;color:#666;line-height:1.4}
+.tk-card{background:#2D2044;border-radius:8px;padding:18px 20px;color:rgba(255,255,255,.9)}
+.tk-card .tk-num{font-family:'JetBrains Mono',monospace;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1}
+.tk-card .tk-label{font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.5);font-weight:600;margin-top:4px}
+.tk-card .tk-desc{font-size:1.15rem;margin-top:8px;line-height:1.4;color:rgba(255,255,255,.75)}
+.sub-row{display:flex;align-items:baseline;gap:12px;margin-top:10px}
+.sub-row .subtitle{font-size:1.25rem;color:#888;margin:0}
+.sub-row .axis-tag{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);font-weight:700;background:rgba(197,165,90,.12);padding:3px 10px;border-radius:10px;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter"></div>
+<div class="presentation" id="presentation">
+
+<!-- SLIDE 1: Same-Size Performance -->
+<div class="slide active">
+<h2>Results: Same-Size Performance</h2>
+<div class="sub-row"><div class="axis-tag">RQ1</div><p class="subtitle">All methods trained and tested on identical sizes — Returns ± SE</p></div>
+<div class="slide-body">
+<div class="chart-area">
+<svg viewBox="0 0 560 320" preserveAspectRatio="xMidYMid meet">
+<!-- Grid lines -->
+<g stroke="#eee" stroke-width=".5">
+<line x1="70" y1="24" x2="540" y2="24"/>
+<line x1="70" y1="84" x2="540" y2="84"/>
+<line x1="70" y1="144" x2="540" y2="144"/>
+<line x1="70" y1="204" x2="540" y2="204"/>
+<line x1="70" y1="264" x2="540" y2="264"/>
+</g>
+<!-- Vertical group separators -->
+<line x1="185" y1="16" x2="185" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+<line x1="300" y1="16" x2="300" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+<line x1="415" y1="16" x2="415" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+
+<!-- Y-axis labels -->
+<g font-family="JetBrains Mono" font-size="10" fill="#bbb" text-anchor="end">
+<text x="64" y="28">20</text>
+<text x="64" y="88">16</text>
+<text x="64" y="148">12</text>
+<text x="64" y="208">8</text>
+<text x="64" y="268">4</text>
+<text x="64" y="298">0</text>
+</g>
+<text transform="rotate(-90)" x="-160" y="18" font-family="Source Sans 3" font-size="11" fill="#aaa" text-anchor="middle">Return</text>
+
+<!-- Scale: 0=294, 20=24 => 1 unit = 13.5px, y = 294 - val*13.5 -->
+<!-- 4 groups, each ~76px wide, centered at 127, 242, 357, 472 -->
+<!-- Bar width=16, bar gap=3, group = 4*16 + 3*3 = 73px -->
+
+<!-- LD(10): GZ=17.5, BZ=16.8, POMCPOW=0.7, AdaOPS=5.2 -->
+<g font-family="JetBrains Mono">
+<rect x="91" y="57.8" width="16" height="236.2" rx="2" fill="#2D2044"/>
+<rect x="110" y="67.2" width="16" height="226.8" rx="2" fill="#6C5B7B" opacity=".7"/>
+<rect x="129" y="284.6" width="16" height="9.4" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="148" y="223.8" width="16" height="70.2" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="99" y="52" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">17.5</text>
+<text x="118" y="62" text-anchor="middle" font-size="8" fill="#6C5B7B">16.8</text>
+<text x="137" y="279" text-anchor="middle" font-size="8" fill="#E67E22">0.7</text>
+<text x="156" y="218" text-anchor="middle" font-size="8" fill="#27AE60">5.2</text>
+</g>
+<text x="127" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#444" font-weight="600">LD(10)</text>
+
+<!-- RS(15,15): GZ=20.5, BZ=20.2, POMCPOW=11.1, AdaOPS=20.7 -->
+<g font-family="JetBrains Mono">
+<rect x="206" y="17.2" width="16" height="276.8" rx="2" fill="#2D2044"/>
+<rect x="225" y="21.3" width="16" height="272.7" rx="2" fill="#6C5B7B" opacity=".7"/>
+<rect x="244" y="144.2" width="16" height="149.8" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="263" y="14.6" width="16" height="279.4" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="214" y="12" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">20.5</text>
+<text x="233" y="16" text-anchor="middle" font-size="8" fill="#6C5B7B">20.2</text>
+<text x="252" y="139" text-anchor="middle" font-size="8" fill="#E67E22">11.1</text>
+<text x="271" y="9" text-anchor="middle" font-size="9" fill="#27AE60" font-weight="700">20.7</text>
+</g>
+<text x="242" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#444" font-weight="600">RS(15,15)</text>
+
+<!-- MOS(5,3): GZ=18.0, BZ=—, POMCPOW=7.5, AdaOPS=15.5 -->
+<g font-family="JetBrains Mono">
+<rect x="321" y="51.0" width="16" height="243.0" rx="2" fill="#2D2044"/>
+<line x1="340" y1="290" x2="356" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<text x="348" y="286" text-anchor="middle" font-size="8" fill="#6C5B7B" opacity=".5">—</text>
+<rect x="359" y="192.8" width="16" height="101.2" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="378" y="84.8" width="16" height="209.2" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="329" y="45" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">18.0</text>
+<text x="367" y="187" text-anchor="middle" font-size="8" fill="#E67E22">7.5</text>
+<text x="386" y="79" text-anchor="middle" font-size="8" fill="#27AE60">15.5</text>
+</g>
+<text x="357" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#444" font-weight="600">MOS(5,3)</text>
+
+<!-- RG(5,2): GZ=12.5, BZ=—, POMCPOW=4.3, AdaOPS=7.7 -->
+<g font-family="JetBrains Mono">
+<rect x="436" y="125.2" width="16" height="168.8" rx="2" fill="#2D2044"/>
+<line x1="455" y1="290" x2="471" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<text x="463" y="286" text-anchor="middle" font-size="8" fill="#6C5B7B" opacity=".5">—</text>
+<rect x="474" y="235.9" width="16" height="58.1" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="493" y="190.1" width="16" height="103.9" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="444" y="120" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">12.5</text>
+<text x="482" y="230" text-anchor="middle" font-size="8" fill="#E67E22">4.3</text>
+<text x="501" y="185" text-anchor="middle" font-size="8" fill="#27AE60">7.7</text>
+</g>
+<text x="472" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="12" fill="#444" font-weight="600">RG(5,2)</text>
+
+</svg>
+<div class="chart-legend">
+<div class="leg-item primary"><span class="leg-swatch" style="background:#2D2044"></span>GZ Full</div>
+<div class="leg-item"><span class="leg-swatch" style="background:#6C5B7B;opacity:.7"></span>BetaZero</div>
+<div class="leg-item"><span class="leg-swatch" style="background:#E67E22;opacity:.7"></span>POMCPOW</div>
+<div class="leg-item"><span class="leg-swatch" style="background:#27AE60;opacity:.7"></span>AdaOPS</div>
+</div>
+</div>
+<div class="side-panel">
+<div class="dc-card"><div class="dc-label">Key Result</div><h3>Matches BetaZero</h3><p>Comparable on shared domains (LD, RS) despite using a general graph architecture.</p></div>
+<div class="tk-card"><div class="tk-num">4 / 4</div><div class="tk-label">Best or Near-Best</div><div class="tk-desc">Best or within SE on all domains. Extends to MOS and RG where BetaZero cannot run.</div></div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 2: Zero-Shot Generalization -->
+<div class="slide">
+<h2>Results: Zero-Shot Generalization</h2>
+<div class="sub-row"><div class="axis-tag">RQ2</div><p class="subtitle">Trained on small, tested on 2–6× larger — Returns ± SE. † = timeout</p></div>
+<div class="slide-body">
+<div class="chart-area">
+<svg viewBox="0 0 620 320" preserveAspectRatio="xMidYMid meet">
+<!-- Grid lines -->
+<g stroke="#eee" stroke-width=".5">
+<line x1="70" y1="24" x2="600" y2="24"/>
+<line x1="70" y1="84" x2="600" y2="84"/>
+<line x1="70" y1="144" x2="600" y2="144"/>
+<line x1="70" y1="204" x2="600" y2="204"/>
+<line x1="70" y1="264" x2="600" y2="264"/>
+</g>
+<!-- Vertical group separators -->
+<line x1="155" y1="16" x2="155" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+<line x1="245" y1="16" x2="245" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+<line x1="335" y1="16" x2="335" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+<line x1="425" y1="16" x2="425" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+<line x1="515" y1="16" x2="515" y2="298" stroke="#c4bdd0" stroke-width="1.5"/>
+
+<!-- Y-axis labels: 0-16 -->
+<g font-family="JetBrains Mono" font-size="10" fill="#bbb" text-anchor="end">
+<text x="64" y="28">16</text>
+<text x="64" y="88">12.8</text>
+<text x="64" y="148">9.6</text>
+<text x="64" y="208">6.4</text>
+<text x="64" y="268">3.2</text>
+<text x="64" y="298">0</text>
+</g>
+<text transform="rotate(-90)" x="-160" y="18" font-family="Source Sans 3" font-size="11" fill="#aaa" text-anchor="middle">Return</text>
+
+<!-- Scale: 0=294, 16=24 => 1 unit = 16.875px, y = 294 - val*16.875 -->
+<!-- 6 groups, each ~66px wide (4 bars * 14px + 3 gaps * 3px = 65), centers at 112, 200, 290, 380, 470, 560 -->
+<!-- gap between groups ~24px -->
+
+<!-- Group 1: LD(10) center=112 -->
+<g font-family="JetBrains Mono">
+<rect x="80" y="37.5" width="14" height="256.5" rx="2" fill="#2D2044"/>
+<line x1="97" y1="290" x2="111" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<rect x="114" y="282.2" width="14" height="11.8" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="131" y="206.2" width="14" height="87.8" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="87" y="32" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">15.2</text>
+<text x="104" y="286" text-anchor="middle" font-size="7.5" fill="#6C5B7B" opacity=".6">✗</text>
+<text x="121" y="277" text-anchor="middle" font-size="8" fill="#E67E22">0.7</text>
+<text x="138" y="201" text-anchor="middle" font-size="8" fill="#27AE60">5.2</text>
+</g>
+<text x="112" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#444" font-weight="600">LD(10)</text>
+
+<!-- Group 2: RS(20,20) center=200 -->
+<g font-family="JetBrains Mono">
+<rect x="168" y="121.9" width="14" height="172.1" rx="2" fill="#2D2044"/>
+<line x1="185" y1="290" x2="199" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<rect x="202" y="121.9" width="14" height="172.1" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="219" y="96.6" width="14" height="197.4" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="175" y="116" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">10.2</text>
+<text x="192" y="286" text-anchor="middle" font-size="7.5" fill="#6C5B7B" opacity=".6">✗</text>
+<text x="209" y="116" text-anchor="middle" font-size="8" fill="#E67E22">10.2</text>
+<text x="226" y="91" text-anchor="middle" font-size="9" fill="#27AE60" font-weight="700">11.7</text>
+</g>
+<text x="200" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#444" font-weight="600">RS(20,20)</text>
+
+<!-- Group 3: MOS(6,4) center=290 -->
+<g font-family="JetBrains Mono">
+<rect x="258" y="49.3" width="14" height="244.7" rx="2" fill="#2D2044"/>
+<line x1="275" y1="290" x2="289" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<rect x="292" y="201.2" width="14" height="92.8" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="309" y="88.1" width="14" height="205.9" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="265" y="44" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">14.5</text>
+<text x="282" y="286" text-anchor="middle" font-size="7.5" fill="#6C5B7B" opacity=".6">—</text>
+<text x="299" y="196" text-anchor="middle" font-size="8" fill="#E67E22">5.5</text>
+<text x="316" y="83" text-anchor="middle" font-size="8" fill="#27AE60">12.2</text>
+</g>
+<text x="290" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#444" font-weight="600">MOS(6,4)</text>
+
+<!-- Group 4: MOS(8,6) center=380 -->
+<g font-family="JetBrains Mono">
+<rect x="348" y="159.0" width="14" height="135.0" rx="2" fill="#2D2044"/>
+<line x1="365" y1="290" x2="379" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<rect x="382" y="294" width="14" height="0" rx="2" fill="#E67E22" opacity=".3"/>
+<rect x="399" y="196.1" width="14" height="97.9" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="355" y="154" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">8.0</text>
+<text x="372" y="286" text-anchor="middle" font-size="7.5" fill="#6C5B7B" opacity=".6">—</text>
+<text x="389" y="289" text-anchor="middle" font-size="8" fill="#E67E22">0†</text>
+<text x="406" y="191" text-anchor="middle" font-size="8" fill="#27AE60">5.8</text>
+</g>
+<text x="380" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#444" font-weight="600">MOS(8,6)</text>
+
+<!-- Group 5: RG(6,4) center=470 -->
+<g font-family="JetBrains Mono">
+<rect x="438" y="138.8" width="14" height="155.2" rx="2" fill="#2D2044"/>
+<line x1="455" y1="290" x2="469" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<rect x="472" y="243.4" width="14" height="50.6" rx="2" fill="#E67E22" opacity=".7"/>
+<rect x="489" y="196.1" width="14" height="97.9" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="445" y="133" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">9.2</text>
+<text x="462" y="286" text-anchor="middle" font-size="7.5" fill="#6C5B7B" opacity=".6">—</text>
+<text x="479" y="238" text-anchor="middle" font-size="8" fill="#E67E22">3.0</text>
+<text x="496" y="191" text-anchor="middle" font-size="8" fill="#27AE60">5.8</text>
+</g>
+<text x="470" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#444" font-weight="600">RG(6,4)</text>
+
+<!-- Group 6: RG(8,5) center=560 -->
+<g font-family="JetBrains Mono">
+<rect x="528" y="218.1" width="14" height="75.9" rx="2" fill="#2D2044"/>
+<line x1="545" y1="290" x2="559" y2="290" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".5"/>
+<rect x="562" y="294" width="14" height="0" rx="2" fill="#E67E22" opacity=".3"/>
+<rect x="579" y="251.8" width="14" height="42.2" rx="2" fill="#27AE60" opacity=".7"/>
+<text x="535" y="213" text-anchor="middle" font-size="9" fill="#2D2044" font-weight="700">4.5</text>
+<text x="552" y="286" text-anchor="middle" font-size="7.5" fill="#6C5B7B" opacity=".6">—</text>
+<text x="569" y="289" text-anchor="middle" font-size="8" fill="#E67E22">0†</text>
+<text x="586" y="247" text-anchor="middle" font-size="8" fill="#27AE60">2.5</text>
+</g>
+<text x="560" y="310" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#444" font-weight="600">RG(8,5)</text>
+
+</svg>
+<div class="chart-legend">
+<div class="leg-item primary"><span class="leg-swatch" style="background:#2D2044"></span>GZ Full</div>
+<div class="leg-item"><svg width="20" height="12"><line x1="0" y1="6" x2="20" y2="6" stroke="#6C5B7B" stroke-width="1.5" stroke-dasharray="3,2" opacity=".6"/></svg>BetaZero (✗ can't run)</div>
+<div class="leg-item"><span class="leg-swatch" style="background:#E67E22;opacity:.7"></span>POMCPOW</div>
+<div class="leg-item"><span class="leg-swatch" style="background:#27AE60;opacity:.7"></span>AdaOPS</div>
+</div>
+</div>
+<div class="side-panel">
+<div class="dc-card"><div class="dc-label">Key Capability</div><h3>Zero-Shot Transfer</h3><p>Train on small instances, deploy on 2–6× larger — no retraining needed.</p></div>
+<div class="tk-card"><div class="tk-num">5 / 6</div><div class="tk-label">Best or Near-Best</div><div class="tk-desc">Dominates on MOS and RG. AdaOPS edges out on RS(20,20). BetaZero cannot generalize at all.</div></div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="nav-bar" id="navBar">
+<div class="nav-item">Introduction</div>
+<div class="nav-item">GABAR</div>
+<div class="nav-item active">GammaZero</div>
+<div class="nav-item">Conclusion</div>
+</div>
+<script>
+(function(){
+var slides=Array.from(document.querySelectorAll('.slide')),current=0;
+var pbar=document.getElementById('progressBar'),ctr=document.getElementById('slideCounter');
+function show(n,dir){if(n<0||n>=slides.length||n===current)return;var out=slides[current],inc=slides[n];out.classList.remove('active');out.classList.add('prev');out.style.transform=dir==='next'?'translateX(-40px)':'translateX(40px)';slides.forEach(function(s){if(s!==out&&s!==inc){s.classList.remove('active','prev');s.style.transform=''}});inc.classList.remove('prev');inc.classList.add('active');inc.style.transform='translateX(0)';current=n;upd()}
+function upd(){pbar.style.width=((current+1)/slides.length*100)+'%';ctr.textContent=(current+1)+' / '+slides.length}
+
+var tx=0;document.addEventListener('touchstart',function(e){tx=e.changedTouches[0].screenX},{passive:true});document.addEventListener('touchend',function(e){var dx=e.changedTouches[0].screenX-tx;if(Math.abs(dx)>50){if(dx<0&&current<slides.length-1)show(current+1,'next');if(dx>0&&current>0)show(current-1,'prev')}},{passive:true});
+upd()
+  // Expose nav to parent scope
+  window.__slideNav = {
+    advance: function() { var s = current; if(current<slides.length-1)show(current+1,"next"); return current !== s; },
+    retreat: function() { var s = current; if(current>0)show(current-1,"prev"); return current !== s; },
+    revealAll: function() { while(window.__slideNav.advance()) {} }
+  };
+
+})();
+</script>
+
+
+
+
+<script>
+// ═══ Unified PPT-style navigation ═══
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-section') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+})();
+
+// Nav bar section clicks -> jump to section
+document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var section = this.textContent.trim();
+    try { window.parent.postMessage({type:'navSection', section:section}, '*'); } catch(err) {}
+  });
+});
+</script>
+</body></html>

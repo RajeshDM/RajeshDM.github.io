@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:#f0f0f0;color:#2E1A38;height:100vh;display:flex;align-items:center;justify-content:center;user-select:none;overflow:hidden}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.gold-top-bar{height:4px;background:#C5A55A;flex-shrink:0}
+.pres-content{flex:1;display:flex;flex-direction:column;min-height:0;padding:10px 20px 4px}
+.slide-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.9rem;color:#2D2044;text-align:center;flex-shrink:0}
+.slide-subtitle{font-size:0.85rem;color:#6B5B7B;text-align:center;margin-top:2px;font-style:italic;flex-shrink:0}
+.main-area{flex:1;display:flex;gap:16px;min-height:0;padding:6px 0}
+.left-panel{width:42%;display:flex;flex-direction:column;gap:4px;min-width:0}
+.wh-label{font-size:11px;font-weight:700;color:#6B5B7B;letter-spacing:.1em;text-align:center}
+.wh-box{flex:1;background:#FDFCFE;border:1px solid #D4CDE0;border-radius:9px;overflow:hidden;min-height:0}
+.plan-section{flex-shrink:0}
+.plan-label{font-size:12px;font-weight:600;color:#6B5B7B;letter-spacing:.08em;margin-bottom:3px;font-family:'Source Sans 3',sans-serif}
+.pi{display:flex;align-items:center;gap:10px;padding:5px 10px;border-radius:6px;border:1.5px solid rgba(39,174,96,.3);background:#fff;margin-bottom:3px}
+.pi .pn{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;background:#27AE60;flex-shrink:0;font-family:'Source Sans 3',sans-serif}
+.pi .pa2{font-weight:500;font-family:'Source Sans 3',sans-serif;color:#27AE60;font-size:15px;letter-spacing:.02em}
+.done-banner{margin-top:4px;padding:7px 12px;text-align:center;background:#EAFAF1;border:1.5px solid rgba(39,174,96,.27);border-radius:6px;display:none}
+.done-banner span{font-size:15px;font-weight:700;color:#27AE60}
+.right-panel{flex:1;display:flex;flex-direction:column;min-height:0;min-width:0}
+.pipe-label{font-size:11px;font-weight:700;color:#6B5B7B;letter-spacing:.1em;text-align:center;margin-bottom:2px}
+.pipe-area{flex:1;min-height:0}
+.nav-bar{height:44px;background:#2D2044;display:flex;align-items:center;flex-shrink:0}
+.nav-section{flex:1;text-align:center;padding:12px 0;font-size:0.85rem;font-family:'Source Sans 3',sans-serif;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em;position:relative;cursor:default}
+.nav-section.active{color:#C5A55A}
+.nav-section.active::before{content:'';position:absolute;top:0;left:15%;right:15%;height:3px;background:#C5A55A;border-radius:0 0 2px 2px}
+</style></head><body>
+<div class="pres-wrapper">
+  <div class="gold-top-bar"></div>
+  <div class="pres-content">
+    <div class="slide-title">GABAR: Greedy Execution Loop</div>
+    <div class="slide-subtitle">Same GNN weights process a new graph each turn — no search required</div>
+    <div class="main-area">
+      <div class="left-panel">
+        <div class="wh-label">WAREHOUSE EXAMPLE</div>
+        <div class="wh-box">
+          <svg id="whSvg" viewBox="0 0 400 300" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet">
+            <g id="whBg"></g><g id="robotG" style="transition:transform 0.7s ease-in-out"></g>
+          </svg>
+        </div>
+        <div class="plan-section">
+          <div class="plan-label" id="planLabel">PLAN</div>
+          <div id="planList"></div>
+          <div class="done-banner" id="doneBanner"><span>&#10003; Goal Reached</span></div>
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="pipe-label">PIPELINE — EACH TURN</div>
+        <div class="pipe-area">
+          <svg id="pipeSvg" viewBox="0 0 600 420" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bar">
+    <div class="nav-section">Introduction</div>
+    <div class="nav-section active">GABAR</div>
+    <div class="nav-section">GammaZero</div>
+    <div class="nav-section">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+
+var C={
+  purple:'#2D2044',purpleLight:'#F4F1F8',
+  gold:'#C5A55A',goldBg:'#FDF6E3',
+  blue:'#2471A3',blueBg:'#EAF2FA',
+  violet:'#8E44AD',violetBg:'#F5EDF9',
+  orange:'#E67E22',orangeBg:'#FFF5E6',
+  green:'#27AE60',greenBg:'#EBF9F1',
+  muted:'#6B5B7B',white:'#fff',
+  dim:'#C0A8CC',txt:'#2E1A38',bdr:'#D4CDE0',
+  rob:'#7B5E99',rD:'#4A3360',
+  pkg:'#D68910',pkD:'#B7770A',
+  goal:'#1E8449',gD:'#E3F5EC',
+  floor:'#F0EDF3',shelf:'#8B7FA0',shB:'#6B5B7B'
+};
+
+// Pipeline: 3 top, 2 bottom in 600×420 viewBox
+var BW=175,BH=75,gap=18;
+var VW=600;
+var r1Total=3*BW+2*gap; // 561
+var r1x0=(VW-r1Total)/2; // 19.5
+var R1Y=10;
+var R2Y=R1Y+BH+70; // 155
+var r2Total=2*BW+gap; // 368
+var r2x0=(VW-r2Total)/2; // 116
+
+var pipeBoxes=[
+  {id:'state',  x:r1x0,             y:R1Y,w:BW,h:BH,label:'Current State',       icon:'S',color:C.purple,bg:C.purpleLight,pi:0},
+  {id:'graph',  x:r1x0+(BW+gap),    y:R1Y,w:BW,h:BH,label:'Graph Construction',  icon:'G',color:C.gold,  bg:C.goldBg,    pi:1},
+  {id:'gnn',    x:r1x0+2*(BW+gap),  y:R1Y,w:BW,h:BH,label:'GNN Encoder',         icon:'E',color:C.blue,  bg:C.blueBg,    pi:2},
+  {id:'decoder',x:r2x0+(BW+gap),    y:R2Y,w:BW,h:BH,label:'GRU Decoder',         icon:'D',color:C.violet,bg:C.violetBg,  pi:3},
+  {id:'execute',x:r2x0,             y:R2Y,w:BW,h:BH,label:'Execute & Check',     icon:'!',color:C.orange,bg:C.orangeBg,  pi:4}
+];
+
+var pipeArrows=[
+  {from:0,to:1},
+  {from:1,to:2},
+  {from:2,to:3,type:'down'},
+  {from:3,to:4,type:'left'}
+];
+
+function getPB(i){return pipeBoxes[i];}
+
+// Warehouse
+var WW=400,CW=170,CH=120,GA=8;
+var GW2=CW*2+GA,GH2=CH*2+GA,GX=(WW-GW2)/2,GY=10;
+var ShW=40,ShH=5,PkW=26,PkH=18;
+var cells=[{id:'a',r:0,c:0},{id:'b',r:0,c:1},{id:'c',r:1,c:0},{id:'d',r:1,c:1}].map(function(c){
+  var x=GX+c.c*(CW+GA),y=GY+c.r*(CH+GA);
+  return{id:c.id,x:x,y:y,cx:x+CW/2,cy:y+CH/2,ri:x+CW,bo:y+CH};
+});
+var CM={};cells.forEach(function(c){CM[c.id]=c;});
+function cc(id){return{x:CM[id].cx,y:CM[id].cy+10};}
+function sfp(c){return{x:c.cx-ShW/2,y:c.y+15};}
+function pkp(c){var s=sfp(c);return{x:c.cx-PkW/2,y:s.y+ShH+4};}
+var PP=pkp(CM.c),GP=pkp(CM.d);
+
+var TU=[
+  {ra:'a',nx:'c',ac:'move(A, C)',     st:'Bot:A · Pkg:C'},
+  {ra:'c',nx:'c',ac:'pickup(pkg, C)', st:'Bot:C · Pkg:C'},
+  {ra:'c',nx:'d',ac:'move(C, D)',     st:'Bot:C · Holding:Pkg'},
+  {ra:'d',nx:'d',ac:'drop(pkg, D)',   st:'Bot:D · Holding:Pkg'}
+];
+
+var turn=-1,ds=-1,ani=false,tms=[];
+function clr(){tms.forEach(clearTimeout);tms=[];}
+
+function render(){
+  var dn=turn>=4;
+  var ati=ani?(turn<0?0:turn):(dn?3:turn>0?turn-1:-1);
+  var dd=ati>=0?TU[ati]:null;
+  var rc=dn?'d':(turn>0?TU[turn-1].nx:(ani?(ds>=4?TU[turn<0?0:turn].nx:TU[turn<0?0:turn].ra):'a'));
+  var hld=false;
+  if(!dn){if(ani){var at=turn<0?0:turn;if((at===1&&ds>=4)||at===2||(at===3&&ds<4))hld=true;}else if(turn>=2&&turn<4)hld=true;}
+  var sC=ani?((turn<0?0:turn)<1||((turn<0?0:turn)===1&&ds<4)):(turn<=1);
+  var sD=dn||(ani&&(turn<0?0:turn)===3&&ds>=4);
+  var tr=['a'],tc=dn?4:(ani?(turn<0?0:turn):turn);
+  for(var i=0;i<Math.min(tc,4);i++){var d=TU[i].nx;if(tr[tr.length-1]!==d)tr.push(d);}
+  if(ani&&ds>=4){var d2=TU[turn<0?0:turn].nx;if(tr[tr.length-1]!==d2)tr.push(d2);}
+
+  // ════════ WAREHOUSE ════════
+  var w='<defs><pattern id="tl3" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="'+C.floor+'"/><line x1="0" y1="16" x2="16" y2="16" stroke="'+C.bdr+'" stroke-width=".2" opacity=".2"/><line x1="16" y1="0" x2="16" y2="16" stroke="'+C.bdr+'" stroke-width=".2" opacity=".2"/></pattern><marker id="mT" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,.5 L7,3 L0,5.5" fill="none" stroke="'+C.blue+'" stroke-width=".9"/></marker></defs>';
+  w+='<rect x="'+(GX-2)+'" y="'+(GY-2)+'" width="'+(GW2+4)+'" height="'+(GH2+4)+'" rx="5" fill="none" stroke="'+C.bdr+'" stroke-width=".8"/>';
+  cells.forEach(function(c){
+    w+='<rect x="'+c.x+'" y="'+c.y+'" width="'+CW+'" height="'+CH+'" rx="4" fill="url(#tl3)" stroke="'+C.bdr+'" stroke-width=".4"/>';
+    w+='<text x="'+c.cx+'" y="'+(c.bo-6)+'" text-anchor="middle" fill="'+C.muted+'" font-size="12" font-weight="600">Zone '+'ABCD'['abcd'.indexOf(c.id)]+'</text>';
+    if(c.id==='c'||c.id==='d'){var sp=sfp(c);w+='<g opacity=".4"><rect x="'+sp.x+'" y="'+sp.y+'" width="'+ShW+'" height="'+ShH+'" rx="1.5" fill="'+C.shelf+'" stroke="'+C.shB+'" stroke-width=".3"/></g>';}
+  });
+  [{f:'a',d:'h'},{f:'a',d:'v'},{f:'b',d:'v'},{f:'c',d:'h'}].forEach(function(j){var a=CM[j.f];if(j.d==='h')w+='<line x1="'+(a.ri+GA/2)+'" y1="'+(a.y+3)+'" x2="'+(a.ri+GA/2)+'" y2="'+(a.bo-3)+'" stroke="'+C.dim+'" stroke-width=".4" stroke-dasharray="5 3" opacity=".25"/>';else w+='<line x1="'+(a.x+3)+'" y1="'+(a.bo+GA/2)+'" x2="'+(a.ri-3)+'" y2="'+(a.bo+GA/2)+'" stroke="'+C.dim+'" stroke-width=".4" stroke-dasharray="5 3" opacity=".25"/>';});
+  for(var ti2=0;ti2<tr.length-1;ti2++){var f=cc(tr[ti2]),t=cc(tr[ti2+1]),dx=t.x-f.x,dy=t.y-f.y,ln=Math.sqrt(dx*dx+dy*dy);if(ln<1)continue;var ux=dx/ln,uy=dy/ln;w+='<line x1="'+(f.x+ux*18)+'" y1="'+(f.y+uy*18)+'" x2="'+(t.x-ux*18)+'" y2="'+(t.y-uy*18)+'" stroke="'+C.blue+'" stroke-width="2.5" stroke-opacity=".4" marker-end="url(#mT)" stroke-linecap="round"/>';}
+  if(sC)w+='<rect x="'+PP.x+'" y="'+PP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+C.pkg+'" stroke="'+C.pkD+'" stroke-width=".7"/><text x="'+(PP.x+PkW/2)+'" y="'+(PP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">PKG</text>';
+  if(sD)w+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+C.pkg+'" stroke="'+C.pkD+'" stroke-width=".7"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">PKG</text>';
+  if(!sD)w+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+C.gD+'" stroke="'+C.goal+'" stroke-width="1.2" stroke-dasharray="4 3" opacity=".5"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+3)+'" text-anchor="middle" fill="'+C.goal+'" font-size="7" font-weight="700" opacity=".6">GOAL</text>';
+  if(dn)w+='<circle cx="'+CM.d.cx+'" cy="'+(GP.y+PkH+16)+'" r="10" fill="'+C.goal+'" opacity=".9"/><polyline points="'+(CM.d.cx-4)+','+(GP.y+PkH+16)+' '+CM.d.cx+','+(GP.y+PkH+19)+' '+(CM.d.cx+5)+','+(GP.y+PkH+11)+'" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+  w+='<text x="'+(WW/2)+'" y="290" text-anchor="middle" fill="'+C.dim+'" font-size="10">Robot in A must deliver package from C to D</text>';
+  document.getElementById('whBg').innerHTML=w;
+
+  var rp=cc(rc);var rg=document.getElementById('robotG');
+  rg.style.transform='translate('+rp.x+'px,'+rp.y+'px)';
+  var rb='<line x1="0" y1="-16" x2="0" y2="-12" stroke="'+C.rD+'" stroke-width="1.3"/><circle cx="0" cy="-17" r="1.8" fill="'+C.rD+'"/>';
+  rb+='<rect x="-8" y="-12" width="16" height="9" rx="3" fill="'+C.rob+'" stroke="'+C.rD+'" stroke-width=".5"/>';
+  rb+='<circle cx="-2.5" cy="-8" r="1.8" fill="#E6E0EC"/><circle cx="2.5" cy="-8" r="1.8" fill="#E6E0EC"/>';
+  rb+='<rect x="-9" y="-3" width="18" height="14" rx="3" fill="'+C.rob+'" stroke="'+C.rD+'" stroke-width=".5"/>';
+  rb+='<rect x="-12" y="-2" width="3" height="8" rx="1.2" fill="'+C.rD+'" opacity=".7"/><rect x="9" y="-2" width="3" height="8" rx="1.2" fill="'+C.rD+'" opacity=".7"/>';
+  if(hld)rb+='<rect x="14" y="'+(-PkH/2)+'" width="'+(PkW-4)+'" height="'+(PkH-3)+'" rx="2.5" fill="'+C.pkg+'" stroke="'+C.pkD+'" stroke-width=".5"/><text x="'+(14+(PkW-4)/2)+'" y="3" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">PKG</text>';
+  rg.innerHTML=rb;
+
+  // ════════ PIPELINE SVG ════════
+  var ps='';
+  ps+='<defs>';
+  ps+='<marker id="pah" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0.5 L9,3.5 L0,6.5" fill="none" stroke="'+C.muted+'" stroke-width="1.5" stroke-linejoin="round"/></marker>';
+  ps+='<marker id="pahO" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0.5 L9,3.5 L0,6.5" fill="none" stroke="'+C.orange+'" stroke-width="1.5" stroke-linejoin="round"/></marker>';
+  ps+='<filter id="psh"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.06"/></filter>';
+  ps+='</defs>';
+
+  // Arrows
+  pipeArrows.forEach(function(a){
+    var fb=getPB(a.from),tb=getPB(a.to);
+    var isVis=ani?ds>=tb.pi:(!ani&&(dn||turn>0));
+    if(!isVis)return;
+    if(a.type==='down'){
+      var x1=fb.x+fb.w/2,y1=fb.y+fb.h,x2=tb.x+tb.w/2,y2=tb.y,midY=(y1+y2)/2;
+      ps+='<path d="M'+x1+','+(y1+5)+' C'+x1+','+midY+' '+x2+','+midY+' '+x2+','+(y2-6)+'" fill="none" stroke="'+C.muted+'" stroke-width="2.5" marker-end="url(#pah)" stroke-linecap="round" opacity="0.5"/>';
+    } else if(a.type==='left'){
+      var x1=fb.x,y1=fb.y+fb.h/2,x2=tb.x+tb.w,y2=tb.y+tb.h/2;
+      ps+='<line x1="'+(x1-5)+'" y1="'+y1+'" x2="'+(x2+6)+'" y2="'+y2+'" stroke="'+C.muted+'" stroke-width="2.5" marker-end="url(#pah)" stroke-linecap="round" opacity="0.5"/>';
+    } else {
+      var x1=fb.x+fb.w,y1=fb.y+fb.h/2,x2=tb.x,y2=tb.y+tb.h/2;
+      ps+='<line x1="'+(x1+5)+'" y1="'+y1+'" x2="'+(x2-6)+'" y2="'+y2+'" stroke="'+C.muted+'" stroke-width="2.5" marker-end="url(#pah)" stroke-linecap="round" opacity="0.5"/>';
+    }
+  });
+
+  // Loop-back
+  var showLoop=!dn&&(ani?ds>=4:turn>0);
+  if(showLoop){
+    var exB=getPB(4),stB=getPB(0);
+    var sx=exB.x+exB.w/2,sy=exB.y+exB.h;
+    var endX=stB.x+stB.w/2,endY=stB.y+stB.h;
+    var cornerY=sy+28,r=14;
+    ps+='<path d="M'+sx+','+sy+' L'+sx+','+(cornerY-r)+' Q'+sx+','+cornerY+' '+(sx-r)+','+cornerY+' L'+(endX+r)+','+cornerY+' Q'+endX+','+cornerY+' '+endX+','+(cornerY-r)+' L'+endX+','+(endY+5)+'" fill="none" stroke="'+C.orange+'" stroke-width="2.5" stroke-dasharray="10 6" marker-end="url(#pahO)" opacity="0.5"/>';
+    ps+='<text x="'+((sx+endX)/2)+'" y="'+(cornerY-6)+'" fill="'+C.orange+'" font-size="13" font-weight="700" font-style="italic" text-anchor="middle" opacity="0.65">next turn</text>';
+  }
+
+  // Boxes — centered text layout
+  pipeBoxes.forEach(function(b){
+    var isActive=ani&&ds===b.pi;
+    var isPast=ani?ds>b.pi:(dn||turn>0);
+    var isDim=ani?ds<b.pi:(!dn&&turn<=0);
+    var opacity=isDim?0.2:1;
+    var sw=isActive?2.5:1.5;
+    var fillBg=isActive||isPast?b.bg:'#fff';
+
+    ps+='<g opacity="'+opacity+'">';
+    ps+='<rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="10" fill="'+fillBg+'" stroke="'+b.color+'" stroke-width="'+sw+'" filter="url(#psh)"/>';
+    if(isActive){ps+='<rect x="'+(b.x-3)+'" y="'+(b.y-3)+'" width="'+(b.w+6)+'" height="'+(b.h+6)+'" rx="13" fill="none" stroke="'+b.color+'" stroke-width="1.2" opacity="0.25"><animate attributeName="opacity" values="0.15;0.35;0.15" dur="1.2s" repeatCount="indefinite"/></rect>';}
+
+    // Centered icon + label + detail
+    var cx=b.x+b.w/2;
+    var iconY=b.y+22;
+    ps+='<circle cx="'+cx+'" cy="'+iconY+'" r="14" fill="'+b.color+'"/>';
+    ps+='<text x="'+cx+'" y="'+(iconY+5)+'" text-anchor="middle" fill="'+C.white+'" font-size="11" font-weight="700" font-family="JetBrains Mono,monospace">'+b.icon+'</text>';
+    ps+='<text x="'+cx+'" y="'+(b.y+50)+'" text-anchor="middle" fill="'+(isActive?b.color:C.txt)+'" font-size="13" font-weight="700" font-family="Playfair Display,serif">'+b.label+'</text>';
+
+    var detail='';
+    if(isPast||isActive){
+      if(b.pi===0&&dd)detail=dd.st;
+      if(b.pi===1&&dd)detail='predicates + actions → edges';
+      if(b.pi===2)detail='L = 3 rounds';
+      if(b.pi===3&&dd)detail='schema → param₁ → param₂';
+      if(b.pi===4&&dd){var gm=dn||(ati===3&&ds>=4);detail=gm?'✓ Goal reached!':'execute '+dd.ac;}
+    }
+    if(detail)ps+='<text x="'+cx+'" y="'+(b.y+66)+'" text-anchor="middle" fill="'+C.muted+'" font-size="10" font-style="italic">'+detail+'</text>';
+    ps+='</g>';
+  });
+
+  // Goal badge
+  var showGC=ani&&ds>=4;
+  if(showGC||(!ani&&turn>0)){
+    var gm2=dn||(ani&&ati===3&&ds>=4);
+    var exeB=getPB(4);
+    var gcy=exeB.y+exeB.h+16;
+    if(gm2||dn){
+      ps+='<rect x="'+(exeB.x+exeB.w/2-70)+'" y="'+(gcy-10)+'" width="140" height="22" rx="6" fill="'+C.greenBg+'" stroke="'+C.green+'" stroke-width="1.5"/>';
+      ps+='<text x="'+(exeB.x+exeB.w/2)+'" y="'+(gcy+5)+'" text-anchor="middle" fill="'+C.green+'" font-size="12" font-weight="700">✓ Goal reached!</text>';
+    } else {
+      ps+='<rect x="'+(exeB.x+exeB.w/2-85)+'" y="'+(gcy-10)+'" width="170" height="22" rx="6" fill="'+C.orangeBg+'" stroke="'+C.orange+'" stroke-width="1.5"/>';
+      ps+='<text x="'+(exeB.x+exeB.w/2)+'" y="'+(gcy+5)+'" text-anchor="middle" fill="'+C.orange+'" font-size="12" font-weight="700">✗ Goal not met → loop back</text>';
+    }
+  }
+
+  document.getElementById('pipeSvg').innerHTML=ps;
+
+  // ════════ PLAN ════════
+  var pc=dn?4:(turn<0?0:turn),pl='';
+  for(var pi=0;pi<4;pi++){
+    if(pi<pc){pl+='<div class="pi"><div class="pn">'+(pi+1)+'</div><span class="pa2">'+TU[pi].ac+'</span></div>';}
+    else if(ani&&pi===pc&&ds>=3&&dd){pl+='<div class="pi" style="border-color:rgba(39,174,96,.35);background:#EBF9F1"><div class="pn" style="background:'+C.green+'">'+(ds>=4?'⚡':'?')+'</div><span class="pa2" style="color:'+C.green+'">'+dd.ac+'</span></div>';}
+    else{pl+='<div class="pi" style="opacity:.15;border-color:#D4CDE0"><div class="pn" style="background:#D4CDE0">'+(pi+1)+'</div><span class="pa2" style="color:#D4CDE0">...</span></div>';}
+  }
+  if(pc===0&&!ani){pl='';for(var pi3=0;pi3<4;pi3++)pl+='<div class="pi" style="opacity:.15;border-color:#D4CDE0"><div class="pn" style="background:#D4CDE0">'+(pi3+1)+'</div><span class="pa2" style="color:#D4CDE0">...</span></div>';}
+  document.getElementById('planList').innerHTML=pl;
+  document.getElementById('planLabel').textContent='PLAN'+(pc>0?' — '+pc+' action'+(pc>1?'s':''):'');
+  document.getElementById('doneBanner').style.display=dn?'block':'none';
+}
+
+render();
+
+window.__slideNav={
+  advance:function(){
+    if(ani)return false;if(turn>=4)return false;
+    ani=true;clr();var ti=turn<0?0:turn;
+    [0,400,800,1200,1700].forEach(function(d,i){tms.push(setTimeout(function(){ds=i;render();},d));});
+    tms.push(setTimeout(function(){turn=ti===3?4:ti+1;ds=-1;ani=false;render();},2400));
+    return true;
+  },
+  retreat:function(){
+    if(ani)return false;if(turn<=-1)return false;
+    clr();if(turn>=4){turn=3;ds=4;}else if(turn<=0){turn=-1;ds=-1;}else{turn--;ds=4;}
+    render();return true;
+  },
+  revealAll:function(){while(window.__slideNav.advance()){}}
+};
+})();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(window.__slideNav&&!window.__slideNav.advance()){try{window.parent.postMessage({type:'boundary',direction:'next'},'*');}catch(err){}}}
+    else if(e.key==='ArrowLeft'){e.preventDefault();if(window.__slideNav&&!window.__slideNav.retreat()){try{window.parent.postMessage({type:'boundary',direction:'prev'},'*');}catch(err){}}}
+    else if(e.key==='a'||e.key==='A'){if(window.__slideNav)window.__slideNav.revealAll();}
+    else if('fFpPtT?bB'.indexOf(e.key)>=0){try{window.parent.postMessage({type:'passthrough',key:e.key},'*');}catch(err){}}
+  });
+  document.addEventListener('click',function(e){
+    if(e.target.closest&&(e.target.closest('.nav-bar')||e.target.closest('.nav-section')||e.target.closest('button')))return;
+    if(e.clientX<window.innerWidth*0.35){if(window.__slideNav&&!window.__slideNav.retreat()){try{window.parent.postMessage({type:'boundary',direction:'prev'},'*');}catch(err){}}}
+    else{if(window.__slideNav&&!window.__slideNav.advance()){try{window.parent.postMessage({type:'boundary',direction:'next'},'*');}catch(err){}}}
+  });
+  document.querySelectorAll('.nav-section,.nav-item').forEach(function(el){el.style.cursor='pointer';el.addEventListener('click',function(e){e.stopPropagation();try{window.parent.postMessage({type:'navSection',section:this.textContent.trim()},'*');}catch(err){}});});
+})();
+</script>
+</body></html>

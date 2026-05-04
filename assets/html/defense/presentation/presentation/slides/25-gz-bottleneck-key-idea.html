@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+
+.pres-wrapper{
+  display:flex;flex-direction:column;
+  width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative;
+}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+
+.pres-content{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:44px 80px 16px;overflow:hidden}
+
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.6rem;color:#2D2044;margin-bottom:.4em}
+h2::after{content:'';display:block;width:90px;height:4px;background:var(--gold);margin-top:12px;border-radius:2px}
+
+.label{text-transform:uppercase;letter-spacing:3px;font-size:.88rem;font-weight:600;margin-bottom:10px}
+.label-red{color:#D35400}
+
+.cols{display:flex;gap:32px}
+
+.card{flex:1;background:#f7f5f0;box-shadow:0 2px 12px rgba(0,0,0,.06);border-radius:6px;padding:22px 24px 20px}
+.card.red-top{border-top:3px solid #E74C3C}
+
+.card h3{font-family:'Playfair Display',serif;font-size:1.65rem;color:#2D2044;margin-bottom:8px}
+.card ul{list-style:none;padding:0;margin:0}
+.card ul li{font-size:1.4rem;color:#555;line-height:1.55;padding-left:18px;position:relative;margin-bottom:5px}
+.card ul li::before{content:'›';position:absolute;left:0;color:#C5A55A;font-weight:700;font-size:1.35rem}
+
+.compare-row{display:flex;gap:32px;margin-top:22px}
+
+.approach-card{flex:1;border-radius:10px;padding:24px 28px 22px;position:relative}
+.approach-card.beta{background:#f0edf3;border:2px solid #D4CDE0}
+.approach-card.gamma{background:linear-gradient(135deg,rgba(197,165,90,.1),rgba(197,165,90,.18));border:2px solid var(--gold);box-shadow:0 4px 16px rgba(197,165,90,.15)}
+
+.approach-card h3{font-family:'Playfair Display',serif;font-size:1.7rem;color:#2D2044;margin-bottom:10px}
+.approach-card .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:4px;margin-left:8px;vertical-align:middle;position:relative;top:-2px;letter-spacing:.04em}
+.tag-prior{background:#D4CDE0;color:#2D2044}
+.tag-ours{background:var(--bg-dark);color:#fff}
+
+.approach-card ul{list-style:none;padding:0;margin:0}
+.approach-card ul li{font-size:1.4rem;color:#555;line-height:1.55;padding-left:18px;position:relative;margin-bottom:5px}
+.approach-card ul li::before{content:'✓';position:absolute;left:0;font-size:1.05rem}
+.approach-card.beta ul li::before{color:#8A7A9B}
+.approach-card.gamma ul li::before{color:#27AE60}
+
+.approach-card ul li.con{color:#C0392B}
+.approach-card ul li.con::before{content:'✗';color:#C0392B}
+
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+
+    <h2>Bottleneck & Key Idea</h2>
+
+    <!-- Step 1: The search cost bottleneck -->
+    <div class="my-step" data-step="1">
+      <p class="label label-red">Search Cost Bottleneck</p>
+      <div class="cols">
+        <div class="card red-top">
+          <h3>Noisy Rollouts</h3>
+          <ul>
+            <li>Random simulations &rarr; poor value estimates</li>
+            <li>Need many iterations to converge</li>
+          </ul>
+        </div>
+        <div class="card red-top">
+          <h3>Blind Action Exploration</h3>
+          <ul>
+            <li>Uniform sampling wastes search budget</li>
+            <li>Scales poorly with action space</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: BetaZero vs GammaZero -->
+    <div class="my-step" data-step="2">
+      <div class="compare-row">
+        <div class="approach-card beta">
+          <h3>BetaZero <span class="tag tag-prior">Prior Work</span></h3>
+          <ul>
+            <li>V<sub>&theta;</sub> replaces rollouts</li>
+            <li>P<sub>&theta;</sub> guides action selection</li>
+            <li class="con">Fixed-size belief vector &rarr; retrain per size</li>
+          </ul>
+        </div>
+        <div class="approach-card gamma">
+          <h3>GammaZero <span class="tag tag-ours">Ours</span></h3>
+          <ul>
+            <li>Beliefs as <strong>uncertainty-aware graphs</strong> &rarr; size-invariant</li>
+            <li>Richer structure &rarr; <strong>better</strong> V<sub>&theta;</sub> &amp; P<sub>&theta;</sub></li>
+            <li>Zero-shot generalization to larger problems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item">GABAR</div>
+    <div class="nav-item active">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0, totalSteps=2, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0 || e.key === 't' || e.key === 'T' || e.key === '?' || e.key === 'b' || e.key === 'B') {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+
+</body></html>

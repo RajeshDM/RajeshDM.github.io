@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:#f0f0f0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw,177.78vh);height:min(100vh,56.25vw);background:#fff;color:#1a1a2e;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.pres-content{flex:1;display:flex;flex-direction:column;padding:34px 60px 12px;min-height:0;overflow:hidden}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.2rem;margin-bottom:.25em;color:#2D2044}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin-top:8px;border-radius:2px}
+.muted{color:#888}
+.nav-bar{height:44px;display:flex;align-items:stretch;font-size:0.85rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.nav-item{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.nav-item.active{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+
+table{width:100%;border-collapse:collapse;font-size:1.3rem}
+thead tr{border-bottom:3px solid var(--gold)}
+th{text-align:center;padding:8px 10px;color:#2D2044;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700}
+th:first-child{text-align:left}
+td{text-align:center;padding:6px 10px;color:#444;font-size:1.2rem}
+td:first-child{text-align:left;font-weight:600;color:#2D2044}
+tbody tr{border-bottom:1px solid #eee}
+tbody tr:last-child{border-bottom:none}
+.hard-col{color:#2D2044;font-weight:700}
+th.hard-hdr{color:var(--gold);font-weight:700}
+.footnote{font-size:.9rem;color:#888;font-style:italic;margin-top:5px}
+
+.viz-row{display:flex;gap:28px;margin-top:12px;flex-shrink:0}
+.viz-card{flex:1;background:#f7f5f0;border-top:3px solid var(--gold);border-radius:6px;padding:18px 22px;display:flex;flex-direction:column;align-items:center}
+.viz-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:8px;color:#2D2044;align-self:flex-start}
+.viz-card p{font-size:1rem;color:#666;margin-top:8px;text-align:center}
+
+.my-step{opacity:0;transform:translateY(12px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.my-step.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head><body>
+<div class="pres-wrapper">
+  <div class="pres-content" id="myRoot">
+    <h2>Experiment Domains</h2>
+    <p class="muted" style="font-size:1.2rem;margin-bottom:6px">8 IPC benchmark domains &mdash; test split into Easy, Medium, Hard by problem size</p>
+
+    <table>
+      <thead><tr><th>Domain</th><th>Train</th><th>Val</th><th>Easy</th><th>Med</th><th class="hard-hdr">Hard</th></tr></thead>
+      <tbody>
+        <tr><td>Blocks</td><td>[6,9]</td><td>[10]</td><td>[11,20]</td><td>[21,30]</td><td class="hard-col">[31,40]</td></tr>
+        <tr><td>Gripper</td><td>[5,15]</td><td>[17]</td><td>[20,40]</td><td>[41,60]</td><td class="hard-col">[61,100]</td></tr>
+        <tr><td>Miconic</td><td>[1,9]</td><td>[10]</td><td>[20,40]</td><td>[41,60]</td><td class="hard-col">[61,100]</td></tr>
+        <tr><td>Spanner</td><td>[2,9]</td><td>[10]</td><td>[11,20]</td><td>[21,30]</td><td class="hard-col">[31,40]</td></tr>
+        <tr><td>Rovers</td><td>[3,9]</td><td>[10]</td><td>[11,30]</td><td>[31,50]</td><td class="hard-col">[51,70]</td></tr>
+        <tr><td>Visitall*</td><td>[9,36]</td><td>[49]</td><td>[50,100]</td><td>[101,200]</td><td class="hard-col">[201,400]</td></tr>
+        <tr><td>Grid*</td><td>[25,49]</td><td>[63]</td><td>[64,100]</td><td>[100,125]</td><td class="hard-col">[125,154]</td></tr>
+        <tr><td>Logistics</td><td>[4,7]</td><td>[8]</td><td>[15,20]</td><td>[21,25]</td><td class="hard-col">[26,30]</td></tr>
+      </tbody>
+    </table>
+    <p class="footnote">Ranges = # objects/variables. *Grid &amp; Visitall = cells. 100 problems per test subset.</p>
+
+    <div class="viz-row my-step" data-step="1">
+      <!-- BLOCKSWORLD -->
+      <div class="viz-card">
+        <h3>BlocksWorld</h3>
+        <svg viewBox="0 0 400 145" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+          <text x="85" y="18" text-anchor="middle" font-size="16" fill="#888" font-weight="600">Initial</text>
+          <rect x="10" y="122" width="155" height="6" rx="2" fill="#2D2044"/>
+          <rect x="22" y="86" width="42" height="34" rx="5" fill="#C5A55A" stroke="#b08f3e" stroke-width="1.2"/>
+          <text x="43" y="109" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">A</text>
+          <rect x="72" y="86" width="42" height="34" rx="5" fill="#5B8FB9" stroke="#4a7a9e" stroke-width="1.2"/>
+          <text x="93" y="109" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">B</text>
+          <rect x="72" y="48" width="42" height="34" rx="5" fill="#8B6FA3" stroke="#7a5f91" stroke-width="1.2"/>
+          <text x="93" y="71" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">C</text>
+          <rect x="122" y="86" width="42" height="34" rx="5" fill="#D4785C" stroke="#c06a4e" stroke-width="1.2"/>
+          <text x="143" y="109" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">D</text>
+          <defs><marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#C5A55A"/></marker></defs>
+          <line x1="180" y1="90" x2="218" y2="90" stroke="#C5A55A" stroke-width="3" marker-end="url(#arw)"/>
+          <text x="310" y="18" text-anchor="middle" font-size="16" fill="#888" font-weight="600">Goal</text>
+          <rect x="235" y="122" width="155" height="6" rx="2" fill="#2D2044"/>
+          <rect x="282" y="86" width="42" height="34" rx="5" fill="#D4785C" stroke="#c06a4e" stroke-width="1.2"/>
+          <text x="303" y="109" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">D</text>
+          <rect x="282" y="48" width="42" height="34" rx="5" fill="#C5A55A" stroke="#b08f3e" stroke-width="1.2"/>
+          <text x="303" y="71" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">A</text>
+          <rect x="282" y="10" width="42" height="34" rx="5" fill="#5B8FB9" stroke="#4a7a9e" stroke-width="1.2"/>
+          <text x="303" y="33" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">B</text>
+          <rect x="332" y="86" width="42" height="34" rx="5" fill="#8B6FA3" stroke="#7a5f91" stroke-width="1.2"/>
+          <text x="353" y="109" text-anchor="middle" font-size="18" fill="#fff" font-weight="700">C</text>
+        </svg>
+        <p>Stack/unstack blocks to reach target tower configuration</p>
+      </div>
+
+      <!-- VISITALL -->
+      <div class="viz-card">
+        <h3>Visitall</h3>
+        <svg viewBox="0 0 400 145" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+          <!-- 5x5 grid -->
+          <!-- Row 0 -->
+          <rect x="60" y="6" width="32" height="32" rx="3" fill="#C5A55A" opacity="0.25" stroke="#C5A55A" stroke-width="1.5"/>
+          <rect x="96" y="6" width="32" height="32" rx="3" fill="#C5A55A" opacity="0.25" stroke="#C5A55A" stroke-width="1.5"/>
+          <rect x="132" y="6" width="32" height="32" rx="3" fill="#C5A55A" opacity="0.25" stroke="#C5A55A" stroke-width="1.5"/>
+          <rect x="168" y="6" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <rect x="204" y="6" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <!-- Row 1 -->
+          <rect x="60" y="42" width="32" height="32" rx="3" fill="#C5A55A" opacity="0.25" stroke="#C5A55A" stroke-width="1.5"/>
+          <rect x="96" y="42" width="32" height="32" rx="3" fill="#C5A55A" opacity="0.25" stroke="#C5A55A" stroke-width="1.5"/>
+          <rect x="132" y="42" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <rect x="168" y="42" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <rect x="204" y="42" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <!-- Row 2 -->
+          <rect x="60" y="78" width="32" height="32" rx="3" fill="#C5A55A" opacity="0.25" stroke="#C5A55A" stroke-width="1.5"/>
+          <rect x="96" y="78" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <rect x="132" y="78" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <rect x="168" y="78" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <rect x="204" y="78" width="32" height="32" rx="3" fill="#f0ede6" stroke="#ddd" stroke-width="1.2"/>
+          <!-- Checkmarks on visited -->
+          <text x="76" y="28" text-anchor="middle" font-size="16" fill="#C5A55A" font-weight="700">✓</text>
+          <text x="112" y="28" text-anchor="middle" font-size="16" fill="#C5A55A" font-weight="700">✓</text>
+          <text x="148" y="28" text-anchor="middle" font-size="16" fill="#C5A55A" font-weight="700">✓</text>
+          <text x="76" y="64" text-anchor="middle" font-size="16" fill="#C5A55A" font-weight="700">✓</text>
+          <text x="112" y="64" text-anchor="middle" font-size="16" fill="#C5A55A" font-weight="700">✓</text>
+          <text x="76" y="100" text-anchor="middle" font-size="16" fill="#C5A55A" font-weight="700">✓</text>
+          <!-- Agent on current cell -->
+          <circle cx="112" cy="94" r="10" fill="#2D2044"/>
+          <text x="112" y="98" text-anchor="middle" font-size="10" fill="#C5A55A" font-weight="700">A</text>
+          <!-- Path arrows -->
+          <line x1="122" y1="94" x2="128" y2="94" stroke="#C5A55A" stroke-width="2" marker-end="url(#arw)"/>
+
+          <!-- Arrow to larger grid -->
+          <line x1="250" y1="58" x2="274" y2="58" stroke="#C5A55A" stroke-width="2.5" marker-end="url(#arw)"/>
+          <text x="262" y="50" text-anchor="middle" font-size="10" fill="#888">×8</text>
+
+          <!-- Larger grid (test) shown compact -->
+          <rect x="282" y="14" width="100" height="100" rx="4" fill="#f0ede6" stroke="#2D2044" stroke-width="1.5"/>
+          <!-- Mini grid lines -->
+          <line x1="292" y1="14" x2="292" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="302" y1="14" x2="302" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="312" y1="14" x2="312" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="322" y1="14" x2="322" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="332" y1="14" x2="332" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="342" y1="14" x2="342" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="352" y1="14" x2="352" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="362" y1="14" x2="362" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="372" y1="14" x2="372" y2="114" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="24" x2="382" y2="24" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="34" x2="382" y2="34" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="44" x2="382" y2="44" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="54" x2="382" y2="54" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="64" x2="382" y2="64" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="74" x2="382" y2="74" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="84" x2="382" y2="84" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="94" x2="382" y2="94" stroke="#ddd" stroke-width=".5"/>
+          <line x1="282" y1="104" x2="382" y2="104" stroke="#ddd" stroke-width=".5"/>
+          <text x="332" y="68" text-anchor="middle" font-size="14" fill="#2D2044" font-weight="700">400 cells</text>
+          <!-- Labels -->
+          <text x="148" y="130" text-anchor="middle" font-size="12" fill="#888">Train: 9–36 cells</text>
+          <text x="332" y="130" text-anchor="middle" font-size="12" fill="#888">Test: up to 400 cells</text>
+        </svg>
+        <p>Visit every cell in the grid. Tests generalization to 8× larger problems.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">Introduction</div>
+    <div class="nav-item active">GABAR</div>
+    <div class="nav-item">GammaZero</div>
+    <div class="nav-item">Conclusion</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0, totalSteps=1, root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav = {
+    advance: function() { var s=currentStep; if(currentStep<totalSteps){currentStep++;revealStep(currentStep)}; return currentStep!==s; },
+    retreat: function() { var s=currentStep; if(currentStep>0){hideStep(currentStep);currentStep--}; return currentStep!==s; },
+    revealAll: function() { while(window.__slideNav.advance()){} }
+  };
+})();
+</script>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} }
+    } else if (e.key === 'ArrowLeft') { e.preventDefault(); if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} }
+    } else if (e.key === 'a' || e.key === 'A') { if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) { try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {} }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button'))) return;
+    if (e.clientX < window.innerWidth * 0.35) { if (window.__slideNav && !window.__slideNav.retreat()) { try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {} }
+    } else { if (window.__slideNav && !window.__slideNav.advance()) { try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {} } }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) { el.style.cursor='pointer'; el.addEventListener('click', function(e) { e.stopPropagation(); try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {} }); });
+})();
+</script>
+</body></html>

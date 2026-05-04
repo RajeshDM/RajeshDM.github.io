@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#2D2044;--bg-darker:#1E1530;--gold:#C5A55A;--white:#FFFFFF;--text-muted:#B0A8C0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f0f0;overflow:hidden;font-family:'Source Sans 3',sans-serif}
+.pres-wrapper{display:flex;flex-direction:column;width:min(100vw, 177.78vh);height:min(100vh, 56.25vw);background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.15);overflow:hidden;position:relative}
+.pres-wrapper::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);z-index:10}
+.pc{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:0;padding:40px 60px 16px;overflow:hidden}
+
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:2.4rem;color:#2D2044;margin-bottom:.1em;text-align:center}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--gold);margin:10px auto 0;border-radius:2px}
+.sub{color:#888;font-size:1.15rem;text-align:center;margin-bottom:30px}
+
+.duo{display:flex;gap:0;align-items:center;justify-content:center;width:100%;max-width:900px}
+
+.side{flex:1;display:flex;flex-direction:column;align-items:center;padding:24px 20px;border-radius:14px;position:relative}
+.side-fo{background:#f9f8fb;border:1.5px solid #E8E4ED}
+.side-po{background:#fdf5f5;border:1.5px solid rgba(192,57,43,.25)}
+
+.side-label{font-family:'Playfair Display',serif;font-size:1.35rem;color:#2D2044;font-weight:700;margin-bottom:4px}
+.side-badge{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:14px}
+.badge-done{background:#E3F5EC;color:#1E8449}
+.badge-next{background:#FDECEA;color:#C0392B}
+
+.side svg{width:100%;max-width:280px}
+
+.side-caption{font-size:.9rem;color:#666;text-align:center;margin-top:12px;line-height:1.4}
+.side-caption strong{color:#2D2044}
+
+.arrow-col{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100px;flex-shrink:0}
+.arrow-col svg{width:70px}
+.arrow-text{font-family:'Playfair Display',serif;font-size:.85rem;color:var(--gold);text-align:center;margin-top:6px;line-height:1.3}
+
+.bottom-msg{margin-top:28px;padding:14px 28px;background:#F8F6FA;border-radius:10px;border-left:4px solid var(--gold);text-align:center;max-width:750px}
+.bottom-msg p{font-size:1.05rem;color:#2D2044;line-height:1.5}
+.bottom-msg strong{color:#C0392B}
+
+.ms{opacity:0;transform:translateY(10px);transition:opacity 0.55s ease, transform 0.55s ease;pointer-events:none}
+.ms.shown{opacity:1;transform:translateY(0);pointer-events:auto}
+
+.nb{height:44px;display:flex;align-items:stretch;font-size:1.2rem;font-weight:600;letter-spacing:1px;flex-shrink:0}
+.ni{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-darker);color:var(--text-muted);border-top:3px solid transparent;cursor:pointer}
+.ni.ac{color:var(--white);border-top-color:var(--gold);background:var(--bg-dark)}
+</style>
+</head><body>
+<div class="pres-wrapper"><div class="pc" id="myRoot">
+
+<h2>Next Challenge</h2>
+<p class="sub">From fully observable to partially observable planning</p>
+
+<div class="duo">
+  <!-- LEFT: Fully Observable -->
+  <div class="side side-fo ms" data-step="1">
+    <div class="side-label">Fully Observable</div>
+    <span class="side-badge badge-done">&#x2713; GABAR</span>
+    <svg viewBox="0 0 240 160" preserveAspectRatio="xMidYMid meet">
+      <defs><pattern id="tFO" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#F0EDF3"/><line x1="0" y1="8" x2="8" y2="8" stroke="#D4CDE0" stroke-width=".1" opacity=".15"/><line x1="8" y1="0" x2="8" y2="8" stroke="#D4CDE0" stroke-width=".1" opacity=".15"/></pattern></defs>
+      <rect x="4" y="4" width="232" height="108" rx="5" fill="none" stroke="#D4CDE0" stroke-width=".6"/>
+      <!-- 3x3 grid - all clear -->
+      <rect x="8" y="8" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="84" y="8" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="160" y="8" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="8" y="44" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="84" y="44" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="160" y="44" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="8" y="80" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="84" y="80" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="160" y="80" width="72" height="32" rx="3" fill="url(#tFO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <!-- Robot -->
+      <g transform="translate(44,24)"><line x1="0" y1="-8" x2="0" y2="-6" stroke="#4A3360" stroke-width="0.6"/><circle cx="0" cy="-8.8" r=".8" fill="#4A3360"/><rect x="-4" y="-6" width="8" height="5" rx="1.5" fill="#7B5E99" stroke="#4A3360" stroke-width=".4"/><circle cx="-1.3" cy="-4" r=".8" fill="#E6E0EC"/><circle cx="1.3" cy="-4" r=".8" fill="#E6E0EC"/><rect x="-4.5" y="-1" width="9" height="7" rx="1" fill="#7B5E99" stroke="#4A3360" stroke-width=".4"/></g>
+      <!-- Packages visible -->
+      <rect x="187" y="14" width="14" height="10" rx="2" fill="#D68910" stroke="#B7770A" stroke-width=".5"/>
+      <text x="194" y="22" text-anchor="middle" fill="#fff" font-size="5.5" font-weight="700">PKG</text>
+      <rect x="113" y="86" width="14" height="10" rx="2" fill="#D68910" stroke="#B7770A" stroke-width=".5"/>
+      <text x="120" y="94" text-anchor="middle" fill="#fff" font-size="5.5" font-weight="700">PKG</text>
+      <!-- Eye: can see -->
+      <g transform="translate(120,130)">
+        <ellipse cx="0" cy="0" rx="12" ry="7" fill="none" stroke="#1E8449" stroke-width="1.3"/>
+        <circle cx="0" cy="0" r="3.5" fill="#1E8449" opacity=".5"/>
+        <circle cx="0" cy="0" r="1.5" fill="#1E8449"/>
+      </g>
+      <text x="120" y="150" text-anchor="middle" fill="#1E8449" font-size="8" font-weight="600">Full state visible</text>
+    </svg>
+    <div class="side-caption">Agent sees <strong>everything</strong>.<br>Search over concrete states.</div>
+  </div>
+
+  <!-- ARROW -->
+  <div class="arrow-col ms" data-step="2">
+    <svg viewBox="0 0 70 30" preserveAspectRatio="xMidYMid meet">
+      <line x1="5" y1="15" x2="55" y2="15" stroke="var(--gold)" stroke-width="2.5"/>
+      <polygon points="55,8 68,15 55,22" fill="var(--gold)"/>
+    </svg>
+    <div class="arrow-text">harder<br>problem</div>
+  </div>
+
+  <!-- RIGHT: Partially Observable -->
+  <div class="side side-po ms" data-step="2">
+    <div class="side-label">Partially Observable</div>
+    <span class="side-badge badge-next">&#x2192; GammaZero</span>
+    <svg viewBox="0 0 240 160" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <pattern id="tPO" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#F0EDF3"/><line x1="0" y1="8" x2="8" y2="8" stroke="#D4CDE0" stroke-width=".1" opacity=".15"/><line x1="8" y1="0" x2="8" y2="8" stroke="#D4CDE0" stroke-width=".1" opacity=".15"/></pattern>
+        <radialGradient id="fogPO" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2E1A38" stop-opacity=".25"/><stop offset="100%" stop-color="#2E1A38" stop-opacity=".6"/></radialGradient>
+      </defs>
+      <rect x="4" y="4" width="232" height="108" rx="5" fill="none" stroke="#D4CDE0" stroke-width=".6"/>
+      <!-- Robot's cell clear -->
+      <rect x="8" y="8" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <!-- All other cells fogged -->
+      <rect x="84" y="8" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="85" y="9" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="120" y="28" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <rect x="160" y="8" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="161" y="9" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="196" y="28" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <rect x="8" y="44" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="9" y="45" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="44" y="64" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <rect x="84" y="44" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="85" y="45" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="120" y="64" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <rect x="160" y="44" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="161" y="45" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="196" y="64" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <rect x="8" y="80" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="9" y="81" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="44" y="100" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <rect x="84" y="80" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="85" y="81" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="120" y="100" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <rect x="160" y="80" width="72" height="32" rx="3" fill="url(#tPO)" stroke="#D4CDE0" stroke-width=".4"/>
+      <rect x="161" y="81" width="70" height="30" rx="2" fill="url(#fogPO)"/>
+      <text x="196" y="100" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" opacity=".4">?</text>
+
+      <!-- Walls between cells -->
+      <rect x="80" y="8" width="3" height="32" fill="#5C4A6E" rx="1" opacity=".45"/><rect x="80" y="20" width="3" height="7" fill="#F0EDF3"/>
+      <rect x="156" y="8" width="3" height="32" fill="#5C4A6E" rx="1" opacity=".45"/><rect x="156" y="20" width="3" height="7" fill="#F0EDF3"/>
+      <rect x="80" y="44" width="3" height="32" fill="#5C4A6E" rx="1" opacity=".45"/><rect x="80" y="56" width="3" height="7" fill="#F0EDF3"/>
+      <rect x="156" y="44" width="3" height="32" fill="#5C4A6E" rx="1" opacity=".45"/><rect x="156" y="56" width="3" height="7" fill="#F0EDF3"/>
+      <rect x="8" y="40" width="72" height="3" fill="#5C4A6E" rx="1" opacity=".45"/><rect x="38" y="40" width="7" height="3" fill="#F0EDF3"/>
+      <rect x="84" y="40" width="72" height="3" fill="#5C4A6E" rx="1" opacity=".45"/><rect x="114" y="40" width="7" height="3" fill="#F0EDF3"/>
+      <rect x="160" y="40" width="72" height="3" fill="#5C4A6E" rx="1" opacity=".45"/><rect x="190" y="40" width="7" height="3" fill="#F0EDF3"/>
+
+      <!-- Robot in top-left -->
+      <g transform="translate(44,24)"><line x1="0" y1="-8" x2="0" y2="-6" stroke="#4A3360" stroke-width="0.6"/><circle cx="0" cy="-8.8" r=".8" fill="#4A3360"/><rect x="-4" y="-6" width="8" height="5" rx="1.5" fill="#7B5E99" stroke="#4A3360" stroke-width=".4"/><circle cx="-1.3" cy="-4" r=".8" fill="#E6E0EC"/><circle cx="1.3" cy="-4" r=".8" fill="#E6E0EC"/><rect x="-4.5" y="-1" width="9" height="7" rx="1" fill="#7B5E99" stroke="#4A3360" stroke-width=".4"/></g>
+
+      <!-- Eye with slash -->
+      <g transform="translate(120,130)">
+        <ellipse cx="0" cy="0" rx="12" ry="7" fill="none" stroke="#C0392B" stroke-width="1.3" opacity=".7"/>
+        <circle cx="0" cy="0" r="3.5" fill="#C0392B" opacity=".25"/>
+        <line x1="-9" y1="7" x2="9" y2="-7" stroke="#C0392B" stroke-width="1.8"/>
+      </g>
+      <text x="120" y="150" text-anchor="middle" fill="#C0392B" font-size="8" font-weight="600">State hidden</text>
+    </svg>
+    <div class="side-caption">Agent sees <strong>only local observations</strong>.<br>Must search over <strong>belief distributions</strong>.</div>
+  </div>
+</div>
+
+
+
+</div>
+<div class="nb"><div class="ni">Introduction</div><div class="ni">GABAR</div><div class="ni ac">GammaZero</div><div class="ni">Conclusion</div></div>
+</div>
+
+<script>
+(function(){
+  var currentStep=0,totalSteps=3,root=document.getElementById('myRoot');
+  function revealStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.add('shown')})}
+  function hideStep(n){root.querySelectorAll('[data-step="'+n+'"]').forEach(function(el){el.classList.remove('shown')})}
+  window.__slideNav={advance:function(){var s=currentStep;if(currentStep<totalSteps){currentStep++;revealStep(currentStep)};return currentStep!==s;},retreat:function(){var s=currentStep;if(currentStep>0){hideStep(currentStep);currentStep--};return currentStep!==s;},revealAll:function(){while(window.__slideNav.advance()){}}};
+})();
+</script>
+<script>
+(function(){
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else if (e.key === 'a' || e.key === 'A') {
+      if (window.__slideNav) window.__slideNav.revealAll();
+    } else if ('fFpPtTbB?'.indexOf(e.key)>=0) {
+      try { window.parent.postMessage({type:'passthrough',key:e.key},'*'); } catch(err) {}
+    }
+  });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest && (e.target.closest('.nav-bar') || e.target.closest('.nav-item') || e.target.closest('button') || e.target.closest('video'))) return;
+    if (e.clientX < window.innerWidth * 0.35) {
+      if (window.__slideNav && !window.__slideNav.retreat()) {
+        try { window.parent.postMessage({type:'boundary',direction:'prev'},'*'); } catch(err) {}
+      }
+    } else {
+      if (window.__slideNav && !window.__slideNav.advance()) {
+        try { window.parent.postMessage({type:'boundary',direction:'next'},'*'); } catch(err) {}
+      }
+    }
+  });
+  document.querySelectorAll('.nav-section, .nav-item').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      try { window.parent.postMessage({type:'navSection', section:this.textContent.trim()}, '*'); } catch(err) {}
+    });
+  });
+})();
+</script>
+</body></html>
