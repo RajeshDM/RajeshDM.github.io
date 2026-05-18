@@ -1,548 +1,530 @@
+---
+layout: fullhtml-post
+title: "The Modern Playbook: LLMs That Help Planners"
+date: 2026-03-20
+categories: ["LLMs Automated Planning and Agents"]
+tags: ["planning", "llm", "hybrid"]
+description: "LLM-Modulo, heuristic generation, and the generate-verify loop that turned 12% into 82%. Part 5 of the Planning in the Era of LLMs series."
+_styles: >
+  .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .blog-fullhtml {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      color: #1a1a2e;
+      background: #fafafa;
+  }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Modern Playbook: LLMs That Help Planners - Planning in the Era of LLMs</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        /* === Base === */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            line-height: 1.8;
-            color: #1a1a2e;
-            background: #fafafa;
-        }
-        /* === Hero Header === */
-        .hero {
-            background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
-            color: #f0f0f0;
-            padding: 80px 20px 60px;
-            text-align: center;
-        }
-        .hero .series-label {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #7eb8da;
-            margin-bottom: 16px;
-        }
-        .hero h1 {
-            font-size: 2.6rem;
-            font-weight: 700;
-            line-height: 1.25;
-            max-width: 820px;
-            margin: 0 auto 20px;
-        }
-        .hero .subtitle {
-            font-size: 1.15rem;
-            color: #b0c4de;
-            max-width: 640px;
-            margin: 0 auto 28px;
-            font-style: italic;
-        }
-        /* === Article Container === */
-        .container {
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 48px 24px 80px;
-        }
-        /* === Typography === */
-        h2 {
-            font-size: 1.85rem;
-            color: #0d1b2a;
-            margin: 56px 0 20px;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #2a4066;
-        }
-        h3 {
-            font-size: 1.35rem;
-            color: #1b2838;
-            margin: 40px 0 14px;
-        }
-        p { margin-bottom: 18px; font-size: 1.05rem; }
-        strong { color: #0d1b2a; }
-        a { color: #2a6496; text-decoration: none; border-bottom: 1px solid #2a649644; }
-        a:hover { color: #1a4060; border-bottom-color: #1a4060; }
-        .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
-        ul, ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
-        li { margin-bottom: 6px; }
-        /* === Series Navigation Banner === */
-        .series-nav {
-            background: #f0f4f8;
-            border: 1px solid #d0d8ef;
-            border-radius: 8px;
-            padding: 20px 24px;
-            margin-bottom: 32px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.92rem;
-            color: #444;
-        }
-        .series-nav strong { color: #2a4066; font-size: 1rem; }
-        .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
-        .series-nav .nav-links {
-            margin-top: 10px;
-            font-size: 0.88rem;
-            color: #2a4066;
-            font-weight: 600;
-        }
-        /* === Callout Boxes === */
-        .callout {
-            border-left: 4px solid #2a4066;
-            background: #f0f4f8;
-            padding: 20px 24px;
-            margin: 28px 0;
-            border-radius: 0 6px 6px 0;
-        }
-        .callout.insight {
-            border-left-color: #228b22;
-            background: #f0faf0;
-        }
-        .callout.warning {
-            border-left-color: #b22222;
-            background: #fdf2f2;
-        }
-        .callout.question {
-            border-left-color: #d4740e;
-            background: #fef9f0;
-        }
-        .callout-label {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-        }
-        .callout.insight .callout-label { color: #228b22; }
-        .callout.warning .callout-label { color: #b22222; }
-        .callout.question .callout-label { color: #d4740e; }
-        .callout p:last-child { margin-bottom: 0; }
-        /* === Agentic AI Sidebar === */
-        .agentic-sidebar {
-            background: linear-gradient(135deg, #f5f0ff, #ede4ff);
-            border: 1px solid #d4c5f0;
-            border-radius: 10px;
-            padding: 24px;
-            margin: 36px 0;
-        }
-        .agentic-sidebar .sidebar-title {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #6b3fa0;
-            margin-bottom: 12px;
-        }
-        .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
-        /* === Code Blocks === */
-        pre {
-            background: #1e1e2e;
-            color: #cdd6f4;
-            padding: 20px 24px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin: 24px 0;
-        }
-        code {
-            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-            font-size: 0.88em;
-        }
-        p code, li code {
-            background: #e8edf2;
-            padding: 2px 6px;
-            border-radius: 3px;
-            color: #2a4066;
-        }
-        /* === Downloadable Visualization Containers === */
-        .vis-container {
-            margin: 2em 0;
-            padding: 1.5em;
-            background: #fafafa;
-            border-radius: 10px;
-            border: 1px solid #eee;
-        }
-        .vis-caption {
-            font-size: 0.85em;
-            color: #666;
-            font-style: italic;
-            margin-top: 10px;
-            text-align: center;
-        }
-        /* Download buttons */
-        .download-btn {
-            display: inline-block;
-            margin-top: 4px;
-            padding: 4px 12px;
-            font-size: 0.72em;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: #2a4066;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-        .download-btn:hover { background: #1b2838; }
-        .download-btn-wrapper {
-            text-align: center;
-            margin-top: -8px;
-            margin-bottom: 24px;
-        }
-        .download-all-container {
-            text-align: center;
-            margin: 2em 0;
-            padding: 15px;
-            background: #f0f4f8;
-            border-radius: 8px;
-            border: 1px dashed #2a4066;
-        }
-        .download-all-btn {
-            padding: 10px 24px;
-            font-size: 0.9em;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: #2a4066;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .download-all-btn:hover { background: #1b2838; }
-        .download-all-container p {
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 8px;
-        }
-        /* === Interactive Element Containers === */
-        .interactive-container {
-            border: 1px solid #d0d8ef;
-            border-radius: 10px;
-            padding: 24px;
-            margin: 36px 0;
-            background: #fff;
-        }
-        .interactive-container .interactive-label {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.82rem;
-            color: #888;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        .auto-demo-btn {
-            background: #2a9d8f;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-top: 12px;
-        }
-        .auto-demo-btn:hover { background: #238577; }
-        /* === Next Post Teaser === */
-        .next-post {
-            margin: 56px 0 0; padding: 28px;
-            background: linear-gradient(135deg, #1b2838, #2a4066);
-            border-radius: 10px; color: #e0e8f0;
-        }
-        .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
-        .next-post p { font-size: 0.95rem; color: #b0c4de; }
-        /* === References === */
-        .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #dde; }
-        .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
-        .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
-        .references li { margin-bottom: 8px; }
-        /* === Footer === */
-        footer {
-            text-align: center; padding: 32px 20px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
-        }
-        /* === Math === */
-        .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
+  .blog-fullhtml .hero {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+      color: #f0f0f0;
+      padding: 80px 20px 60px;
+      text-align: center;
+  }
+  .blog-fullhtml .hero .series-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #7eb8da;
+      margin-bottom: 16px;
+  }
+  .blog-fullhtml .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 820px;
+      margin: 0 auto 20px;
+  }
+  .blog-fullhtml .hero .subtitle {
+      font-size: 1.15rem;
+      color: #b0c4de;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-style: italic;
+  }
 
-        /* =============================================
-           LLM-MODULO LOOP DIAGRAM
-           ============================================= */
-        .modulo-loop {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            flex-wrap: nowrap;
-            margin: 20px 0;
-            padding: 20px;
-        }
-        .modulo-node {
-            padding: 16px 22px;
-            border-radius: 10px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #fff;
-            text-align: center;
-            min-width: 130px;
-            line-height: 1.4;
-            position: relative;
-        }
-        .modulo-node.llm-gen { background: #6b3fa0; }
-        .modulo-node.verifier { background: #228b22; }
-        .modulo-node.output { background: #2a9d8f; }
-        .modulo-arrow {
-            font-size: 1.6rem;
-            color: #555;
-            padding: 0 12px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        .modulo-feedback {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.8rem;
-            color: #b22222;
-            font-weight: 600;
-        }
-        .modulo-feedback-arrow {
-            font-size: 1.8rem;
-            color: #b22222;
-            margin: 0 8px;
-        }
+  .blog-fullhtml .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+  }
 
-        /* =============================================
-           RESULTS COMPARISON CHART
-           ============================================= */
-        .results-chart {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            padding: 20px 0;
-        }
-        .result-row {
-            display: grid;
-            grid-template-columns: 180px 1fr 50px;
-            align-items: center;
-            gap: 12px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.85rem;
-        }
-        .result-label {
-            text-align: right;
-            font-weight: 600;
-            color: #1b2838;
-            font-size: 0.82rem;
-        }
-        .result-bar-track {
-            height: 28px;
-            background: #e8ecf1;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .result-bar {
-            height: 100%;
-            border-radius: 4px;
-        }
-        .result-value {
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
+  .blog-fullhtml h2 {
+      font-size: 1.85rem;
+      color: #0d1b2a;
+      margin: 56px 0 20px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #2a4066;
+  }
+  .blog-fullhtml h3 {
+      font-size: 1.35rem;
+      color: #1b2838;
+      margin: 40px 0 14px;
+  }
+  .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
+  .blog-fullhtml strong { color: #0d1b2a; }
+  .blog-fullhtml a { color: #2a6496; text-decoration: none; border-bottom: 1px solid #2a649644; }
+  .blog-fullhtml a:hover { color: #1a4060; border-bottom-color: #1a4060; }
+  .blog-fullhtml .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
+  .blog-fullhtml li { margin-bottom: 6px; }
 
-        /* =============================================
-           CODE GENERATION PANEL
-           ============================================= */
-        .code-gen-panel {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .code-gen-side {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .code-gen-header {
-            padding: 10px 16px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .code-gen-side.input .code-gen-header {
-            background: #6b3fa0;
-            color: white;
-        }
-        .code-gen-side.output .code-gen-header {
-            background: #228b22;
-            color: white;
-        }
-        .code-gen-side pre {
-            margin: 0;
-            border-radius: 0 0 10px 10px;
-            font-size: 0.78rem;
-            min-height: 200px;
-        }
+  .blog-fullhtml .series-nav {
+      background: #f0f4f8;
+      border: 1px solid #d0d8ef;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.92rem;
+      color: #444;
+  }
+  .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
+  .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
+  .blog-fullhtml .series-nav .nav-links {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #2a4066;
+      font-weight: 600;
+  }
 
-        /* =============================================
-           APPROACH CARDS
-           ============================================= */
-        .approach-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-            margin: 20px 0;
-        }
-        .approach-card {
-            border-radius: 10px;
-            padding: 18px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-        .approach-card .card-number {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 6px;
-        }
-        .approach-card h4 {
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-        }
-        .approach-card p {
-            font-size: 0.82rem;
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-        .approach-card .card-result {
-            font-size: 0.78rem;
-            font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        .approach-card.card-modulo {
-            background: #f0faf0;
-            border: 2px solid #228b22;
-        }
-        .approach-card.card-modulo .card-number { color: #228b22; }
-        .approach-card.card-modulo h4 { color: #1a6b1a; }
-        .approach-card.card-modulo p { color: #0a4a0a; }
-        .approach-card.card-modulo .card-result { background: #d4edda; color: #155724; }
-        .approach-card.card-heuristic {
-            background: #f5f0ff;
-            border: 2px solid #6b3fa0;
-        }
-        .approach-card.card-heuristic .card-number { color: #6b3fa0; }
-        .approach-card.card-heuristic h4 { color: #5a2d8a; }
-        .approach-card.card-heuristic p { color: #3a2060; }
-        .approach-card.card-heuristic .card-result { background: #e8ddf5; color: #3a2060; }
-        .approach-card.card-tos {
-            background: #fff7ed;
-            border: 2px solid #d4740e;
-        }
-        .approach-card.card-tos .card-number { color: #d4740e; }
-        .approach-card.card-tos h4 { color: #b35c00; }
-        .approach-card.card-tos p { color: #7a3f00; }
-        .approach-card.card-tos .card-result { background: #ffecd0; color: #7a3f00; }
+  .blog-fullhtml .callout {
+      border-left: 4px solid #2a4066;
+      background: #f0f4f8;
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 0 6px 6px 0;
+  }
+  .blog-fullhtml .callout.insight {
+      border-left-color: #228b22;
+      background: #f0faf0;
+  }
+  .blog-fullhtml .callout.warning {
+      border-left-color: #b22222;
+      background: #fdf2f2;
+  }
+  .blog-fullhtml .callout.question {
+      border-left-color: #d4740e;
+      background: #fef9f0;
+  }
+  .blog-fullhtml .callout-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
+  .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
+  .blog-fullhtml .callout.question .callout-label { color: #d4740e; }
+  .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
 
-        /* =============================================
-           INTERACTIVE LLM-MODULO DEMO
-           ============================================= */
-        .modulo-demo {
-            width: 960px;
-            max-width: calc(100vw - 40px);
-            margin-left: 50%;
-            transform: translateX(-50%);
-            position: relative;
-        }
-        .modulo-demo-grid {
-            display: grid;
-            grid-template-columns: 1fr 80px 1fr;
-            gap: 0;
-            align-items: stretch;
-            margin-top: 14px;
-        }
-        .modulo-panel {
-            border-radius: 10px;
-            padding: 18px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.85rem;
-        }
-        .modulo-panel.gen-panel {
-            background: #f5f0ff;
-            border: 2px solid #6b3fa0;
-        }
-        .modulo-panel.ver-panel {
-            background: #f0faf0;
-            border: 2px solid #228b22;
-        }
-        .modulo-panel h4 {
-            font-size: 0.92rem;
-            margin-bottom: 12px;
-        }
-        .modulo-panel.gen-panel h4 { color: #6b3fa0; }
-        .modulo-panel.ver-panel h4 { color: #228b22; }
-        .modulo-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.75rem;
-            color: #888;
-        }
-        .modulo-center .arrow-right { font-size: 2rem; color: #6b3fa0; }
-        .modulo-center .arrow-left { font-size: 2rem; color: #b22222; }
-        .round-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        .round-badge.attempt { background: #e8ddf5; color: #6b3fa0; }
-        .round-badge.feedback { background: #fce4e4; color: #b22222; }
-        .round-badge.success { background: #d4edda; color: #155724; }
-        .step-item {
-            padding: 6px 10px;
-            margin-bottom: 4px;
-            border-radius: 5px;
-            font-size: 0.82rem;
-            line-height: 1.4;
-        }
-        .step-item.valid { background: #e8f5e9; }
-        .step-item.invalid { background: #ffebee; }
-        .step-item.corrected { background: #e8f5e9; border-left: 3px solid #228b22; }
+  .blog-fullhtml .agentic-sidebar {
+      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+      border: 1px solid #d4c5f0;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+  }
+  .blog-fullhtml .agentic-sidebar .sidebar-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #6b3fa0;
+      margin-bottom: 12px;
+  }
+  .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
 
-        /* === Responsive === */
-        @media (max-width: 700px) {
-            .hero h1 { font-size: 1.8rem; }
-            .container { padding: 32px 16px 60px; }
-            .code-gen-panel { grid-template-columns: 1fr; }
-            .approach-cards { grid-template-columns: 1fr; }
-            .modulo-loop { flex-wrap: wrap; gap: 8px; }
-            .modulo-node { min-width: 100px; font-size: 0.82rem; }
-            .modulo-demo-grid { grid-template-columns: 1fr; }
-            .result-row { grid-template-columns: 120px 1fr 40px; }
-        }
-    </style>
-</head>
-<body>
+  .blog-fullhtml pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 24px 0;
+  }
+  .blog-fullhtml code {
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.88em;
+  }
+  .blog-fullhtml p code, .blog-fullhtml li code {
+      background: #e8edf2;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #2a4066;
+  }
+
+  .blog-fullhtml .vis-container {
+      margin: 2em 0;
+      padding: 1.5em;
+      background: #fafafa;
+      border-radius: 10px;
+      border: 1px solid #eee;
+  }
+  .blog-fullhtml .vis-caption {
+      font-size: 0.85em;
+      color: #666;
+      font-style: italic;
+      margin-top: 10px;
+      text-align: center;
+  }
+
+  .blog-fullhtml .download-btn {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 4px 12px;
+      font-size: 0.72em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #2a4066;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+  }
+  .blog-fullhtml .download-btn:hover { background: #1b2838; }
+  .blog-fullhtml .download-btn-wrapper {
+      text-align: center;
+      margin-top: -8px;
+      margin-bottom: 24px;
+  }
+  .blog-fullhtml .download-all-container {
+      text-align: center;
+      margin: 2em 0;
+      padding: 15px;
+      background: #f0f4f8;
+      border-radius: 8px;
+      border: 1px dashed #2a4066;
+  }
+  .blog-fullhtml .download-all-btn {
+      padding: 10px 24px;
+      font-size: 0.9em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #2a4066;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+  }
+  .blog-fullhtml .download-all-btn:hover { background: #1b2838; }
+  .blog-fullhtml .download-all-container p {
+      font-size: 0.8em;
+      color: #666;
+      margin-top: 8px;
+  }
+
+  .blog-fullhtml .interactive-container {
+      border: 1px solid #d0d8ef;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+      background: #fff;
+  }
+  .blog-fullhtml .interactive-container .interactive-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 12px;
+      font-style: italic;
+  }
+  .blog-fullhtml .auto-demo-btn {
+      background: #2a9d8f;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-top: 12px;
+  }
+  .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
+
+  .blog-fullhtml .next-post {
+      margin: 56px 0 0; padding: 28px;
+      background: linear-gradient(135deg, #1b2838, #2a4066);
+      border-radius: 10px; color: #e0e8f0;
+  }
+  .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
+  .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
+
+  .blog-fullhtml .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #dde; }
+  .blog-fullhtml .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
+  .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
+  .blog-fullhtml .references li { margin-bottom: 8px; }
+
+  .blog-fullhtml footer {
+      text-align: center; padding: 32px 20px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  }
+
+  .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
+
+  .blog-fullhtml .modulo-loop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: nowrap;
+      margin: 20px 0;
+      padding: 20px;
+  }
+  .blog-fullhtml .modulo-node {
+      padding: 16px 22px;
+      border-radius: 10px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+      min-width: 130px;
+      line-height: 1.4;
+      position: relative;
+  }
+  .blog-fullhtml .modulo-node.llm-gen { background: #6b3fa0; }
+  .blog-fullhtml .modulo-node.verifier { background: #228b22; }
+  .blog-fullhtml .modulo-node.output { background: #2a9d8f; }
+  .blog-fullhtml .modulo-arrow {
+      font-size: 1.6rem;
+      color: #555;
+      padding: 0 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+  }
+  .blog-fullhtml .modulo-feedback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      color: #b22222;
+      font-weight: 600;
+  }
+  .blog-fullhtml .modulo-feedback-arrow {
+      font-size: 1.8rem;
+      color: #b22222;
+      margin: 0 8px;
+  }
+
+  .blog-fullhtml .results-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 20px 0;
+  }
+  .blog-fullhtml .result-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 50px;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+  }
+  .blog-fullhtml .result-label {
+      text-align: right;
+      font-weight: 600;
+      color: #1b2838;
+      font-size: 0.82rem;
+  }
+  .blog-fullhtml .result-bar-track {
+      height: 28px;
+      background: #e8ecf1;
+      border-radius: 4px;
+      overflow: hidden;
+  }
+  .blog-fullhtml .result-bar {
+      height: 100%;
+      border-radius: 4px;
+  }
+  .blog-fullhtml .result-value {
+      font-weight: 700;
+      font-size: 0.9rem;
+  }
+
+  .blog-fullhtml .code-gen-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+  }
+  .blog-fullhtml .code-gen-side {
+      border-radius: 10px;
+      overflow: hidden;
+  }
+  .blog-fullhtml .code-gen-header {
+      padding: 10px 16px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+  }
+  .blog-fullhtml .code-gen-side.input .code-gen-header {
+      background: #6b3fa0;
+      color: white;
+  }
+  .blog-fullhtml .code-gen-side.output .code-gen-header {
+      background: #228b22;
+      color: white;
+  }
+  .blog-fullhtml .code-gen-side pre {
+      margin: 0;
+      border-radius: 0 0 10px 10px;
+      font-size: 0.78rem;
+      min-height: 200px;
+  }
+
+  .blog-fullhtml .approach-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+  }
+  .blog-fullhtml .approach-card {
+      border-radius: 10px;
+      padding: 18px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .approach-card .card-number {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+  }
+  .blog-fullhtml .approach-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .approach-card p {
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+      line-height: 1.5;
+  }
+  .blog-fullhtml .approach-card .card-result {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 4px;
+      display: inline-block;
+  }
+  .blog-fullhtml .approach-card.card-modulo {
+      background: #f0faf0;
+      border: 2px solid #228b22;
+  }
+  .blog-fullhtml .approach-card.card-modulo .card-number { color: #228b22; }
+  .blog-fullhtml .approach-card.card-modulo h4 { color: #1a6b1a; }
+  .blog-fullhtml .approach-card.card-modulo p { color: #0a4a0a; }
+  .blog-fullhtml .approach-card.card-modulo .card-result { background: #d4edda; color: #155724; }
+  .blog-fullhtml .approach-card.card-heuristic {
+      background: #f5f0ff;
+      border: 2px solid #6b3fa0;
+  }
+  .blog-fullhtml .approach-card.card-heuristic .card-number { color: #6b3fa0; }
+  .blog-fullhtml .approach-card.card-heuristic h4 { color: #5a2d8a; }
+  .blog-fullhtml .approach-card.card-heuristic p { color: #3a2060; }
+  .blog-fullhtml .approach-card.card-heuristic .card-result { background: #e8ddf5; color: #3a2060; }
+  .blog-fullhtml .approach-card.card-tos {
+      background: #fff7ed;
+      border: 2px solid #d4740e;
+  }
+  .blog-fullhtml .approach-card.card-tos .card-number { color: #d4740e; }
+  .blog-fullhtml .approach-card.card-tos h4 { color: #b35c00; }
+  .blog-fullhtml .approach-card.card-tos p { color: #7a3f00; }
+  .blog-fullhtml .approach-card.card-tos .card-result { background: #ffecd0; color: #7a3f00; }
+
+  .blog-fullhtml .modulo-demo {
+      width: 960px;
+      max-width: calc(100vw - 40px);
+      margin-left: 50%;
+      transform: translateX(-50%);
+      position: relative;
+  }
+  .blog-fullhtml .modulo-demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0;
+      align-items: stretch;
+      margin-top: 14px;
+  }
+  .blog-fullhtml .modulo-panel {
+      border-radius: 10px;
+      padding: 18px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+  }
+  .blog-fullhtml .modulo-panel.gen-panel {
+      background: #f5f0ff;
+      border: 2px solid #6b3fa0;
+  }
+  .blog-fullhtml .modulo-panel.ver-panel {
+      background: #f0faf0;
+      border: 2px solid #228b22;
+  }
+  .blog-fullhtml .modulo-panel h4 {
+      font-size: 0.92rem;
+      margin-bottom: 12px;
+  }
+  .blog-fullhtml .modulo-panel.gen-panel h4 { color: #6b3fa0; }
+  .blog-fullhtml .modulo-panel.ver-panel h4 { color: #228b22; }
+  .blog-fullhtml .modulo-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      color: #888;
+  }
+  .blog-fullhtml .modulo-center .arrow-right { font-size: 2rem; color: #6b3fa0; }
+  .blog-fullhtml .modulo-center .arrow-left { font-size: 2rem; color: #b22222; }
+  .blog-fullhtml .round-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .round-badge.attempt { background: #e8ddf5; color: #6b3fa0; }
+  .blog-fullhtml .round-badge.feedback { background: #fce4e4; color: #b22222; }
+  .blog-fullhtml .round-badge.success { background: #d4edda; color: #155724; }
+  .blog-fullhtml .step-item {
+      padding: 6px 10px;
+      margin-bottom: 4px;
+      border-radius: 5px;
+      font-size: 0.82rem;
+      line-height: 1.4;
+  }
+  .blog-fullhtml .step-item.valid { background: #e8f5e9; }
+  .blog-fullhtml .step-item.invalid { background: #ffebee; }
+  .blog-fullhtml .step-item.corrected { background: #e8f5e9; border-left: 3px solid #228b22; }
+
+  @media (max-width: 700px) {
+      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+      .blog-fullhtml .container { padding: 32px 16px 60px; }
+      .blog-fullhtml .code-gen-panel { grid-template-columns: 1fr; }
+      .blog-fullhtml .approach-cards { grid-template-columns: 1fr; }
+      .blog-fullhtml .modulo-loop { flex-wrap: wrap; gap: 8px; }
+      .blog-fullhtml .modulo-node { min-width: 100px; font-size: 0.82rem; }
+      .blog-fullhtml .modulo-demo-grid { grid-template-columns: 1fr; }
+      .blog-fullhtml .result-row { grid-template-columns: 120px 1fr 40px; }
+  }
+---
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <header class="hero">
     <div class="series-label">Planning in the Era of LLMs — Part 5 of 7</div>
@@ -1076,6 +1058,3 @@ function resetModuloDemo() {
     document.getElementById('moduloResetBtn').style.display = 'none';
 }
 </script>
-
-</body>
-</html>

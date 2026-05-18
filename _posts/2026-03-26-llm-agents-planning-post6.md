@@ -1,576 +1,559 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>From English to Plans: The NL-to-PDDL Frontier - Planning in the Era of LLMs</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        /* === Base === */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            line-height: 1.8;
-            color: #1a1a2e;
-            background: #fafafa;
-        }
-        /* === Hero Header === */
-        .hero {
-            background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
-            color: #f0f0f0;
-            padding: 80px 20px 60px;
-            text-align: center;
-        }
-        .hero .series-label {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #7eb8da;
-            margin-bottom: 16px;
-        }
-        .hero h1 {
-            font-size: 2.6rem;
-            font-weight: 700;
-            line-height: 1.25;
-            max-width: 820px;
-            margin: 0 auto 20px;
-        }
-        .hero .subtitle {
-            font-size: 1.15rem;
-            color: #b0c4de;
-            max-width: 640px;
-            margin: 0 auto 28px;
-            font-style: italic;
-        }
-        /* === Article Container === */
-        .container {
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 48px 24px 80px;
-        }
-        /* === Typography === */
-        h2 {
-            font-size: 1.85rem;
-            color: #0d1b2a;
-            margin: 56px 0 20px;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #2a4066;
-        }
-        h3 {
-            font-size: 1.35rem;
-            color: #1b2838;
-            margin: 40px 0 14px;
-        }
-        p { margin-bottom: 18px; font-size: 1.05rem; }
-        strong { color: #0d1b2a; }
-        a { color: #2a6496; text-decoration: none; border-bottom: 1px solid #2a649644; }
-        a:hover { color: #1a4060; border-bottom-color: #1a4060; }
-        .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
-        ul, ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
-        li { margin-bottom: 6px; }
-        /* === Series Navigation Banner === */
-        .series-nav {
-            background: #f0f4f8;
-            border: 1px solid #d0d8ef;
-            border-radius: 8px;
-            padding: 20px 24px;
-            margin-bottom: 32px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.92rem;
-            color: #444;
-        }
-        .series-nav strong { color: #2a4066; font-size: 1rem; }
-        .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
-        .series-nav .nav-links {
-            margin-top: 10px;
-            font-size: 0.88rem;
-            color: #2a4066;
-            font-weight: 600;
-        }
-        /* === Callout Boxes === */
-        .callout {
-            border-left: 4px solid #2a4066;
-            background: #f0f4f8;
-            padding: 20px 24px;
-            margin: 28px 0;
-            border-radius: 0 6px 6px 0;
-        }
-        .callout.insight {
-            border-left-color: #228b22;
-            background: #f0faf0;
-        }
-        .callout.warning {
-            border-left-color: #b22222;
-            background: #fdf2f2;
-        }
-        .callout.question {
-            border-left-color: #d4740e;
-            background: #fef9f0;
-        }
-        .callout-label {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-        }
-        .callout.insight .callout-label { color: #228b22; }
-        .callout.warning .callout-label { color: #b22222; }
-        .callout.question .callout-label { color: #d4740e; }
-        .callout p:last-child { margin-bottom: 0; }
-        /* === Agentic AI Sidebar === */
-        .agentic-sidebar {
-            background: linear-gradient(135deg, #f5f0ff, #ede4ff);
-            border: 1px solid #d4c5f0;
-            border-radius: 10px;
-            padding: 24px;
-            margin: 36px 0;
-        }
-        .agentic-sidebar .sidebar-title {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #6b3fa0;
-            margin-bottom: 12px;
-        }
-        .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
-        /* === Code Blocks === */
-        pre {
-            background: #1e1e2e;
-            color: #cdd6f4;
-            padding: 20px 24px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin: 24px 0;
-        }
-        code {
-            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-            font-size: 0.88em;
-        }
-        p code, li code {
-            background: #e8edf2;
-            padding: 2px 6px;
-            border-radius: 3px;
-            color: #2a4066;
-        }
-        /* === Downloadable Visualization Containers === */
-        .vis-container {
-            margin: 2em 0;
-            padding: 1.5em;
-            background: #fafafa;
-            border-radius: 10px;
-            border: 1px solid #eee;
-        }
-        .vis-caption {
-            font-size: 0.85em;
-            color: #666;
-            font-style: italic;
-            margin-top: 10px;
-            text-align: center;
-        }
-        /* Download buttons */
-        .download-btn {
-            display: inline-block;
-            margin-top: 4px;
-            padding: 4px 12px;
-            font-size: 0.72em;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: #2a4066;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-        .download-btn:hover { background: #1b2838; }
-        .download-btn-wrapper {
-            text-align: center;
-            margin-top: -8px;
-            margin-bottom: 24px;
-        }
-        .download-all-container {
-            text-align: center;
-            margin: 2em 0;
-            padding: 15px;
-            background: #f0f4f8;
-            border-radius: 8px;
-            border: 1px dashed #2a4066;
-        }
-        .download-all-btn {
-            padding: 10px 24px;
-            font-size: 0.9em;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: #2a4066;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .download-all-btn:hover { background: #1b2838; }
-        .download-all-container p {
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 8px;
-        }
-        /* === Interactive Element Containers === */
-        .interactive-container {
-            border: 1px solid #d0d8ef;
-            border-radius: 10px;
-            padding: 24px;
-            margin: 36px 0;
-            background: #fff;
-        }
-        .interactive-container .interactive-label {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.82rem;
-            color: #888;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        .auto-demo-btn {
-            background: #2a9d8f;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-top: 12px;
-        }
-        .auto-demo-btn:hover { background: #238577; }
-        /* === Next Post Teaser === */
-        .next-post {
-            margin: 56px 0 0; padding: 28px;
-            background: linear-gradient(135deg, #1b2838, #2a4066);
-            border-radius: 10px; color: #e0e8f0;
-        }
-        .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
-        .next-post p { font-size: 0.95rem; color: #b0c4de; }
-        /* === References === */
-        .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #dde; }
-        .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
-        .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
-        .references li { margin-bottom: 8px; }
-        /* === Footer === */
-        footer {
-            text-align: center; padding: 32px 20px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
-        }
-        /* === Math === */
-        .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
+---
+layout: fullhtml-post
+title: "From English to Plans: The NL-to-PDDL Frontier"
+date: 2026-03-26
+categories: ["LLMs Automated Planning and Agents"]
+tags: ["planning", "llm", "nl-to-pddl"]
+description: "NL2Plan, agentic PDDL generation, and the orchestrator bottleneck — when the conductor can't keep up with the orchestra. Part 6 of the Planning in the Era of LLMs series."
+_styles: >
+  .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .blog-fullhtml {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      color: #1a1a2e;
+      background: #fafafa;
+  }
 
-        /* =============================================
-           NL-to-PDDL PIPELINE DIAGRAM
-           ============================================= */
-        .pipeline-flow {
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            gap: 0;
-            margin: 20px 0;
-            padding: 10px 0;
-        }
-        .pipeline-stage {
-            padding: 14px 16px;
-            border-radius: 10px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.82rem;
-            font-weight: 600;
-            text-align: center;
-            min-width: 110px;
-            line-height: 1.4;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .pipeline-stage .stage-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-            opacity: 0.8;
-        }
-        .pipeline-arrow {
-            font-size: 1.4rem;
-            color: #555;
-            padding: 0 8px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        .stage-nl { background: #2a9d8f; color: white; }
-        .stage-extract { background: #6b3fa0; color: white; }
-        .stage-pddl { background: #d4740e; color: white; }
-        .stage-validate { background: #b22222; color: white; }
-        .stage-solve { background: #228b22; color: white; }
+  .blog-fullhtml .hero {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+      color: #f0f0f0;
+      padding: 80px 20px 60px;
+      text-align: center;
+  }
+  .blog-fullhtml .hero .series-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #7eb8da;
+      margin-bottom: 16px;
+  }
+  .blog-fullhtml .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 820px;
+      margin: 0 auto 20px;
+  }
+  .blog-fullhtml .hero .subtitle {
+      font-size: 1.15rem;
+      color: #b0c4de;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-style: italic;
+  }
 
-        /* =============================================
-           AGENT ORCHESTRA DIAGRAM
-           ============================================= */
-        .orchestra-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .orchestra-agent {
-            border-radius: 10px;
-            padding: 14px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            text-align: center;
-        }
-        .orchestra-agent .agent-icon {
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-        }
-        .orchestra-agent h5 {
-            font-size: 0.82rem;
-            margin-bottom: 4px;
-        }
-        .orchestra-agent p {
-            font-size: 0.72rem;
-            margin-bottom: 0;
-            line-height: 1.4;
-        }
-        .agent-extractor {
-            background: #f5f0ff;
-            border: 2px solid #6b3fa0;
-        }
-        .agent-extractor h5 { color: #6b3fa0; }
-        .agent-extractor p { color: #3a2060; }
-        .agent-validator {
-            background: #fdf2f2;
-            border: 2px solid #b22222;
-        }
-        .agent-validator h5 { color: #b22222; }
-        .agent-validator p { color: #5a1010; }
-        .agent-fixer {
-            background: #fff7ed;
-            border: 2px solid #d4740e;
-        }
-        .agent-fixer h5 { color: #d4740e; }
-        .agent-fixer p { color: #7a3f00; }
-        .agent-solver {
-            background: #f0faf0;
-            border: 2px solid #228b22;
-        }
-        .agent-solver h5 { color: #228b22; }
-        .agent-solver p { color: #0a4a0a; }
-        .orchestrator-bar {
-            background: linear-gradient(90deg, #1b2838, #2a4066);
-            color: #e0e8f0;
-            border-radius: 10px;
-            padding: 12px 20px;
-            margin-top: 12px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+  .blog-fullhtml .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+  }
 
-        /* =============================================
-           NL → PDDL TRANSFORMATION PANEL
-           ============================================= */
-        .nl-pddl-transform {
-            display: grid;
-            grid-template-columns: 1fr 40px 1fr;
-            gap: 0;
-            margin: 20px 0;
-            align-items: stretch;
-        }
-        .nl-side, .pddl-side {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .nl-side .panel-header {
-            background: #2a9d8f;
-            color: white;
-            padding: 10px 16px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .pddl-side .panel-header {
-            background: #d4740e;
-            color: white;
-            padding: 10px 16px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .nl-side .panel-body {
-            background: #f0fafa;
-            border: 2px solid #2a9d8f;
-            border-top: none;
-            border-radius: 0 0 10px 10px;
-            padding: 16px;
-            font-size: 0.88rem;
-            line-height: 1.7;
-            min-height: 280px;
-        }
-        .pddl-side .panel-body {
-            border: 2px solid #d4740e;
-            border-top: none;
-            border-radius: 0 0 10px 10px;
-        }
-        .pddl-side .panel-body pre {
-            margin: 0;
-            border-radius: 0 0 8px 8px;
-            font-size: 0.72rem;
-            min-height: 280px;
-        }
-        .transform-arrow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #6b3fa0;
-            font-weight: 700;
-        }
+  .blog-fullhtml h2 {
+      font-size: 1.85rem;
+      color: #0d1b2a;
+      margin: 56px 0 20px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #2a4066;
+  }
+  .blog-fullhtml h3 {
+      font-size: 1.35rem;
+      color: #1b2838;
+      margin: 40px 0 14px;
+  }
+  .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
+  .blog-fullhtml strong { color: #0d1b2a; }
+  .blog-fullhtml a { color: #2a6496; text-decoration: none; border-bottom: 1px solid #2a649644; }
+  .blog-fullhtml a:hover { color: #1a4060; border-bottom-color: #1a4060; }
+  .blog-fullhtml .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
+  .blog-fullhtml li { margin-bottom: 6px; }
 
-        /* =============================================
-           BOTTLENECK VISUALIZATION
-           ============================================= */
-        .bottleneck-chart {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 20px 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-        .bottleneck-row {
-            display: grid;
-            grid-template-columns: 160px 1fr 70px;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.85rem;
-        }
-        .bottleneck-label {
-            text-align: right;
-            font-weight: 600;
-            color: #1b2838;
-            font-size: 0.8rem;
-        }
-        .bottleneck-bar-track {
-            height: 24px;
-            background: #e8ecf1;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .bottleneck-bar {
-            height: 100%;
-            border-radius: 4px;
-        }
-        .bottleneck-value {
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
+  .blog-fullhtml .series-nav {
+      background: #f0f4f8;
+      border: 1px solid #d0d8ef;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.92rem;
+      color: #444;
+  }
+  .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
+  .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
+  .blog-fullhtml .series-nav .nav-links {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #2a4066;
+      font-weight: 600;
+  }
 
-        /* =============================================
-           INTERACTIVE NL-TO-PLAN DEMO
-           ============================================= */
-        .nl-demo-container {
-            width: 960px;
-            max-width: calc(100vw - 40px);
-            margin-left: 50%;
-            transform: translateX(-50%);
-            position: relative;
-        }
-        .nl-demo-stages {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 14px;
-        }
-        .demo-stage {
-            border-radius: 10px;
-            padding: 16px 20px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.85rem;
-            transition: all 0.4s ease;
-        }
-        .demo-stage .stage-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .demo-stage .stage-num {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: white;
-            flex-shrink: 0;
-        }
-        .demo-stage .stage-title {
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        .demo-stage .stage-content {
-            padding-left: 38px;
-            font-size: 0.82rem;
-            line-height: 1.5;
-        }
-        .demo-stage.waiting {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-        }
-        .demo-stage.waiting .stage-num { background: #ccc; }
-        .demo-stage.active {
-            border: 2px solid #2a9d8f;
-            background: #f0fafa;
-            box-shadow: 0 2px 10px rgba(42, 157, 143, 0.2);
-        }
-        .demo-stage.active .stage-num { background: #2a9d8f; }
-        .demo-stage.done {
-            background: #f0faf0;
-            border: 1px solid #228b22;
-        }
-        .demo-stage.done .stage-num { background: #228b22; }
-        .demo-stage.error {
-            background: #fdf2f2;
-            border: 2px solid #b22222;
-        }
-        .demo-stage.error .stage-num { background: #b22222; }
+  .blog-fullhtml .callout {
+      border-left: 4px solid #2a4066;
+      background: #f0f4f8;
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 0 6px 6px 0;
+  }
+  .blog-fullhtml .callout.insight {
+      border-left-color: #228b22;
+      background: #f0faf0;
+  }
+  .blog-fullhtml .callout.warning {
+      border-left-color: #b22222;
+      background: #fdf2f2;
+  }
+  .blog-fullhtml .callout.question {
+      border-left-color: #d4740e;
+      background: #fef9f0;
+  }
+  .blog-fullhtml .callout-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
+  .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
+  .blog-fullhtml .callout.question .callout-label { color: #d4740e; }
+  .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
 
-        /* === Responsive === */
-        @media (max-width: 700px) {
-            .hero h1 { font-size: 1.8rem; }
-            .container { padding: 32px 16px 60px; }
-            .pipeline-flow { flex-wrap: wrap; gap: 8px; }
-            .pipeline-stage { min-width: 80px; font-size: 0.75rem; }
-            .orchestra-grid { grid-template-columns: 1fr 1fr; }
-            .nl-pddl-transform { grid-template-columns: 1fr; }
-            .transform-arrow { transform: rotate(90deg); padding: 8px 0; }
-            .nl-demo-container { width: 100%; transform: none; margin-left: 0; }
-            .bottleneck-row { grid-template-columns: 100px 1fr 50px; }
-        }
-    </style>
-</head>
-<body>
+  .blog-fullhtml .agentic-sidebar {
+      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+      border: 1px solid #d4c5f0;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+  }
+  .blog-fullhtml .agentic-sidebar .sidebar-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #6b3fa0;
+      margin-bottom: 12px;
+  }
+  .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
+
+  .blog-fullhtml pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 24px 0;
+  }
+  .blog-fullhtml code {
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.88em;
+  }
+  .blog-fullhtml p code, .blog-fullhtml li code {
+      background: #e8edf2;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #2a4066;
+  }
+
+  .blog-fullhtml .vis-container {
+      margin: 2em 0;
+      padding: 1.5em;
+      background: #fafafa;
+      border-radius: 10px;
+      border: 1px solid #eee;
+  }
+  .blog-fullhtml .vis-caption {
+      font-size: 0.85em;
+      color: #666;
+      font-style: italic;
+      margin-top: 10px;
+      text-align: center;
+  }
+
+  .blog-fullhtml .download-btn {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 4px 12px;
+      font-size: 0.72em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #2a4066;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+  }
+  .blog-fullhtml .download-btn:hover { background: #1b2838; }
+  .blog-fullhtml .download-btn-wrapper {
+      text-align: center;
+      margin-top: -8px;
+      margin-bottom: 24px;
+  }
+  .blog-fullhtml .download-all-container {
+      text-align: center;
+      margin: 2em 0;
+      padding: 15px;
+      background: #f0f4f8;
+      border-radius: 8px;
+      border: 1px dashed #2a4066;
+  }
+  .blog-fullhtml .download-all-btn {
+      padding: 10px 24px;
+      font-size: 0.9em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #2a4066;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+  }
+  .blog-fullhtml .download-all-btn:hover { background: #1b2838; }
+  .blog-fullhtml .download-all-container p {
+      font-size: 0.8em;
+      color: #666;
+      margin-top: 8px;
+  }
+
+  .blog-fullhtml .interactive-container {
+      border: 1px solid #d0d8ef;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+      background: #fff;
+  }
+  .blog-fullhtml .interactive-container .interactive-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 12px;
+      font-style: italic;
+  }
+  .blog-fullhtml .auto-demo-btn {
+      background: #2a9d8f;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-top: 12px;
+  }
+  .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
+
+  .blog-fullhtml .next-post {
+      margin: 56px 0 0; padding: 28px;
+      background: linear-gradient(135deg, #1b2838, #2a4066);
+      border-radius: 10px; color: #e0e8f0;
+  }
+  .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
+  .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
+
+  .blog-fullhtml .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #dde; }
+  .blog-fullhtml .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
+  .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
+  .blog-fullhtml .references li { margin-bottom: 8px; }
+
+  .blog-fullhtml footer {
+      text-align: center; padding: 32px 20px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  }
+
+  .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
+
+  .blog-fullhtml .pipeline-flow {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+      margin: 20px 0;
+      padding: 10px 0;
+  }
+  .blog-fullhtml .pipeline-stage {
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 110px;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  }
+  .blog-fullhtml .pipeline-stage .stage-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      opacity: 0.8;
+  }
+  .blog-fullhtml .pipeline-arrow {
+      font-size: 1.4rem;
+      color: #555;
+      padding: 0 8px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+  }
+  .blog-fullhtml .stage-nl { background: #2a9d8f; color: white; }
+  .blog-fullhtml .stage-extract { background: #6b3fa0; color: white; }
+  .blog-fullhtml .stage-pddl { background: #d4740e; color: white; }
+  .blog-fullhtml .stage-validate { background: #b22222; color: white; }
+  .blog-fullhtml .stage-solve { background: #228b22; color: white; }
+
+  .blog-fullhtml .orchestra-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+  }
+  .blog-fullhtml .orchestra-agent {
+      border-radius: 10px;
+      padding: 14px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      text-align: center;
+  }
+  .blog-fullhtml .orchestra-agent .agent-icon {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+  }
+  .blog-fullhtml .orchestra-agent h5 {
+      font-size: 0.82rem;
+      margin-bottom: 4px;
+  }
+  .blog-fullhtml .orchestra-agent p {
+      font-size: 0.72rem;
+      margin-bottom: 0;
+      line-height: 1.4;
+  }
+  .blog-fullhtml .agent-extractor {
+      background: #f5f0ff;
+      border: 2px solid #6b3fa0;
+  }
+  .blog-fullhtml .agent-extractor h5 { color: #6b3fa0; }
+  .blog-fullhtml .agent-extractor p { color: #3a2060; }
+  .blog-fullhtml .agent-validator {
+      background: #fdf2f2;
+      border: 2px solid #b22222;
+  }
+  .blog-fullhtml .agent-validator h5 { color: #b22222; }
+  .blog-fullhtml .agent-validator p { color: #5a1010; }
+  .blog-fullhtml .agent-fixer {
+      background: #fff7ed;
+      border: 2px solid #d4740e;
+  }
+  .blog-fullhtml .agent-fixer h5 { color: #d4740e; }
+  .blog-fullhtml .agent-fixer p { color: #7a3f00; }
+  .blog-fullhtml .agent-solver {
+      background: #f0faf0;
+      border: 2px solid #228b22;
+  }
+  .blog-fullhtml .agent-solver h5 { color: #228b22; }
+  .blog-fullhtml .agent-solver p { color: #0a4a0a; }
+  .blog-fullhtml .orchestrator-bar {
+      background: linear-gradient(90deg, #1b2838, #2a4066);
+      color: #e0e8f0;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-top: 12px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+  }
+
+  .blog-fullhtml .nl-pddl-transform {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      gap: 0;
+      margin: 20px 0;
+      align-items: stretch;
+  }
+  .blog-fullhtml .nl-side, .blog-fullhtml .pddl-side {
+      border-radius: 10px;
+      overflow: hidden;
+  }
+  .blog-fullhtml .nl-side .panel-header {
+      background: #2a9d8f;
+      color: white;
+      padding: 10px 16px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+  }
+  .blog-fullhtml .pddl-side .panel-header {
+      background: #d4740e;
+      color: white;
+      padding: 10px 16px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+  }
+  .blog-fullhtml .nl-side .panel-body {
+      background: #f0fafa;
+      border: 2px solid #2a9d8f;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 16px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      min-height: 280px;
+  }
+  .blog-fullhtml .pddl-side .panel-body {
+      border: 2px solid #d4740e;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+  }
+  .blog-fullhtml .pddl-side .panel-body pre {
+      margin: 0;
+      border-radius: 0 0 8px 8px;
+      font-size: 0.72rem;
+      min-height: 280px;
+  }
+  .blog-fullhtml .transform-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #6b3fa0;
+      font-weight: 700;
+  }
+
+  .blog-fullhtml .bottleneck-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 20px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .bottleneck-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 70px;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+  }
+  .blog-fullhtml .bottleneck-label {
+      text-align: right;
+      font-weight: 600;
+      color: #1b2838;
+      font-size: 0.8rem;
+  }
+  .blog-fullhtml .bottleneck-bar-track {
+      height: 24px;
+      background: #e8ecf1;
+      border-radius: 4px;
+      overflow: hidden;
+  }
+  .blog-fullhtml .bottleneck-bar {
+      height: 100%;
+      border-radius: 4px;
+  }
+  .blog-fullhtml .bottleneck-value {
+      font-weight: 700;
+      font-size: 0.85rem;
+  }
+
+  .blog-fullhtml .nl-demo-container {
+      width: 960px;
+      max-width: calc(100vw - 40px);
+      margin-left: 50%;
+      transform: translateX(-50%);
+      position: relative;
+  }
+  .blog-fullhtml .nl-demo-stages {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+  }
+  .blog-fullhtml .demo-stage {
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      transition: all 0.4s ease;
+  }
+  .blog-fullhtml .demo-stage .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .demo-stage .stage-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: white;
+      flex-shrink: 0;
+  }
+  .blog-fullhtml .demo-stage .stage-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+  }
+  .blog-fullhtml .demo-stage .stage-content {
+      padding-left: 38px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+  }
+  .blog-fullhtml .demo-stage.waiting {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+  }
+  .blog-fullhtml .demo-stage.waiting .stage-num { background: #ccc; }
+  .blog-fullhtml .demo-stage.active {
+      border: 2px solid #2a9d8f;
+      background: #f0fafa;
+      box-shadow: 0 2px 10px rgba(42, 157, 143, 0.2);
+  }
+  .blog-fullhtml .demo-stage.active .stage-num { background: #2a9d8f; }
+  .blog-fullhtml .demo-stage.done {
+      background: #f0faf0;
+      border: 1px solid #228b22;
+  }
+  .blog-fullhtml .demo-stage.done .stage-num { background: #228b22; }
+  .blog-fullhtml .demo-stage.error {
+      background: #fdf2f2;
+      border: 2px solid #b22222;
+  }
+  .blog-fullhtml .demo-stage.error .stage-num { background: #b22222; }
+
+  @media (max-width: 700px) {
+      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+      .blog-fullhtml .container { padding: 32px 16px 60px; }
+      .blog-fullhtml .pipeline-flow { flex-wrap: wrap; gap: 8px; }
+      .blog-fullhtml .pipeline-stage { min-width: 80px; font-size: 0.75rem; }
+      .blog-fullhtml .orchestra-grid { grid-template-columns: 1fr 1fr; }
+      .blog-fullhtml .nl-pddl-transform { grid-template-columns: 1fr; }
+      .blog-fullhtml .transform-arrow { transform: rotate(90deg); padding: 8px 0; }
+      .blog-fullhtml .nl-demo-container { width: 100%; transform: none; margin-left: 0; }
+      .blog-fullhtml .bottleneck-row { grid-template-columns: 100px 1fr 50px; }
+  }
+---
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <header class="hero">
     <div class="series-label">Planning in the Era of LLMs — Part 6 of 7</div>
@@ -1171,7 +1154,3 @@ function resetPipelineDemo() {
     document.getElementById('pipelineResetBtn').style.display = 'none';
 }
 </script>
-
-</body>
-</html>
-
