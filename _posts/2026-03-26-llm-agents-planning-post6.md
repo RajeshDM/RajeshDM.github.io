@@ -43,7 +43,7 @@ _styles: >
       font-style: italic;
   }
 
-  .blog-fullhtml .container {
+  .blog-fullhtml .blog-container {
       max-width: 780px;
       margin: 0 auto;
       padding: 48px 24px 80px;
@@ -539,10 +539,11 @@ _styles: >
       border: 2px solid #b22222;
   }
   .blog-fullhtml .demo-stage.error .stage-num { background: #b22222; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   @media (max-width: 700px) {
       .blog-fullhtml .hero h1 { font-size: 1.8rem; }
-      .blog-fullhtml .container { padding: 32px 16px 60px; }
+      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
       .blog-fullhtml .pipeline-flow { flex-wrap: wrap; gap: 8px; }
       .blog-fullhtml .pipeline-stage { min-width: 80px; font-size: 0.75rem; }
       .blog-fullhtml .orchestra-grid { grid-template-columns: 1fr 1fr; }
@@ -561,7 +562,7 @@ _styles: >
     <p class="subtitle">NL2Plan, agentic PDDL generation, and the orchestrator bottleneck — when the conductor can't keep up with the orchestra.</p>
 </header>
 
-<article class="container">
+<article class="blog-container">
 
     <!-- Series Navigation -->
     <div class="vis-container" data-download-name="series-nav-banner">
@@ -1055,9 +1056,9 @@ _styles: >
 
 </article>
 
-<footer>
-    Planning in the Era of LLMs — Part 6 of 7
-</footer>
+<div class="blog-footer">
+    <p>Planning in the Era of LLMs — Part 6 of 7</p>
+</div>
 
 <script>
 /* === Download functionality === */

@@ -43,7 +43,7 @@ _styles: >
       font-style: italic;
   }
 
-  .blog-fullhtml .container {
+  .blog-fullhtml .blog-container {
       max-width: 780px;
       margin: 0 auto;
       padding: 48px 24px 80px;
@@ -511,10 +511,11 @@ _styles: >
   .blog-fullhtml .step-item.valid { background: #e8f5e9; }
   .blog-fullhtml .step-item.invalid { background: #ffebee; }
   .blog-fullhtml .step-item.corrected { background: #e8f5e9; border-left: 3px solid #228b22; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   @media (max-width: 700px) {
       .blog-fullhtml .hero h1 { font-size: 1.8rem; }
-      .blog-fullhtml .container { padding: 32px 16px 60px; }
+      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
       .blog-fullhtml .code-gen-panel { grid-template-columns: 1fr; }
       .blog-fullhtml .approach-cards { grid-template-columns: 1fr; }
       .blog-fullhtml .modulo-loop { flex-wrap: wrap; gap: 8px; }
@@ -532,7 +533,7 @@ _styles: >
     <p class="subtitle">LLM-Modulo, heuristic generation, and the generate-verify loop that turned 12% into 82%.</p>
 </header>
 
-<article class="container">
+<article class="blog-container">
 
     <!-- Series Navigation -->
     <div class="vis-container" data-download-name="series-nav-banner">
@@ -927,9 +928,9 @@ shelf-b)", "holding(beam)"}).</code></pre>
 
 </article>
 
-<footer>
-    Planning in the Era of LLMs — Part 5 of 7
-</footer>
+<div class="blog-footer">
+    <p>Planning in the Era of LLMs — Part 5 of 7</p>
+</div>
 
 <script>
 /* === Download functionality === */

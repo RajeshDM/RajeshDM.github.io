@@ -43,7 +43,7 @@ _styles: >
       font-style: italic;
   }
 
-  .blog-fullhtml .container {
+  .blog-fullhtml .blog-container {
       max-width: 780px;
       margin: 0 auto;
       padding: 48px 24px 80px;
@@ -585,10 +585,11 @@ _styles: >
       border-radius: 3px;
       font-weight: 600;
   }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   @media (max-width: 700px) {
       .blog-fullhtml .hero h1 { font-size: 1.8rem; }
-      .blog-fullhtml .container { padding: 32px 16px 60px; }
+      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
       .blog-fullhtml .mystery-comparison { grid-template-columns: 1fr; }
       .blog-fullhtml .taxonomy-grid { grid-template-columns: 1fr; }
       .blog-fullhtml .llm-demo-split { grid-template-columns: 1fr; }
@@ -604,7 +605,7 @@ _styles: >
     <p class="subtitle">PlanBench, Mystery Blocksworld, and the sobering evidence that frontier models can't reliably sequence three actions.</p>
 </header>
 
-<article class="container">
+<article class="blog-container">
 
     <!-- Series Navigation -->
     <div class="vis-container" data-download-name="series-nav-banner">
@@ -1183,9 +1184,9 @@ LLM: "Move to Zone-X, florp Zrint,
 
 </article>
 
-<footer>
-    Planning in the Era of LLMs — Part 4 of 7
-</footer>
+<div class="blog-footer">
+    <p>Planning in the Era of LLMs — Part 4 of 7</p>
+</div>
 
 <script>
 /* === Download functionality === */
