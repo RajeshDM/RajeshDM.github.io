@@ -1,0 +1,1865 @@
+---
+layout: fullhtml-post
+title: "Training the Conductor"
+date: 2026-04-02
+categories: ["LLMs Automated Planning and Agents"]
+tags: ["planning", "llm", "orchestrator"]
+description: "Stop prompting the orchestrator at every step. Let the verifier you already trust supervise a small local model — and watch the bill drop by 99%. Part 7 of the Planning in the Era of LLMs series."
+_styles: >
+  .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .blog-fullhtml {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      color: #1a1a2e;
+      background: #fafafa;
+  }
+
+  .blog-fullhtml .hero {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+      color: #f0f0f0;
+      padding: 80px 20px 60px;
+      text-align: center;
+  }
+  .blog-fullhtml .hero .series-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #7eb8da;
+      margin-bottom: 16px;
+  }
+  .blog-fullhtml .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 820px;
+      margin: 0 auto 20px;
+  }
+  .blog-fullhtml .hero .subtitle {
+      font-size: 1.15rem;
+      color: #b0c4de;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-style: italic;
+  }
+
+  .blog-fullhtml .blog-container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+  }
+
+  .blog-fullhtml h2 {
+      font-size: 1.85rem;
+      color: #0d1b2a;
+      margin: 56px 0 20px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #2a4066;
+  }
+  .blog-fullhtml h3 {
+      font-size: 1.35rem;
+      color: #1b2838;
+      margin: 40px 0 14px;
+  }
+  .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
+  .blog-fullhtml strong { color: #0d1b2a; }
+  .blog-fullhtml a { color: #2a6496; text-decoration: none; border-bottom: 1px solid #2a649644; }
+  .blog-fullhtml a:hover { color: #1a4060; border-bottom-color: #1a4060; }
+  .blog-fullhtml .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
+  .blog-fullhtml li { margin-bottom: 6px; }
+
+  .blog-fullhtml .series-nav {
+      background: #f0f4f8;
+      border: 1px solid #d0d8ef;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.92rem;
+      color: #444;
+  }
+  .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
+  .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
+  .blog-fullhtml .series-nav .nav-links {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #2a4066;
+      font-weight: 600;
+  }
+
+  .blog-fullhtml .callout {
+      border-left: 4px solid #2a4066;
+      background: #f0f4f8;
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 0 6px 6px 0;
+  }
+  .blog-fullhtml .callout.insight {
+      border-left-color: #228b22;
+      background: #f0faf0;
+  }
+  .blog-fullhtml .callout.warning {
+      border-left-color: #b22222;
+      background: #fdf2f2;
+  }
+  .blog-fullhtml .callout.question {
+      border-left-color: #d4740e;
+      background: #fef9f0;
+  }
+  .blog-fullhtml .callout-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
+  .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
+  .blog-fullhtml .callout.question .callout-label { color: #d4740e; }
+  .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
+
+  .blog-fullhtml .agentic-sidebar {
+      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+      border: 1px solid #d4c5f0;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+  }
+  .blog-fullhtml .agentic-sidebar .sidebar-title {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #6b3fa0;
+      margin-bottom: 12px;
+  }
+  .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
+
+  .blog-fullhtml pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 24px 0;
+  }
+  .blog-fullhtml code {
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.88em;
+  }
+  .blog-fullhtml p code, .blog-fullhtml li code {
+      background: #e8edf2;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #2a4066;
+  }
+
+  .blog-fullhtml .image-container { margin: 2em 0; text-align: center; }
+  .blog-fullhtml .image-placeholder {
+      background: #f0f0f0;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      padding: 40px 20px;
+      color: #888;
+      font-style: italic;
+      font-size: 0.9em;
+      line-height: 1.6;
+  }
+  .blog-fullhtml .image-caption {
+      font-size: 0.85em;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+  }
+
+  .blog-fullhtml .vis-container {
+      margin: 2em 0;
+      padding: 1.5em;
+      background: #fafafa;
+      border-radius: 10px;
+      border: 1px solid #eee;
+  }
+  .blog-fullhtml .vis-caption {
+      font-size: 0.85em;
+      color: #666;
+      font-style: italic;
+      margin-top: 10px;
+      text-align: center;
+  }
+
+  .blog-fullhtml .download-btn {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 4px 12px;
+      font-size: 0.72em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #2a4066;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+  }
+  .blog-fullhtml .download-btn:hover { background: #1b2838; }
+  .blog-fullhtml .download-btn-wrapper {
+      text-align: center;
+      margin-top: -8px;
+      margin-bottom: 24px;
+  }
+  .blog-fullhtml .download-all-container {
+      text-align: center;
+      margin: 2em 0;
+      padding: 15px;
+      background: #f0f4f8;
+      border-radius: 8px;
+      border: 1px dashed #2a4066;
+  }
+  .blog-fullhtml .download-all-btn {
+      padding: 10px 24px;
+      font-size: 0.9em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #2a4066;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+  }
+  .blog-fullhtml .download-all-btn:hover { background: #1b2838; }
+  .blog-fullhtml .download-all-container p {
+      font-size: 0.8em;
+      color: #666;
+      margin-top: 8px;
+  }
+
+  .blog-fullhtml .interactive-container {
+      border: 1px solid #d0d8ef;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 36px 0;
+      background: #fff;
+  }
+  .blog-fullhtml .interactive-container .interactive-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 12px;
+      font-style: italic;
+  }
+  .blog-fullhtml .auto-demo-btn {
+      background: #2a9d8f;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-top: 12px;
+  }
+  .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
+
+  .blog-fullhtml .next-post {
+      margin: 56px 0 0; padding: 28px;
+      background: linear-gradient(135deg, #1b2838, #2a4066);
+      border-radius: 10px; color: #e0e8f0;
+  }
+  .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
+  .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
+  .blog-fullhtml .next-post ul { color: #b0c4de; font-size: 0.95rem; }
+
+  .blog-fullhtml .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #dde; }
+  .blog-fullhtml .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
+  .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
+  .blog-fullhtml .references li { margin-bottom: 8px; }
+
+  .blog-fullhtml .blog-footer {
+      text-align: center; padding: 32px 20px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  }
+
+  .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
+  .blog-fullhtml .math-block {
+      text-align: center; padding: 16px 0; margin: 20px 0;
+      font-size: 1.1rem; background: #f8f9fb; border-radius: 6px;
+  }
+
+  .blog-fullhtml .credit-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px 0 8px;
+      flex-wrap: wrap;
+  }
+  .blog-fullhtml .credit-step {
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      text-align: center;
+      min-width: 95px;
+      font-weight: 600;
+      background: #fff;
+  }
+  .blog-fullhtml .credit-step.ok { border-color: #228b22; color: #228b22; background: #f0faf0; }
+  .blog-fullhtml .credit-step.bad { border-color: #b22222; color: #b22222; background: #fdf2f2; }
+  .blog-fullhtml .credit-step.unknown { border-color: #888; color: #555; background: #f5f5f5; }
+  .blog-fullhtml .credit-arrow {
+      font-size: 1.2rem;
+      color: #888;
+      font-weight: 700;
+  }
+  .blog-fullhtml .credit-reward {
+      background: linear-gradient(90deg, #1b2838, #2a4066);
+      color: #e0e8f0;
+      border-radius: 8px;
+      padding: 8px 14px;
+      margin-top: 6px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+  }
+
+  .blog-fullhtml .orch-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 24px 0;
+  }
+  .blog-fullhtml .orch-compare > * { min-width: 0; }
+  .blog-fullhtml .orch-card {
+      padding: 22px;
+      border-radius: 10px;
+      border: 2px solid;
+      background: #fff;
+  }
+  .blog-fullhtml .orch-card.prompted {
+      border-color: #b22222;
+      background: #fdf2f2;
+  }
+  .blog-fullhtml .orch-card.trained {
+      border-color: #228b22;
+      background: #f0faf0;
+  }
+  .blog-fullhtml .orch-card .orch-tag {
+      display: inline-block;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      color: white;
+  }
+  .blog-fullhtml .orch-card.prompted .orch-tag { background: #b22222; }
+  .blog-fullhtml .orch-card.trained .orch-tag { background: #228b22; }
+  .blog-fullhtml .orch-card h4 {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1.02rem;
+      margin-bottom: 10px;
+  }
+  .blog-fullhtml .orch-card.prompted h4 { color: #7a1a1a; }
+  .blog-fullhtml .orch-card.trained h4 { color: #0a4a0a; }
+  .blog-fullhtml .orch-card ul {
+      margin-left: 18px;
+      font-size: 0.92rem;
+  }
+  .blog-fullhtml .orch-card.prompted ul { color: #5a1010; }
+  .blog-fullhtml .orch-card.trained ul { color: #0a4a0a; }
+  .blog-fullhtml .orch-card .cost {
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+  }
+  .blog-fullhtml .orch-card.prompted .cost {
+      background: #f3c8c8;
+      color: #7a1a1a;
+  }
+  .blog-fullhtml .orch-card.trained .cost {
+      background: #c8e8c8;
+      color: #0a4a0a;
+  }
+
+  .blog-fullhtml .agent-pool {
+      margin: 22px 0 8px;
+  }
+  .blog-fullhtml .agent-group {
+      margin-bottom: 16px;
+  }
+  .blog-fullhtml .agent-group-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #1b2838;
+      margin-bottom: 8px;
+      padding-left: 4px;
+  }
+  .blog-fullhtml .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+  }
+  .blog-fullhtml .agent-grid > * { min-width: 0; }
+  .blog-fullhtml .agent-chip {
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      line-height: 1.35;
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+      min-height: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+  .blog-fullhtml .agent-chip .agent-id {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.25);
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-bottom: 3px;
+  }
+  .blog-fullhtml .agent-chip.baseline { background: #4682b4; }
+  .blog-fullhtml .agent-chip.deterministic { background: #228b22; }
+  .blog-fullhtml .agent-chip.pddl-aware { background: #6b3fa0; }
+  .blog-fullhtml .agent-chip.added { box-shadow: 0 0 0 2px #d4740e inset, 0 0 0 4px #d4740e; }
+  .blog-fullhtml .agent-legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 12px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      color: #444;
+  }
+  .blog-fullhtml .agent-legend .swatch {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      margin-right: 6px;
+      vertical-align: middle;
+  }
+
+  .blog-fullhtml .hybrid-diagram {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 20px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .hybrid-layer {
+      border-radius: 10px;
+      padding: 16px 20px;
+  }
+  .blog-fullhtml .hybrid-layer.layer1 {
+      background: linear-gradient(135deg, #fff7ed, #ffe9d0);
+      border: 2px solid #d4740e;
+  }
+  .blog-fullhtml .hybrid-layer.layer2 {
+      background: linear-gradient(135deg, #f0faf0, #d0eed0);
+      border: 2px solid #228b22;
+  }
+  .blog-fullhtml .hybrid-layer h5 {
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .hybrid-layer.layer1 h5 { color: #b35c00; }
+  .blog-fullhtml .hybrid-layer.layer2 h5 { color: #0a4a0a; }
+  .blog-fullhtml .hybrid-rules {
+      margin: 8px 0 0 22px;
+      font-size: 0.82rem;
+  }
+  .blog-fullhtml .hybrid-rules code {
+      background: rgba(0,0,0,0.07);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #1b2838;
+      font-size: 0.78rem;
+  }
+  .blog-fullhtml .hybrid-layer .layer-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      color: white;
+      margin-bottom: 6px;
+  }
+  .blog-fullhtml .hybrid-layer.layer1 .layer-tag { background: #d4740e; }
+  .blog-fullhtml .hybrid-layer.layer2 .layer-tag { background: #228b22; }
+  .blog-fullhtml .hybrid-arrow {
+      text-align: center;
+      font-size: 1.4rem;
+      color: #888;
+      font-weight: 700;
+  }
+
+  .blog-fullhtml .train-pipeline {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 20px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .train-stage {
+      border-radius: 10px;
+      padding: 14px 18px;
+      background: #fff;
+      border: 2px solid #d0d8ef;
+      position: relative;
+  }
+  .blog-fullhtml .train-stage .train-counter {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      background: #2a4066;
+      color: white;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+  }
+  .blog-fullhtml .train-stage h5 {
+      font-size: 0.92rem;
+      margin: 4px 0 6px;
+      color: #1b2838;
+  }
+  .blog-fullhtml .train-stage p {
+      font-size: 0.85rem;
+      color: #444;
+      line-height: 1.55;
+      margin-bottom: 0;
+  }
+  .blog-fullhtml .train-stage .count-pill {
+      display: inline-block;
+      background: #f0f4f8;
+      color: #2a4066;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-left: 6px;
+  }
+  .blog-fullhtml .train-stage.hard { border-color: #b22222; background: #fdf2f2; }
+  .blog-fullhtml .train-stage.hard h5 { color: #7a1a1a; }
+  .blog-fullhtml .train-stage.augment { border-color: #d4740e; background: #fff7ed; }
+  .blog-fullhtml .train-stage.augment h5 { color: #b35c00; }
+  .blog-fullhtml .train-stage.soft { border-color: #2a9d8f; background: #f0fafa; }
+  .blog-fullhtml .train-stage.soft h5 { color: #1a6b60; }
+  .blog-fullhtml .train-stage.train { border-color: #228b22; background: #f0faf0; }
+  .blog-fullhtml .train-stage.train h5 { color: #0a4a0a; }
+
+  .blog-fullhtml .results-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 8px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .results-row {
+      display: grid;
+      grid-template-columns: 170px 1fr 80px;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+  }
+  .blog-fullhtml .results-label {
+      text-align: right;
+      font-weight: 600;
+      color: #1b2838;
+      font-size: 0.82rem;
+      line-height: 1.3;
+  }
+  .blog-fullhtml .results-bar-track {
+      height: 22px;
+      background: #ececec;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+  }
+  .blog-fullhtml .results-bar {
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+  }
+  .blog-fullhtml .results-value {
+      font-weight: 700;
+      font-size: 0.85rem;
+  }
+  .blog-fullhtml .results-section-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #1b2838;
+      margin: 10px 0 6px;
+      padding-left: 4px;
+  }
+
+  .blog-fullhtml .demo-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+  }
+  .blog-fullhtml .demo-board > * { min-width: 0; }
+  .blog-fullhtml .demo-col {
+      border: 2px solid;
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 480px;
+  }
+  .blog-fullhtml .demo-col.prompted-col { border-color: #b22222; }
+  .blog-fullhtml .demo-col.trained-col { border-color: #228b22; }
+  .blog-fullhtml .demo-col .demo-header {
+      padding: 10px 16px;
+      color: white;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+  }
+  .blog-fullhtml .demo-col.prompted-col .demo-header { background: #b22222; }
+  .blog-fullhtml .demo-col.trained-col .demo-header { background: #228b22; }
+  .blog-fullhtml .demo-steps {
+      flex: 1;
+      padding: 14px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+  }
+  .blog-fullhtml .demo-step {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fafafa;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      opacity: 0.45;
+      transition: all 0.4s ease;
+      min-height: 64px;
+  }
+  .blog-fullhtml .demo-step.active {
+      opacity: 1;
+      background: #fff8e6;
+      border-color: #d4740e;
+      box-shadow: 0 2px 8px rgba(212, 116, 14, 0.18);
+  }
+  .blog-fullhtml .demo-step.done.prompted {
+      opacity: 1;
+      background: #fdf2f2;
+      border-color: #b22222;
+  }
+  .blog-fullhtml .demo-step.done.trained {
+      opacity: 1;
+      background: #f0faf0;
+      border-color: #228b22;
+  }
+  .blog-fullhtml .demo-step .step-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+  }
+  .blog-fullhtml .demo-step .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: white;
+      background: #888;
+      flex-shrink: 0;
+  }
+  .blog-fullhtml .demo-step.active .step-num { background: #d4740e; }
+  .blog-fullhtml .demo-step.done.prompted .step-num { background: #b22222; }
+  .blog-fullhtml .demo-step.done.trained .step-num { background: #228b22; }
+  .blog-fullhtml .demo-step .step-label {
+      font-size: 0.78rem;
+      color: #555;
+      font-weight: 600;
+  }
+  .blog-fullhtml .demo-step .step-agent {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: #1b2838;
+      font-weight: 700;
+      margin-top: 2px;
+  }
+  .blog-fullhtml .demo-step .step-note {
+      font-size: 0.72rem;
+      color: #666;
+      margin-top: 2px;
+      font-style: italic;
+  }
+  .blog-fullhtml .demo-tally {
+      padding: 10px 14px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      border-top: 1px solid #ddd;
+      visibility: hidden;
+  }
+  .blog-fullhtml .demo-tally.visible { visibility: visible; }
+  .blog-fullhtml .demo-tally.prompted { background: #fdf2f2; color: #7a1a1a; }
+  .blog-fullhtml .demo-tally.trained { background: #f0faf0; color: #0a4a0a; }
+  .blog-fullhtml .demo-controls {
+      margin-top: 16px;
+      text-align: center;
+  }
+  .blog-fullhtml .demo-controls button {
+      margin: 0 4px;
+  }
+  .blog-fullhtml .demo-controls .reset-btn {
+      background: #888;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.9em;
+      font-weight: 600;
+  }
+  .blog-fullhtml .demo-controls .reset-btn:hover { background: #666; }
+  .blog-fullhtml .demo-status {
+      text-align: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      color: #666;
+      margin-top: 12px;
+      min-height: 1.2em;
+  }
+
+  @media (max-width: 700px) {
+      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
+      .blog-fullhtml .credit-flow { gap: 6px; }
+      .blog-fullhtml .credit-step { font-size: 0.7rem; min-width: 70px; padding: 8px 10px; }
+      .blog-fullhtml .orch-compare { grid-template-columns: 1fr; }
+      .blog-fullhtml .agent-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-fullhtml .results-row { grid-template-columns: 110px 1fr 60px; }
+      .blog-fullhtml .demo-board { grid-template-columns: 1fr; }
+  }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+---
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<header class="hero">
+    <div class="series-label">Planning in the Era of LLMs — Part 7 of 7</div>
+    <h1>Training the Conductor</h1>
+    <p class="subtitle">Stop prompting the orchestrator at every step. Let the verifier you already trust supervise a small local model — and watch the bill drop by 99%.</p>
+</header>
+
+<article class="blog-container">
+
+    <!-- Series Navigation -->
+    <div class="vis-container" data-download-name="series-nav-banner">
+        <div class="series-nav">
+            <strong>📚 Planning in the Era of LLMs — Part 7 of 7</strong>
+            <div class="nav-desc">The series finale. Post 6 left us with a working NL-to-PDDL pipeline whose weakest link was the orchestrator — a prompted frontier LLM called at every refinement step. This post is the author's research direction: train a small local model to take the orchestrator's place, using the verifier that's already in the loop as the supervisor.</div>
+            <div class="nav-links">
+                ← Part 6: "From English to Plans" | Series conclusion 🎉
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Opening Hook        -->
+    <!-- ============================== -->
+
+    <p class="lead">Six posts in, we have a working answer to one of agentic AI's hardest problems. A user describes a task in English. A multi-agent pipeline turns it into PDDL, validates it, solves it, and returns a verified plan. On standard domains it gets close to 100%. The combination of LLMs and formal planning works.</p>
+
+    <p>It also has a billing problem. Every refinement step in Post 6's pipeline calls a frontier model — GPT-5-mini, GPT-5, Gemini-3-Flash — to decide which repair agent to invoke next. A few steps per problem, twenty-odd cents per task, thousands of problems: orchestration cost dominates everything. Worse, it pins deployment to a continuous, paid API connection. Lab-scale, edge, and air-gapped use cases — robotics, manufacturing, classrooms — are priced out.</p>
+
+    <p>This post asks a question that should have been asked sooner: <strong>does the orchestrator need to be a frontier LLM at all?</strong> The repair agents do the heavy lifting. The orchestrator's job is one decision at a time: which agent, given this state. That's a 21-way classification problem — and we already have, by construction, the perfect supervisor sitting in the loop: the validator that decides whether a plan is correct.</p>
+
+    <p>The headline result of the author's recent paper — a system called <strong>HALO</strong>, for Hybrid Agent-Learned Orchestrator — is that a small QLoRA-tuned Llama-3-8B model, trained on a few thousand verifier-accepted refinement trajectories and paired with a thin hardcoded-rule layer, matches or beats both a prompted GPT-5-mini orchestrator and a Gemini-3-Flash orchestrator across 12 PDDL domains. Against GPT-5-mini, HALO actually <em>exceeds</em> the teacher on every benchmark family (by 3.3, 37.3, and 2.8 percentage points on PlanBench, Natural Plan, and classical planning). Orchestration cost drops from about <strong>$0.18 to $0.004 per task — roughly 45× cheaper than GPT-5-mini and 15–20× cheaper than the already-cheap Gemini-3-Flash baseline</strong>. LLM calls per episode drop by 40–50%; per-step self-correction climbs from 50% to 83%. The rest of this post unpacks how, and what it means for agentic AI more broadly.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: The Bottleneck      -->
+    <!-- ============================== -->
+
+    <h2>The Bottleneck We Inherited</h2>
+
+    <p>Post 6's pipeline — the agentic PDDL framework of <em>La Malfa et al.</em> (2025) — decomposes the refinement loop into thirteen specialised repair agents. <code>AgentSyntaxPDDL</code> repairs syntax errors, <code>AgentHallucinations</code> strips predicates the LLM invented, <code>AgentFastDownwardsAdapter</code> rewrites the PDDL for Fast Downward, and so on. The cycle: orchestrator picks an agent, agent edits the PDDL, planner re-runs, validator re-runs, orchestrator picks again. The loop terminates when the validator accepts the plan or the iteration budget runs out.</p>
+
+    <p>The structure is excellent. Specialised agents with narrow prompts beat one big prompt asking an LLM to "fix the PDDL." Verifier-checked refinement provides hard correctness guarantees. The combination lifts smaller models to near-frontier accuracy.</p>
+
+    <p>The economics are not. At every refinement step the orchestrator — itself a frontier LLM — is fed the entire state and emits one agent name. We pay frontier-LLM rates on a multi-thousand-token prompt to receive a five-word answer, ten times per problem.</p>
+
+    <div class="vis-container" data-download-name="orchestrator-cost-breakdown">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Where the Cost Hides</h3>
+        <div class="orch-compare">
+            <div class="orch-card prompted">
+                <span class="orch-tag">Prompted (Post 6)</span>
+                <h4>Per-step LLM call to a frontier model</h4>
+                <ul>
+                    <li>~2,000-token state in every prompt</li>
+                    <li>Frontier LLM API call per refinement step</li>
+                    <li>Returns one agent name (~5 tokens out)</li>
+                    <li>Several steps per problem × thousands of problems</li>
+                    <li>Cannot run offline / on-device</li>
+                </ul>
+                <div class="cost">~$0.18–$0.22 / task on GPT-5-mini · ~$0.06–$0.08 on Gemini-3-Flash</div>
+            </div>
+            <div class="orch-card trained">
+                <span class="orch-tag">HALO (this post)</span>
+                <h4>One forward pass on a local 8B model</h4>
+                <ul>
+                    <li>State encoded once, truncated to 2,048 tokens</li>
+                    <li>Single-token decision (~10 ms on a 24 GB GPU)</li>
+                    <li>Three trivial cases handled by hardcoded rules</li>
+                    <li>40–50% fewer LLM calls per episode end-to-end</li>
+                    <li>Runs offline, on-device, air-gapped</li>
+                </ul>
+                <div class="cost">~$0.004 / task &nbsp;·&nbsp; <strong>45× cheaper than GPT-5-mini, 15–20× cheaper than Gemini-3-Flash</strong></div>
+            </div>
+        </div>
+        <p class="vis-caption">The economics of orchestration. A prompted frontier-LLM orchestrator pays full price for a tiny output, every step, every problem. HALO pays roughly <strong>45× less than GPT-5-mini</strong> and <strong>15–20× less than the already-cheap Gemini-3-Flash</strong> — for matching or better decision quality. Gemini-3-Flash is the right comparator: it's the strongest competitive cost baseline, and HALO is still more than an order of magnitude cheaper than it.</p>
+    </div>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>The orchestrator's output space is tiny — 21 agent IDs — but it's being asked from a generalist model that doesn't know that. We're paying for an oracle that can write essays and translate between languages, then using exactly one of its 32,000 vocabulary tokens. The mismatch is the cost.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Credit Assignment   -->
+    <!-- ============================== -->
+
+    <h2>The Credit Assignment Problem</h2>
+
+    <p>So why hasn't this been done already? The decision "which agent, given this state" has no ground-truth label in any dataset — the right choice at step 3 depends on what happens at steps 4 through 8, and the only verifiable signal (whether the final plan succeeds) is several causal steps removed from each individual decision. This is the classic <strong>credit assignment problem</strong>.</p>
+
+    <p>The textbook tool is reinforcement learning: emit a sparse reward at the end and propagate gradients back through the trajectory. RL works, but it's slow. Sparse rewards need thousands of episodes, and a thousand episodes of a PDDL refinement loop is a thousand × ten frontier-LLM calls of <em>data collection</em> before training even begins. The cost we're trying to remove gets paid up front.</p>
+
+    <div class="vis-container" data-download-name="credit-assignment-diagram">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Credit Assignment: Three Ways to Decide Who Did the Right Thing</h3>
+
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; margin-bottom: 16px;">
+            <p style="font-size: 0.88rem; color: #444; margin-bottom: 6px;"><strong>Sparse RL:</strong> only the terminal reward is observed; the policy must figure out which step earned it.</p>
+            <div class="credit-flow">
+                <div class="credit-step unknown">step 1<br><span style="font-weight:400; font-size:0.7rem;">?</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step unknown">step 2<br><span style="font-weight:400; font-size:0.7rem;">?</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step unknown">step 3<br><span style="font-weight:400; font-size:0.7rem;">?</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step unknown">step 4<br><span style="font-weight:400; font-size:0.7rem;">?</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">terminal<br><span style="font-weight:400; font-size:0.7rem;">+1</span></div>
+            </div>
+            <div class="credit-reward">noisy gradients · thousands of samples to converge</div>
+        </div>
+
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; margin-bottom: 16px;">
+            <p style="font-size: 0.88rem; color: #444; margin-bottom: 6px;"><strong>Dense RL (shaped rewards):</strong> hand-craft a per-step signal. Powerful but brittle — reward hacking is real.</p>
+            <div class="credit-flow">
+                <div class="credit-step ok">step 1<br><span style="font-weight:400; font-size:0.7rem;">+0.2</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">step 2<br><span style="font-weight:400; font-size:0.7rem;">+0.1</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step bad">step 3<br><span style="font-weight:400; font-size:0.7rem;">−0.3</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">step 4<br><span style="font-weight:400; font-size:0.7rem;">+0.4</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">terminal<br><span style="font-weight:400; font-size:0.7rem;">+1</span></div>
+            </div>
+            <div class="credit-reward">cleaner gradients · reward-hacking surface area</div>
+        </div>
+
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem;">
+            <p style="font-size: 0.88rem; color: #444; margin-bottom: 6px;"><strong>Verifier-filtered imitation</strong> (this paper): keep only trajectories the verifier accepts. Every kept step is by definition a step on a winning path.</p>
+            <div class="credit-flow">
+                <div class="credit-step ok">step 1<br><span style="font-weight:400; font-size:0.7rem;">✓</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">step 2<br><span style="font-weight:400; font-size:0.7rem;">✓</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">step 3<br><span style="font-weight:400; font-size:0.7rem;">✓</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">step 4<br><span style="font-weight:400; font-size:0.7rem;">✓</span></div>
+                <div class="credit-arrow">→</div>
+                <div class="credit-step ok">terminal<br><span style="font-weight:400; font-size:0.7rem;">VAL ✓</span></div>
+            </div>
+            <div class="credit-reward" style="background: linear-gradient(90deg, #1a5e1a, #228b22);">direct per-step labels · supervised, cheap, sample-efficient</div>
+        </div>
+
+        <p class="vis-caption">Three ways to assign credit in a refinement loop. The verifier-filtered approach side-steps both RL's sparsity and shaped-reward brittleness: the data-acceptance filter is the credit signal.</p>
+    </div>
+
+    <p>The paper takes a third path. Treat each <em>accepted trajectory</em> as a sequence of demonstrably correct decisions and learn from those directly. A verifier-accepted trajectory is, by construction, a path that ended in a valid plan; whatever decisions it contains worked in the operational sense that the planner and validator certified them. This reframes orchestrator training from reinforcement learning to <strong>verifier-filtered imitation</strong> — the credit signal isn't a reward propagated through time, it's a binary acceptance gate applied to whole trajectories before any gradient is computed. The verifier we already trust to certify plans doubles as the data-acceptance filter for training.</p>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>Agentic frameworks built around formal verifiers already have a credit signal — they just haven't been using it. Every refinement trajectory the verifier accepts is a sequence of (state, agent) pairs that worked. That's per-step supervision, available for free, sitting in the framework's logs.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Why train it        -->
+    <!-- ============================== -->
+
+    <h2>Why "Train the Orchestrator" Belongs on Every Agentic Roadmap</h2>
+
+    <p>Multi-agent frameworks — CrewAI, AutoGen, LangGraph, MetaGPT, Post 6's agentic PDDL pipeline — almost all share the same architecture: a pool of specialised agents coordinated by a prompted generalist LLM. The generalist is treated as load-bearing. It isn't: the orchestration decision is a small discrete classification problem in a structured state space, and every one of these frameworks ships with <em>some</em> downstream verifier — a test suite, a type checker, a linter, a deployment health-check, a policy engine, a compiler. PDDL is just the most natural setting because its verifier is the most rigorous. The same template — collect trajectories, filter by verifier acceptance, fine-tune a small model on the surviving (state, action) pairs — applies wherever a closed-loop multi-agent system has a way to check its own work.</p>
+
+    <div class="vis-container" data-download-name="trainable-orchestrator-recipe">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">When You Can Train the Orchestrator</h3>
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.92rem; color: #333; line-height: 1.7;">
+            <p style="margin-bottom: 12px;">A multi-agent system admits a trainable orchestrator when:</p>
+            <ul style="margin-left: 22px; font-size: 0.92rem;">
+                <li><strong>A discrete agent pool.</strong> The decision is "pick one of <em>N</em>," not "write arbitrary code." <em>N</em> in the dozens is fine; <em>N</em> in the thousands is harder.</li>
+                <li><strong>A verifiable terminal.</strong> Some external check determines whether the final output is correct. Compiler, test suite, type checker, validator, policy engine, manual review — anything binary.</li>
+                <li><strong>A trajectory log.</strong> The framework records, per step, the state the orchestrator saw and the agent it picked. Most frameworks already do this for debugging.</li>
+                <li><strong>A modestly-sized state.</strong> The encoded state fits in a small model's context window (a few thousand tokens). PDDL fits comfortably. So does most code review, refund processing, or CI/CD state.</li>
+            </ul>
+            <p style="margin-top: 14px; font-size: 0.88rem; color: #2a4066; font-style: italic;">If you tick all four boxes, the orchestrator can be small, local, and learned.</p>
+        </div>
+        <p class="vis-caption">A short checklist for whether a multi-agent system is a candidate for orchestrator training. The PDDL setting hits every box hard; most agentic pipelines hit every box at least softly.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: The Method (overview) -->
+    <!-- ============================== -->
+
+    <h2>The Method, End to End</h2>
+
+    <p>Figure 1 shows the framework with the three contributions highlighted: a trained orchestrator at the centre of the refinement loop, a hybrid hardcoded-plus-learned policy, and an expanded 21-agent action space.</p>
+
+    <div class="image-container">
+        <div class="image-placeholder">
+            📄 PAPER FIGURE: Training the Orchestrator, Figure 1 (page 3 of PDF)<br>
+            Source: <em>Training the Orchestrator: A Supervised Approach to End-to-End PDDL Planning with LLM Agents</em><br>
+            Description: The end-to-end framework. A natural-language specification is converted to a draft PDDL pair, iteratively refined inside the loop until the verifier accepts a plan; the plan is then rendered back into natural language. Three contributions sit at the centre — (1) a locally-served orchestrator trained on verifier-accepted trajectories, (2) a hybrid of hardcoded rules and a learned policy, (3) an agent pool expanded from 13 to 21.
+        </div>
+        <p class="image-caption">Figure 1 — The agentic PDDL framework with the trained orchestrator at its centre.</p>
+    </div>
+
+    <p>The high-level picture is unchanged from Post 6: NL spec in, draft PDDL refined inside a verifier-checked loop, plan rendered back to English. What changes is the orchestrator at the centre. The next four subsections describe the moving parts: the expanded action space, the verifier-filtered trajectory collection, the hybrid policy, and the SFT recipe.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: The 21 agents       -->
+    <!-- ============================== -->
+
+    <h3>1 — The 21-Agent Action Space</h3>
+
+    <p>The orchestrator chooses one of 21 agents. Thirteen are the LLM-prompted repair routines from <em>La Malfa et al.</em>; five are pure Python plan-repair routines from <em>Armony et al.</em> (2025), each running in milliseconds with zero LLM cost; three are PDDL-aware LLM agents from NL2Plan (<em>Gestrin et al.</em> 2024) addressing modelling errors the baseline 13 don't cover. Agent IDs are integers <code>0–20</code>, chosen so that every ID is a single token under the Llama-3, Qwen-2.5, and Gemma-2 tokenisers.</p>
+
+    <div class="vis-container" data-download-name="agent-pool-21">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 8px;">The 21-Agent Action Space</h3>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 14px;">Each agent reads the relevant slice of state and returns a candidate update; the framework re-runs the planner and validator on the result.</p>
+
+        <div class="agent-pool">
+            <div class="agent-group">
+                <div class="agent-group-label">Baseline LLM-prompted (IDs 0–12) — from La Malfa et al. 2025</div>
+                <div class="agent-grid">
+                    <div class="agent-chip baseline"><span class="agent-id">0</span>Hallucinations</div>
+                    <div class="agent-chip baseline"><span class="agent-id">1</span>DeepThinkPDDL</div>
+                    <div class="agent-chip baseline"><span class="agent-id">2</span>Emergency</div>
+                    <div class="agent-chip baseline"><span class="agent-id">3</span>EmergencySolution</div>
+                    <div class="agent-chip baseline"><span class="agent-id">4</span>DeepThinkConstraints</div>
+                    <div class="agent-chip baseline"><span class="agent-id">5</span>TemporalConsistency</div>
+                    <div class="agent-chip baseline"><span class="agent-id">6</span>EnforceMultiAgency</div>
+                    <div class="agent-chip baseline"><span class="agent-id">7</span>FastDownwardsAdapter</div>
+                    <div class="agent-chip baseline"><span class="agent-id">8</span>ReduceVariables</div>
+                    <div class="agent-chip baseline"><span class="agent-id">9</span>SyntaxPDDL</div>
+                    <div class="agent-chip baseline"><span class="agent-id">10</span>Asynchronicity</div>
+                    <div class="agent-chip baseline"><span class="agent-id">11</span>NoOpAgent</div>
+                    <div class="agent-chip baseline"><span class="agent-id">12</span>NaturalLanguage</div>
+                    <div></div><div></div><div></div>
+                </div>
+            </div>
+
+            <div class="agent-group">
+                <div class="agent-group-label">+ Deterministic plan-repair (IDs 13–17) — adapted from Armony et al. 2025 · NEW</div>
+                <div class="agent-grid">
+                    <div class="agent-chip deterministic added"><span class="agent-id">13</span>VariableSwapper</div>
+                    <div class="agent-chip deterministic added"><span class="agent-id">14</span>ActionReorderer</div>
+                    <div class="agent-chip deterministic added"><span class="agent-id">15</span>RedundancyStripper</div>
+                    <div class="agent-chip deterministic added"><span class="agent-id">16</span>PlanTruncator</div>
+                    <div class="agent-chip deterministic added"><span class="agent-id">17</span>SubplanFiller</div>
+                    <div></div><div></div><div></div>
+                </div>
+            </div>
+
+            <div class="agent-group">
+                <div class="agent-group-label">+ PDDL-aware LLM agents (IDs 18–20) — adapted from Gestrin et al. 2024 · NEW</div>
+                <div class="agent-grid">
+                    <div class="agent-chip pddl-aware added"><span class="agent-id">18</span>TypeHierarchyFixer</div>
+                    <div class="agent-chip pddl-aware added"><span class="agent-id">19</span>PredicateGeneralizer</div>
+                    <div class="agent-chip pddl-aware added"><span class="agent-id">20</span>InitialStateSuggester</div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="agent-legend">
+            <div><span class="swatch" style="background:#4682b4;"></span>LLM-prompted (paid per call)</div>
+            <div><span class="swatch" style="background:#228b22;"></span>Deterministic Python (free)</div>
+            <div><span class="swatch" style="background:#6b3fa0;"></span>PDDL-modelling LLM (paid)</div>
+            <div><span class="swatch" style="background:transparent; box-shadow: 0 0 0 2px #d4740e;"></span>Added in this paper</div>
+        </div>
+        <p class="vis-caption">The expanded 21-agent action space. The orange outline marks the eight agents added in this work. The five deterministic repair routines contribute zero LLM cost — and, as we'll see, end up being some of the most-used agents on classical-planning benchmarks.</p>
+    </div>
+
+    <p>The five deterministic agents earn their place: when the planner returns a plan that's <em>almost</em> right — wrong variable bindings, out-of-order actions, a redundant step — calling <code>AgentVariableSwapper</code> for a millisecond is dramatically better than calling another LLM. The three PDDL-aware agents plug a different gap: <code>AgentTypeHierarchyFixer</code> reorganises <code>:types</code>, <code>AgentPredicateGeneralizer</code> widens an over-specific predicate to its parent type, and <code>AgentInitialStateSuggester</code> infers missing <code>:init</code> facts from the NL spec. Each one fixes a class of modelling error the baseline 13 silently struggle with.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Verifier filtering -->
+    <!-- ============================== -->
+
+    <h3>2 — Verifier-Filtered Trajectory Collection</h3>
+
+    <p>This is the part of the method doing the conceptual work. The training pipeline follows the GABAR template (Mangannavar et al. 2025) applied to orchestration rather than action ranking: pass training problems through a strong prompted teacher, log every step of every rollout, and filter aggressively for trajectories the verifier accepts.</p>
+
+    <div class="image-container">
+        <div class="image-placeholder">
+            📄 PAPER FIGURE: Training the Orchestrator, Figure 2 (page 5 of PDF)<br>
+            Source: <em>Training the Orchestrator: A Supervised Approach to End-to-End PDDL Planning with LLM Agents</em><br>
+            Description: (a) Training problems from 12 PDDL domains pass through a strong prompted teacher (GPT-5-mini, with Gemini-3-Flash for diversity). Rollouts go through a three-pass filter — hard verifier filter that discards trajectories not ending in a valid plan, spec-level augmentation, LLM-as-judge soft filter — producing ≈12–15k (state, agent) pairs. The orchestrator π_θ is fine-tuned on these pairs with single-token cross-entropy under QLoRA. (b) The same π_θ is then dropped into the Refiner block of the framework, wrapped by a hardcoded-rule Layer 1 to form π_hybrid — together: HALO.
+        </div>
+        <p class="image-caption">Figure 2 — Training pipeline (a) and inference-time deployment (b).</p>
+    </div>
+
+    <div class="vis-container" data-download-name="training-pipeline">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Three-Pass Trajectory Filter</h3>
+        <div class="train-pipeline">
+            <div class="train-stage">
+                <div class="train-counter">Source</div>
+                <h5>Teacher rollouts <span class="count-pill">~thousands</span></h5>
+                <p>GPT-5-mini (with Gemini-3-Flash for diversity) runs as the prompted orchestrator over training problems from 12 PDDL domains spanning PlanBench, Google Natural Plan, and classical planning. Every step is logged: the state, the agent chosen, whether a rule would have caught it, the agent's response, the post-execution state, and validator metrics before and after.</p>
+            </div>
+            <div class="train-stage hard">
+                <div class="train-counter">Filter 1 · Hard</div>
+                <h5>Verifier acceptance <span class="count-pill">~200 seeds survive</span></h5>
+                <p>A trajectory is kept <strong>only</strong> if the validator (VAL / uVAL) certifies the terminal plan as valid. Partial trajectories that exhaust the iteration budget without producing a valid plan are discarded. The verifier never enters the loss; it's purely a data-acceptance gate.</p>
+            </div>
+            <div class="train-stage augment">
+                <div class="train-counter">Filter 2 · Augment</div>
+                <h5>Spec-level paraphrasing <span class="count-pill">~5k trajectories</span></h5>
+                <p>Survivors are augmented by paraphrasing the natural-language spec, renaming objects, and varying goal surface forms. These perturbations preserve the validator's acceptance assignment while expanding the dataset roughly 25-fold from the seed trajectories.</p>
+            </div>
+            <div class="train-stage soft">
+                <div class="train-counter">Filter 3 · Soft</div>
+                <h5>LLM-as-judge rating <span class="count-pill">~2k trajectories</span></h5>
+                <p>A frontier LLM rates each augmented trajectory on per-step rationale coherence and final-plan quality. Trajectories scoring below the threshold are dropped. The soft filter removes cases where the final plan is valid but intermediate steps are noisy — keeps the strong examples, drops the lucky ones.</p>
+            </div>
+            <div class="train-stage train">
+                <div class="train-counter">Output</div>
+                <h5>Supervised (state, agent) pairs <span class="count-pill">~12–15k</span></h5>
+                <p>Every (s_t, a_t) pair from surviving trajectories becomes one training example — <em>except</em> steps where a Layer-1 rule would have fired, which are excluded so the model never wastes capacity learning patterns a rule already resolves correctly.</p>
+            </div>
+        </div>
+        <p class="vis-caption">Three-pass filter. The hard verifier filter is the conceptual core — it converts whole-trajectory acceptance into per-step labels. The augmentation and soft-judge passes scale and clean the data; nothing in either of them touches the verifier's binary signal.</p>
+    </div>
+
+    <p>Two details matter. First, the verifier never appears in the loss. It's an external Boolean: <em>this trajectory ended in a valid plan</em>. Per-step decisions are tagged as supervision purely because the trajectory they belong to was accepted as a whole — the verifier hardens which data the gradient sees, not which direction the gradient points.</p>
+
+    <p>Second, the training set excludes steps where a Layer-1 rule would have fired. The model should never be asked to predict patterns a rule already resolves correctly; excluding them sharpens the supervised signal.</p>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>The verifier is doubly useful: at <em>training</em> time as a data-acceptance gate, and at <em>inference</em> time as the termination oracle. The same component plays both roles. It's a structural property of agentic frameworks built around formal verifiers — and it's why this approach generalises beyond PDDL.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Hybrid policy       -->
+    <!-- ============================== -->
+
+    <h3>3 — A Hybrid Hardcoded-plus-Learned Policy</h3>
+
+    <p>At inference the orchestrator is two layers stacked. Layer 1 is a tiny set of hardcoded rules that resolve trivially-decidable decisions instantly. Layer 2 is the trained model, called only when no rule fires. Together: <span class="math">π</span><sub>hybrid</sub>.</p>
+
+    <div class="vis-container" data-download-name="hybrid-policy-layers">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">π<sub>hybrid</sub> = Rules ∘ Trained Model</h3>
+
+        <div class="hybrid-diagram">
+            <div class="hybrid-layer layer1">
+                <span class="layer-tag">Layer 1 — Hardcoded</span>
+                <h5>Three trivially-decidable cases · zero model cost</h5>
+                <ol class="hybrid-rules">
+                    <li>If 𝒟<sub>t</sub> is empty (cold start) → pick <code>AgentEmergency</code>.</li>
+                    <li>If e<sub>t</sub> contains a syntax error → pick <code>AgentSyntaxPDDL</code>.</li>
+                    <li>If <em>V</em>(𝒟<sub>t</sub>, 𝒫<sub>t</sub>, ρ<sub>t</sub>) = valid → pick <code>NoOpAgent</code> (terminate).</li>
+                </ol>
+                <p style="font-size: 0.82rem; color: #7a3f00; margin-top: 8px; margin-bottom: 0;">Each rule returns its agent name immediately. No model call. No prompt assembly. Captures roughly one-third of all decisions across the benchmarks.</p>
+            </div>
+
+            <div class="hybrid-arrow">↓</div>
+
+            <div class="hybrid-layer layer2">
+                <span class="layer-tag">Layer 2 — Learned</span>
+                <h5>QLoRA-tuned 8B model · single-token decision · &lt;10 ms</h5>
+                <p style="font-size: 0.86rem; color: #0a4a0a; margin: 4px 0 0;">If no Layer-1 rule fires, the trained policy <span class="math">π</span><sub>θ</sub> sees the encoded state and emits a single token from {0, …, 20}. Sampling is greedy (temperature 0), consistent with the per-decision cross-entropy training objective.</p>
+            </div>
+        </div>
+
+        <p class="vis-caption">The hybrid policy. Layer 1 handles the three trivially decidable cases by rule; Layer 2 handles everything else by learned single-token classification. The split is propagated into training: the supervised set excludes any step that Layer 1 would have caught, so the model spends its capacity on the genuinely ambiguous decisions.</p>
+    </div>
+
+    <p>The three rules are picked because they are unambiguous — any reasonable orchestrator would make the same choice from these states. Ablations in the paper confirm both layers are necessary: removing the rules raises trained-policy queries by ~35% per episode; removing the trained model collapses success rate.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 9: SFT recipe          -->
+    <!-- ============================== -->
+
+    <h3>4 — Supervised Fine-Tuning with a Single-Token Target</h3>
+
+    <p>The fine-tuning recipe is intentionally boring: standard QLoRA, AdamW, single-token cross-entropy. The state <span class="math">s</span><sub>t</sub> is rendered into a structured prompt with eight capped sections (NL spec, current PDDL domain and problem, current plan, validator errors, planner logs, recent agent history, available-agent list), left-truncated within each section to fit a 2,048-token context. The target is a single agent-ID token <span class="math">a</span><sup>★</sup> ∈ {0, …, 20}; all prompt tokens carry <code>label = −100</code>:</p>
+
+    <div class="math-block">
+        <span class="math">ℒ</span>(θ; s, a<sup>★</sup>) = − log <span class="math">π</span><sub>θ</sub>(a<sup>★</sup> | encode(s))
+    </div>
+
+    <p>One token per example. The gradient does not propagate through the encoded state. Architecture is QLoRA at rank 16, α = 32, on the attention and MLP projections. AdamW at LR 2 × 10<sup>−5</sup>, effective batch 16, three epochs. A full Llama-3-8B fine-tune on the assembled ~2k trajectories takes about six wall-clock hours on a single 8×A100 node; inference is &lt;10 ms per decision on a 24 GB consumer GPU.</p>
+
+    <div class="callout question">
+        <div class="callout-label">Why Single Token Matters</div>
+        <p>Single-token output isn't cosmetic. It guarantees that one forward pass produces one validly-formatted decision. No parsing, no JSON repair, no "the model said <em>SyntaxFixer</em> but the registry has it as <em>AgentSyntaxPDDL</em>" fragility. A startup pass verifies that every agent ID tokenises to exactly one token under the active tokeniser — the load-bearing detail that makes deployment robust.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 10: Results            -->
+    <!-- ============================== -->
+
+    <h2>What It Buys You</h2>
+
+    <p>HALO is evaluated on 12 PDDL domains across three benchmark families — PlanBench (Blocksworld, Depots, Logistics, Mystery Blocksworld, Obfuscated Deceptive Logistics), Google Natural Plan (Calendar, Meeting, Trip), and classical planning (Blocksworld, Hanoi, Childsnack, Floortile). Baselines are the unmodified La Malfa pipeline with GPT-5-mini and Gemini-3-Flash as the prompted orchestrator; the agent pool is held at 21 for all configurations.</p>
+
+    <div class="vis-container" data-download-name="results-success-rate">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Success Rate by Benchmark Family</h3>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Fraction of problems whose final PDDL + plan satisfies the validator</p>
+
+        <div class="results-section-label">PlanBench</div>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">GPT-5-mini</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 91.6%; background: linear-gradient(90deg, #b22222, #d43030);">91.6%</div></div>
+                <div class="results-value" style="color: #b22222;">91.6</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">Gemini-3-Flash</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 97.8%; background: linear-gradient(90deg, #d4740e, #e88a30);">97.8%</div></div>
+                <div class="results-value" style="color: #d4740e;">97.8</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 94.9%; background: linear-gradient(90deg, #228b22, #2ea82e);">94.9%</div></div>
+                <div class="results-value" style="color: #228b22;">94.9</div>
+            </div>
+        </div>
+
+        <div class="results-section-label">Natural Plan</div>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">GPT-5-mini</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 51.5%; background: linear-gradient(90deg, #b22222, #d43030);">51.5%</div></div>
+                <div class="results-value" style="color: #b22222;">51.5</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">Gemini-3-Flash</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 91.7%; background: linear-gradient(90deg, #d4740e, #e88a30);">91.7%</div></div>
+                <div class="results-value" style="color: #d4740e;">91.7</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 88.8%; background: linear-gradient(90deg, #228b22, #2ea82e);">88.8%</div></div>
+                <div class="results-value" style="color: #228b22;">88.8</div>
+            </div>
+        </div>
+
+        <div class="results-section-label">Classical Planning</div>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">GPT-5-mini</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 93.0%; background: linear-gradient(90deg, #b22222, #d43030);">93.0%</div></div>
+                <div class="results-value" style="color: #b22222;">93.0</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">Gemini-3-Flash</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 93.0%; background: linear-gradient(90deg, #d4740e, #e88a30);">93.0%</div></div>
+                <div class="results-value" style="color: #d4740e;">93.0*</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 95.8%; background: linear-gradient(90deg, #228b22, #2ea82e);">95.8%</div></div>
+                <div class="results-value" style="color: #228b22;">95.8</div>
+            </div>
+        </div>
+
+        <p class="vis-caption">HALO exceeds GPT-5-mini by 3.3, 37.3, and 2.8 percentage points on PlanBench, Natural Plan, and classical planning respectively — the largest gain on Natural Plan, where GPT-5-mini drops to 51.5%. HALO sits within 3 pp of the stronger Gemini-3-Flash baseline on PlanBench and Natural Plan, and beats it by 2.8 pp on classical planning. *Gemini-3-Flash classical: Borealis subset only.</p>
+    </div>
+
+    <div class="vis-container" data-download-name="results-cost-chart">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Orchestration Cost per Task</h3>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">USD per problem (PlanBench / classical figures shown; Natural Plan is slightly higher)</p>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">GPT-5-mini<br><span style="font-weight:400; font-size:0.72rem; color:#888;">prompted</span></div>
+                <div class="results-bar-track">
+                    <div class="results-bar" style="width: 100%; background: linear-gradient(90deg, #b22222, #d43030);">~$0.18</div>
+                </div>
+                <div class="results-value" style="color: #b22222;">1.00×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">Gemini-3-Flash<br><span style="font-weight:400; font-size:0.72rem; color:#888;">prompted</span></div>
+                <div class="results-bar-track">
+                    <div class="results-bar" style="width: 33%; background: linear-gradient(90deg, #d4740e, #e88a30);">~$0.06</div>
+                </div>
+                <div class="results-value" style="color: #d4740e;">0.33×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)<br><span style="font-weight:400; font-size:0.72rem; color:#888;">QLoRA, local</span></div>
+                <div class="results-bar-track">
+                    <div class="results-bar" style="width: 2.2%; background: linear-gradient(90deg, #228b22, #2ea82e); padding-right: 2px;"></div>
+                </div>
+                <div class="results-value" style="color: #228b22;">$0.004</div>
+            </div>
+        </div>
+        <p class="vis-caption">Per-task orchestration cost. <strong>HALO is ~45× cheaper than GPT-5-mini and 15–20× cheaper than Gemini-3-Flash</strong> — depending on benchmark family and whichever orchestrator-task cost falls in the published $0.06–$0.08 (Gemini) and $0.18–$0.22 (GPT-5-mini) range. The reduction has two complementary sources: (a) a small local forward pass costs orders of magnitude less than a frontier-LLM API call even before counting tokens, and (b) the hybrid policy resolves ~35% of decisions with no model call at all.</p>
+    </div>
+
+    <div class="vis-container" data-download-name="results-quality-chart">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Per-Step Self-Correction Rate</h3>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Fraction of refinement steps that strictly improve LEA / StV validator metrics over the previous step</p>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">Prompted baseline<br><span style="font-weight:400; font-size:0.72rem; color:#888;">frontier LLM</span></div>
+                <div class="results-bar-track">
+                    <div class="results-bar" style="width: 50%; background: linear-gradient(90deg, #b22222, #d43030);">50%</div>
+                </div>
+                <div class="results-value" style="color: #b22222;">50%</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)<br><span style="font-weight:400; font-size:0.72rem; color:#888;">π<sub>hybrid</sub></span></div>
+                <div class="results-bar-track">
+                    <div class="results-bar" style="width: 83%; background: linear-gradient(90deg, #228b22, #2ea82e);">83%</div>
+                </div>
+                <div class="results-value" style="color: #228b22;">83%</div>
+            </div>
+        </div>
+        <p class="vis-caption">Per-step self-correction. HALO's per-step decision improves the validator's view of the PDDL 83% of the time, against 50% for the prompted baseline. Fewer bad decisions per episode means fewer wasted iterations — and is what lets HALO match frontier orchestrators with far fewer calls.</p>
+    </div>
+
+    <div class="vis-container" data-download-name="results-llm-calls-chart">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Total LLM Calls per Episode</h3>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Sum of orchestrator + agent LLM calls per problem (deterministic agents contribute zero)</p>
+
+        <div class="results-section-label">PlanBench</div>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">GPT-5-mini</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 100%; background: linear-gradient(90deg, #b22222, #d43030);">4.8</div></div>
+                <div class="results-value" style="color: #b22222;">1.00×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">Gemini-3-Flash</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 77%; background: linear-gradient(90deg, #d4740e, #e88a30);">3.7</div></div>
+                <div class="results-value" style="color: #d4740e;">0.77×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 46%; background: linear-gradient(90deg, #228b22, #2ea82e);">2.2</div></div>
+                <div class="results-value" style="color: #228b22;">0.46×</div>
+            </div>
+        </div>
+
+        <div class="results-section-label">Natural Plan</div>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">GPT-5-mini</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 100%; background: linear-gradient(90deg, #b22222, #d43030);">6.8</div></div>
+                <div class="results-value" style="color: #b22222;">1.00×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">Gemini-3-Flash</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 79%; background: linear-gradient(90deg, #d4740e, #e88a30);">5.4</div></div>
+                <div class="results-value" style="color: #d4740e;">0.79×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 47%; background: linear-gradient(90deg, #228b22, #2ea82e);">3.2</div></div>
+                <div class="results-value" style="color: #228b22;">0.47×</div>
+            </div>
+        </div>
+
+        <div class="results-section-label">Classical Planning</div>
+        <div class="results-chart">
+            <div class="results-row">
+                <div class="results-label">GPT-5-mini</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 100%; background: linear-gradient(90deg, #b22222, #d43030);">4.8</div></div>
+                <div class="results-value" style="color: #b22222;">1.00×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">Gemini-3-Flash</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 90%; background: linear-gradient(90deg, #d4740e, #e88a30);">4.3</div></div>
+                <div class="results-value" style="color: #d4740e;">0.90×</div>
+            </div>
+            <div class="results-row">
+                <div class="results-label">HALO (ours)</div>
+                <div class="results-bar-track"><div class="results-bar" style="width: 54%; background: linear-gradient(90deg, #228b22, #2ea82e);">2.6</div></div>
+                <div class="results-value" style="color: #228b22;">0.54×</div>
+            </div>
+        </div>
+
+        <p class="vis-caption">LLM calls per episode. HALO cuts calls by 46–54% vs GPT-5-mini and by ~40% vs Gemini-3-Flash across the three families. Layer-1 rules eliminate the orchestrator call at ~35% of steps; the higher per-step self-correction rate also shortens trajectories by reducing wasted refinement iterations.</p>
+    </div>
+
+    <p>Across all three benchmark families HALO <em>exceeds</em> the GPT-5-mini prompted baseline on success rate — the same teacher whose trajectories were the supervision source — while costing <strong>~45× less</strong>. Against the stronger Gemini-3-Flash baseline, HALO sits within 3 pp on PlanBench and Natural Plan, and beats it by 2.8 pp on classical planning, for <strong>15–20× less cost</strong>. Per-step self-correction climbs from 50% to 83%; total LLM calls per episode drop by 40–50%.</p>
+
+    <div class="callout question">
+        <div class="callout-label">A Surprising Detail</div>
+        <p>The supervised student beats its own teacher on terminal success rate, on every family. Two things make this work. First, the verifier filter keeps only trajectories that <em>succeeded</em> — the student inherits the teacher's <em>best</em> behaviour rather than its average. Second, the Layer-1 hardcoded rules catch trivially decidable cases (cold start, syntax errors, valid plan) that the prompted teacher sometimes mishandles. The student's per-decision strategy is still bounded by what the teacher exhibits in accepted trajectories, but its terminal accuracy isn't.</p>
+    </div>
+
+    <h3>Where the Wins Come From</h3>
+
+    <div class="vis-container" data-download-name="ablation-summary">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Ablation: What Each Piece Contributes</h3>
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.92rem;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.86rem;">
+                <thead>
+                    <tr style="background: #1b2838; color: white;">
+                        <th style="padding: 10px 14px; text-align: left; font-weight: 600;">Configuration</th>
+                        <th style="padding: 10px 14px; text-align: left; font-weight: 600;">What changes vs. headline</th>
+                        <th style="padding: 10px 14px; text-align: center; font-weight: 600;">Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px 14px;"><strong>π<sub>θ</sub> only</strong> (no rules)</td>
+                        <td style="padding: 10px 14px;">Drop Layer 1; learned model on every step</td>
+                        <td style="padding: 10px 14px; text-align: center; color: #b22222;">↓ success rate · +35% queries/ep.</td>
+                    </tr>
+                    <tr style="background: #f8f9fa; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px 14px;"><strong>13 agents</strong> (no expansion)</td>
+                        <td style="padding: 10px 14px;">Restrict action space to baseline pool</td>
+                        <td style="padding: 10px 14px; text-align: center; color: #d4740e;">≈ on PlanBench · ↓ on Natural Plan + classical (vs GPT-5-mini)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px 14px;"><strong>No verifier filter</strong></td>
+                        <td style="padding: 10px 14px;">Keep all teacher trajectories, including failures</td>
+                        <td style="padding: 10px 14px; text-align: center; color: #b22222;">↓ success rate (consistent across domains)</td>
+                    </tr>
+                    <tr style="background: #f8f9fa; border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px 14px;"><strong>Held-out domains</strong></td>
+                        <td style="padding: 10px 14px;">Train on 8 of 12 domains, test on the other 4</td>
+                        <td style="padding: 10px 14px; text-align: center; color: #228b22;">Within ≤8 pp of in-distribution rates</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 14px;"><strong>Qwen-2.5 / Gemma-2</strong></td>
+                        <td style="padding: 10px 14px;">Same recipe, different base model family</td>
+                        <td style="padding: 10px 14px; text-align: center; color: #228b22;">Within ≤2 pp of Llama-3-8B on PlanBench</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="vis-caption">Each ablation tests one design choice. Removing the verifier filter is the most damaging — the model picks up biased (state, agent) pairs from failed trajectories. Removing the rules makes the model do more work for marginal gain. Restricting to 13 agents matters most on Natural Plan and classical planning, where the deterministic plan-repair agents earn their keep. Cross-family parity (Llama, Qwen, Gemma agreeing within 2 pp) suggests the signal is in the data, not the base model.</p>
+    </div>
+
+    <p>Three takeaways. <strong>The verifier filter is load-bearing</strong> — unfiltered teacher trajectories include rollouts that <em>looked</em> reasonable but ended in failure, and the unfiltered model picks up locally-plausible but globally-wrong selections. <strong>The expanded action space matters most off PlanBench</strong>, where deterministic plan-repair and PDDL-modelling agents earn their keep. <strong>Generalisation holds across model families and held-out domains</strong>: Llama, Qwen, and Gemma agree within 2 pp; held-out test rates stay within 8 pp of in-distribution.</p>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>The matching success rate at 1% of the cost says something specific: <strong>the orchestration decision did not actually require a frontier model</strong>. We were paying frontier rates not because the task was hard, but because we were using a generalist for a specialist's job. With the right supervision, an 8B model is enough.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 11: RoboSort demo      -->
+    <!-- ============================== -->
+
+    <h2>RoboSort: HALO at Work</h2>
+
+    <p>For the finale, the warehouse description is brand-new — a different facility with rules the model has not seen verbatim. The orchestrator must pick repair agents step by step until the validator accepts a plan. The visual below runs the same trajectory through both a prompted GPT-5-mini orchestrator (left) and HALO (right).</p>
+
+    <div class="vis-container no-download" data-download-name="robosort-orchestrator-demo">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">RoboSort, Post 7: Two Orchestrators, One Refinement Loop</h3>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 12px;"><em>Specification:</em> "RoboSort works in a new facility. Three shelves (A, B, C), one dock. Five packages — two small, two medium, one fragile. Fragile must be picked last and placed first at the dock. Gripper carries one at a time. Goal: all packages at dock with fragile on top."</p>
+
+        <div class="interactive-container" style="margin: 0; border: none; padding: 0; background: transparent;">
+            <div class="interactive-label" style="text-align: center;">Interactive — click "▶ Auto Demo" to watch both orchestrators run the same refinement loop, step by step</div>
+
+            <div class="demo-board">
+                <!-- Prompted orchestrator column -->
+                <div class="demo-col prompted-col">
+                    <div class="demo-header">Prompted GPT-5-mini (Post 6 baseline)</div>
+                    <div class="demo-steps">
+                        <div class="demo-step" id="pstep1">
+                            <div class="step-head">
+                                <span class="step-num">1</span>
+                                <span class="step-label">Cold start — empty PDDL</span>
+                            </div>
+                            <div class="step-agent">→ AgentEmergency</div>
+                            <div class="step-note">Full-state prompt → 1 API call (~2k tokens in)</div>
+                        </div>
+                        <div class="demo-step" id="pstep2">
+                            <div class="step-head">
+                                <span class="step-num">2</span>
+                                <span class="step-label">Validator: syntax error in :requirements</span>
+                            </div>
+                            <div class="step-agent">→ AgentSyntaxPDDL</div>
+                            <div class="step-note">Full-state prompt → 1 API call</div>
+                        </div>
+                        <div class="demo-step" id="pstep3">
+                            <div class="step-head">
+                                <span class="step-num">3</span>
+                                <span class="step-label">Plan invalid — fragile placed second</span>
+                            </div>
+                            <div class="step-agent">→ AgentDeepThinkPDDL</div>
+                            <div class="step-note">Misses the fragile-order constraint</div>
+                        </div>
+                        <div class="demo-step" id="pstep4">
+                            <div class="step-head">
+                                <span class="step-num">4</span>
+                                <span class="step-label">Plan still invalid — same root cause</span>
+                            </div>
+                            <div class="step-agent">→ AgentTemporalConsistency</div>
+                            <div class="step-note">Wrong agent again — wastes another call</div>
+                        </div>
+                        <div class="demo-step" id="pstep5">
+                            <div class="step-head">
+                                <span class="step-num">5</span>
+                                <span class="step-label">Validator: valid · 6 iters total</span>
+                            </div>
+                            <div class="step-agent">→ NoOpAgent</div>
+                            <div class="step-note">Eventually finds it after extra detours</div>
+                        </div>
+                    </div>
+                    <div class="demo-tally prompted" id="ptally">
+                        <strong>Result:</strong> Valid plan · 6 orchestrator API calls · ≈ $0.18 / task
+                    </div>
+                </div>
+
+                <!-- Trained orchestrator column -->
+                <div class="demo-col trained-col">
+                    <div class="demo-header">HALO — Llama-3-8B + rules (this paper)</div>
+                    <div class="demo-steps">
+                        <div class="demo-step" id="tstep1">
+                            <div class="step-head">
+                                <span class="step-num">1</span>
+                                <span class="step-label">Cold start — empty PDDL</span>
+                            </div>
+                            <div class="step-agent">→ AgentEmergency · LAYER 1 (rule)</div>
+                            <div class="step-note">Resolved by rule. No model call.</div>
+                        </div>
+                        <div class="demo-step" id="tstep2">
+                            <div class="step-head">
+                                <span class="step-num">2</span>
+                                <span class="step-label">Validator: syntax error in :requirements</span>
+                            </div>
+                            <div class="step-agent">→ AgentSyntaxPDDL · LAYER 1 (rule)</div>
+                            <div class="step-note">Resolved by rule. No model call.</div>
+                        </div>
+                        <div class="demo-step" id="tstep3">
+                            <div class="step-head">
+                                <span class="step-num">3</span>
+                                <span class="step-label">Plan invalid — fragile placed second</span>
+                            </div>
+                            <div class="step-agent">→ AgentInitialStateSuggester · LAYER 2</div>
+                            <div class="step-note">Single-token decision · ~8 ms · catches missing fragile-priority predicate</div>
+                        </div>
+                        <div class="demo-step" id="tstep4">
+                            <div class="step-head">
+                                <span class="step-num">4</span>
+                                <span class="step-label">Plan valid but redundant move/unmove</span>
+                            </div>
+                            <div class="step-agent">→ AgentRedundancyStripper · LAYER 2</div>
+                            <div class="step-note">Deterministic agent · 0 LLM cost · ~3 ms</div>
+                        </div>
+                        <div class="demo-step" id="tstep5">
+                            <div class="step-head">
+                                <span class="step-num">5</span>
+                                <span class="step-label">Validator: valid · 4 iters total</span>
+                            </div>
+                            <div class="step-agent">→ NoOpAgent · LAYER 1 (rule)</div>
+                            <div class="step-note">Resolved by rule. No model call.</div>
+                        </div>
+                    </div>
+                    <div class="demo-tally trained" id="ttally">
+                        <strong>Result:</strong> Valid plan · 1 model call (others by rule) · ≈ $0.004 / task
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-status" id="demoStatus">Click "▶ Auto Demo" to start.</div>
+
+            <div class="demo-controls">
+                <button class="auto-demo-btn" id="demoRunBtn" onclick="runDemo()">▶ Auto Demo</button>
+                <button class="reset-btn" id="demoResetBtn" onclick="resetDemo()" style="display:none;">↺ Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <p>Same 21-agent action space, same validator. The prompted GPT-5-mini pays for a full-state prompt at every step — including the cold start, syntax error, and terminal accept that HALO's hybrid policy resolves by rule. When the decision is genuinely ambiguous (step 3), HALO picks the right agent on the first try where the prompted baseline takes two attempts. Combined effect: fewer iterations, far fewer model calls, ~45× lower per-task cost, the same final plan.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 12: Agentic Sidebar    -->
+    <!-- ============================== -->
+
+    <h3>Beyond the Warehouse: Who's Conducting Your Multi-Agent Framework?</h3>
+
+    <p>Every multi-agent framework in production has an orchestrator — router (LangGraph), manager (AutoGen), crew lead (CrewAI), product manager (MetaGPT), or just "the GPT-4 we prompt with the system prompt." Same decision: which agent handles this subtask. PDDL is unusual because the verifier is watertight; most agentic systems still have <em>some</em> verifier — and that's enough.</p>
+
+    <div class="vis-container" data-download-name="agentic-sidebar">
+        <div class="agentic-sidebar">
+            <div class="sidebar-title">🤖 Agentic AI in the Wild: Who's Conducting CrewAI?</div>
+            <p>Every multi-agent framework — CrewAI, AutoGen, LangGraph, MetaGPT — faces the orchestration problem. Which agent handles this subtask? When to escalate? How to avoid contradictions? Currently, most use static routing rules or a prompted frontier LLM. The planning community's insight: if you can verify intermediate outputs (compiler, test suite, rule engine), you can train the orchestrator using that feedback. This applies beyond planning — test suites, type checkers, linters, and policy engines all serve as verifiers. The compiler is just the most natural one.</p>
+            <p style="margin-top: 10px;">Picture a code-review agent stack — syntax fixer, security linter, test generator, refactorer. Today the orchestrator is GPT-4. With a few thousand merge-accepted PR trajectories (each already CI-filtered as "this sequence produced code that passed the tests"), the orchestrator can be a small local model. Same logic for CI/CD pipelines (the build is the verifier), refund agents (the policy engine is the verifier), or any agentic system with a downstream check it already trusts.</p>
+            <p style="margin-top: 10px;">Each post in this series has included a sidebar like this one, connecting the planning concepts to real agentic AI applications. The thread tying them all together: <strong>LLMs and formal tools are complements, and the most useful formal tool an agentic system has is the one that already certifies its outputs</strong>.</p>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 13: Pointer to Epilogue -->
+    <!-- ============================== -->
+
+    <h2>Where This Leaves Us</h2>
+
+    <p>HALO has three honest limitations — the teacher bounds the per-decision <em>strategies</em> the learned policy can express (terminal success can still exceed the teacher, as the surprising result above showed, but qualitatively new agent-selection patterns require a signal beyond imitation), the verifier is itself a ceiling (Fast Downward timeouts get discarded indiscriminately), and the 21-agent space doesn't cover PDDL 2.1 numeric fluents or durative actions with continuous effects. Each limitation suggests a follow-up: RLVR on top of the supervised initialiser, smarter timeout handling, an expanded action space. There's also a wider set of frontier questions — meta-learning across orchestration tasks, compositional generalisation, the RLHF parallel for verifier-based rewards, online learning loops, inference-time tree search, the eventual convergence of Paradigm 1 and Paradigm 2 — that the paper points at but does not address.</p>
+
+    <p>Rather than fit all of that into the back of this post, I've broken it out into a separate <strong>Epilogue</strong> — a forward-looking companion piece that sits outside the canonical seven posts of the series. If you want the research roadmap beyond what's published, that's where to go next. The remainder of this post wraps the series itself.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 14: Series Conclusion  -->
+    <!-- ============================== -->
+
+    <h2>Series Conclusion: The Arc, In One View</h2>
+
+    <p>Seven posts ago we started with a simple frustration. LLM agents are confident, fluent, and broken at multi-step coordination — booking the flight without the hotel, writing the function without the dependency, double-booking the oven. These are <em>planning</em> failures, and there is an entire subfield of AI that has spent fifty years on exactly this problem.</p>
+
+    <p>The series traced the arc. Post 2 introduced PDDL. Post 3 walked through fifty years of planning algorithms, ending at heuristic-search solvers that an LLM agent should be working <em>with</em>, not <em>replacing</em>. Post 4 was the reality check: PlanBench, Mystery Blocksworld, four failure modes of self-verification. Posts 5 and 6 were the recovery — LLM-Modulo, code-generated heuristics, LMPLAN, Thought of Search, NL2Plan, agentic PDDL. The pattern throughout: LLMs provide intelligence, formal tools provide guarantees.</p>
+
+    <p>This post closed the loop. The orchestrator's bottleneck is structural, but the same property that creates it — a verifier at every refinement step — also gives us the supervision to fix it. Verifier-filtered trajectories provide per-step labels for a single-token classifier. A hybrid policy spends compute only where it's needed. The result is a small local orchestrator that matches a frontier model at 1% of the cost.</p>
+
+    <div class="vis-container" data-download-name="series-arc">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">The Series Arc</h3>
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.88rem; line-height: 1.75; color: #333;">
+            <p style="margin-bottom: 10px;"><strong style="color: #2a4066;">Post 1:</strong> The roadmap. Why LLM agents fail at multi-step tasks and what 50 years of planning gives us.</p>
+            <p style="margin-bottom: 10px;"><strong style="color: #2a4066;">Post 2:</strong> PDDL, states, actions, goals. The formal language that makes "plan" a precise object.</p>
+            <p style="margin-bottom: 10px;"><strong style="color: #2a4066;">Post 3:</strong> STRIPS → GraphPlan → SATPlan → HSP → Fast Downward → LAMA. The solvers we're integrating with.</p>
+            <p style="margin-bottom: 10px;"><strong style="color: #b22222;">Post 4:</strong> LLMs alone can't plan. PlanBench, Mystery Blocksworld, four failure modes.</p>
+            <p style="margin-bottom: 10px;"><strong style="color: #228b22;">Post 5:</strong> LLMs help planners. LLM-Modulo (12 → 82%), code-generated heuristics, LMPLAN policies. Paradigm 1 works.</p>
+            <p style="margin-bottom: 10px;"><strong style="color: #6b3fa0;">Post 6:</strong> NL → PDDL → plan. NL2Plan, agentic PDDL, the orchestrator bottleneck. Paradigm 2 works on standard domains.</p>
+            <p style="margin-bottom: 0;"><strong style="color: #2a9d8f;">Post 7:</strong> HALO — train the orchestrator. Verifier-filtered supervision + hybrid policy. Beats the teacher (GPT-5-mini) on every family at ~2 orders of magnitude lower cost.</p>
+        </div>
+        <p class="vis-caption">Seven posts, one thesis. LLMs alone don't plan reliably — but the combination of LLMs and formal planning tools is extraordinarily powerful, and the verifier that makes that combination reliable also gives us the supervision to make it cheap.</p>
+    </div>
+
+    <h3>The Two Paradigms, Final Score</h3>
+
+    <p>Post 1 introduced the two paradigms as the conceptual backbone of the series. After six more posts of evidence, the picture has resolved.</p>
+
+    <div class="vis-container" data-download-name="two-paradigms-final">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Where the Two Paradigms Stand</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; font-family: 'Helvetica Neue', Arial, sans-serif;">
+            <div style="background: #eff5ff; border: 2px solid #4682b4; border-radius: 10px; padding: 18px; min-width: 0;">
+                <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #4682b4; margin-bottom: 8px;">Paradigm 1 — PDDL is Given</div>
+                <p style="font-size: 0.86rem; color: #2a5080; margin-bottom: 10px; line-height: 1.55;">Posts 4–5. The expert writes the formal model. LLMs help the planner — generating heuristic code, candidate policies, sound search components, or candidate plans inside a verifier-checked loop.</p>
+                <ul style="font-size: 0.82rem; color: #2a5080; margin: 0 0 0 18px; line-height: 1.55;">
+                    <li>LLM-Modulo: 12% → 82% on Blocksworld</li>
+                    <li>Corrêa heuristics: 373/720 at 1/50th the cost</li>
+                    <li>LMPLAN portfolio: 630/900 (LAMA: 557)</li>
+                    <li>ToS: 27% states vs LATS' 3.3%, at 2 calls vs 286k</li>
+                </ul>
+                <div style="margin-top: 12px; padding: 8px 12px; background: #d0e0f0; border-radius: 6px; font-size: 0.78rem; color: #2a5080;">
+                    <strong>Status:</strong> Strong, deployable today. Bottleneck: writing PDDL.
+                </div>
+            </div>
+            <div style="background: #fff7ed; border: 2px solid #d4740e; border-radius: 10px; padding: 18px; min-width: 0;">
+                <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #d4740e; margin-bottom: 8px;">Paradigm 2 — Only Natural Language</div>
+                <p style="font-size: 0.86rem; color: #7a3f00; margin-bottom: 10px; line-height: 1.55;">Posts 6–7. The user describes the task in English. A multi-agent pipeline formalises, validates, solves, and renders the plan back into language — under a learned orchestrator.</p>
+                <ul style="font-size: 0.82rem; color: #7a3f00; margin: 0 0 0 18px; line-height: 1.55;">
+                    <li>NL2Plan: 100% on standard, ~35% on novel</li>
+                    <li>Agentic PDDL: 100% Blocksworld, 93% Depots</li>
+                    <li>Plan optimisation: 45.8% cost reduction</li>
+                    <li>HALO: −98% cost vs GPT-5-mini, beats teacher on every family</li>
+                </ul>
+                <div style="margin-top: 12px; padding: 8px 12px; background: #ffecd0; border-radius: 6px; font-size: 0.78rem; color: #7a3f00;">
+                    <strong>Status:</strong> Promising; deployable on familiar domains. Bottleneck: novel-domain robustness.
+                </div>
+            </div>
+        </div>
+        <p class="vis-caption">The two paradigms are complementary, not competing. Paradigm 1 is what you reach for when an expert has written the PDDL and you need a planner-grade answer. Paradigm 2 is what you reach for when the user is the only one who knows the task. The hybrid future — Paradigm 2 generates the PDDL, Paradigm 1 solves it — is where the two threads of this series converge.</p>
+    </div>
+
+    <h3>One Pattern, Repeated at Every Layer</h3>
+
+    <p>The clearest finding across seven posts is structural, not tactical. The same pattern keeps showing up:</p>
+
+    <div class="callout insight">
+        <div class="callout-label">The Cross-Post Pattern</div>
+        <p><strong>LLM produces a candidate. Formal tool verifies. Disagreement becomes supervision.</strong> Post 5 has it as LLM-Modulo (LLM proposes a plan, validator checks). Post 5 again has it for heuristics (LLM writes Python, the planner's outcome rates it). Post 6 has it for PDDL itself (LLM drafts the domain, the parser validates). Post 7 has it for the orchestrator (LLM teacher proposes agent sequences, the verifier filters the accepted ones into training data). The pattern is fractal: every layer of the agentic stack that has a formal verifier <em>somewhere in the loop</em> can use that verifier's binary signal as supervision for the LLM component at that layer.</p>
+    </div>
+
+    <p>That fractal is the operative insight, and it generalises beyond planning. Wherever a multi-agent system has a downstream check it already trusts — a test suite, a type checker, a policy engine, a compiler — the same pattern applies. Don't ask the LLM to be right; ask it to <em>propose</em>, and let the formal tool be the arbiter. Then mine the arbiter's accepted traces for training data when you want to drive the cost down.</p>
+
+    <h3>Back to Post 1</h3>
+
+    <p>Post 1 made four claims about where the field was heading. Six posts later, the evidence is in.</p>
+
+    <ul>
+        <li><strong>"LLMs alone cannot plan reliably."</strong> Confirmed harder than Post 1 stated. PlanBench, Mystery Blocksworld, and the obfuscation kill shot in Post 4 leave no room for argument.</li>
+        <li><strong>"LLMs + formal planning tools are extraordinarily powerful."</strong> Post 5's numbers are decisive: 12% → 82% on Blocksworld via LLM-Modulo, near-LAMA performance on classical benchmarks via LMPLAN, two-orders-of-magnitude cost reduction via Thought of Search.</li>
+        <li><strong>"Paradigm 2 is the most exciting frontier."</strong> Held. Post 6 showed NL2Plan and agentic PDDL reaching 100% on standard domains; Post 7 showed the orchestrator at the centre of these pipelines is now itself trainable.</li>
+        <li><strong>"Orchestration is the key unsolved problem."</strong> Held, with progress. This post is one specific cut at it. Online learning, RLVR on top of the supervised initialiser, and inference-time tree search remain open.</li>
+    </ul>
+
+    <p>The thesis, restated: the planning community's fifty years are the missing piece for reliable LLM agents — not because planners replace LLMs, but because their verifiers, solvers, and formal models are exactly what's needed to give LLM agents the correctness guarantees they cannot give themselves. The trained orchestrator is one specific worked-out instance. There will be many more — at every layer of the agentic stack, wherever a formal tool sits next to a language model.</p>
+
+    <p>Thanks for reading.</p>
+
+    <!-- ============================== -->
+    <!-- DOWNLOAD ALL + REFERENCES      -->
+    <!-- ============================== -->
+
+    <div class="download-all-container">
+        <button class="download-all-btn" onclick="downloadAllVisualizations()">Download All Visualizations as PNG</button>
+        <p>For Substack: downloads every diagram, chart, sidebar, and visual as a high-res PNG.</p>
+    </div>
+
+    <div class="references">
+        <h2>References</h2>
+        <ol>
+            <li>Mangannavar, R., Coalson, Z., Dugar, P., &amp; Tadepalli, P. (2026). <em>Training the Orchestrator: A Supervised Approach to End-to-End PDDL Planning with LLM Agents</em>. Oregon State University. Under review (introduces HALO).</li>
+            <li>La Malfa, E. <em>et al.</em> (2025). End-to-end LLM-driven PDDL planning with a multi-agent refinement framework. <em>arXiv:2512.09629</em>.</li>
+            <li>Gestrin, M., Zuo, N., Stein, M., &amp; Kambhampati, S. (2024). NL2Plan: Robust LLM-Driven Planning from Minimal Text. <em>arXiv:2405.04215</em>.</li>
+            <li>Armony, R. <em>et al.</em> (2025). Plan repair as a deterministic toolkit: variable-swap, action-reorder, redundancy-strip, plan-truncate, subplan-fill. <em>arXiv preprint</em>.</li>
+            <li>Mangannavar, V. <em>et al.</em> (2025). GABAR: GNN-based Action Ranking for Planning. <em>NeurIPS 2025</em>.</li>
+            <li>Kambhampati, S., Valmeekam, V., &amp; Stechly, K. (2024). LLM-Modulo: An LLM-Based Framework for Planning with Formal Verification. <em>ICML 2024</em>. arXiv:2402.01817.</li>
+            <li>Valmeekam, V., Marquez, M., Olmo, A., Sreedharan, S., &amp; Kambhampati, S. (2023). PlanBench: An Extensible Benchmark for Evaluating Large Language Models on Planning. <em>NeurIPS 2023</em>.</li>
+            <li>Liu, B., Jiang, Y., Zhang, X., <em>et al.</em> (2023). LLM+P: Empowering Large Language Models with Optimal Planning Proficiency. <em>arXiv:2304.11477</em>.</li>
+            <li>Helmert, M. (2006). The Fast Downward Planning System. <em>JAIR</em>, 26, 191–246.</li>
+            <li>Howey, R., Long, D., &amp; Fox, M. (2004). VAL: Automatic Plan Validation, Continuous Effects and Mixed Initiative Planning Using PDDL. <em>ICTAI 2004</em>.</li>
+            <li>Coles, A. <em>et al.</em> (2010). Forward-Chaining Partial-Order Planning. <em>ICAPS 2010</em> (POPF).</li>
+            <li>Dettmers, T. <em>et al.</em> (2023). QLoRA: Efficient Finetuning of Quantized LLMs. <em>NeurIPS 2023</em>.</li>
+            <li>Schulman, J. <em>et al.</em> (2017). Proximal Policy Optimization Algorithms. <em>arXiv:1707.06347</em>.</li>
+            <li>Ross, S., Gordon, G., &amp; Bagnell, D. (2011). A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning. <em>AISTATS 2011</em> (DAgger).</li>
+            <li>Katz, M., Kokel, H., &amp; Muise, C. (2025). Planning in the Era of Language Models. <em>NeurIPS 2025 Tutorial</em>.</li>
+        </ol>
+    </div>
+
+</article>
+
+<div class="blog-footer">
+    <p>Planning in the Era of LLMs — Part 7 of 7</p>
+</div>
+
+<script>
+// ============================================================
+// PNG DOWNLOAD SYSTEM
+// Every .vis-container[data-download-name] gets an injected
+// "Download as PNG" button placed OUTSIDE the container so the
+// button itself never appears in the rendered PNG.
+// Containers with class "no-download" are skipped.
+// ============================================================
+
+function downloadVisualization(container, filename) {
+    html2canvas(container, {
+        scale: 3,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        logging: false
+    }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = filename + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var containers = document.querySelectorAll('.vis-container[data-download-name]');
+    containers.forEach(function(container) {
+        if (container.classList.contains('no-download')) return;
+        var wrapper = document.createElement('div');
+        wrapper.className = 'download-btn-wrapper';
+        var btn = document.createElement('button');
+        btn.className = 'download-btn';
+        btn.textContent = '⬇ Download as PNG';
+        btn.onclick = function(e) {
+            e.preventDefault();
+            var name = container.getAttribute('data-download-name');
+            btn.textContent = 'Generating...';
+            btn.disabled = true;
+            downloadVisualization(container, 'blog-' + name);
+            setTimeout(function() {
+                btn.textContent = '⬇ Download as PNG';
+                btn.disabled = false;
+            }, 2000);
+        };
+        wrapper.appendChild(btn);
+        container.parentNode.insertBefore(wrapper, container.nextSibling);
+    });
+});
+
+function downloadAllVisualizations() {
+    var containers = document.querySelectorAll('.vis-container[data-download-name]:not(.no-download)');
+    var btn = document.querySelector('.download-all-btn');
+    var total = containers.length;
+    var current = 0;
+    btn.textContent = 'Downloading 0/' + total + '...';
+    btn.disabled = true;
+
+    function downloadNext() {
+        if (current >= total) {
+            btn.textContent = 'Done! All ' + total + ' downloaded.';
+            setTimeout(function() {
+                btn.textContent = 'Download All Visualizations as PNG';
+                btn.disabled = false;
+            }, 3000);
+            return;
+        }
+        var container = containers[current];
+        var name = container.getAttribute('data-download-name');
+        downloadVisualization(container, 'blog-' + name);
+        current++;
+        btn.textContent = 'Downloading ' + current + '/' + total + '...';
+        setTimeout(downloadNext, 800);
+    }
+    downloadNext();
+}
+
+// ============================================================
+// ROBOSORT DEMO — TRAINED VS PROMPTED ORCHESTRATOR
+// Plays the two trajectories side by side, step by step, with
+// the prompted column finishing 6 steps and the trained column
+// finishing 5 (one extra wasted iteration on the prompted side).
+// Uses async/await + setTimeout for sequencing.
+// Layout uses opacity transitions only — no display:none — so
+// the recordable area never shifts.
+// ============================================================
+
+var demoRunning = false;
+
+function delay(ms) {
+    return new Promise(function(resolve) { setTimeout(resolve, ms); });
+}
+
+async function runDemo() {
+    if (demoRunning) return;
+    demoRunning = true;
+    var runBtn = document.getElementById('demoRunBtn');
+    var resetBtn = document.getElementById('demoResetBtn');
+    var statusEl = document.getElementById('demoStatus');
+    runBtn.disabled = true;
+    runBtn.textContent = 'Running...';
+    resetEverythingInternal();
+
+    // Step 1 — both: cold start
+    statusEl.textContent = 'Step 1: cold start — empty PDDL. Both pick AgentEmergency. (Prompted: full API call · Trained: Layer-1 rule fires.)';
+    activate('pstep1'); activate('tstep1');
+    await delay(2400);
+    markDone('pstep1', 'prompted'); markDone('tstep1', 'trained');
+
+    // Step 2 — both: syntax error
+    statusEl.textContent = 'Step 2: validator reports a syntax error. Both pick AgentSyntaxPDDL. (Prompted: full API call · Trained: Layer-1 rule fires.)';
+    activate('pstep2'); activate('tstep2');
+    await delay(2400);
+    markDone('pstep2', 'prompted'); markDone('tstep2', 'trained');
+
+    // Step 3 — divergence: plan invalid, fragile order
+    statusEl.textContent = 'Step 3: plan returned but fragile placed second. The ambiguous case — both orchestrators must reason.';
+    activate('pstep3'); activate('tstep3');
+    await delay(2800);
+    markDone('pstep3', 'prompted'); markDone('tstep3', 'trained');
+
+    // Step 4 — prompted wastes a call, trained uses a fast deterministic agent
+    statusEl.textContent = 'Step 4: prompted GPT-5-mini picks the wrong specialist again. HALO reaches for AgentRedundancyStripper (deterministic, 0 LLM cost).';
+    activate('pstep4'); activate('tstep4');
+    await delay(2800);
+    markDone('pstep4', 'prompted'); markDone('tstep4', 'trained');
+
+    // Step 5 — trained: validator accepts, NoOp. prompted needs one more.
+    statusEl.textContent = 'Step 5: trained orchestrator terminates (validator accepts → NoOpAgent by Layer-1 rule). Prompted still needs another step.';
+    activate('pstep5'); activate('tstep5');
+    await delay(2400);
+    markDone('tstep5', 'trained');
+    // Prompted gets one more (overflow), shown by keeping pstep5 active a moment longer then done
+    statusEl.textContent = 'Prompted orchestrator finishes one step late, after extra deliberation.';
+    await delay(1400);
+    markDone('pstep5', 'prompted');
+
+    // Show tallies
+    document.getElementById('ptally').classList.add('visible');
+    document.getElementById('ttally').classList.add('visible');
+    statusEl.textContent = 'Done. Same final plan. HALO: 1 model call (others by rule), ~$0.004. Prompted orchestrator: 6 API calls, ~$0.18.';
+
+    runBtn.style.display = 'none';
+    resetBtn.style.display = 'inline-block';
+    demoRunning = false;
+}
+
+function activate(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.add('active');
+}
+
+function markDone(id, side) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('active');
+    el.classList.add('done', side);
+}
+
+function resetEverythingInternal() {
+    ['pstep1','pstep2','pstep3','pstep4','pstep5','tstep1','tstep2','tstep3','tstep4','tstep5'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.classList.remove('active', 'done', 'prompted', 'trained');
+        }
+    });
+    document.getElementById('ptally').classList.remove('visible');
+    document.getElementById('ttally').classList.remove('visible');
+}
+
+function resetDemo() {
+    resetEverythingInternal();
+    document.getElementById('demoStatus').textContent = 'Click "▶ Auto Demo" to start.';
+    var runBtn = document.getElementById('demoRunBtn');
+    runBtn.style.display = 'inline-block';
+    runBtn.disabled = false;
+    runBtn.textContent = '▶ Auto Demo';
+    document.getElementById('demoResetBtn').style.display = 'none';
+}
+</script>

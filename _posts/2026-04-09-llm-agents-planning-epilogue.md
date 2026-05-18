@@ -1,0 +1,846 @@
+---
+layout: fullhtml-post
+title: "Epilogue: Where the Field Goes Next"
+date: 2026-04-09
+categories: ["LLMs Automated Planning and Agents"]
+tags: ["planning", "llm", "research"]
+description: "A forward-looking companion to the seven-post series. Limitations of HALO, the meta-learning frame, open challenges, and the research directions that will define the next few years."
+_styles: >
+  .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .blog-fullhtml {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      color: #1a1a2e;
+      background: #fafafa;
+  }
+
+  .blog-fullhtml .hero {
+      background: linear-gradient(135deg, #1b1340 0%, #2a1f5a 40%, #3a2870 100%);
+      color: #f0f0f0;
+      padding: 80px 20px 60px;
+      text-align: center;
+  }
+  .blog-fullhtml .hero .series-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #c9b8e8;
+      margin-bottom: 16px;
+  }
+  .blog-fullhtml .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 820px;
+      margin: 0 auto 20px;
+  }
+  .blog-fullhtml .hero .subtitle {
+      font-size: 1.15rem;
+      color: #d4c5f0;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-style: italic;
+  }
+
+  .blog-fullhtml .blog-container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+  }
+
+  .blog-fullhtml h2 {
+      font-size: 1.85rem;
+      color: #1b1340;
+      margin: 56px 0 20px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #6b3fa0;
+  }
+  .blog-fullhtml h3 {
+      font-size: 1.35rem;
+      color: #2a1f5a;
+      margin: 40px 0 14px;
+  }
+  .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
+  .blog-fullhtml strong { color: #1b1340; }
+  .blog-fullhtml a { color: #6b3fa0; text-decoration: none; border-bottom: 1px solid #6b3fa044; }
+  .blog-fullhtml a:hover { color: #4a2870; border-bottom-color: #4a2870; }
+  .blog-fullhtml .lead { font-size: 1.2rem; color: #333; line-height: 1.9; margin-bottom: 28px; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 20px 28px; font-size: 1.05rem; }
+  .blog-fullhtml li { margin-bottom: 6px; }
+
+  .blog-fullhtml .series-nav {
+      background: #f5f0ff;
+      border: 1px solid #d4c5f0;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.92rem;
+      color: #444;
+  }
+  .blog-fullhtml .series-nav strong { color: #6b3fa0; font-size: 1rem; }
+  .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
+  .blog-fullhtml .series-nav .nav-links {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #6b3fa0;
+      font-weight: 600;
+  }
+
+  .blog-fullhtml .callout {
+      border-left: 4px solid #6b3fa0;
+      background: #f5f0ff;
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 0 6px 6px 0;
+  }
+  .blog-fullhtml .callout.insight {
+      border-left-color: #228b22;
+      background: #f0faf0;
+  }
+  .blog-fullhtml .callout.warning {
+      border-left-color: #b22222;
+      background: #fdf2f2;
+  }
+  .blog-fullhtml .callout.question {
+      border-left-color: #d4740e;
+      background: #fef9f0;
+  }
+  .blog-fullhtml .callout-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
+  .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
+  .blog-fullhtml .callout.question .callout-label { color: #d4740e; }
+  .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
+
+  .blog-fullhtml pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 24px 0;
+  }
+  .blog-fullhtml code {
+      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+      font-size: 0.88em;
+  }
+  .blog-fullhtml p code, .blog-fullhtml li code {
+      background: #ede4ff;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #6b3fa0;
+  }
+
+  .blog-fullhtml .vis-container {
+      margin: 2em 0;
+      padding: 1.5em;
+      background: #fafafa;
+      border-radius: 10px;
+      border: 1px solid #eee;
+  }
+  .blog-fullhtml .vis-caption {
+      font-size: 0.85em;
+      color: #666;
+      font-style: italic;
+      margin-top: 10px;
+      text-align: center;
+  }
+
+  .blog-fullhtml .download-btn {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 4px 12px;
+      font-size: 0.72em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #6b3fa0;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+  }
+  .blog-fullhtml .download-btn:hover { background: #4a2870; }
+  .blog-fullhtml .download-btn-wrapper {
+      text-align: center;
+      margin-top: -8px;
+      margin-bottom: 24px;
+  }
+  .blog-fullhtml .download-all-container {
+      text-align: center;
+      margin: 2em 0;
+      padding: 15px;
+      background: #f5f0ff;
+      border-radius: 8px;
+      border: 1px dashed #6b3fa0;
+  }
+  .blog-fullhtml .download-all-btn {
+      padding: 10px 24px;
+      font-size: 0.9em;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #6b3fa0;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+  }
+  .blog-fullhtml .download-all-btn:hover { background: #4a2870; }
+  .blog-fullhtml .download-all-container p {
+      font-size: 0.8em;
+      color: #666;
+      margin-top: 8px;
+  }
+
+  .blog-fullhtml .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #d4c5f0; }
+  .blog-fullhtml .references h2 { border-bottom: none; font-size: 1.4rem; margin-top: 0; }
+  .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
+  .blog-fullhtml .references li { margin-bottom: 8px; }
+
+  .blog-fullhtml .blog-footer {
+      text-align: center; padding: 32px 20px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  }
+
+  .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #6b3fa0; }
+
+  .blog-fullhtml .ceilings-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 20px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .ceiling-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 14px;
+      align-items: stretch;
+  }
+  .blog-fullhtml .ceiling-row > * { min-width: 0; }
+  .blog-fullhtml .ceiling-name {
+      background: #1b1340;
+      color: white;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+  }
+  .blog-fullhtml .ceiling-desc {
+      background: #fff;
+      border: 2px solid #d4c5f0;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.88rem;
+      color: #444;
+      line-height: 1.55;
+  }
+  .blog-fullhtml .ceiling-desc strong { color: #6b3fa0; }
+
+  .blog-fullhtml .shift-grid {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 0;
+      align-items: stretch;
+      margin: 22px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .shift-grid > * { min-width: 0; }
+  .blog-fullhtml .shift-box {
+      border-radius: 10px;
+      padding: 18px 20px;
+  }
+  .blog-fullhtml .shift-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #6b3fa0;
+      font-weight: 700;
+  }
+  .blog-fullhtml .shift-before {
+      background: #f0f4f8;
+      border: 2px solid #4682b4;
+  }
+  .blog-fullhtml .shift-after {
+      background: #f5f0ff;
+      border: 2px solid #6b3fa0;
+  }
+  .blog-fullhtml .shift-box h5 {
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .shift-before h5 { color: #2a5080; }
+  .blog-fullhtml .shift-after h5 { color: #6b3fa0; }
+  .blog-fullhtml .shift-box ul {
+      margin: 0 0 0 18px;
+      font-size: 0.83rem;
+      line-height: 1.55;
+  }
+  .blog-fullhtml .shift-before ul { color: #2a5080; }
+  .blog-fullhtml .shift-after ul { color: #4a2870; }
+  .blog-fullhtml .shift-box .shift-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      color: white;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .shift-before .shift-tag { background: #4682b4; }
+  .blog-fullhtml .shift-after .shift-tag { background: #6b3fa0; }
+
+  .blog-fullhtml .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+  }
+  .blog-fullhtml .challenges-grid > * { min-width: 0; }
+  .blog-fullhtml .challenge-card {
+      background: #fff;
+      border: 2px solid #d4c5f0;
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .challenge-card h5 {
+      font-size: 0.95rem;
+      color: #6b3fa0;
+      margin-bottom: 8px;
+  }
+  .blog-fullhtml .challenge-card p {
+      font-size: 0.84rem;
+      color: #444;
+      line-height: 1.55;
+      margin-bottom: 0;
+  }
+  .blog-fullhtml .challenge-card .challenge-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      background: #6b3fa0;
+      color: white;
+      margin-bottom: 6px;
+  }
+
+  .blog-fullhtml .threads-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 20px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .thread-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 14px;
+      align-items: stretch;
+  }
+  .blog-fullhtml .thread-row > * { min-width: 0; }
+  .blog-fullhtml .thread-stamp {
+      background: linear-gradient(135deg, #6b3fa0, #4a2870);
+      color: white;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.3;
+  }
+  .blog-fullhtml .thread-body {
+      background: #fafafa;
+      border: 1px solid #ede4ff;
+      border-radius: 8px;
+      padding: 14px 18px;
+  }
+  .blog-fullhtml .thread-body h5 {
+      font-size: 0.95rem;
+      color: #1b1340;
+      margin-bottom: 6px;
+  }
+  .blog-fullhtml .thread-body p {
+      font-size: 0.85rem;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 0;
+  }
+
+  .blog-fullhtml .hybrid-future {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr 60px 1fr;
+      gap: 0;
+      align-items: stretch;
+      margin: 24px 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .hybrid-future > * { min-width: 0; }
+  .blog-fullhtml .hybrid-step {
+      border-radius: 10px;
+      padding: 16px 14px;
+      text-align: center;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  }
+  .blog-fullhtml .hybrid-step h5 {
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+  }
+  .blog-fullhtml .hybrid-step .hybrid-tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-bottom: 5px;
+      color: white;
+  }
+  .blog-fullhtml .hybrid-step.p2 {
+      background: #fff7ed;
+      border: 2px solid #d4740e;
+      color: #7a3f00;
+  }
+  .blog-fullhtml .hybrid-step.p2 h5 { color: #b35c00; }
+  .blog-fullhtml .hybrid-step.p2 .hybrid-tag { background: #d4740e; }
+  .blog-fullhtml .hybrid-step.bridge {
+      background: #f5f0ff;
+      border: 2px solid #6b3fa0;
+      color: #4a2870;
+  }
+  .blog-fullhtml .hybrid-step.bridge h5 { color: #6b3fa0; }
+  .blog-fullhtml .hybrid-step.bridge .hybrid-tag { background: #6b3fa0; }
+  .blog-fullhtml .hybrid-step.p1 {
+      background: #eff5ff;
+      border: 2px solid #4682b4;
+      color: #2a5080;
+  }
+  .blog-fullhtml .hybrid-step.p1 h5 { color: #2a5080; }
+  .blog-fullhtml .hybrid-step.p1 .hybrid-tag { background: #4682b4; }
+  .blog-fullhtml .hybrid-arrow-h {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #6b3fa0;
+      font-weight: 700;
+  }
+
+  @media (max-width: 700px) {
+      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
+      .blog-fullhtml .ceiling-row { grid-template-columns: 1fr; }
+      .blog-fullhtml .shift-grid { grid-template-columns: 1fr; }
+      .blog-fullhtml .shift-arrow { transform: rotate(90deg); padding: 6px 0; }
+      .blog-fullhtml .challenges-grid { grid-template-columns: 1fr; }
+      .blog-fullhtml .thread-row { grid-template-columns: 1fr; }
+      .blog-fullhtml .thread-stamp { padding: 6px 12px; }
+      .blog-fullhtml .hybrid-future { grid-template-columns: 1fr; }
+      .blog-fullhtml .hybrid-arrow-h { transform: rotate(90deg); padding: 6px 0; }
+  }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+---
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<header class="hero">
+    <div class="series-label">Planning in the Era of LLMs — Epilogue</div>
+    <h1>Where the Field Goes Next</h1>
+    <p class="subtitle">A forward-looking companion to the seven-post series. Limitations of HALO, the meta-learning frame, open challenges, and the research directions that will define the next few years.</p>
+</header>
+
+<article class="blog-container">
+
+    <!-- Series Navigation -->
+    <div class="vis-container" data-download-name="epilogue-nav-banner">
+        <div class="series-nav">
+            <strong>📚 Planning in the Era of LLMs — Epilogue</strong>
+            <div class="nav-desc">A bonus piece sitting outside the canonical seven posts. The series itself ended at Post 7 with HALO and a Series Conclusion. This epilogue is the forward-looking companion — what HALO <em>doesn't</em> do, and where the research goes from here.</div>
+            <div class="nav-links">
+                ← Part 7: "Training the Conductor" | Series complete · this is bonus material
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 1: Opening              -->
+    <!-- ============================== -->
+
+    <p class="lead">Post 7 ended on a deliberately tight note: HALO works, beats its teacher across 12 PDDL domains at ~2 orders of magnitude lower cost, the series argument round-trips back to Post 1, thanks for reading. This epilogue picks up where that ended. It's the place to put everything the paper points at without resolving — limitations of the supervised approach, the meta-learning lens the work invites, and the open frontier questions that the broader agentic-planning community is now circling.</p>
+
+    <p>The structure here is loose by design. Post 7 had to be tight because it was making a paper argument. This piece is a survey of open directions, organised into four passes: what the current paper <em>can't</em> do; the meta-learning frame that re-reads the result; the open challenges the community names as the frontier; and the specific research threads — RLVR, online learning, tree search, RLHF parallels, hybrid Paradigm 1+2 — that the next few years are likely to chase.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: Three Ceilings       -->
+    <!-- ============================== -->
+
+    <h2>Three Ceilings HALO Doesn't Break</h2>
+
+    <p>HALO beats frontier prompted orchestrators on success rate at <strong>~45× lower cost than GPT-5-mini and 15–20× lower cost than the already-cheap Gemini-3-Flash</strong> — but the win is bounded in three concrete ways. Each ceiling is a candidate for the next paper.</p>
+
+    <div class="vis-container" data-download-name="three-ceilings">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Where HALO Stops Improving</h3>
+        <div class="ceilings-grid">
+            <div class="ceiling-row">
+                <div class="ceiling-name">Teacher (per-decision) ceiling</div>
+                <div class="ceiling-desc">HALO actually <em>exceeds</em> GPT-5-mini on terminal success — the verifier filter keeps only succeeded trajectories so the student inherits the teacher's <strong>best</strong> behaviour, and the Layer-1 rules catch trivial cases the teacher mishandles. But the <em>kinds</em> of per-decision strategies HALO can express are still bounded by what the teacher exhibits in accepted trajectories. Qualitatively new agent-selection patterns require a signal beyond imitation.</div>
+            </div>
+            <div class="ceiling-row">
+                <div class="ceiling-name">Verifier ceiling</div>
+                <div class="ceiling-desc">Fast Downward timeouts and "no plan exists" look the same from inside the pipeline. Trajectories on hard instances that <em>could</em> have been salvaged with more search budget get filtered out as failures and never become training data. The verifier filters honestly, but it filters on a noisy signal.</div>
+            </div>
+            <div class="ceiling-row">
+                <div class="ceiling-name">Action-space ceiling</div>
+                <div class="ceiling-desc">The 21-agent space covers classical PDDL plus the temporal extensions handled by POPF. PDDL 2.1 numeric fluents, durative actions with continuous effects, and conditional-axiom domains lie outside. On such problems the orchestrator literally has no productive move available — the limitation isn't the policy, it's the toolkit.</div>
+            </div>
+        </div>
+        <p class="vis-caption">Three ceilings. The per-decision teacher ceiling motivates RLVR (next section). The verifier ceiling motivates smarter timeout handling and inference-time search. The action-space ceiling motivates expanding the agent pool — adding agents for numeric repair, durative re-encoding, axiom handling — which is mechanically straightforward but unsexy.</p>
+    </div>
+
+    <p>Two of these are research problems; one is engineering. The per-decision teacher ceiling and the verifier ceiling need new methods. The action-space ceiling needs an engineering investment to write the missing repair agents — and the supervised pipeline drops in unchanged once those agents exist.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: Meta-Learning Frame  -->
+    <!-- ============================== -->
+
+    <h2>The Meta-Learning Frame</h2>
+
+    <p>Step back from the specific paper. What was actually accomplished?</p>
+
+    <p>The orchestrator wasn't taught a plan. It wasn't taught a heuristic. It wasn't taught a policy over PDDL actions. It was taught <strong>how to plan the planning process</strong> — when to call the syntax fixer, when to call the predicate generaliser, when to fall through to the deterministic plan-repair operators. That's meta-planning, and the trained model is meta-learning it from verifier-accepted trajectories.</p>
+
+    <p>The vocabulary matters because it reframes the contribution. "We trained a small classifier on 12k examples" is a true description but undersells the story. "We learned an orchestration policy for a PDDL planning pipeline from outcome-filtered demonstrations" is the same fact restated as meta-learning for planning — and that framing opens up the comparison surface to a much wider literature.</p>
+
+    <div class="vis-container" data-download-name="metalearning-shift">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">From "What to Plan" to "How to Plan"</h3>
+
+        <div class="shift-grid">
+            <div class="shift-box shift-before">
+                <span class="shift-tag">Object level</span>
+                <h5>Learn what to plan</h5>
+                <ul>
+                    <li>GABAR: which PDDL action next, given state</li>
+                    <li>LMPLAN: which Python policy given a problem</li>
+                    <li>Corrêa: which heuristic for this domain</li>
+                    <li>Classical planners: which node to expand next</li>
+                </ul>
+            </div>
+            <div class="shift-arrow">→</div>
+            <div class="shift-box shift-after">
+                <span class="shift-tag">Meta level</span>
+                <h5>Learn how to plan</h5>
+                <ul>
+                    <li>This paper: which repair agent next, given pipeline state</li>
+                    <li>Future: which heuristic to generate, given domain</li>
+                    <li>Future: which decomposition strategy, given a spec</li>
+                    <li>Future: when to ask the user vs guess</li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="vis-caption">Object-level planning chooses actions inside a fixed framework. Meta-level planning chooses the framework's own moves. The same supervised-from-verifier-acceptance recipe applies at both levels — and once it works at one level, it usually works at the level above.</p>
+    </div>
+
+    <p>Three things start to look obvious from this angle.</p>
+
+    <p><strong>The recipe is layer-agnostic.</strong> The same "LLM proposes, verifier filters, student imitates" pattern that Post 7 used at the orchestrator layer also drives Corrêa's heuristic-generation pipeline (LLM writes Python, planner success rates filter), Silver's policy-distillation (LLM writes domain-independent policies, examples filter), and GABAR's action ranking (planner provides labels). All four are instances of the same meta-learning template applied at different layers of the planning stack.</p>
+
+    <p><strong>The next layers up are inviting.</strong> One layer above the orchestrator is the <em>method</em> selector — given a new problem, should the system reach for LLM-Modulo, generate a heuristic, train a policy, or just call the orchestrator? The same supervised-from-acceptance pipeline works there too, provided you log enough method-selection trajectories with the right outcome signal. The hardware exists. The training data does not, yet.</p>
+
+    <p><strong>Compositional structure shows up at the meta level.</strong> An orchestrator that's seen "syntax error → AgentSyntaxPDDL" and "hallucinated predicate → AgentHallucinations" should generalise to "syntax error <em>plus</em> hallucinated predicate → AgentSyntaxPDDL <em>then</em> AgentHallucinations." The current model does this implicitly because Layer 2 sees the full state. A more explicit compositional structure (hierarchical policy, options, skill libraries) is one of the natural follow-ups.</p>
+
+    <div class="callout insight">
+        <div class="callout-label">Key Insight</div>
+        <p>The meta-learning frame isn't decoration. It tells you which adjacent papers in the broader ML literature actually apply to the problem (DAgger, behaviour cloning, offline RL, learning-to-search) and which don't (most "agent tuning" papers, which operate in open action spaces without verifiers). It also tells you which adjacent <em>problems</em> are next — method selection, decomposition strategy, when-to-ask-the-user — that the same recipe should attack.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 4: Open Challenges      -->
+    <!-- ============================== -->
+
+    <h2>Open Challenges the Community is Circling</h2>
+
+    <p>Beyond the three ceilings, four challenges show up repeatedly across recent papers — Gestrin's NL2Plan failure analysis, La Malfa's per-domain breakdowns, the cross-domain generalisation results in Post 7. None has a settled answer.</p>
+
+    <div class="vis-container" data-download-name="open-challenges">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Four Open Challenges</h3>
+        <div class="challenges-grid">
+            <div class="challenge-card">
+                <span class="challenge-tag">Challenge 1</span>
+                <h5>Compositional generalisation</h5>
+                <p>A system that's seen Blocksworld and Logistics independently should solve a problem that <em>combines</em> block-stacking <em>and</em> logistics. Current systems struggle because PDDL generation and orchestration are still pattern-matching over training distributions, not compositional reasoning over primitives.</p>
+            </div>
+            <div class="challenge-card">
+                <span class="challenge-tag">Challenge 2</span>
+                <h5>Implicit constraint extraction</h5>
+                <p>"The robot can't carry two items" implies a gripper-empty predicate and a precondition on pick. "Aisle 3 is one-way" implies asymmetric connectivity. Extracting these from natural language requires world knowledge, not just text parsing. NL2Plan misses them silently; agentic PDDL asks the user.</p>
+            </div>
+            <div class="challenge-card">
+                <span class="challenge-tag">Challenge 3</span>
+                <h5>Multi-domain transfer</h5>
+                <p>Hold-out experiments in Post 7 show ~8 pp drops on unseen domains. The framework is robust to NL paraphrase and object renaming, but a genuinely new domain — new types, new predicate signatures — pushes the orchestrator off-distribution. Closing this gap is what makes the system actually domain-general rather than benchmark-general.</p>
+            </div>
+            <div class="challenge-card">
+                <span class="challenge-tag">Challenge 4</span>
+                <h5>Scaling to real-world complexity</h5>
+                <p>Benchmarks top out at ~100 objects, ~20-action plans. Real-world planning — manufacturing schedules, multi-robot coordination, complex logistics — runs orders of magnitude larger. The orchestrator is the cheap part of scaling; the planner and validator are the bottleneck. Hierarchical decomposition is the obvious next step.</p>
+            </div>
+        </div>
+        <p class="vis-caption">Four named challenges that HALO alone doesn't solve. Each is its own thread in the broader research programme.</p>
+    </div>
+
+    <p>None of these is unique to PDDL. Compositional generalisation is the ML community's deepest open problem; implicit-constraint extraction is the same gap that haunts requirements engineering; multi-domain transfer is meta-learning's central question; scaling to real-world complexity is what the planning community itself has been chipping away at for fifty years. HALO inherits all four challenges — it doesn't create them and it doesn't solve them.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 5: Research Threads     -->
+    <!-- ============================== -->
+
+    <h2>Five Research Threads the Next Few Years Will Chase</h2>
+
+    <p>The threads below are not predictions, they're the directions the supervised orchestrator paper visibly opens. Each one is what comes next if the recipe holds up.</p>
+
+    <div class="vis-container" data-download-name="research-threads">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Where the Research Goes from Here</h3>
+        <div class="threads-list">
+            <div class="thread-row">
+                <div class="thread-stamp">Thread 1<br>RLVR</div>
+                <div class="thread-body">
+                    <h5>Reinforcement learning with the verifier as a verifiable reward</h5>
+                    <p>HALO is the natural initialiser. PPO against per-step verifier signals (LEA / StV / AQM moving down) breaks the per-decision teacher ceiling — the model can now exceed GPT-5-mini's strategic patterns on individual decisions, not just on terminal success. The verifier signal is denser than binary trajectory accept, so credit assignment is easier than vanilla sparse-reward RL. The dense-reward credit assignment story from Post 7's diagram applies, made cheap by the supervised initialiser.</p>
+                </div>
+            </div>
+            <div class="thread-row">
+                <div class="thread-stamp">Thread 2<br>RLHF parallel</div>
+                <div class="thread-body">
+                    <h5>What the planning community has that the chat community wishes it had</h5>
+                    <p>RLHF trains on noisy preferences from human annotators; the reward model has to be learned. Here the reward is the validator: deterministic, sound, and free. The community has been arguing about whether verifiable rewards are the right successor to RLHF; agentic planning is the cleanest setting where they unambiguously are. Whatever methodology emerges for verifiable-reward RL — process reward models, dense step-level signals, hybrid offline-online schemes — will show up here first.</p>
+                </div>
+            </div>
+            <div class="thread-row">
+                <div class="thread-stamp">Thread 3<br>Online loop</div>
+                <div class="thread-body">
+                    <h5>Self-improving orchestrators via deployment telemetry</h5>
+                    <p>Every deployed pipeline produces a stream of new verifier-accepted trajectories. Periodically retraining on the freshest accepted set lets the orchestrator adapt to domain drift cheaply — a luxury a prompted frontier-LLM orchestrator does not have. Infrastructure is straightforward: log every decision, mark the verifier-accepted ones, retrain weekly. The interesting question is regret and stability: how to retrain without forgetting prior domains.</p>
+                </div>
+            </div>
+            <div class="thread-row">
+                <div class="thread-stamp">Thread 4<br>Tree search</div>
+                <div class="thread-body">
+                    <h5>Search at orchestration time, not just at plan time</h5>
+                    <p>The trained policy plus the verifier admits MCTS, beam, or best-first <em>over agent sequences</em>. Each expansion is a cheap forward pass on the orchestrator; the verifier provides a hard pruning signal. This trades extra orchestration calls for accuracy on long-horizon problems where a single greedy trajectory falls short — and rejoins the planning community's tree-search heritage to the LLM agent literature on its own terms.</p>
+                </div>
+            </div>
+            <div class="thread-row">
+                <div class="thread-stamp">Thread 5<br>Method selector</div>
+                <div class="thread-body">
+                    <h5>Meta-orchestration: choose the method, not just the agent</h5>
+                    <p>One level above the orchestrator is the method selector. Given a new problem, should the system reach for LLM-Modulo, generate a heuristic with Corrêa's pipeline, train a policy with LMPLAN, write Python with Thought of Search, or just call this paper's orchestrator? Each method is itself a verifiable pipeline. The same supervised-from-acceptance recipe trains the chooser — if you log enough method-selection trajectories with the right outcome signal.</p>
+                </div>
+            </div>
+        </div>
+        <p class="vis-caption">Five research threads, all flowing out of the same paper. Threads 1 and 2 are about pushing past the teacher. Thread 3 is about distribution shift. Thread 4 is about long-horizon problems. Thread 5 is meta-meta-planning — the natural next layer up.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 6: Hybrid Future        -->
+    <!-- ============================== -->
+
+    <h2>The Hybrid Future: Paradigm 1 and Paradigm 2 Converge</h2>
+
+    <p>Post 1 set up two paradigms. Posts 4–5 made Paradigm 1 (PDDL given) work. Posts 6–7 made Paradigm 2 (only natural language) work on familiar domains. The natural endpoint is hybrid — and it's already visible.</p>
+
+    <div class="vis-container" data-download-name="hybrid-future">
+        <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Where the Two Paradigms Meet</h3>
+        <div class="hybrid-future">
+            <div class="hybrid-step p2">
+                <span class="hybrid-tag">Paradigm 2</span>
+                <h5>NL → PDDL</h5>
+                NL2Plan / Agentic PDDL formalise the user's task into a draft PDDL pair.
+            </div>
+            <div class="hybrid-arrow-h">→</div>
+            <div class="hybrid-step bridge">
+                <span class="hybrid-tag">Trained Orchestrator</span>
+                <h5>Refine to validity</h5>
+                Hybrid policy iterates 21 repair agents until the validator accepts the PDDL and a plan.
+            </div>
+            <div class="hybrid-arrow-h">→</div>
+            <div class="hybrid-step p1">
+                <span class="hybrid-tag">Paradigm 1</span>
+                <h5>Solve and verify</h5>
+                LLM-Modulo / LLM heuristics / LMPLAN policies — pick the right Paradigm 1 method per domain.
+            </div>
+        </div>
+        <p class="vis-caption">The hybrid pipeline: Paradigm 2 generates the formal model from English, HALO validates and refines it, Paradigm 1 methods solve it. Each box is its own active research area; HALO is the glue that makes them composable.</p>
+    </div>
+
+    <p>The interesting consequence is that the seven posts of this series stop reading as a chronological progression and start reading as a stack. Posts 2–3 are the foundation layer (PDDL, classical planners). Posts 4–5 are the integration layer (LLMs + planners under Paradigm 1). Post 6 is the front-end layer (NL → PDDL). Post 7 is the coordination layer (HALO). The future hybrid system uses all four layers simultaneously, with HALO deciding which Paradigm-1 method to dispatch based on the domain it just helped Paradigm-2 formalise.</p>
+
+    <p>None of this is hypothetical. NL2Plan + Fast Downward already runs as a pipeline; LLM-Modulo wraps Fast Downward in a verifier-checked loop; HALO was designed specifically to sit between an NL2Plan-style front-end and a Paradigm-1 back-end. The components exist. What's missing is the meta-orchestrator that decides, given the domain, which combination to use — and that's Thread 5 from the previous section.</p>
+
+    <!-- ============================== -->
+    <!-- SECTION 7: Broader Implications -->
+    <!-- ============================== -->
+
+    <h2>Broader Implications Beyond Planning</h2>
+
+    <p>The deepest pattern in this series is layer-agnostic: <em>LLM proposes, formal tool verifies, disagreement becomes supervision</em>. PDDL planning is the cleanest instance because the verifier is the most rigorous, but the recipe applies wherever a multi-agent system has a downstream check it already trusts.</p>
+
+    <ul>
+        <li><strong>Software engineering agents.</strong> Code review pipelines have test suites, linters, type checkers, and security scanners as verifiers. Merge-accepted PR trajectories are the training data; the orchestrator chooses which agent (writer / reviewer / tester / refactorer) to call next.</li>
+        <li><strong>CI/CD coordination.</strong> The build is the verifier. Pipeline-accepted runs are training data; the orchestrator chooses which step (compile / test / deploy / rollback) given the current pipeline state.</li>
+        <li><strong>Compliance and policy agents.</strong> Policy engines and rule systems are the verifier. Compliance-accepted trajectories are training data; the orchestrator chooses which sub-policy applies (verify identity / check eligibility / calculate refund / escalate).</li>
+        <li><strong>Scientific workflow orchestration.</strong> Experiment validators (statistical tests, replication checks, peer review) are the verifier. Replicated-result trajectories are training data; the orchestrator chooses which analysis step (preprocess / fit / test / report) given partial results.</li>
+    </ul>
+
+    <p>In each case the structural prerequisites are the same as Post 7: a discrete agent pool, a verifiable terminal check, trajectory logs, and a state representation that fits in a small model's context. Wherever those four conditions hold, the supervised orchestrator template applies — and the cost reduction transfers along with the recipe.</p>
+
+    <div class="callout insight">
+        <div class="callout-label">The General Claim</div>
+        <p>Agentic frameworks built around formal verifiers admit a structural simplification: the orchestrator can be small, local, and learned. PDDL is just the most rigorous setting where this is provable today. As verifiable rewards become the central organising principle of post-RLHF LLM training, this template will show up in many more domains. The compiler is just the most natural verifier — it isn't the only one.</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 8: Closing              -->
+    <!-- ============================== -->
+
+    <h2>Closing</h2>
+
+    <p>Post 7 closed the canonical seven-post series with HALO. This epilogue is what didn't fit in. The three ceilings name where HALO stops improving; the meta-learning frame names what was actually accomplished; the four open challenges name where the broader community is stuck; the five research threads name what comes next; the hybrid future names where Paradigm 1 and Paradigm 2 converge; the broader implications name what this template means outside planning.</p>
+
+    <p>Each of these is a candidate for its own paper, its own blog post, its own thesis chapter. The series ended at Post 7 because the canonical seven-post argument was complete. The research, obviously, hasn't.</p>
+
+    <p>Thanks again for reading.</p>
+
+    <!-- ============================== -->
+    <!-- DOWNLOAD ALL + REFERENCES      -->
+    <!-- ============================== -->
+
+    <div class="download-all-container">
+        <button class="download-all-btn" onclick="downloadAllVisualizations()">Download All Visualizations as PNG</button>
+        <p>For Substack: downloads every diagram and chart as a high-res PNG.</p>
+    </div>
+
+    <div class="references">
+        <h2>References</h2>
+        <ol>
+            <li>Mangannavar, R., Coalson, Z., Dugar, P., &amp; Tadepalli, P. (2026). <em>Training the Orchestrator: A Supervised Approach to End-to-End PDDL Planning with LLM Agents</em>. Oregon State University. Under review (introduces HALO).</li>
+            <li>La Malfa, E. <em>et al.</em> (2025). End-to-end LLM-driven PDDL planning with a multi-agent refinement framework. <em>arXiv:2512.09629</em>.</li>
+            <li>Gestrin, M., Zuo, N., Stein, M., &amp; Kambhampati, S. (2024). NL2Plan: Robust LLM-Driven Planning from Minimal Text. <em>arXiv:2405.04215</em>.</li>
+            <li>Mangannavar, V. <em>et al.</em> (2025). GABAR: GNN-based Action Ranking for Planning. <em>NeurIPS 2025</em>.</li>
+            <li>Corrêa, A. <em>et al.</em> (2025). LLM-Generated Heuristics. <em>NeurIPS 2025</em>. arXiv:2503.18809.</li>
+            <li>Chen, R. <em>et al.</em> (2025). LMPLAN: Language Models as Planning Policies. <em>RLC 2025</em>. arXiv:2508.18507.</li>
+            <li>Kambhampati, S., Valmeekam, V., &amp; Stechly, K. (2024). LLM-Modulo. <em>ICML 2024</em>. arXiv:2402.01817.</li>
+            <li>Schulman, J. <em>et al.</em> (2017). Proximal Policy Optimization Algorithms. <em>arXiv:1707.06347</em>.</li>
+            <li>Christiano, P. <em>et al.</em> (2017). Deep RL from Human Preferences. <em>NeurIPS 2017</em>. (RLHF.)</li>
+            <li>Ouyang, L. <em>et al.</em> (2022). Training language models to follow instructions with human feedback. <em>NeurIPS 2022</em>. (InstructGPT.)</li>
+            <li>Lightman, H. <em>et al.</em> (2023). Let's Verify Step by Step. <em>arXiv:2305.20050</em>. (Process reward models.)</li>
+            <li>Ross, S., Gordon, G., &amp; Bagnell, D. (2011). A Reduction of Imitation Learning to Online Learning. <em>AISTATS 2011</em>. (DAgger.)</li>
+            <li>Silver, T. <em>et al.</em> (2024). Generalized Planning via LLM-Generated Policies. <em>AAAI 2024</em>.</li>
+            <li>Katz, M., Kokel, H., &amp; Muise, C. (2025). Planning in the Era of Language Models. <em>NeurIPS 2025 Tutorial</em>.</li>
+        </ol>
+    </div>
+
+</article>
+
+<div class="blog-footer">
+    <p>Planning in the Era of LLMs — Epilogue</p>
+</div>
+
+<script>
+function downloadVisualization(container, filename) {
+    html2canvas(container, {
+        scale: 3,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        logging: false
+    }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = filename + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var containers = document.querySelectorAll('.vis-container[data-download-name]');
+    containers.forEach(function(container) {
+        if (container.classList.contains('no-download')) return;
+        var wrapper = document.createElement('div');
+        wrapper.className = 'download-btn-wrapper';
+        var btn = document.createElement('button');
+        btn.className = 'download-btn';
+        btn.textContent = '⬇ Download as PNG';
+        btn.onclick = function(e) {
+            e.preventDefault();
+            var name = container.getAttribute('data-download-name');
+            btn.textContent = 'Generating...';
+            btn.disabled = true;
+            downloadVisualization(container, 'blog-' + name);
+            setTimeout(function() {
+                btn.textContent = '⬇ Download as PNG';
+                btn.disabled = false;
+            }, 2000);
+        };
+        wrapper.appendChild(btn);
+        container.parentNode.insertBefore(wrapper, container.nextSibling);
+    });
+});
+
+function downloadAllVisualizations() {
+    var containers = document.querySelectorAll('.vis-container[data-download-name]:not(.no-download)');
+    var btn = document.querySelector('.download-all-btn');
+    var total = containers.length;
+    var current = 0;
+    btn.textContent = 'Downloading 0/' + total + '...';
+    btn.disabled = true;
+
+    function downloadNext() {
+        if (current >= total) {
+            btn.textContent = 'Done! All ' + total + ' downloaded.';
+            setTimeout(function() {
+                btn.textContent = 'Download All Visualizations as PNG';
+                btn.disabled = false;
+            }, 3000);
+            return;
+        }
+        var container = containers[current];
+        var name = container.getAttribute('data-download-name');
+        downloadVisualization(container, 'blog-' + name);
+        current++;
+        btn.textContent = 'Downloading ' + current + '/' + total + '...';
+        setTimeout(downloadNext, 800);
+    }
+    downloadNext();
+}
+</script>
