@@ -470,6 +470,69 @@ _styles: >
       .blog-fullhtml .hybrid-arrow-h { transform: rotate(90deg); padding: 6px 0; }
   }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e8e0f0; border-bottom-color: #8060a8; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d8d0e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e8e0f0; }
+  html[data-theme="dark"] .blog-fullhtml a { color: #b088e0; border-bottom-color: rgba(176,136,224,0.3); }
+  html[data-theme="dark"] .blog-fullhtml a:hover { color: #c5a8ee; border-bottom-color: #c5a8ee; }
+  html[data-theme="dark"] .blog-fullhtml .lead { color: #b8b0c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e1a30; border-color: #3a2a50; color: #b8b0c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #a8a0b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a1530; border-left-color: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; border-left-color: #228b22; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1414; border-left-color: #b22222; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2010; border-left-color: #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c2737; color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e1a30; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .download-btn { background: #6b3fa0; color: white; }
+  html[data-theme="dark"] .blog-fullhtml .download-btn:hover { background: #8060a8; }
+  html[data-theme="dark"] .blog-fullhtml .download-all-container { background: #1e1a30; border-color: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .download-all-btn { background: #6b3fa0; color: white; }
+  html[data-theme="dark"] .blog-fullhtml .download-all-btn:hover { background: #8060a8; }
+  html[data-theme="dark"] .blog-fullhtml .download-all-container p { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #3a2a45; }
+  html[data-theme="dark"] .blog-fullhtml .references ol { color: #a8a0b8; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #786a88; border-top-color: #3a2a45; }
+  html[data-theme="dark"] .blog-fullhtml .math { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .ceiling-name { background: #1b1340; color: white; }
+  html[data-theme="dark"] .blog-fullhtml .ceiling-desc { background: #1e1a30; border-color: #3a2a50; color: #b8b0c8; }
+  html[data-theme="dark"] .blog-fullhtml .ceiling-desc strong { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .shift-arrow { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .shift-before { background: #141e2e; border-color: #4682b4; }
+  html[data-theme="dark"] .blog-fullhtml .shift-after { background: #1e1a30; border-color: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .shift-before h5 { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .shift-after h5 { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .shift-before ul { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .shift-after ul { color: #c5a8ee; }
+  html[data-theme="dark"] .blog-fullhtml .shift-box .shift-tag { color: white; }
+  html[data-theme="dark"] .blog-fullhtml .shift-before .shift-tag { background: #4682b4; }
+  html[data-theme="dark"] .blog-fullhtml .shift-after .shift-tag { background: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .challenge-card { background: #1e1a30; border-color: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .challenge-card h5 { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .challenge-card p { color: #b8b0c8; }
+  html[data-theme="dark"] .blog-fullhtml .challenge-card .challenge-tag { background: #6b3fa0; color: white; }
+  html[data-theme="dark"] .blog-fullhtml .thread-stamp { background: linear-gradient(135deg, #6b3fa0, #4a2870); color: white; }
+  html[data-theme="dark"] .blog-fullhtml .thread-body { background: #1e1a30; border-color: #3a2a50; }
+  html[data-theme="dark"] .blog-fullhtml .thread-body h5 { color: #e8e0f0; }
+  html[data-theme="dark"] .blog-fullhtml .thread-body p { color: #b8b0c8; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.p2 { background: #2a2010; border-color: #d4740e; color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.p2 h5 { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.p2 .hybrid-tag { background: #d4740e; color: white; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.bridge { background: #1e1a30; border-color: #6b3fa0; color: #c5a8ee; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.bridge h5 { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.bridge .hybrid-tag { background: #6b3fa0; color: white; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.p1 { background: #141e2e; border-color: #4682b4; color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.p1 h5 { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-step.p1 .hybrid-tag { background: #4682b4; color: white; }
+  html[data-theme="dark"] .blog-fullhtml .hybrid-arrow-h { color: #b088e0; }
 ---
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
