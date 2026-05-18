@@ -11,7 +11,6 @@ _styles: >
       font-family: 'Georgia', 'Times New Roman', serif;
       line-height: 1.8;
       color: #1a1a2e;
-      background: #fafafa;
   }
 
   .blog-fullhtml .hero {
@@ -189,52 +188,6 @@ _styles: >
       font-style: italic;
       margin-top: 10px;
       text-align: center;
-  }
-
-  .blog-fullhtml .download-btn {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 4px 12px;
-      font-size: 0.72em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
-  }
-  .blog-fullhtml .download-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-btn-wrapper {
-      text-align: center;
-      margin-top: -8px;
-      margin-bottom: 24px;
-  }
-  .blog-fullhtml .download-all-container {
-      text-align: center;
-      margin: 2em 0;
-      padding: 15px;
-      background: #f0f4f8;
-      border-radius: 8px;
-      border: 1px dashed #2a4066;
-  }
-  .blog-fullhtml .download-all-btn {
-      padding: 10px 24px;
-      font-size: 0.9em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-  }
-  .blog-fullhtml .download-all-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-all-container p {
-      font-size: 0.8em;
-      color: #666;
-      margin-top: 8px;
   }
 
   .blog-fullhtml .interactive-container {
@@ -782,7 +735,7 @@ _styles: >
       .blog-fullhtml .demo-board { grid-template-columns: 1fr; }
   }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; background: #1c1c1d; }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
   html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
   html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
   html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
@@ -808,12 +761,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .image-caption { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
   html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn { background: #4a7ab5; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn:hover { background: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container { background: #1e2a3a; border-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn { background: #4a7ab5; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn:hover { background: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container p { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: #fff; }
@@ -893,8 +840,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .demo-status { color: #8899aa; }
 ---
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <header class="hero">
     <div class="series-label">Planning in the Era of LLMs — Part 7 of 7</div>
     <h1>Training the Conductor</h1>
@@ -904,7 +849,7 @@ _styles: >
 <article class="blog-container">
 
     <!-- Series Navigation -->
-    <div class="vis-container" data-download-name="series-nav-banner">
+    <div class="vis-container">
         <div class="series-nav">
             <strong>📚 Planning in the Era of LLMs — Part 7 of 7</strong>
             <div class="nav-desc">The series finale. Post 6 left us with a working NL-to-PDDL pipeline whose weakest link was the orchestrator — a prompted frontier LLM called at every refinement step. This post is the author's research direction: train a small local model to take the orchestrator's place, using the verifier that's already in the loop as the supervisor.</div>
@@ -938,7 +883,7 @@ _styles: >
 
     <p>The economics are not. At every refinement step the orchestrator — itself a frontier LLM — is fed the entire state and emits one agent name. We pay frontier-LLM rates on a multi-thousand-token prompt to receive a five-word answer, ten times per problem.</p>
 
-    <div class="vis-container" data-download-name="orchestrator-cost-breakdown">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Where the Cost Hides</h3>
         <div class="orch-compare">
             <div class="orch-card prompted">
@@ -984,7 +929,7 @@ _styles: >
 
     <p>The textbook tool is reinforcement learning: emit a sparse reward at the end and propagate gradients back through the trajectory. RL works, but it's slow. Sparse rewards need thousands of episodes, and a thousand episodes of a PDDL refinement loop is a thousand × ten frontier-LLM calls of <em>data collection</em> before training even begins. The cost we're trying to remove gets paid up front.</p>
 
-    <div class="vis-container" data-download-name="credit-assignment-diagram">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Credit Assignment: Three Ways to Decide Who Did the Right Thing</h3>
 
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; margin-bottom: 16px;">
@@ -1053,7 +998,7 @@ _styles: >
 
     <p>Multi-agent frameworks — CrewAI, AutoGen, LangGraph, MetaGPT, Post 6's agentic PDDL pipeline — almost all share the same architecture: a pool of specialised agents coordinated by a prompted generalist LLM. The generalist is treated as load-bearing. It isn't: the orchestration decision is a small discrete classification problem in a structured state space, and every one of these frameworks ships with <em>some</em> downstream verifier — a test suite, a type checker, a linter, a deployment health-check, a policy engine, a compiler. PDDL is just the most natural setting because its verifier is the most rigorous. The same template — collect trajectories, filter by verifier acceptance, fine-tune a small model on the surviving (state, action) pairs — applies wherever a closed-loop multi-agent system has a way to check its own work.</p>
 
-    <div class="vis-container" data-download-name="trainable-orchestrator-recipe">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">When You Can Train the Orchestrator</h3>
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.92rem; color: #333; line-height: 1.7;">
             <p style="margin-bottom: 12px;">A multi-agent system admits a trainable orchestrator when:</p>
@@ -1095,7 +1040,7 @@ _styles: >
 
     <p>The orchestrator chooses one of 21 agents. Thirteen are the LLM-prompted repair routines from <em>La Malfa et al.</em>; five are pure Python plan-repair routines from <em>Armony et al.</em> (2025), each running in milliseconds with zero LLM cost; three are PDDL-aware LLM agents from NL2Plan (<em>Gestrin et al.</em> 2024) addressing modelling errors the baseline 13 don't cover. Agent IDs are integers <code>0–20</code>, chosen so that every ID is a single token under the Llama-3, Qwen-2.5, and Gemma-2 tokenisers.</p>
 
-    <div class="vis-container" data-download-name="agent-pool-21">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 8px;">The 21-Agent Action Space</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 14px;">Each agent reads the relevant slice of state and returns a candidate update; the framework re-runs the planner and validator on the result.</p>
 
@@ -1171,7 +1116,7 @@ _styles: >
         <p class="image-caption">Figure 2 — Training pipeline (a) and inference-time deployment (b).</p>
     </div>
 
-    <div class="vis-container" data-download-name="training-pipeline">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Three-Pass Trajectory Filter</h3>
         <div class="train-pipeline">
             <div class="train-stage">
@@ -1220,7 +1165,7 @@ _styles: >
 
     <p>At inference the orchestrator is two layers stacked. Layer 1 is a tiny set of hardcoded rules that resolve trivially-decidable decisions instantly. Layer 2 is the trained model, called only when no rule fires. Together: <span class="math">π</span><sub>hybrid</sub>.</p>
 
-    <div class="vis-container" data-download-name="hybrid-policy-layers">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">π<sub>hybrid</sub> = Rules ∘ Trained Model</h3>
 
         <div class="hybrid-diagram">
@@ -1276,7 +1221,7 @@ _styles: >
 
     <p>HALO is evaluated on 12 PDDL domains across three benchmark families — PlanBench (Blocksworld, Depots, Logistics, Mystery Blocksworld, Obfuscated Deceptive Logistics), Google Natural Plan (Calendar, Meeting, Trip), and classical planning (Blocksworld, Hanoi, Childsnack, Floortile). Baselines are the unmodified La Malfa pipeline with GPT-5-mini and Gemini-3-Flash as the prompted orchestrator; the agent pool is held at 21 for all configurations.</p>
 
-    <div class="vis-container" data-download-name="results-success-rate">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Success Rate by Benchmark Family</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Fraction of problems whose final PDDL + plan satisfies the validator</p>
 
@@ -1340,7 +1285,7 @@ _styles: >
         <p class="vis-caption">HALO exceeds GPT-5-mini by 3.3, 37.3, and 2.8 percentage points on PlanBench, Natural Plan, and classical planning respectively — the largest gain on Natural Plan, where GPT-5-mini drops to 51.5%. HALO sits within 3 pp of the stronger Gemini-3-Flash baseline on PlanBench and Natural Plan, and beats it by 2.8 pp on classical planning. *Gemini-3-Flash classical: Borealis subset only.</p>
     </div>
 
-    <div class="vis-container" data-download-name="results-cost-chart">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Orchestration Cost per Task</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">USD per problem (PlanBench / classical figures shown; Natural Plan is slightly higher)</p>
         <div class="results-chart">
@@ -1369,7 +1314,7 @@ _styles: >
         <p class="vis-caption">Per-task orchestration cost. <strong>HALO is ~45× cheaper than GPT-5-mini and 15–20× cheaper than Gemini-3-Flash</strong> — depending on benchmark family and whichever orchestrator-task cost falls in the published $0.06–$0.08 (Gemini) and $0.18–$0.22 (GPT-5-mini) range. The reduction has two complementary sources: (a) a small local forward pass costs orders of magnitude less than a frontier-LLM API call even before counting tokens, and (b) the hybrid policy resolves ~35% of decisions with no model call at all.</p>
     </div>
 
-    <div class="vis-container" data-download-name="results-quality-chart">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Per-Step Self-Correction Rate</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Fraction of refinement steps that strictly improve LEA / StV validator metrics over the previous step</p>
         <div class="results-chart">
@@ -1391,7 +1336,7 @@ _styles: >
         <p class="vis-caption">Per-step self-correction. HALO's per-step decision improves the validator's view of the PDDL 83% of the time, against 50% for the prompted baseline. Fewer bad decisions per episode means fewer wasted iterations — and is what lets HALO match frontier orchestrators with far fewer calls.</p>
     </div>
 
-    <div class="vis-container" data-download-name="results-llm-calls-chart">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Total LLM Calls per Episode</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Sum of orchestrator + agent LLM calls per problem (deterministic agents contribute zero)</p>
 
@@ -1464,7 +1409,7 @@ _styles: >
 
     <h3>Where the Wins Come From</h3>
 
-    <div class="vis-container" data-download-name="ablation-summary">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Ablation: What Each Piece Contributes</h3>
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.92rem;">
             <table style="width: 100%; border-collapse: collapse; font-size: 0.86rem;">
@@ -1522,7 +1467,7 @@ _styles: >
 
     <p>For the finale, the warehouse description is brand-new — a different facility with rules the model has not seen verbatim. The orchestrator must pick repair agents step by step until the validator accepts a plan. The visual below runs the same trajectory through both a prompted GPT-5-mini orchestrator (left) and HALO (right).</p>
 
-    <div class="vis-container no-download" data-download-name="robosort-orchestrator-demo">
+    <div class="vis-container no-download">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">RoboSort, Post 7: Two Orchestrators, One Refinement Loop</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 12px;"><em>Specification:</em> "RoboSort works in a new facility. Three shelves (A, B, C), one dock. Five packages — two small, two medium, one fragile. Fragile must be picked last and placed first at the dock. Gripper carries one at a time. Goal: all packages at dock with fragile on top."</p>
 
@@ -1650,7 +1595,7 @@ _styles: >
 
     <p>Every multi-agent framework in production has an orchestrator — router (LangGraph), manager (AutoGen), crew lead (CrewAI), product manager (MetaGPT), or just "the GPT-4 we prompt with the system prompt." Same decision: which agent handles this subtask. PDDL is unusual because the verifier is watertight; most agentic systems still have <em>some</em> verifier — and that's enough.</p>
 
-    <div class="vis-container" data-download-name="agentic-sidebar">
+    <div class="vis-container">
         <div class="agentic-sidebar">
             <div class="sidebar-title">🤖 Agentic AI in the Wild: Who's Conducting CrewAI?</div>
             <p>Every multi-agent framework — CrewAI, AutoGen, LangGraph, MetaGPT — faces the orchestration problem. Which agent handles this subtask? When to escalate? How to avoid contradictions? Currently, most use static routing rules or a prompted frontier LLM. The planning community's insight: if you can verify intermediate outputs (compiler, test suite, rule engine), you can train the orchestrator using that feedback. This applies beyond planning — test suites, type checkers, linters, and policy engines all serve as verifiers. The compiler is just the most natural one.</p>
@@ -1681,7 +1626,7 @@ _styles: >
 
     <p>This post closed the loop. The orchestrator's bottleneck is structural, but the same property that creates it — a verifier at every refinement step — also gives us the supervision to fix it. Verifier-filtered trajectories provide per-step labels for a single-token classifier. A hybrid policy spends compute only where it's needed. The result is a small local orchestrator that matches a frontier model at 1% of the cost.</p>
 
-    <div class="vis-container" data-download-name="series-arc">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">The Series Arc</h3>
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.88rem; line-height: 1.75; color: #333;">
             <p style="margin-bottom: 10px;"><strong style="color: #2a4066;">Post 1:</strong> The roadmap. Why LLM agents fail at multi-step tasks and what 50 years of planning gives us.</p>
@@ -1699,7 +1644,7 @@ _styles: >
 
     <p>Post 1 introduced the two paradigms as the conceptual backbone of the series. After six more posts of evidence, the picture has resolved.</p>
 
-    <div class="vis-container" data-download-name="two-paradigms-final">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Where the Two Paradigms Stand</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; font-family: 'Helvetica Neue', Arial, sans-serif;">
             <div style="background: #eff5ff; border: 2px solid #4682b4; border-radius: 10px; padding: 18px; min-width: 0;">
@@ -1761,13 +1706,7 @@ _styles: >
     <!-- ============================== -->
     <!-- DOWNLOAD ALL + REFERENCES      -->
     <!-- ============================== -->
-
-    <div class="download-all-container">
-        <button class="download-all-btn" onclick="downloadAllVisualizations()">Download All Visualizations as PNG</button>
-        <p>For Substack: downloads every diagram, chart, sidebar, and visual as a high-res PNG.</p>
-    </div>
-
-    <div class="references">
+<div class="references">
         <h2>References</h2>
         <ol>
             <li>Mangannavar, R., Coalson, Z., Dugar, P., &amp; Tadepalli, P. (2026). <em>Training the Orchestrator: A Supervised Approach to End-to-End PDDL Planning with LLM Agents</em>. Oregon State University. Under review (introduces HALO).</li>
@@ -1795,80 +1734,6 @@ _styles: >
 </div>
 
 <script>
-// ============================================================
-// PNG DOWNLOAD SYSTEM
-// Every .vis-container[data-download-name] gets an injected
-// "Download as PNG" button placed OUTSIDE the container so the
-// button itself never appears in the rendered PNG.
-// Containers with class "no-download" are skipped.
-// ============================================================
-
-function downloadVisualization(container, filename) {
-    html2canvas(container, {
-        scale: 3,
-        backgroundColor: '#ffffff',
-        useCORS: true,
-        logging: false
-    }).then(function(canvas) {
-        var link = document.createElement('a');
-        link.download = filename + '.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var containers = document.querySelectorAll('.vis-container[data-download-name]');
-    containers.forEach(function(container) {
-        if (container.classList.contains('no-download')) return;
-        var wrapper = document.createElement('div');
-        wrapper.className = 'download-btn-wrapper';
-        var btn = document.createElement('button');
-        btn.className = 'download-btn';
-        btn.textContent = '⬇ Download as PNG';
-        btn.onclick = function(e) {
-            e.preventDefault();
-            var name = container.getAttribute('data-download-name');
-            btn.textContent = 'Generating...';
-            btn.disabled = true;
-            downloadVisualization(container, 'blog-' + name);
-            setTimeout(function() {
-                btn.textContent = '⬇ Download as PNG';
-                btn.disabled = false;
-            }, 2000);
-        };
-        wrapper.appendChild(btn);
-        container.parentNode.insertBefore(wrapper, container.nextSibling);
-    });
-});
-
-function downloadAllVisualizations() {
-    var containers = document.querySelectorAll('.vis-container[data-download-name]:not(.no-download)');
-    var btn = document.querySelector('.download-all-btn');
-    var total = containers.length;
-    var current = 0;
-    btn.textContent = 'Downloading 0/' + total + '...';
-    btn.disabled = true;
-
-    function downloadNext() {
-        if (current >= total) {
-            btn.textContent = 'Done! All ' + total + ' downloaded.';
-            setTimeout(function() {
-                btn.textContent = 'Download All Visualizations as PNG';
-                btn.disabled = false;
-            }, 3000);
-            return;
-        }
-        var container = containers[current];
-        var name = container.getAttribute('data-download-name');
-        downloadVisualization(container, 'blog-' + name);
-        current++;
-        btn.textContent = 'Downloading ' + current + '/' + total + '...';
-        setTimeout(downloadNext, 800);
-    }
-    downloadNext();
-}
-
 // ============================================================
 // ROBOSORT DEMO — TRAINED VS PROMPTED ORCHESTRATOR
 // Plays the two trajectories side by side, step by step, with

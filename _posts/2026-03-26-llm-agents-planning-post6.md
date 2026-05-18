@@ -11,7 +11,6 @@ _styles: >
       font-family: 'Georgia', 'Times New Roman', serif;
       line-height: 1.8;
       color: #1a1a2e;
-      background: #fafafa;
   }
 
   .blog-fullhtml .hero {
@@ -171,52 +170,6 @@ _styles: >
       font-style: italic;
       margin-top: 10px;
       text-align: center;
-  }
-
-  .blog-fullhtml .download-btn {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 4px 12px;
-      font-size: 0.72em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
-  }
-  .blog-fullhtml .download-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-btn-wrapper {
-      text-align: center;
-      margin-top: -8px;
-      margin-bottom: 24px;
-  }
-  .blog-fullhtml .download-all-container {
-      text-align: center;
-      margin: 2em 0;
-      padding: 15px;
-      background: #f0f4f8;
-      border-radius: 8px;
-      border: 1px dashed #2a4066;
-  }
-  .blog-fullhtml .download-all-btn {
-      padding: 10px 24px;
-      font-size: 0.9em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-  }
-  .blog-fullhtml .download-all-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-all-container p {
-      font-size: 0.8em;
-      color: #666;
-      margin-top: 8px;
   }
 
   .blog-fullhtml .interactive-container {
@@ -553,7 +506,7 @@ _styles: >
       .blog-fullhtml .bottleneck-row { grid-template-columns: 100px 1fr 50px; }
   }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; background: #1c1c1d; }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
   html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
   html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
   html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
@@ -577,12 +530,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
   html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
   html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn { background: #4a7ab5; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn:hover { background: #5a8ac5; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container { background: #1e2a3a; border-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn { background: #4a7ab5; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn:hover { background: #5a8ac5; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container p { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: #fff; }
@@ -630,8 +577,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
 ---
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <header class="hero">
     <div class="series-label">Planning in the Era of LLMs — Part 6 of 7</div>
     <h1>From English to Plans: The NL-to-PDDL Frontier</h1>
@@ -641,7 +586,7 @@ _styles: >
 <article class="blog-container">
 
     <!-- Series Navigation -->
-    <div class="vis-container" data-download-name="series-nav-banner">
+    <div class="vis-container">
         <div class="series-nav">
             <strong>📚 Planning in the Era of LLMs — Part 6 of 7</strong>
             <div class="nav-desc">Paradigm 2: no PDDL exists. The system must create the formal model from natural language, validate it, solve it, and return a verified plan. The most ambitious — and most fragile — frontier in LLM-planning research.</div>
@@ -671,7 +616,7 @@ _styles: >
 
     <p>Converting English to a verified plan requires five stages. Each one is hard. Getting all five right, in sequence, is extraordinarily hard.</p>
 
-    <div class="vis-container" data-download-name="nl-to-plan-pipeline">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">The NL-to-Plan Pipeline</h3>
         <div class="pipeline-flow">
             <div class="pipeline-stage stage-nl">
@@ -701,9 +646,7 @@ _styles: >
         </div>
         <p class="vis-caption">Five stages from English to verified plan. Each stage can fail independently. The pipeline's overall accuracy is the product of per-stage accuracies — if each stage is 90% reliable, the pipeline is only 59% end-to-end.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>Let's trace the pipeline for our RoboSort warehouse:</p>
+<p>Let's trace the pipeline for our RoboSort warehouse:</p>
 
     <ol>
         <li><strong>English Description:</strong> "A robot in a warehouse with three shelves (A, B, C) and a build zone. Shelf A has two legs, Shelf B has a beam, Shelf C has a roof and a flag. The robot starts at home and can carry one piece. Legs support beam, beam supports roof, roof supports flag. Build the tower."</li>
@@ -727,7 +670,7 @@ _styles: >
 
     <p><strong>NL2Plan</strong> (Gestrin et al., 2025) is the most systematic framework for this problem. Instead of asking a single LLM to do everything, it decomposes the pipeline into specialized agents, each responsible for one stage.</p>
 
-    <div class="vis-container" data-download-name="nl2plan-agents">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">NL2Plan: Specialized Agents</h3>
         <div class="orchestra-grid">
             <div class="orchestra-agent agent-extractor">
@@ -756,15 +699,13 @@ _styles: >
         </div>
         <p class="vis-caption">NL2Plan uses specialized agents for each extraction task. The orchestrator coordinates the pipeline — and, as we'll see, is the weakest link.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The key innovation is the decomposition. Instead of one massive prompt ("convert this English to PDDL"), NL2Plan breaks the task into focused queries: "What types of objects exist in this description?" then "Given these types, what predicates describe their relationships?" then "Given these types and predicates, what actions can the robot perform?" Each agent can use few-shot examples and targeted prompts for its specific subtask.</p>
+<p>The key innovation is the decomposition. Instead of one massive prompt ("convert this English to PDDL"), NL2Plan breaks the task into focused queries: "What types of objects exist in this description?" then "Given these types, what predicates describe their relationships?" then "Given these types and predicates, what actions can the robot perform?" Each agent can use few-shot examples and targeted prompts for its specific subtask.</p>
 
     <h3>RoboSort Through NL2Plan</h3>
 
     <p>Here's how NL2Plan processes our warehouse description, transforming natural language into the same PDDL we wrote by hand in Post 2:</p>
 
-    <div class="vis-container" data-download-name="robosort-nl-to-pddl">
+    <div class="vis-container">
         <div class="nl-pddl-transform">
             <div class="nl-side">
                 <div class="panel-header">Natural Language Input</div>
@@ -813,9 +754,7 @@ _styles: >
         </div>
         <p class="vis-caption">NL2Plan transforms natural language into the same PDDL domain we manually wrote in Post 2. The LLM correctly extracts types (location, piece), predicates (robot-at, supports, holding), and actions (move, pick, place) — including the critical support constraint.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <div class="callout insight">
+<div class="callout insight">
         <div class="callout-label">Key Insight</div>
         <p>NL2Plan achieves 100% accuracy on several standard domains — the generated PDDL is functionally identical to expert-written PDDL. The breakthrough is decomposition: by splitting the hard problem ("English → PDDL") into focused subproblems ("English → types," "types → predicates," etc.), each step becomes tractable for current LLMs.</p>
     </div>
@@ -849,7 +788,7 @@ _styles: >
 
     <p>Let's see what happens when NL2Plan processes a subtly ambiguous RoboSort description:</p>
 
-    <div class="vis-container" data-download-name="orchestrator-failure">
+    <div class="vis-container">
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif;">
             <div style="background: #f0fafa; border: 2px solid #2a9d8f; border-radius: 10px; padding: 16px; margin-bottom: 12px;">
                 <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #2a9d8f; margin-bottom: 6px;">User Description</div>
@@ -883,9 +822,7 @@ _styles: >
         </div>
         <p class="vis-caption">The orchestrator passes syntactically valid PDDL to the solver — but the PDDL is missing the support constraint. The resulting plan is "valid" according to the broken model but physically impossible. This is the subtlest and most dangerous failure mode.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <!-- ============================== -->
+<!-- ============================== -->
     <!-- SECTION 5: Agentic PDDL       -->
     <!-- ============================== -->
 
@@ -897,7 +834,7 @@ _styles: >
 
     <p>For RoboSort, this might look like:</p>
 
-    <div class="vis-container" data-download-name="agentic-pddl-dialogue">
+    <div class="vis-container">
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif;">
             <div style="background: #f5f0ff; border: 1px solid #d4c5f0; border-radius: 10px; padding: 14px; margin-bottom: 8px;">
                 <div style="font-size: 0.72rem; font-weight: 700; color: #6b3fa0; margin-bottom: 4px;">SYSTEM</div>
@@ -914,9 +851,7 @@ _styles: >
         </div>
         <p class="vis-caption">Agentic PDDL keeps the user in the loop. When the system detects ambiguity in support constraints, it asks — rather than guessing. This catches the exact failure mode NL2Plan misses.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <div class="callout insight">
+<div class="callout insight">
         <div class="callout-label">Key Insight</div>
         <p>The orchestration problem is fundamentally a <em>communication</em> problem, not just a planning problem. Natural language is ambiguous. Formal models require precision. The gap between the two is where errors hide. Agentic PDDL bridges this gap through dialogue — asking users to resolve ambiguities rather than guessing. This human-in-the-loop approach trades automation for accuracy.</p>
     </div>
@@ -992,7 +927,7 @@ _styles: >
 
     <p>Paradigm 2 results are mixed but improving rapidly. Here's the current picture:</p>
 
-    <div class="vis-container" data-download-name="paradigm2-results">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Paradigm 2 Results: NL-to-Plan Accuracy</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">End-to-end accuracy on planning domains (English in, valid plan out)</p>
         <div class="bottleneck-chart">
@@ -1027,9 +962,7 @@ _styles: >
         </div>
         <p class="vis-caption">NL-to-Plan accuracy varies dramatically by domain familiarity. Standard domains the LLM has seen in training (like Blocksworld) achieve near-perfect results. Novel domains with ambiguous constraints remain hard. Data patterns from Gestrin et al. (2025), La Malfa et al. (2025).</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The pattern tells a familiar story. When the domain is well-known — Blocksworld, logistics, standard problems from planning competitions — the LLM effectively has the PDDL in its training data and can reproduce it. When the domain is novel, accuracy drops sharply. This is the same pattern-matching vs. reasoning distinction from Post 4's Mystery Blocksworld, now appearing at the model generation level.</p>
+<p>The pattern tells a familiar story. When the domain is well-known — Blocksworld, logistics, standard problems from planning competitions — the LLM effectively has the PDDL in its training data and can reproduce it. When the domain is novel, accuracy drops sharply. This is the same pattern-matching vs. reasoning distinction from Post 4's Mystery Blocksworld, now appearing at the model generation level.</p>
 
     <p>Three open challenges define the frontier:</p>
 
@@ -1054,7 +987,7 @@ _styles: >
 
     <p>Let's step back and see how all six posts connect. The series has traced a clear arc from foundations to frontier:</p>
 
-    <div class="vis-container" data-download-name="full-picture-summary">
+    <div class="vis-container">
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif;">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div style="background: #eff5ff; border: 2px solid #4682b4; border-radius: 10px; padding: 18px;">
@@ -1085,9 +1018,7 @@ _styles: >
         </div>
         <p class="vis-caption">The two paradigms complement each other. Paradigm 1 is mature and reliable where PDDL exists. Paradigm 2 extends the reach to domains described only in English — but the orchestrator bottleneck limits its reliability on novel problems.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The RoboSort warehouse has been our constant through all six posts. We watched it crash under a naive LLM plan (Post 1). We formalized it in PDDL (Post 2). We watched A* find the optimal path through its warehouse floor (Post 3). We watched GPT-4 fail and Mystery Blocksworld expose why (Post 4). We watched LLM-Modulo fix the plan in two iterations (Post 5). And now we've seen NL2Plan generate the PDDL from English (Post 6).</p>
+<p>The RoboSort warehouse has been our constant through all six posts. We watched it crash under a naive LLM plan (Post 1). We formalized it in PDDL (Post 2). We watched A* find the optimal path through its warehouse floor (Post 3). We watched GPT-4 fail and Mystery Blocksworld expose why (Post 4). We watched LLM-Modulo fix the plan in two iterations (Post 5). And now we've seen NL2Plan generate the PDDL from English (Post 6).</p>
 
     <p>One question remains: can we build systems that <em>learn</em> to orchestrate better — that adapt their coordination strategies, handle novel domains more reliably, and close the gap between familiar and unfamiliar? That's the subject of the final post.</p>
 
@@ -1125,11 +1056,6 @@ _styles: >
     </div>
 
     <!-- Download All -->
-    <div class="download-all-container">
-        <button class="download-all-btn" onclick="downloadAllVis()">⬇ Download All Visualizations as PNG</button>
-        <p>Downloads all static diagrams and charts from this post.</p>
-    </div>
-
 </article>
 
 <div class="blog-footer">
@@ -1137,31 +1063,6 @@ _styles: >
 </div>
 
 <script>
-/* === Download functionality === */
-function downloadVis(btn) {
-    const container = btn.closest('.download-btn-wrapper').previousElementSibling;
-    html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-        const link = document.createElement('a');
-        const name = container.getAttribute('data-download-name') || 'visualization';
-        link.download = name + '.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    });
-}
-
-function downloadAllVis() {
-    document.querySelectorAll('.vis-container[data-download-name]').forEach((container, i) => {
-        setTimeout(() => {
-            html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = container.getAttribute('data-download-name') + '.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }, i * 500);
-    });
-}
-
 /* === NL-to-Plan Pipeline Demo === */
 const pipelineData = [
     {

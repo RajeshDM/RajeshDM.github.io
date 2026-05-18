@@ -11,7 +11,6 @@ _styles: >
       font-family: 'Georgia', 'Times New Roman', serif;
       line-height: 1.8;
       color: #1a1a2e;
-      background: #fafafa;
   }
 
   .blog-fullhtml .hero {
@@ -171,52 +170,6 @@ _styles: >
       font-style: italic;
       margin-top: 10px;
       text-align: center;
-  }
-
-  .blog-fullhtml .download-btn {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 4px 12px;
-      font-size: 0.72em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
-  }
-  .blog-fullhtml .download-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-btn-wrapper {
-      text-align: center;
-      margin-top: -8px;
-      margin-bottom: 24px;
-  }
-  .blog-fullhtml .download-all-container {
-      text-align: center;
-      margin: 2em 0;
-      padding: 15px;
-      background: #f0f4f8;
-      border-radius: 8px;
-      border: 1px dashed #2a4066;
-  }
-  .blog-fullhtml .download-all-btn {
-      padding: 10px 24px;
-      font-size: 0.9em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-  }
-  .blog-fullhtml .download-all-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-all-container p {
-      font-size: 0.8em;
-      color: #666;
-      margin-top: 8px;
   }
 
   .blog-fullhtml .interactive-container {
@@ -596,7 +549,7 @@ _styles: >
       .blog-fullhtml .bench-row { grid-template-columns: 100px 1fr 40px; }
   }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; background: #1c1c1d; }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
   html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
   html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
   html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
@@ -620,12 +573,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
   html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
   html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn { background: #4a7ab5; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn:hover { background: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container { background: #1e2a3a; border-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn { background: #4a7ab5; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn:hover { background: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container p { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .next-post h3 { color: #7eb8da; }
@@ -690,8 +637,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .chat-bubble .error-highlight { background: #2a1414; color: #e06060; }
 ---
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <header class="hero">
     <div class="series-label">Planning in the Era of LLMs — Part 4 of 7</div>
     <h1>LLMs Try to Plan (It Goes Badly)</h1>
@@ -701,7 +646,7 @@ _styles: >
 <article class="blog-container">
 
     <!-- Series Navigation -->
-    <div class="vis-container" data-download-name="series-nav-banner">
+    <div class="vis-container">
         <div class="series-nav">
             <strong>📚 Planning in the Era of LLMs — Part 4 of 7</strong>
             <div class="nav-desc">The reality check: rigorous benchmarks reveal that LLMs — even frontier models — fail catastrophically at planning. Self-critique and chain-of-thought don't fix it.</div>
@@ -733,7 +678,7 @@ _styles: >
 
     <p>They tested GPT-4, GPT-3.5, and several open-source models. The task: given an initial state and a goal state, produce a valid sequence of actions. Not optimal — just valid. Any plan that reaches the goal without violating preconditions counts as a success.</p>
 
-    <div class="vis-container" data-download-name="planbench-results">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">PlanBench Results: Blocksworld Plan Generation</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Percentage of valid plans generated (higher is better)</p>
         <div class="benchmark-chart">
@@ -775,9 +720,7 @@ _styles: >
         </div>
         <p class="vis-caption">PlanBench results on Blocksworld plan generation. Classical planners achieve 100% on every instance in under a second. GPT-4 manages ~30% — and that number drops further on harder instances. Data from Valmeekam et al. (2023).</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The numbers were stark. GPT-4 — the most capable model at the time — generated valid plans for only about 30% of instances. GPT-3.5 managed around 3%. Open-source models scored near zero. Meanwhile, Fast Downward, a classical planner from 2004, solved 100% of instances in under a second.</p>
+<p>The numbers were stark. GPT-4 — the most capable model at the time — generated valid plans for only about 30% of instances. GPT-3.5 managed around 3%. Open-source models scored near zero. Meanwhile, Fast Downward, a classical planner from 2004, solved 100% of instances in under a second.</p>
 
     <div class="callout warning">
         <div class="callout-label">Critical Finding</div>
@@ -794,7 +737,7 @@ _styles: >
 
     <p>Let's see what this looks like in our warehouse. We gave a frontier LLM the same RoboSort problem from Posts 1–3: five pieces, three shelves, one build zone, support constraints. Build a tower. Here's what happened.</p>
 
-    <div class="vis-container" data-download-name="robosort-llm-attempt">
+    <div class="vis-container">
         <div class="chat-exchange">
             <div class="chat-bubble user">
                 <span class="chat-label">Prompt</span>
@@ -819,9 +762,7 @@ _styles: >
         </div>
         <p class="vis-caption">A real LLM attempt at the RoboSort tower assembly. The model gets the legs right but then skips the Beam, placing Roof directly on legs. It "knows" the support constraint — it even states it — but doesn't enforce it during generation.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The model knows what support constraints are — it can explain them eloquently. But knowing a constraint and <em>enforcing</em> it during sequential generation are fundamentally different cognitive operations. The LLM generates step-by-step, each token predicted from context. It doesn't maintain a world model. It doesn't track which pieces are placed. It doesn't verify preconditions before committing to an action.</p>
+<p>The model knows what support constraints are — it can explain them eloquently. But knowing a constraint and <em>enforcing</em> it during sequential generation are fundamentally different cognitive operations. The LLM generates step-by-step, each token predicted from context. It doesn't maintain a world model. It doesn't track which pieces are placed. It doesn't verify preconditions before committing to an action.</p>
 
     <div class="callout insight">
         <div class="callout-label">Key Insight</div>
@@ -838,7 +779,7 @@ _styles: >
 
     <p>Valmeekam et al. tested this with <strong>Mystery Blocksworld</strong>. They took the exact same planning problems and replaced every predicate and action name with meaningless tokens. <code>on(A,B)</code> became <code>snurg(q3,q7)</code>. <code>pick-up</code> became <code>florp</code>. The logical structure was identical. Only the labels changed.</p>
 
-    <div class="vis-container" data-download-name="mystery-blocksworld-comparison">
+    <div class="vis-container">
         <div class="mystery-comparison">
             <div class="mystery-panel original">
                 <h4>Standard Blocksworld</h4>
@@ -873,9 +814,7 @@ _styles: >
         </div>
         <p class="vis-caption">Same logical structure. Different names. Performance collapses to zero. The LLM was matching patterns from training data — "pick-up" evokes block-stacking scripts — not reasoning about preconditions and effects.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The result was devastating: performance collapsed to <strong>zero</strong>. Not "lower." Not "somewhat degraded." Zero.</p>
+<p>The result was devastating: performance collapsed to <strong>zero</strong>. Not "lower." Not "somewhat degraded." Zero.</p>
 
     <p>This is the smoking gun. A system that reasons about state transitions wouldn't care whether the action is called "pick-up" or "florp." The preconditions are the same. The effects are the same. The state space is identical. But the LLM's performance was entirely dependent on recognizing the <em>names</em> — because it wasn't reasoning at all. It was retrieving similar-looking action sequences from its training data.</p>
 
@@ -883,7 +822,7 @@ _styles: >
 
     <p>The same test with our warehouse robot is equally revealing. When we describe the problem with meaningful names — "pick up Leg1 from Shelf A" — the LLM can pattern-match against warehouse logistics data and occasionally get it right. But rename the pieces:</p>
 
-    <div class="vis-container" data-download-name="mystery-robosort">
+    <div class="vis-container">
         <div class="mystery-comparison">
             <div class="mystery-panel original">
                 <h4>Standard RoboSort</h4>
@@ -914,9 +853,7 @@ LLM: "Move to Zone-X, florp Zrint,
         </div>
         <p class="vis-caption">Same RoboSort warehouse. Same five pieces, same support constraints, same goal. Only the labels changed — and the LLM loses all ability to generate even plausible-looking plans. Pattern matching, not planning.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <div class="callout warning">
+<div class="callout warning">
         <div class="callout-label">What This Means</div>
         <p>When an LLM "solves" a planning problem, it's often not solving it at all — it's recognizing it. The training data contains countless examples of "stack blocks bottom-up" and "assemble structures foundation-first." The LLM retrieves and adapts these patterns. Remove the semantic cues, and there's nothing left to retrieve.</p>
     </div>
@@ -941,7 +878,7 @@ LLM: "Move to Zone-X, florp Zrint,
 
     <p>The result: <strong>self-critique makes things worse</strong>. This was the most surprising finding. Valmeekam et al. showed that when LLMs evaluate their own plans, they exhibit a "yes-man" bias — the critic tends to approve whatever the generator produced. Worse, when the critic does flag an issue, the "fix" often introduces new violations. After several rounds of self-critique, accuracy <em>decreased</em>.</p>
 
-    <div class="vis-container" data-download-name="robosort-self-critique">
+    <div class="vis-container">
         <div class="chat-exchange">
             <div class="chat-bubble llm">
                 <span class="chat-label">LLM — Plan (Attempt 1)</span>
@@ -967,15 +904,13 @@ LLM: "Move to Zone-X, florp Zrint,
         </div>
         <p class="vis-caption">Self-critique in action on RoboSort. The critic identifies the missing Beam but the revised plan puts Beam before L2. Each revision shuffles errors around rather than eliminating them. Data pattern from Valmeekam et al. (2023).</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <h3>Tree of Thoughts (ToT)</h3>
+<h3>Tree of Thoughts (ToT)</h3>
 
     <p>The idea: explore multiple reasoning paths in parallel, evaluate them, and pick the best. Instead of one linear chain of thought, branch out, score each branch, and select the most promising.</p>
 
     <p>The result: <strong>expensive and unsound</strong>. ToT can marginally improve results on some instances, but it multiplies computational cost by 10–100x without providing any guarantee. You're searching a tree of LLM-generated candidates — but the evaluation function is also an LLM, which can't reliably distinguish valid from invalid plans. It's search without a sound heuristic. Post 3 showed why that doesn't work: you need a heuristic that actually correlates with distance to goal. An LLM's confidence score doesn't.</p>
 
-    <div class="vis-container" data-download-name="prompting-strategies-table">
+    <div class="vis-container">
         <table class="strategy-table">
             <thead>
                 <tr>
@@ -1020,9 +955,7 @@ LLM: "Move to Zone-X, florp Zrint,
         </table>
         <p class="vis-caption">No prompting strategy brings LLMs close to classical planner accuracy. Self-critique actively degrades performance. Tree of Thoughts is expensive without guarantees. Data patterns from Valmeekam et al. (2023), Kambhampati (2024).</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <div class="callout insight">
+<div class="callout insight">
         <div class="callout-label">Key Insight</div>
         <p>The problem isn't the prompt — it's the architecture. Autoregressive generation commits to each token before seeing the consequences. No amount of prompt engineering can add backtracking, constraint propagation, or state tracking to a system that generates left-to-right. You don't fix a calculator by asking it nicely — you use a different tool.</p>
     </div>
@@ -1205,7 +1138,7 @@ LLM: "Move to Zone-X, florp Zrint,
 
     <p>The failures of 2022–2023 didn't kill the idea of LLMs in planning. They refined it. The research community converged on a taxonomy of roles — things LLMs are genuinely good at, paired with formal tools that handle what LLMs can't.</p>
 
-    <div class="vis-container" data-download-name="llm-roles-taxonomy">
+    <div class="vis-container">
         <div class="taxonomy-grid">
             <div class="taxonomy-card role-direct">
                 <div class="tax-label">Role 1 — Failed</div>
@@ -1230,9 +1163,7 @@ LLM: "Move to Zone-X, florp Zrint,
         </div>
         <p class="vis-caption">The taxonomy of LLM roles in planning. Role 1 (direct planning) failed. Roles 2–4 leverage LLMs' actual strengths — language understanding, code generation, coordination — while delegating reasoning to formal tools.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The critical shift: <strong>stop asking LLMs to plan. Start asking them to help plan.</strong> The LLM's genuine strengths — understanding natural language, generating code, translating between formats — are exactly the capabilities that formal planners lack. The planner's strengths — state tracking, constraint verification, optimality guarantees — are exactly what LLMs lack. The marriage is natural. The remaining posts in this series explore how it works in practice.</p>
+<p>The critical shift: <strong>stop asking LLMs to plan. Start asking them to help plan.</strong> The LLM's genuine strengths — understanding natural language, generating code, translating between formats — are exactly the capabilities that formal planners lack. The planner's strengths — state tracking, constraint verification, optimality guarantees — are exactly what LLMs lack. The marriage is natural. The remaining posts in this series explore how it works in practice.</p>
 
     <!-- ============================== -->
     <!-- SECTION 9: What's Ahead        -->
@@ -1270,11 +1201,6 @@ LLM: "Move to Zone-X, florp Zrint,
     </div>
 
     <!-- Download All -->
-    <div class="download-all-container">
-        <button class="download-all-btn" onclick="downloadAllVis()">⬇ Download All Visualizations as PNG</button>
-        <p>Downloads all static diagrams and charts from this post.</p>
-    </div>
-
 </article>
 
 <div class="blog-footer">
@@ -1282,31 +1208,6 @@ LLM: "Move to Zone-X, florp Zrint,
 </div>
 
 <script>
-/* === Download functionality === */
-function downloadVis(btn) {
-    const container = btn.closest('.download-btn-wrapper').previousElementSibling;
-    html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-        const link = document.createElement('a');
-        const name = container.getAttribute('data-download-name') || 'visualization';
-        link.download = name + '.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    });
-}
-
-function downloadAllVis() {
-    document.querySelectorAll('.vis-container[data-download-name]').forEach((container, i) => {
-        setTimeout(() => {
-            html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = container.getAttribute('data-download-name') + '.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }, i * 500);
-    });
-}
-
 /* === LLM vs Planner Comparison Demo === */
 function runComparison() {
     const llmResults =  ['ok','ok','ok','ok','fail','fail','ok','fail','ok','fail'];

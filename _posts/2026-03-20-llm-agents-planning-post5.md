@@ -11,7 +11,6 @@ _styles: >
       font-family: 'Georgia', 'Times New Roman', serif;
       line-height: 1.8;
       color: #1a1a2e;
-      background: #fafafa;
   }
 
   .blog-fullhtml .hero {
@@ -171,52 +170,6 @@ _styles: >
       font-style: italic;
       margin-top: 10px;
       text-align: center;
-  }
-
-  .blog-fullhtml .download-btn {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 4px 12px;
-      font-size: 0.72em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
-  }
-  .blog-fullhtml .download-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-btn-wrapper {
-      text-align: center;
-      margin-top: -8px;
-      margin-bottom: 24px;
-  }
-  .blog-fullhtml .download-all-container {
-      text-align: center;
-      margin: 2em 0;
-      padding: 15px;
-      background: #f0f4f8;
-      border-radius: 8px;
-      border: 1px dashed #2a4066;
-  }
-  .blog-fullhtml .download-all-btn {
-      padding: 10px 24px;
-      font-size: 0.9em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #2a4066;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-  }
-  .blog-fullhtml .download-all-btn:hover { background: #1b2838; }
-  .blog-fullhtml .download-all-container p {
-      font-size: 0.8em;
-      color: #666;
-      margin-top: 8px;
   }
 
   .blog-fullhtml .interactive-container {
@@ -524,7 +477,7 @@ _styles: >
       .blog-fullhtml .result-row { grid-template-columns: 120px 1fr 40px; }
   }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; background: #1c1c1d; }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
   html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
   html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
   html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
@@ -548,12 +501,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
   html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
   html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn { background: #2a4066; color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn:hover { background: #355080; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container { background: #1e2a3a; border-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn { background: #2a4066; color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn:hover { background: #355080; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container p { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
   html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: #fff; }
@@ -606,8 +553,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
 ---
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <header class="hero">
     <div class="series-label">Planning in the Era of LLMs — Part 5 of 7</div>
     <h1>The Modern Playbook: LLMs That Help Planners</h1>
@@ -617,7 +562,7 @@ _styles: >
 <article class="blog-container">
 
     <!-- Series Navigation -->
-    <div class="vis-container" data-download-name="series-nav-banner">
+    <div class="vis-container">
         <div class="series-nav">
             <strong>📚 Planning in the Era of LLMs — Part 5 of 7</strong>
             <div class="nav-desc">Paradigm 1 in action: when PDDL is given, LLMs amplify planners through code generation, heuristic design, and generate-verify loops. The combination achieves what neither could alone.</div>
@@ -645,7 +590,7 @@ _styles: >
 
     <p>The most influential framework to emerge from the planning community's response to LLM limitations is <strong>LLM-Modulo</strong>, introduced by Kambhampati et al. (2024). The core insight is disarmingly simple: <em>let the LLM generate, let the planner verify</em>.</p>
 
-    <div class="vis-container" data-download-name="llm-modulo-loop">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">The LLM-Modulo Framework</h3>
         <div class="modulo-loop">
             <div class="modulo-node llm-gen">LLM<br>Generator</div>
@@ -663,9 +608,7 @@ _styles: >
         </div>
         <p class="vis-caption">LLM-Modulo: the LLM generates candidate plans (fast, creative, but unreliable). The formal verifier checks every precondition and effect (slow to build, but mathematically sound). Invalid plans get sent back with specific feedback. This loop converges on valid plans — typically in 2–4 iterations.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>Here's why this works. LLMs are excellent at generating <em>plausible</em> plans — plans that look roughly right, with most pieces in approximately the right order. Post 4 showed they get 30% fully correct. But even the 70% that fail are usually <em>close</em> — one or two constraints violated, not total nonsense. The formal verifier catches exactly which constraints fail, and feeds that specific error back to the LLM. The LLM then fixes just that part.</p>
+<p>Here's why this works. LLMs are excellent at generating <em>plausible</em> plans — plans that look roughly right, with most pieces in approximately the right order. Post 4 showed they get 30% fully correct. But even the 70% that fail are usually <em>close</em> — one or two constraints violated, not total nonsense. The formal verifier catches exactly which constraints fail, and feeds that specific error back to the LLM. The LLM then fixes just that part.</p>
 
     <p>This is fundamentally different from self-critique (Post 4), where the LLM tried to verify <em>its own</em> output. Self-critique failed because the LLM couldn't reliably detect violations. LLM-Modulo succeeds because the verifier is a <em>formal tool</em> — a PDDL validator that checks every precondition with mathematical certainty. The feedback isn't "this looks wrong" — it's "step 5 requires <code>(placed beam)</code> to be true, but beam has not been placed."</p>
 
@@ -727,7 +670,7 @@ _styles: >
 
     <p>This is the second major breakthrough. Instead of asking the LLM to plan, ask it to write a <strong>Python function</strong> that estimates how far a given state is from the goal. Then plug that function into A* or GBFS (Post 3's search algorithms) as the heuristic. The search engine does the planning. The LLM just provides the guidance function.</p>
 
-    <div class="vis-container" data-download-name="heuristic-code-generation">
+    <div class="vis-container">
         <div class="code-gen-panel">
             <div class="code-gen-side input">
                 <div class="code-gen-header">Input: PDDL Domain + Prompt</div>
@@ -769,9 +712,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">The LLM generates a domain-specific heuristic for RoboSort. The function counts unplaced pieces and estimates ~4 actions per piece (move, pick, move, place). This is crude but effective — it gives the search engine a domain-aware signal that h<sub>FF</sub> alone doesn't have.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>Why does this work so well? The LLM understands the <em>domain semantics</em> — it knows that warehouse robots need to travel between shelves, that each piece requires multiple actions, and that holding a piece reduces remaining work. Domain-independent heuristics like h<sub>FF</sub> compute estimates purely from the PDDL structure, ignoring this semantic understanding. The LLM-generated heuristic captures domain knowledge that would take a human expert hours to encode.</p>
+<p>Why does this work so well? The LLM understands the <em>domain semantics</em> — it knows that warehouse robots need to travel between shelves, that each piece requires multiple actions, and that holding a piece reduces remaining work. Domain-independent heuristics like h<sub>FF</sub> compute estimates purely from the PDDL structure, ignoring this semantic understanding. The LLM-generated heuristic captures domain knowledge that would take a human expert hours to encode.</p>
 
     <p>Critically, the heuristic <strong>doesn't need to be correct</strong>. It just needs to be roughly right — pointing the search in the right direction. If the LLM's heuristic overestimates or underestimates, the search engine compensates. A bad heuristic makes search slower but doesn't make the plan wrong — the planner still checks every precondition. This is the beauty of the setup: the LLM contributes <em>guidance</em>, and the formal system contributes <em>guarantees</em>.</p>
 
@@ -806,7 +747,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
 
     <p>Let's compare the three Paradigm 1 approaches side by side. Each gives the LLM a different role while keeping the formal planner in the loop for correctness.</p>
 
-    <div class="vis-container" data-download-name="three-approaches">
+    <div class="vis-container">
         <div class="approach-cards">
             <div class="approach-card card-modulo">
                 <div class="card-number">Approach 1</div>
@@ -835,9 +776,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">Three approaches, one principle: the LLM contributes domain understanding and creative generation; the formal system contributes correctness guarantees. The division of labor matches each system's strengths.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <!-- ============================== -->
+<!-- ============================== -->
     <!-- SECTION 6: The Results         -->
     <!-- ============================== -->
 
@@ -845,7 +784,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
 
     <p>The numbers speak for themselves. On the same PlanBench problems where LLMs alone scored 12–30% (Post 4), LLM-Modulo and related approaches achieved dramatically higher accuracy.</p>
 
-    <div class="vis-container" data-download-name="paradigm1-results">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">Paradigm 1 Results: LLM + Planner vs. LLM Alone</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 16px;">Plan validity rate on Blocksworld benchmarks (higher is better)</p>
         <div class="results-chart">
@@ -894,9 +833,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">The dramatic improvement of Paradigm 1 approaches over LLM-only methods. LLM-Modulo achieves ~82% by adding formal verification to the loop. Data patterns from Kambhampati et al. (2024), Katz et al. (2025).</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>Several things stand out:</p>
+<p>Several things stand out:</p>
 
     <ol>
         <li><strong>The gap from 30% to 82% comes entirely from formal verification.</strong> The LLM is the same. The prompting is similar. The only difference: instead of trusting the LLM's output, you verify it and feed back errors. This simple architectural change nearly triples accuracy.</li>
@@ -921,7 +858,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
 
     <p>Let's extend the warehouse. Instead of one tower with 5 pieces, imagine RoboSort must assemble <strong>three towers simultaneously</strong> — 15 pieces across 6 shelves, with shared aisles and a single build zone. The robot still carries one piece at a time. The support constraints still apply. But now there are aisle congestion constraints and a build order across towers.</p>
 
-    <div class="vis-container" data-download-name="robosort-scaling">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 16px;">Scaling the Warehouse: 5 Pieces → 15 Pieces</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-family: 'Helvetica Neue', Arial, sans-serif;">
             <div style="background: #fdf2f2; border: 2px solid #b22222; border-radius: 10px; padding: 18px;">
@@ -943,9 +880,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">As problem complexity grows, the LLM's accuracy drops sharply (30% → 5%) while LLM-Modulo degrades gracefully (82% → 70%). The formal verifier becomes more valuable as problems get harder.</p>
     </div>
-    <div class="download-btn-wrapper"><button class="download-btn" onclick="downloadVis(this)">⬇ Download as PNG</button></div>
-
-    <p>The scaling pattern is clear. As problems grow, LLMs alone degrade rapidly — their context window fills up, state tracking becomes impossible, and constraint violations multiply. But the formal tools don't degrade. PDDL validators check constraints in polynomial time regardless of problem size. The combination degrades gracefully because the formal backbone provides structural support that scales.</p>
+<p>The scaling pattern is clear. As problems grow, LLMs alone degrade rapidly — their context window fills up, state tracking becomes impossible, and constraint violations multiply. But the formal tools don't degrade. PDDL validators check constraints in polynomial time regardless of problem size. The combination degrades gracefully because the formal backbone provides structural support that scales.</p>
 
     <!-- ============================== -->
     <!-- SECTION 8: The Remaining Gap   -->
@@ -1002,11 +937,6 @@ shelf-b)", "holding(beam)"}).</code></pre>
     </div>
 
     <!-- Download All -->
-    <div class="download-all-container">
-        <button class="download-all-btn" onclick="downloadAllVis()">⬇ Download All Visualizations as PNG</button>
-        <p>Downloads all static diagrams and charts from this post.</p>
-    </div>
-
 </article>
 
 <div class="blog-footer">
@@ -1014,31 +944,6 @@ shelf-b)", "holding(beam)"}).</code></pre>
 </div>
 
 <script>
-/* === Download functionality === */
-function downloadVis(btn) {
-    const container = btn.closest('.download-btn-wrapper').previousElementSibling;
-    html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-        const link = document.createElement('a');
-        const name = container.getAttribute('data-download-name') || 'visualization';
-        link.download = name + '.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    });
-}
-
-function downloadAllVis() {
-    document.querySelectorAll('.vis-container[data-download-name]').forEach((container, i) => {
-        setTimeout(() => {
-            html2canvas(container, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = container.getAttribute('data-download-name') + '.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }, i * 500);
-    });
-}
-
 /* === LLM-Modulo Interactive Demo === */
 const moduloRounds = [
     {

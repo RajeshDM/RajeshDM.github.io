@@ -11,7 +11,6 @@ _styles: >
       font-family: 'Georgia', 'Times New Roman', serif;
       line-height: 1.8;
       color: #1a1a2e;
-      background: #fafafa;
   }
 
   .blog-fullhtml .hero {
@@ -155,52 +154,6 @@ _styles: >
       font-style: italic;
       margin-top: 10px;
       text-align: center;
-  }
-
-  .blog-fullhtml .download-btn {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 4px 12px;
-      font-size: 0.72em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #6b3fa0;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
-  }
-  .blog-fullhtml .download-btn:hover { background: #4a2870; }
-  .blog-fullhtml .download-btn-wrapper {
-      text-align: center;
-      margin-top: -8px;
-      margin-bottom: 24px;
-  }
-  .blog-fullhtml .download-all-container {
-      text-align: center;
-      margin: 2em 0;
-      padding: 15px;
-      background: #f5f0ff;
-      border-radius: 8px;
-      border: 1px dashed #6b3fa0;
-  }
-  .blog-fullhtml .download-all-btn {
-      padding: 10px 24px;
-      font-size: 0.9em;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #6b3fa0;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-  }
-  .blog-fullhtml .download-all-btn:hover { background: #4a2870; }
-  .blog-fullhtml .download-all-container p {
-      font-size: 0.8em;
-      color: #666;
-      margin-top: 8px;
   }
 
   .blog-fullhtml .references { margin-top: 48px; padding-top: 24px; border-top: 2px solid #d4c5f0; }
@@ -492,12 +445,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c2737; color: #b088e0; }
   html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e1a30; border-color: #2a2540; }
   html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #9888a8; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn { background: #6b3fa0; color: white; }
-  html[data-theme="dark"] .blog-fullhtml .download-btn:hover { background: #8060a8; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container { background: #1e1a30; border-color: #6b3fa0; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn { background: #6b3fa0; color: white; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-btn:hover { background: #8060a8; }
-  html[data-theme="dark"] .blog-fullhtml .download-all-container p { color: #9888a8; }
   html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #3a2a45; }
   html[data-theme="dark"] .blog-fullhtml .references ol { color: #a8a0b8; }
   html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #786a88; border-top-color: #3a2a45; }
@@ -535,8 +482,6 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .hybrid-arrow-h { color: #b088e0; }
 ---
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <header class="hero">
     <div class="series-label">Planning in the Era of LLMs — Epilogue</div>
     <h1>Where the Field Goes Next</h1>
@@ -546,7 +491,7 @@ _styles: >
 <article class="blog-container">
 
     <!-- Series Navigation -->
-    <div class="vis-container" data-download-name="epilogue-nav-banner">
+    <div class="vis-container">
         <div class="series-nav">
             <strong>📚 Planning in the Era of LLMs — Epilogue</strong>
             <div class="nav-desc">A bonus piece sitting outside the canonical seven posts. The series itself ended at Post 7 with HALO and a Series Conclusion. This epilogue is the forward-looking companion — what HALO <em>doesn't</em> do, and where the research goes from here.</div>
@@ -572,7 +517,7 @@ _styles: >
 
     <p>HALO beats frontier prompted orchestrators on success rate at <strong>~45× lower cost than GPT-5-mini and 15–20× lower cost than the already-cheap Gemini-3-Flash</strong> — but the win is bounded in three concrete ways. Each ceiling is a candidate for the next paper.</p>
 
-    <div class="vis-container" data-download-name="three-ceilings">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Where HALO Stops Improving</h3>
         <div class="ceilings-grid">
             <div class="ceiling-row">
@@ -605,7 +550,7 @@ _styles: >
 
     <p>The vocabulary matters because it reframes the contribution. "We trained a small classifier on 12k examples" is a true description but undersells the story. "We learned an orchestration policy for a PDDL planning pipeline from outcome-filtered demonstrations" is the same fact restated as meta-learning for planning — and that framing opens up the comparison surface to a much wider literature.</p>
 
-    <div class="vis-container" data-download-name="metalearning-shift">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">From "What to Plan" to "How to Plan"</h3>
 
         <div class="shift-grid">
@@ -656,7 +601,7 @@ _styles: >
 
     <p>Beyond the three ceilings, four challenges show up repeatedly across recent papers — Gestrin's NL2Plan failure analysis, La Malfa's per-domain breakdowns, the cross-domain generalisation results in Post 7. None has a settled answer.</p>
 
-    <div class="vis-container" data-download-name="open-challenges">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Four Open Challenges</h3>
         <div class="challenges-grid">
             <div class="challenge-card">
@@ -693,7 +638,7 @@ _styles: >
 
     <p>The threads below are not predictions, they're the directions the supervised orchestrator paper visibly opens. Each one is what comes next if the recipe holds up.</p>
 
-    <div class="vis-container" data-download-name="research-threads">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Where the Research Goes from Here</h3>
         <div class="threads-list">
             <div class="thread-row">
@@ -743,7 +688,7 @@ _styles: >
 
     <p>Post 1 set up two paradigms. Posts 4–5 made Paradigm 1 (PDDL given) work. Posts 6–7 made Paradigm 2 (only natural language) work on familiar domains. The natural endpoint is hybrid — and it's already visible.</p>
 
-    <div class="vis-container" data-download-name="hybrid-future">
+    <div class="vis-container">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b1340; margin-bottom: 16px;">Where the Two Paradigms Meet</h3>
         <div class="hybrid-future">
             <div class="hybrid-step p2">
@@ -808,13 +753,7 @@ _styles: >
     <!-- ============================== -->
     <!-- DOWNLOAD ALL + REFERENCES      -->
     <!-- ============================== -->
-
-    <div class="download-all-container">
-        <button class="download-all-btn" onclick="downloadAllVisualizations()">Download All Visualizations as PNG</button>
-        <p>For Substack: downloads every diagram and chart as a high-res PNG.</p>
-    </div>
-
-    <div class="references">
+<div class="references">
         <h2>References</h2>
         <ol>
             <li>Mangannavar, R., Coalson, Z., Dugar, P., &amp; Tadepalli, P. (2026). <em>Training the Orchestrator: A Supervised Approach to End-to-End PDDL Planning with LLM Agents</em>. Oregon State University. Under review (introduces HALO).</li>
@@ -839,71 +778,3 @@ _styles: >
 <div class="blog-footer">
     <p>Planning in the Era of LLMs — Epilogue</p>
 </div>
-
-<script>
-function downloadVisualization(container, filename) {
-    html2canvas(container, {
-        scale: 3,
-        backgroundColor: '#ffffff',
-        useCORS: true,
-        logging: false
-    }).then(function(canvas) {
-        var link = document.createElement('a');
-        link.download = filename + '.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var containers = document.querySelectorAll('.vis-container[data-download-name]');
-    containers.forEach(function(container) {
-        if (container.classList.contains('no-download')) return;
-        var wrapper = document.createElement('div');
-        wrapper.className = 'download-btn-wrapper';
-        var btn = document.createElement('button');
-        btn.className = 'download-btn';
-        btn.textContent = '⬇ Download as PNG';
-        btn.onclick = function(e) {
-            e.preventDefault();
-            var name = container.getAttribute('data-download-name');
-            btn.textContent = 'Generating...';
-            btn.disabled = true;
-            downloadVisualization(container, 'blog-' + name);
-            setTimeout(function() {
-                btn.textContent = '⬇ Download as PNG';
-                btn.disabled = false;
-            }, 2000);
-        };
-        wrapper.appendChild(btn);
-        container.parentNode.insertBefore(wrapper, container.nextSibling);
-    });
-});
-
-function downloadAllVisualizations() {
-    var containers = document.querySelectorAll('.vis-container[data-download-name]:not(.no-download)');
-    var btn = document.querySelector('.download-all-btn');
-    var total = containers.length;
-    var current = 0;
-    btn.textContent = 'Downloading 0/' + total + '...';
-    btn.disabled = true;
-
-    function downloadNext() {
-        if (current >= total) {
-            btn.textContent = 'Done! All ' + total + ' downloaded.';
-            setTimeout(function() {
-                btn.textContent = 'Download All Visualizations as PNG';
-                btn.disabled = false;
-            }, 3000);
-            return;
-        }
-        var container = containers[current];
-        var name = container.getAttribute('data-download-name');
-        downloadVisualization(container, 'blog-' + name);
-        current++;
-        btn.textContent = 'Downloading ' + current + '/' + total + '...';
-        setTimeout(downloadNext, 800);
-    }
-    downloadNext();
-}
-</script>
