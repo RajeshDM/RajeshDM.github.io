@@ -505,77 +505,36 @@ _styles: >
   .blog-fullhtml .bottleneck-row { grid-template-columns: 100px 1fr 50px; }
   }
 
-  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+  .blog-fullhtml .warehouse-scene { position: relative; width: 100%; height: 420px; background: linear-gradient(180deg, #e8ecf1 0%, #d5dbe3 100%); border-radius: 10px; overflow: hidden; font-family: 'Helvetica Neue', Arial, sans-serif; border: 1px solid #bcc5d3; }
+  .blog-fullhtml .wh-floor { position: absolute; bottom: 0; left: 0; right: 0; height: 260px; background: repeating-linear-gradient(90deg, #c8cdd4 0px, #c8cdd4 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, #c8cdd4 0px, #c8cdd4 1px, transparent 1px, transparent 80px), #dfe3e8; }
+  .blog-fullhtml .wh-ceiling { position: absolute; top: 0; left: 0; right: 0; height: 25px; background: #3a4a5c; }
+  .blog-fullhtml .wh-light { position: absolute; top: 25px; width: 40px; height: 8px; background: #ffe8a0; border-radius: 0 0 4px 4px; box-shadow: 0 4px 20px 8px rgba(255, 232, 160, 0.25); }
+  .blog-fullhtml .wh-shelf { position: absolute; bottom: 100px; width: 110px; height: 160px; background: linear-gradient(180deg, #6a7585 0%, #555f6e 100%); border-radius: 3px 3px 0 0; display: flex; flex-direction: column; justify-content: space-around; align-items: center; padding: 8px 6px; box-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
+  .blog-fullhtml .wh-shelf-label { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: #444; background: #f0f2f5; padding: 2px 8px; border-radius: 3px; white-space: nowrap; }
+  .blog-fullhtml .wh-shelf-row { width: 94%; height: 3px; background: #8a95a5; border-radius: 1px; }
+  .blog-fullhtml .wh-package { width: 32px; height: 28px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; color: #fff; position: absolute; box-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+  .blog-fullhtml .piece-l1 { background: #e07030; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-l2 { background: #3080c0; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-bm { background: #d04050; width: 160px; height: 16px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-rf { background: #30a060; width: 60px; height: 18px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-fg { background: #8050c0; width: 16px; height: 26px; font-size: 0.42rem; }
+  .blog-fullhtml .build-zone { position: absolute; left: 478px; bottom: 6px; width: 200px; height: 195px; border: 2px dashed rgba(100,120,140,0.45); border-radius: 6px; background: rgba(245,248,252,0.25); }
+  .blog-fullhtml .build-zone-label { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; font-weight: 800; color: #5a6a7a; text-transform: uppercase; letter-spacing: 1.5px; white-space: nowrap; }
+  .blog-fullhtml .build-zone-platform { position: absolute; bottom: 8px; left: 8%; width: 84%; height: 5px; background: linear-gradient(90deg, #6a7585, #555f6e, #6a7585); border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .blog-fullhtml .wh-robot { position: absolute; width: 50px; height: 60px; z-index: 10; }
+  .blog-fullhtml .wh-robot-body { width: 50px; height: 40px; background: linear-gradient(180deg, #6b3fa0, #5a2e8f); border-radius: 8px 8px 4px 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .blog-fullhtml .wh-robot-eyes { display: flex; gap: 8px; }
+  .blog-fullhtml .wh-robot-eye { width: 10px; height: 10px; background: #7eb8da; border-radius: 50%; box-shadow: 0 0 4px #7eb8da; }
+  .blog-fullhtml .wh-robot-wheels { display: flex; justify-content: space-between; padding: 2px 5px 0; }
+  .blog-fullhtml .wh-robot-wheel { width: 14px; height: 14px; background: #333; border-radius: 50%; border: 2px solid #555; }
+  .blog-fullhtml .wh-robot-arm { position: absolute; top: 8px; right: -12px; width: 14px; height: 6px; background: #888; border-radius: 2px; }
+  .blog-fullhtml .wh-robot-label { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; font-weight: 700; color: #6b3fa0; white-space: nowrap; }
+  .blog-fullhtml .wh-status { position: absolute; top: 35px; left: 12px; right: 12px; background: rgba(27,40,56,0.88); color: #e0e8f0; padding: 8px 14px; border-radius: 6px; font-size: 0.78rem; font-family: 'Fira Code', 'Consolas', monospace; z-index: 20; display: flex; justify-content: space-between; align-items: center; }
+  .blog-fullhtml .wh-status .status-action { color: #7eb8da; }
+  .blog-fullhtml .wh-status .status-state { color: #a6e3a1; }
+  @media (max-width: 700px) { .blog-fullhtml .warehouse-scene { height: 350px; } }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
-  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
-  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
-  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .hero .subtitle { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .hero .series-label { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; border-left-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #142a14; border-left-color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1414; border-left-color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2010; border-left-color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
-  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .pipeline-arrow { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .stage-nl { background: #1a4a44; color: #4dc9b0; }
-  html[data-theme="dark"] .blog-fullhtml .stage-extract { background: #1e142e; color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .stage-pddl { background: #2a2010; color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .stage-validate { background: #2a1414; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .stage-solve { background: #142a14; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .agent-extractor { background: #1e142e; border-color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agent-extractor h5 { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agent-extractor p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml .agent-validator { background: #2a1414; border-color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .agent-validator h5 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .agent-validator p { color: #d8a8a8; }
-  html[data-theme="dark"] .blog-fullhtml .agent-fixer { background: #2a2010; border-color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agent-fixer h5 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agent-fixer p { color: #d8c0a0; }
-  html[data-theme="dark"] .blog-fullhtml .agent-solver { background: #142a14; border-color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .agent-solver h5 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .agent-solver p { color: #a8c8a8; }
-  html[data-theme="dark"] .blog-fullhtml .orchestrator-bar { background: linear-gradient(90deg, #1b2838, #2a4066); color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .nl-side .panel-header { background: #1a4a44; color: #4dc9b0; }
-  html[data-theme="dark"] .blog-fullhtml .pddl-side .panel-header { background: #2a2010; color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .nl-side .panel-body { background: #142a2a; border-color: #2a9d8f; }
-  html[data-theme="dark"] .blog-fullhtml .pddl-side .panel-body { border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .transform-arrow { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .bottleneck-label { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml .bottleneck-bar-track { background: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .bottleneck-value { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.waiting { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.waiting .stage-num { background: #4a5565; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.active { background: #142a2a; border-color: #2a9d8f; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.active .stage-num { background: #2a9d8f; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.done { background: #142a14; border-color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.done .stage-num { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.error { background: #2a1414; border-color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.error .stage-num { background: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 ---
 
 <header class="hero">
@@ -651,54 +610,27 @@ _styles: >
 
     <p>Let's trace the pipeline for our RoboSort warehouse:</p>
 
-    <!-- Static RoboSort warehouse panel (shared visual anchor) -->
-    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 16px 0;">
-        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:8px;">RoboSort facility &middot; the English below describes <em>this</em> warehouse; the pipeline emits PDDL for it</div>
-        <svg viewBox="0 0 580 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; max-height:220px;">
-            <rect x="10" y="172" width="560" height="18" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
-            <rect x="30" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
-            <line x1="30" y1="100" x2="140" y2="100" stroke="#3a4055" stroke-width=".8"/>
-            <line x1="30" y1="135" x2="140" y2="135" stroke="#3a4055" stroke-width=".8"/>
-            <text x="85" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf A</text>
-            <rect x="48" y="74" width="34" height="22" rx="3" fill="#e07030" stroke="#a85510" stroke-width=".6"/>
-            <text x="65" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L1</text>
-            <rect x="90" y="74" width="34" height="22" rx="3" fill="#3080c0" stroke="#1c5f8e" stroke-width=".6"/>
-            <text x="107" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L2</text>
-            <rect x="160" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
-            <line x1="160" y1="100" x2="270" y2="100" stroke="#3a4055" stroke-width=".8"/>
-            <line x1="160" y1="135" x2="270" y2="135" stroke="#3a4055" stroke-width=".8"/>
-            <text x="215" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf B</text>
-            <rect x="170" y="82" width="90" height="14" rx="3" fill="#d04050" stroke="#a02838" stroke-width=".6"/>
-            <text x="215" y="92" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Beam</text>
-            <rect x="290" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
-            <line x1="290" y1="100" x2="400" y2="100" stroke="#3a4055" stroke-width=".8"/>
-            <line x1="290" y1="135" x2="400" y2="135" stroke="#3a4055" stroke-width=".8"/>
-            <text x="345" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf C</text>
-            <rect x="300" y="82" width="56" height="14" rx="3" fill="#30a060" stroke="#1c7040" stroke-width=".6"/>
-            <text x="328" y="92" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">Roof</text>
-            <rect x="364" y="78" width="18" height="22" rx="2" fill="#8050c0" stroke="#5a3580" stroke-width=".6"/>
-            <text x="373" y="92" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">Flag</text>
-            <rect x="430" y="70" width="130" height="100" rx="6" fill="none" stroke="#7a8499" stroke-width="1.2" stroke-dasharray="6 4"/>
-            <line x1="430" y1="170" x2="560" y2="170" stroke="#7a8499" stroke-width="1.5"/>
-            <text x="495" y="120" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700" letter-spacing="1">BUILD ZONE</text>
-            <g transform="translate(38,178)">
-                <line x1="0" y1="-30" x2="0" y2="-26" stroke="#8050c0" stroke-width="1.2"/>
-                <circle cx="0" cy="-32" r="2.5" fill="#8050c0"/>
-                <rect x="-12" y="-25" width="24" height="18" rx="3" fill="#8050c0" stroke="#5a3580" stroke-width=".8"/>
-                <circle cx="-4" cy="-19" r="2.5" fill="#4fc3f7"/>
-                <circle cx="4" cy="-19" r="2.5" fill="#4fc3f7"/>
-                <rect x="-3" y="-7" width="6" height="3" rx="1" fill="#5a3580"/>
-                <circle cx="-7" cy="-1" r="3" fill="#3a4055"/>
-                <circle cx="0" cy="-1" r="3" fill="#3a4055"/>
-                <circle cx="7" cy="-1" r="3" fill="#3a4055"/>
-                <text x="0" y="9" text-anchor="middle" fill="#8050c0" font-size="9" font-weight="700">RoboSort</text>
-            </g>
-            <text x="120" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Gripper: empty</text>
-            <text x="270" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">|</text>
-            <text x="370" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Tower: 0/5 pieces</text>
-        </svg>
-        <div style="font-size:.78em; color:#7a8499; text-align:center; margin-top:8px; font-style:italic;">The English description below corresponds to this exact configuration &middot; the NL-to-PDDL pipeline has to recover all of it from plain text</div>
+    <!-- Static RoboSort warehouse panel (canonical HTML+CSS, matching Posts 1-3) -->
+    <div class="warehouse-scene" style="margin: 16px 0;">
+        <div class="wh-ceiling"></div>
+        <div class="wh-light" style="left: 80px;"></div>
+        <div class="wh-light" style="left: 240px;"></div>
+        <div class="wh-light" style="left: 400px;"></div>
+        <div class="wh-light" style="left: 560px;"></div>
+        <div class="wh-floor"></div>
+        <div class="wh-status"><span class="status-action">Awaiting orders...</span><span class="status-state">Gripper: empty | Tower: 0/5 pieces</span></div>
+        <div class="wh-shelf" style="left: 40px;"><div class="wh-shelf-label">Shelf A</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+        <div class="wh-shelf" style="left: 200px;"><div class="wh-shelf-label">Shelf B</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+        <div class="wh-shelf" style="left: 360px;"><div class="wh-shelf-label">Shelf C</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+        <div class="wh-package piece-l1" style="left:55px; bottom:185px;">L1</div>
+        <div class="wh-package piece-l2" style="left:100px; bottom:185px;">L2</div>
+        <div class="wh-package piece-bm" style="left:175px; bottom:197px;">Beam</div>
+        <div class="wh-package piece-rf" style="left:370px; bottom:192px;">Roof</div>
+        <div class="wh-package piece-fg" style="left:442px; bottom:193px;">Flag</div>
+        <div class="build-zone"><div class="build-zone-label">Build Zone</div><div class="build-zone-platform"></div></div>
+        <div class="wh-robot" style="left: 40px; bottom: 30px;"><div class="wh-robot-body"><div class="wh-robot-eyes"><div class="wh-robot-eye"></div><div class="wh-robot-eye"></div></div><div class="wh-robot-arm"></div></div><div class="wh-robot-wheels"><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div></div><div class="wh-robot-label">RoboSort</div></div>
     </div>
+    <p style="font-size:0.85em; color:#5a6a7a; text-align:center; margin: -8px 0 16px; font-style:italic;">The English description below corresponds to this exact configuration &middot; the NL-to-PDDL pipeline has to recover all of it from plain text</p>
 
     <ol>
         <li><strong>English Description:</strong> "A robot in a warehouse with three shelves (A, B, C) and a build zone. Shelf A has two legs, Shelf B has a beam, Shelf C has a roof and a flag. The robot starts at home and can carry one piece. Legs support beam, beam supports roof, roof supports flag. Build the tower."</li>

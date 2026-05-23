@@ -735,109 +735,38 @@ _styles: >
   .blog-fullhtml .demo-board { grid-template-columns: 1fr; }
   }
 
-  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+  .blog-fullhtml .warehouse-scene { position: relative; width: 100%; height: 420px; background: linear-gradient(180deg, #e8ecf1 0%, #d5dbe3 100%); border-radius: 10px; overflow: hidden; font-family: 'Helvetica Neue', Arial, sans-serif; border: 1px solid #bcc5d3; }
+  .blog-fullhtml .wh-floor { position: absolute; bottom: 0; left: 0; right: 0; height: 260px; background: repeating-linear-gradient(90deg, #c8cdd4 0px, #c8cdd4 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, #c8cdd4 0px, #c8cdd4 1px, transparent 1px, transparent 80px), #dfe3e8; }
+  .blog-fullhtml .wh-ceiling { position: absolute; top: 0; left: 0; right: 0; height: 25px; background: #3a4a5c; }
+  .blog-fullhtml .wh-light { position: absolute; top: 25px; width: 40px; height: 8px; background: #ffe8a0; border-radius: 0 0 4px 4px; box-shadow: 0 4px 20px 8px rgba(255, 232, 160, 0.25); }
+  .blog-fullhtml .wh-shelf { position: absolute; bottom: 100px; width: 110px; height: 160px; background: linear-gradient(180deg, #6a7585 0%, #555f6e 100%); border-radius: 3px 3px 0 0; display: flex; flex-direction: column; justify-content: space-around; align-items: center; padding: 8px 6px; box-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
+  .blog-fullhtml .wh-shelf-label { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: #444; background: #f0f2f5; padding: 2px 8px; border-radius: 3px; white-space: nowrap; }
+  .blog-fullhtml .wh-shelf-row { width: 94%; height: 3px; background: #8a95a5; border-radius: 1px; }
+  .blog-fullhtml .wh-package { width: 32px; height: 28px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; color: #fff; position: absolute; box-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+  .blog-fullhtml .piece-l1 { background: #e07030; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-l2 { background: #3080c0; width: 38px; height: 50px; }
+  .blog-fullhtml .piece-bm { background: #d04050; width: 160px; height: 16px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-rf { background: #30a060; width: 60px; height: 18px; font-size: 0.52rem; }
+  .blog-fullhtml .piece-fg { background: #8050c0; width: 16px; height: 26px; font-size: 0.42rem; }
+  .blog-fullhtml .build-zone { position: absolute; left: 478px; bottom: 6px; width: 200px; height: 195px; border: 2px dashed rgba(100,120,140,0.45); border-radius: 6px; background: rgba(245,248,252,0.25); }
+  .blog-fullhtml .build-zone-label { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; font-weight: 800; color: #5a6a7a; text-transform: uppercase; letter-spacing: 1.5px; white-space: nowrap; }
+  .blog-fullhtml .build-zone-platform { position: absolute; bottom: 8px; left: 8%; width: 84%; height: 5px; background: linear-gradient(90deg, #6a7585, #555f6e, #6a7585); border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .blog-fullhtml .wh-robot { position: absolute; width: 50px; height: 60px; z-index: 10; }
+  .blog-fullhtml .wh-robot-body { width: 50px; height: 40px; background: linear-gradient(180deg, #6b3fa0, #5a2e8f); border-radius: 8px 8px 4px 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .blog-fullhtml .wh-robot-eyes { display: flex; gap: 8px; }
+  .blog-fullhtml .wh-robot-eye { width: 10px; height: 10px; background: #7eb8da; border-radius: 50%; box-shadow: 0 0 4px #7eb8da; }
+  .blog-fullhtml .wh-robot-wheels { display: flex; justify-content: space-between; padding: 2px 5px 0; }
+  .blog-fullhtml .wh-robot-wheel { width: 14px; height: 14px; background: #333; border-radius: 50%; border: 2px solid #555; }
+  .blog-fullhtml .wh-robot-arm { position: absolute; top: 8px; right: -12px; width: 14px; height: 6px; background: #888; border-radius: 2px; }
+  .blog-fullhtml .wh-robot-label { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; font-weight: 700; color: #6b3fa0; white-space: nowrap; }
+  .blog-fullhtml .wh-status { position: absolute; top: 35px; left: 12px; right: 12px; background: rgba(27,40,56,0.88); color: #e0e8f0; padding: 8px 14px; border-radius: 6px; font-size: 0.78rem; font-family: 'Fira Code', 'Consolas', monospace; z-index: 20; display: flex; justify-content: space-between; align-items: center; }
+  .blog-fullhtml .wh-status .status-action { color: #7eb8da; }
+  .blog-fullhtml .wh-status .status-state { color: #a6e3a1; }
+  .blog-fullhtml .wh-status.status-ok { background: rgba(20, 70, 20, 0.92); }
+  .blog-fullhtml .wh-status.status-ok .status-action, .blog-fullhtml .wh-status.status-ok .status-state { color: #a6e3a1; }
+  @media (max-width: 700px) { .blog-fullhtml .warehouse-scene { height: 350px; } }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
-  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
-  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
-  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .image-placeholder { background: #1e2530; border-color: #2a3545; color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .image-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1a2535; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .math-block { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step { background: #1a2535; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step.ok { border-color: #1a6b1a; color: #5cbf5c; background: #142a14; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step.bad { border-color: #5a3030; color: #e06060; background: #2a1414; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step.unknown { border-color: #2a3545; color: #b0b8c8; background: #1a2535; }
-  html[data-theme="dark"] .blog-fullhtml .credit-arrow { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted { border-color: #5a3030; background: #2a1414; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained { border-color: #1a6b1a; background: #142a14; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted .orch-tag { background: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained .orch-tag { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted h4 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained h4 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted ul { color: #d8a0a0; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained ul { color: #a8d8a8; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted .cost { background: #3a1818; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained .cost { background: #18301a; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .agent-group-label { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.baseline { background: #2a4a70; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.deterministic { background: #1a6b1a; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.pddl-aware { background: #4a2a78; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.added { box-shadow: 0 0 0 2px #e8a040 inset, 0 0 0 4px #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agent-legend { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer1 { background: linear-gradient(135deg, #2a2010, #3a2c14); border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer2 { background: linear-gradient(135deg, #142a14, #1c3c1c); border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer1 h5 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer2 h5 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-rules code { background: rgba(255,255,255,0.07); color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer1 .layer-tag { background: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer2 .layer-tag { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-arrow { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage .train-counter { background: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage h5 { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage p { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage .count-pill { background: #1e2a3a; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.hard { border-color: #5a3030; background: #2a1414; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.hard h5 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.augment { border-color: #5a4020; background: #2a2010; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.augment h5 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.soft { border-color: #1a6b60; background: #142a2a; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.soft h5 { color: #4dc9b0; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.train { border-color: #1a6b1a; background: #142a14; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.train h5 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .results-label { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml .results-bar-track { background: #2a2540; }
-  html[data-theme="dark"] .blog-fullhtml .results-section-label { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.prompted-col { border-color: #5a3030; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.trained-col { border-color: #1a6b1a; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.prompted-col .demo-header { background: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.trained-col .demo-header { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step { background: #1a2535; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.active { background: #2a2010; border-color: #d4740e; box-shadow: 0 2px 8px rgba(212, 116, 14, 0.3); }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.prompted { background: #2a1414; border-color: #5a3030; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.trained { background: #142a14; border-color: #1a6b1a; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-num { background: #4a5565; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.active .step-num { background: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.prompted .step-num { background: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.trained .step-num { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-label { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-agent { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-note { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .demo-tally { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .demo-tally.prompted { background: #2a1414; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .demo-tally.trained { background: #142a14; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .demo-controls .reset-btn { background: #4a5565; color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml .demo-controls .reset-btn:hover { background: #5a6575; }
-  html[data-theme="dark"] .blog-fullhtml .demo-status { color: #8899aa; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 ---
 
 <header class="hero">
@@ -1469,69 +1398,29 @@ _styles: >
 
     <div class="vis-container no-download">
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">RoboSort, Post 7: Two Orchestrators, One Refinement Loop</h3>
-        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 12px;"><em>Specification:</em> "RoboSort works in a new facility. Three shelves (A, B, C), one dock. Five packages — two small, two medium, one fragile. Fragile must be picked last and placed first at the dock. Gripper carries one at a time. Goal: all packages at dock with fragile on top."</p>
+        <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 12px;"><em>Specification:</em> "RoboSort, same warehouse as Posts 1–6. Three shelves (A, B, C), one build zone. Five pieces: L1 and L2 (legs) on Shelf A, Beam on Shelf B, Roof and Flag on Shelf C. Support chain: legs support beam, beam supports roof, roof supports flag. Gripper carries one piece at a time. Goal: 5-piece tower assembled in the build zone, every support predicate satisfied."</p>
 
-        <!-- RoboSort warehouse visualization (matches the spec above) -->
-        <div style="background:#0f1117; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin-bottom:14px;">
-            <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:8px;">The RoboSort facility · what both orchestrators are trying to plan for</div>
-            <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; max-height:200px;">
-                <!-- Floor -->
-                <rect x="20" y="170" width="560" height="20" fill="#1a1f2e" stroke="#2a2f3f" stroke-width=".5"/>
-
-                <!-- Shelf A -->
-                <rect x="40" y="60" width="110" height="100" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
-                <line x1="40" y1="110" x2="150" y2="110" stroke="#3a4055" stroke-width=".8"/>
-                <text x="95" y="76" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700">SHELF A</text>
-                <!-- Package: small on top -->
-                <rect x="60" y="84" width="30" height="22" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
-                <text x="75" y="98" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">SMALL</text>
-                <!-- Package: medium below -->
-                <rect x="100" y="130" width="40" height="28" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
-                <text x="120" y="147" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">MEDIUM</text>
-
-                <!-- Shelf B -->
-                <rect x="170" y="60" width="110" height="100" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
-                <line x1="170" y1="110" x2="280" y2="110" stroke="#3a4055" stroke-width=".8"/>
-                <text x="225" y="76" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700">SHELF B</text>
-                <!-- Package: small -->
-                <rect x="185" y="84" width="30" height="22" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
-                <text x="200" y="98" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">SMALL</text>
-                <!-- Package: medium -->
-                <rect x="230" y="130" width="40" height="28" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
-                <text x="250" y="147" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">MEDIUM</text>
-
-                <!-- Shelf C -->
-                <rect x="300" y="60" width="110" height="100" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
-                <line x1="300" y1="110" x2="410" y2="110" stroke="#3a4055" stroke-width=".8"/>
-                <text x="355" y="76" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700">SHELF C</text>
-                <!-- Package: FRAGILE -->
-                <rect x="320" y="84" width="70" height="22" rx="3" fill="#c2185b" stroke="#8a0f3e" stroke-width="1"/>
-                <text x="355" y="98" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">⚠ FRAGILE</text>
-                <text x="355" y="120" text-anchor="middle" fill="#c2185b" font-size="7.5" font-style="italic">picked last · placed first</text>
-
-                <!-- Dock -->
-                <rect x="450" y="80" width="120" height="80" rx="6" fill="#0a4a0a" fill-opacity=".35" stroke="#228b22" stroke-width="1.5" stroke-dasharray="6 4"/>
-                <text x="510" y="100" text-anchor="middle" fill="#5fcf5f" font-size="11" font-weight="700">DOCK</text>
-                <text x="510" y="118" text-anchor="middle" fill="#7a8499" font-size="8" font-style="italic">(empty · goal target)</text>
-                <text x="510" y="138" text-anchor="middle" fill="#7a8499" font-size="7.5" font-style="italic">5 packages here</text>
-                <text x="510" y="150" text-anchor="middle" fill="#7a8499" font-size="7.5" font-style="italic">FRAGILE on top</text>
-
-                <!-- Robot -->
-                <g transform="translate(38,178)">
-                    <line x1="0" y1="-26" x2="0" y2="-22" stroke="#7a8499" stroke-width="1"/>
-                    <circle cx="0" cy="-28" r="2" fill="#7a8499"/>
-                    <rect x="-8" y="-22" width="16" height="9" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
-                    <circle cx="-2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
-                    <circle cx="2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
-                    <rect x="-9" y="-12" width="18" height="14" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
-                    <text x="20" y="-10" fill="#7a8499" font-size="9" font-weight="700">RoboSort</text>
-                    <text x="20" y="0" fill="#7a8499" font-size="7.5" font-style="italic">at HOME · empty gripper</text>
-                </g>
-
-                <!-- Constraint reminder -->
-                <text x="300" y="20" text-anchor="middle" fill="#c2185b" font-size="9.5" font-weight="700">CONSTRAINT: gripper carries 1 · fragile picked LAST, placed FIRST · all to DOCK</text>
-            </svg>
+        <!-- RoboSort warehouse visualization (canonical HTML+CSS, matching Posts 1-3) -->
+        <div class="warehouse-scene" style="margin-bottom: 14px;">
+            <div class="wh-ceiling"></div>
+            <div class="wh-light" style="left: 80px;"></div>
+            <div class="wh-light" style="left: 240px;"></div>
+            <div class="wh-light" style="left: 400px;"></div>
+            <div class="wh-light" style="left: 560px;"></div>
+            <div class="wh-floor"></div>
+            <div class="wh-status"><span class="status-action">Awaiting orders...</span><span class="status-state">Gripper: empty | Tower: 0/5 pieces</span></div>
+            <div class="wh-shelf" style="left: 40px;"><div class="wh-shelf-label">Shelf A</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+            <div class="wh-shelf" style="left: 200px;"><div class="wh-shelf-label">Shelf B</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+            <div class="wh-shelf" style="left: 360px;"><div class="wh-shelf-label">Shelf C</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+            <div class="wh-package piece-l1" style="left:55px; bottom:185px;">L1</div>
+            <div class="wh-package piece-l2" style="left:100px; bottom:185px;">L2</div>
+            <div class="wh-package piece-bm" style="left:175px; bottom:197px;">Beam</div>
+            <div class="wh-package piece-rf" style="left:370px; bottom:192px;">Roof</div>
+            <div class="wh-package piece-fg" style="left:442px; bottom:193px;">Flag</div>
+            <div class="build-zone"><div class="build-zone-label">Build Zone</div><div class="build-zone-platform"></div></div>
+            <div class="wh-robot" style="left: 40px; bottom: 30px;"><div class="wh-robot-body"><div class="wh-robot-eyes"><div class="wh-robot-eye"></div><div class="wh-robot-eye"></div></div><div class="wh-robot-arm"></div></div><div class="wh-robot-wheels"><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div></div><div class="wh-robot-label">RoboSort</div></div>
         </div>
+        <p style="font-size:0.85em; color:#5a6a7a; text-align:center; margin: -8px 0 12px; font-style:italic;">Same warehouse as Posts 1&ndash;6 &middot; support chain: <code style="background:#f0f2f5; color:#444; padding:1px 5px; border-radius:3px;">L1, L2 &rarr; Beam &rarr; Roof &rarr; Flag</code></p>
 
         <div class="interactive-container" style="margin: 0; border: none; padding: 0; background: transparent;">
             <div class="interactive-label" style="text-align: center;">Interactive — click "▶ Auto Demo" to watch both orchestrators run the same refinement loop, step by step</div>
@@ -1560,10 +1449,10 @@ _styles: >
                         <div class="demo-step" id="pstep3">
                             <div class="step-head">
                                 <span class="step-num">3</span>
-                                <span class="step-label">Plan invalid — fragile placed second</span>
+                                <span class="step-label">Plan invalid — Roof placed before Beam</span>
                             </div>
                             <div class="step-agent">→ AgentDeepThinkPDDL</div>
-                            <div class="step-note">Misses the fragile-order constraint</div>
+                            <div class="step-note">Misses the support-chain constraint</div>
                         </div>
                         <div class="demo-step" id="pstep4">
                             <div class="step-head">
@@ -1610,10 +1499,10 @@ _styles: >
                         <div class="demo-step" id="tstep3">
                             <div class="step-head">
                                 <span class="step-num">3</span>
-                                <span class="step-label">Plan invalid — fragile placed second</span>
+                                <span class="step-label">Plan invalid — Roof placed before Beam</span>
                             </div>
                             <div class="step-agent">→ AgentInitialStateSuggester · LAYER 2</div>
-                            <div class="step-note">Single-token decision · ~8 ms · catches missing fragile-priority predicate</div>
+                            <div class="step-note">Single-token decision · ~8 ms · catches missing support predicate</div>
                         </div>
                         <div class="demo-step" id="tstep4">
                             <div class="step-head">
@@ -1647,117 +1536,74 @@ _styles: >
         </div>
     </div>
 
-    <!-- Outcome panel: same warehouse end-state, different orchestration cost -->
-    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 20px 0;">
-        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:10px;">Both orchestrators arrive at the same valid plan &middot; here is the dock after RoboSort executes it</div>
-        <div style="display:flex; gap:14px; align-items:stretch;">
-            <!-- Warehouse end-state: dock with all 5 packages, fragile on top -->
-            <div style="flex:1.1; min-width:0;">
-                <svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
-                    <!-- Floor -->
-                    <rect x="10" y="172" width="340" height="18" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+    <!-- Outcome panel: same tower outcome, different orchestration cost (canonical HTML+CSS) -->
+    <p style="font-size:0.85rem; color:#1b2838; font-weight:700; text-align:center; margin: 24px 0 12px; text-transform:uppercase; letter-spacing:1.5px;">Both orchestrators arrive at the same valid plan &middot; here is the build zone after RoboSort executes it</p>
 
-                    <!-- Empty shelves -->
-                    <rect x="20" y="60" width="60" height="110" rx="5" fill="#1a1f2e" stroke="#3a4055" stroke-width="1"/>
-                    <text x="50" y="50" text-anchor="middle" fill="#5a6075" font-size="9" font-weight="700">SHELF A</text>
-                    <text x="50" y="118" text-anchor="middle" fill="#3a4055" font-size="8" font-style="italic" opacity=".6">(empty)</text>
+    <div class="warehouse-scene" style="margin: 12px 0; border-color: #2e8b2e;">
+        <div class="wh-ceiling"></div>
+        <div class="wh-light" style="left: 80px;"></div>
+        <div class="wh-light" style="left: 240px;"></div>
+        <div class="wh-light" style="left: 400px;"></div>
+        <div class="wh-light" style="left: 560px;"></div>
+        <div class="wh-floor"></div>
+        <div class="wh-status status-ok"><span class="status-action">✓ Plan verified &middot; executing</span><span class="status-state">Tower: 5/5 ✓ &middot; support chain intact</span></div>
+        <div class="wh-shelf" style="left: 40px; opacity: 0.55;"><div class="wh-shelf-label">Shelf A</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+        <div class="wh-shelf" style="left: 200px; opacity: 0.55;"><div class="wh-shelf-label">Shelf B</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+        <div class="wh-shelf" style="left: 360px; opacity: 0.55;"><div class="wh-shelf-label">Shelf C</div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div><div class="wh-shelf-row"></div></div>
+        <div class="wh-package piece-l1" style="left:559px; bottom:14px;">L1</div>
+        <div class="wh-package piece-l2" style="left:559px; bottom:66px;">L2</div>
+        <div class="wh-package piece-bm" style="left:498px; bottom:118px;">Beam</div>
+        <div class="wh-package piece-rf" style="left:548px; bottom:136px;">Roof</div>
+        <div class="wh-package piece-fg" style="left:570px; bottom:156px;">Flag</div>
+        <div class="build-zone"><div class="build-zone-label">Build Zone</div><div class="build-zone-platform"></div></div>
+        <div class="wh-robot" style="left: 40px; bottom: 30px;"><div class="wh-robot-body"><div class="wh-robot-eyes"><div class="wh-robot-eye"></div><div class="wh-robot-eye"></div></div><div class="wh-robot-arm"></div></div><div class="wh-robot-wheels"><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div><div class="wh-robot-wheel"></div></div><div class="wh-robot-label">RoboSort</div></div>
+    </div>
 
-                    <rect x="90" y="60" width="60" height="110" rx="5" fill="#1a1f2e" stroke="#3a4055" stroke-width="1"/>
-                    <text x="120" y="50" text-anchor="middle" fill="#5a6075" font-size="9" font-weight="700">SHELF B</text>
-                    <text x="120" y="118" text-anchor="middle" fill="#3a4055" font-size="8" font-style="italic" opacity=".6">(empty)</text>
-
-                    <rect x="160" y="60" width="60" height="110" rx="5" fill="#1a1f2e" stroke="#3a4055" stroke-width="1"/>
-                    <text x="190" y="50" text-anchor="middle" fill="#5a6075" font-size="9" font-weight="700">SHELF C</text>
-                    <text x="190" y="118" text-anchor="middle" fill="#3a4055" font-size="8" font-style="italic" opacity=".6">(empty)</text>
-
-                    <!-- Dock with stacked packages (fragile on top) -->
-                    <rect x="240" y="60" width="100" height="110" rx="6" fill="#0a1a0a" stroke="#2e8b2e" stroke-width="1.5"/>
-                    <text x="290" y="50" text-anchor="middle" fill="#5fcf5f" font-size="9" font-weight="700" letter-spacing="1">DOCK</text>
-
-                    <!-- Packages stacked: medium, medium, small, small, fragile on top -->
-                    <rect x="252" y="148" width="76" height="20" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
-                    <text x="290" y="161" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">MEDIUM</text>
-                    <rect x="252" y="126" width="76" height="20" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
-                    <text x="290" y="139" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">MEDIUM</text>
-                    <rect x="262" y="108" width="56" height="16" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
-                    <text x="290" y="119" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">SMALL</text>
-                    <rect x="262" y="90" width="56" height="16" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
-                    <text x="290" y="101" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">SMALL</text>
-                    <rect x="256" y="68" width="68" height="20" rx="2" fill="#c2185b" stroke="#8a0f3e" stroke-width=".8"/>
-                    <text x="290" y="81" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">⚠ FRAGILE</text>
-
-                    <!-- Robot at home -->
-                    <g transform="translate(28,178)">
-                        <line x1="0" y1="-26" x2="0" y2="-22" stroke="#7a8499" stroke-width="1"/>
-                        <circle cx="0" cy="-28" r="2" fill="#7a8499"/>
-                        <rect x="-8" y="-22" width="16" height="9" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
-                        <circle cx="-2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
-                        <circle cx="2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
-                        <rect x="-9" y="-12" width="18" height="14" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
-                    </g>
-
-                    <!-- Status -->
-                    <text x="130" y="14" fill="#5fcf5f" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Gripper: empty &middot; Dock: 5/5 &middot; FRAGILE on top ✓</text>
-                </svg>
-                <div style="font-size:.74em; color:#7a8499; text-align:center; margin-top:6px; font-style:italic;">Identical end state from both orchestrators &middot; same valid PDDL plan</div>
+    <!-- Cost comparison bars below the warehouse -->
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px; margin: 16px 0;">
+        <div>
+            <div style="font-size:0.82em; color:#1b2838; font-weight:600; margin-bottom:6px; text-align:center;">Iterations to valid plan</div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                <span style="font-size:0.7em; color:#b22222; min-width:72px;">Prompted</span>
+                <div style="flex:1; height:14px; background:#f0e0e0; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
+                <span style="font-size:0.78em; color:#b22222; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">6</span>
             </div>
-
-            <!-- Cost comparison bars -->
-            <div style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:14px; padding: 0 8px;">
-                <div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.78em; margin-bottom:4px;">
-                        <span style="color:#a8b2c8; font-weight:600;">Iterations to valid plan</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
-                        <span style="font-size:0.7em; color:#ff6b6b; min-width:90px;">Prompted GPT-5</span>
-                        <div style="flex:1; height:14px; background:#1a0a0a; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
-                        <span style="font-size:0.78em; color:#ff6b6b; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">6</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:0.7em; color:#5fcf5f; min-width:90px;">HALO</span>
-                        <div style="flex:1; height:14px; background:#0a1a0a; border-radius:3px; overflow:hidden;"><div style="width:66%; height:100%; background:#2e8b2e;"></div></div>
-                        <span style="font-size:0.78em; color:#5fcf5f; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">4</span>
-                    </div>
-                </div>
-
-                <div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.78em; margin-bottom:4px;">
-                        <span style="color:#a8b2c8; font-weight:600;">Orchestrator model calls</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
-                        <span style="font-size:0.7em; color:#ff6b6b; min-width:90px;">Prompted GPT-5</span>
-                        <div style="flex:1; height:14px; background:#1a0a0a; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
-                        <span style="font-size:0.78em; color:#ff6b6b; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">6</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:0.7em; color:#5fcf5f; min-width:90px;">HALO</span>
-                        <div style="flex:1; height:14px; background:#0a1a0a; border-radius:3px; overflow:hidden;"><div style="width:17%; height:100%; background:#2e8b2e;"></div></div>
-                        <span style="font-size:0.78em; color:#5fcf5f; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">1</span>
-                    </div>
-                </div>
-
-                <div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.78em; margin-bottom:4px;">
-                        <span style="color:#a8b2c8; font-weight:600;">Cost per task</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
-                        <span style="font-size:0.7em; color:#ff6b6b; min-width:90px;">Prompted GPT-5</span>
-                        <div style="flex:1; height:14px; background:#1a0a0a; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
-                        <span style="font-size:0.74em; color:#ff6b6b; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:50px; text-align:right;">$0.18</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:0.7em; color:#5fcf5f; min-width:90px;">HALO</span>
-                        <div style="flex:1; height:14px; background:#0a1a0a; border-radius:3px; overflow:hidden;"><div style="width:2.2%; height:100%; background:#2e8b2e;"></div></div>
-                        <span style="font-size:0.74em; color:#5fcf5f; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:50px; text-align:right;">$0.004</span>
-                    </div>
-                </div>
-
-                <div style="text-align:center; padding:8px 12px; background:#0d1f0d; border-radius:6px; border:1px solid #2e8b2e; margin-top:4px;">
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:1.05rem; font-weight:700; color:#5fcf5f;">≈ 45× cheaper</div>
-                    <div style="font-size:0.7em; color:#a8b2c8; margin-top:2px; font-style:italic;">same plan, far less compute</div>
-                </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:0.7em; color:#1a6b1a; min-width:72px;">HALO</span>
+                <div style="flex:1; height:14px; background:#e0f0e0; border-radius:3px; overflow:hidden;"><div style="width:66%; height:100%; background:#2e8b2e;"></div></div>
+                <span style="font-size:0.78em; color:#1a6b1a; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">4</span>
             </div>
         </div>
+        <div>
+            <div style="font-size:0.82em; color:#1b2838; font-weight:600; margin-bottom:6px; text-align:center;">Orchestrator model calls</div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                <span style="font-size:0.7em; color:#b22222; min-width:72px;">Prompted</span>
+                <div style="flex:1; height:14px; background:#f0e0e0; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
+                <span style="font-size:0.78em; color:#b22222; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">6</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:0.7em; color:#1a6b1a; min-width:72px;">HALO</span>
+                <div style="flex:1; height:14px; background:#e0f0e0; border-radius:3px; overflow:hidden;"><div style="width:17%; height:100%; background:#2e8b2e;"></div></div>
+                <span style="font-size:0.78em; color:#1a6b1a; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">1</span>
+            </div>
+        </div>
+        <div>
+            <div style="font-size:0.82em; color:#1b2838; font-weight:600; margin-bottom:6px; text-align:center;">Cost per task</div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                <span style="font-size:0.7em; color:#b22222; min-width:72px;">Prompted</span>
+                <div style="flex:1; height:14px; background:#f0e0e0; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
+                <span style="font-size:0.74em; color:#b22222; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:50px; text-align:right;">$0.18</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:0.7em; color:#1a6b1a; min-width:72px;">HALO</span>
+                <div style="flex:1; height:14px; background:#e0f0e0; border-radius:3px; overflow:hidden;"><div style="width:2.2%; height:100%; background:#2e8b2e;"></div></div>
+                <span style="font-size:0.74em; color:#1a6b1a; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:50px; text-align:right;">$0.004</span>
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center; padding:10px 14px; background:#eaf8ea; border-radius:6px; border:1.5px solid #1a6b1a; margin: 8px 0 16px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:1.1rem; font-weight:700; color:#1a6b1a;">≈ 45× cheaper</div>
+        <div style="font-size:0.78em; color:#1a3a1a; margin-top:2px; font-style:italic;">same plan, far less compute</div>
     </div>
 
     <p>Same 21-agent action space, same validator. The prompted GPT-5-mini pays for a full-state prompt at every step — including the cold start, syntax error, and terminal accept that HALO's hybrid policy resolves by rule. When the decision is genuinely ambiguous (step 3), HALO picks the right agent on the first try where the prompted baseline takes two attempts. Combined effect: fewer iterations, far fewer model calls, ~45× lower per-task cost, the same final plan.</p>
@@ -1950,8 +1796,8 @@ async function runDemo() {
     await delay(2400);
     markDone('pstep2', 'prompted'); markDone('tstep2', 'trained');
 
-    // Step 3 — divergence: plan invalid, fragile order
-    statusEl.textContent = 'Step 3: plan returned but fragile placed second. The ambiguous case — both orchestrators must reason.';
+    // Step 3 — divergence: plan invalid, support chain violated
+    statusEl.textContent = 'Step 3: plan returned but Roof placed before Beam (support chain violated). The ambiguous case — both orchestrators must reason.';
     activate('pstep3'); activate('tstep3');
     await delay(2800);
     markDone('pstep3', 'prompted'); markDone('tstep3', 'trained');
