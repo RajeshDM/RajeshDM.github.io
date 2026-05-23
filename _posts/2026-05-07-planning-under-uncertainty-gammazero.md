@@ -153,6 +153,57 @@ _styles: >
 
   .blog-fullhtml .blog-container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml em { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml a { color: #9aafe6; border-bottom-color: rgba(154,175,230,0.3); }
+  html[data-theme="dark"] .blog-fullhtml a:hover { color: #b8c8f0; border-bottom-color: #b8c8f0; }
+  html[data-theme="dark"] .blog-fullhtml hr { border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml code { background: #2c3237; color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml blockquote { background: #1a1f3a; border-left-color: #9aafe6; color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .subtitle { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1a1530; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .results-block { background: #1a1f3a; border-left-color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .results-block strong { color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .equation-note { background: #1e142e; border-color: #6b3fa0; color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .equation-note::before { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .chart-container { background: #1a2030; }
+  html[data-theme="dark"] .blog-fullhtml .chart-label { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-bar-container { background: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .chart-bar.small-text { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-title { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-subtitle { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .difficulty-header { color: #a8b8b8; background: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .belief-stage { background: #1a1530; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .belief-stage h5 { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .belief-arrow { color: #5a6065; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table th, html[data-theme="dark"] .blog-fullhtml .compare-table td { border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table th { background: #1e2530; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table .yes { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table .no { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table .partial { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .scale-grid { border-color: #5b6abf; }
+  html[data-theme="dark"] .blog-fullhtml .scale-label { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .scale-arrow { color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .video-placeholder { background: #1a1530; border-color: #3a3545; }
+  html[data-theme="dark"] .blog-fullhtml .video-placeholder .play-icon { color: #5a5560; }
+  html[data-theme="dark"] .blog-fullhtml .video-placeholder p { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1a1f3a; border-left-color: #3a4a6a; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .series-nav-links { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a { color: #9aafe6; border-bottom-color: rgba(154,175,230,0.3); }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a:hover { color: #b8c8f0; border-bottom-color: #b8c8f0; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer { background: #15192e; border-color: #3a4a6a; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer strong { color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer p { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer a { color: #9aafe6; border-bottom-color: rgba(154,175,230,0.3); }
+  html[data-theme="dark"] .blog-fullhtml .series-footer a:hover { color: #b8c8f0; border-bottom-color: #b8c8f0; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
 ---
 
 <article class="blog-container">
