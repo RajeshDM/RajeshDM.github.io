@@ -1,0 +1,910 @@
+---
+layout: fullhtml-post
+title: "You Don't Need to Rank All States. Just Rank the Actions in Front of You."
+date: 2026-05-14
+categories: ["Learning for Planning", "My Research"]
+tags: ["planning", "gnn", "action-ranking", "generalization"]
+description: "How a simple shift in learning objective — from global value functions to local action ranking — yields planning policies that generalize 8x beyond training size. A deep dive into GABAR. Part 4 of the Learning for Planning series."
+_styles: >
+  .blog-fullhtml {
+  font-family: 'Charter', 'Georgia', serif;
+  line-height: 1.7;
+  color: #1a1a1a;
+  font-size: 18px;
+  }
+  .blog-fullhtml h1 { font-size: 2em; line-height: 1.2; margin-top: 1.5em; }
+  .blog-fullhtml h2 { font-size: 1.5em; margin-top: 2em; }
+  .blog-fullhtml h3 { font-size: 1.2em; margin-top: 1.5em; }
+  .blog-fullhtml blockquote {
+  border-left: 3px solid #ccc;
+  margin: 1.5em 0;
+  padding: 0.5em 1.5em;
+  color: #555;
+  font-style: italic;
+  }
+  .blog-fullhtml .equation-note {
+  background: #f0f4ff;
+  border: 1px dashed #aac;
+  padding: 10px 15px;
+  margin: 1em 0;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.85em;
+  color: #336;
+  }
+  .blog-fullhtml .equation-note::before {
+  content: "EQUATION (use Substack's equation button): ";
+  font-weight: bold;
+  color: #558;
+  }
+  .blog-fullhtml hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 2.5em 0;
+  }
+  .blog-fullhtml .subtitle {
+  font-size: 1.1em;
+  color: #555;
+  font-style: italic;
+  margin-top: -0.5em;
+  }
+  .blog-fullhtml .results-block {
+  background: #f9f9f9;
+  border-left: 4px solid #2a9d8f;
+  padding: 15px 20px;
+  margin: 1.5em 0;
+  }
+  .blog-fullhtml .results-block strong { color: #264653; }
+  .blog-fullhtml code {
+  background: #f4f4f4;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  }
+
+  .blog-fullhtml .results-chart-container {
+  margin: 25px 0;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 10px;
+  }
+  .blog-fullhtml .chart {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  }
+  .blog-fullhtml .chart-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  }
+  .blog-fullhtml .chart-label {
+  width: 130px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #444;
+  text-align: right;
+  flex-shrink: 0;
+  }
+  .blog-fullhtml .chart-bar-container {
+  flex: 1;
+  height: 24px;
+  background: #eee;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  }
+  .blog-fullhtml .chart-bar {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  font-size: 0.7em;
+  font-weight: 700;
+  color: white;
+  }
+  .blog-fullhtml .chart-bar.small-text {
+  justify-content: flex-start;
+  padding-left: 8px;
+  color: #333;
+  }
+  .blog-fullhtml .difficulty-section {
+  margin-bottom: 15px;
+  }
+  .blog-fullhtml .difficulty-header {
+  font-weight: 700;
+  font-size: 0.85em;
+  color: #555;
+  margin: 12px 0 6px 0;
+  padding: 3px 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  display: inline-block;
+  }
+  .blog-fullhtml .chart-title {
+  text-align: center;
+  margin-bottom: 15px;
+  }
+  .blog-fullhtml .chart-title h4 {
+  font-size: 1em;
+  color: #333;
+  margin: 0;
+  font-style: normal;
+  }
+  .blog-fullhtml .chart-title p {
+  font-size: 0.75em;
+  color: #888;
+  margin: 3px 0 0;
+  }
+  .blog-fullhtml .chart-caption {
+  font-size: 0.75em;
+  color: #777;
+  margin-top: 12px;
+  text-align: center;
+  font-style: italic;
+  }
+  .blog-fullhtml .chart-divider {
+  border-top: 1px solid #ddd;
+  margin: 6px 0 6px 140px;
+  }
+  .blog-fullhtml .image-container {
+  margin: 2em 0;
+  text-align: center;
+  }
+  .blog-fullhtml .image-container img {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  }
+  .blog-fullhtml .image-caption {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
+  }
+
+  .blog-fullhtml .series-nav {
+  background: #e0f5f4;
+  border-left: 4px solid #00A3A1;
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 0 0 32px;
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.92em;
+  }
+  .blog-fullhtml .series-nav strong { color: #006e6c; }
+  .blog-fullhtml .series-nav .series-nav-links {
+  margin-top: 6px;
+  font-size: 0.85em;
+  color: #555;
+  }
+  .blog-fullhtml .series-nav a { color: #006e6c; text-decoration: none; border-bottom: 1px solid #00A3A155; }
+  .blog-fullhtml .series-nav a:hover { color: #004a48; border-bottom-color: #004a48; }
+
+  .blog-fullhtml .series-footer {
+  margin: 3em 0 2em;
+  padding: 20px 22px;
+  background: #f4fbfa;
+  border: 1px solid #c8e8e6;
+  border-radius: 10px;
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  }
+  .blog-fullhtml .series-footer strong { color: #006e6c; }
+  .blog-fullhtml .series-footer p {
+  font-size: 0.9em;
+  color: #444;
+  margin: 8px 0 0;
+  line-height: 1.6;
+  }
+  .blog-fullhtml .series-footer a { color: #006e6c; text-decoration: none; border-bottom: 1px solid #00A3A155; }
+  .blog-fullhtml .series-footer a:hover { color: #004a48; border-bottom-color: #004a48; }
+
+  .blog-fullhtml .vis-container-gabar {
+  margin: 28px -40px; padding: 22px 24px 16px;
+  background: #fff; border: 1px solid #E8E4ED;
+  border-radius: 14px; box-shadow: 0 4px 18px rgba(45,32,68,0.06);
+  font-family: 'Source Sans 3', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  }
+  @media (max-width: 800px) { .blog-fullhtml .vis-container-gabar { margin: 24px 0; } }
+  .blog-fullhtml .vis-exec-title { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; color: #2D2044; font-weight: 700; }
+  .blog-fullhtml .vis-exec-title::after { content:''; display:block; width:60px; height:3px; background:#C5A55A; margin-top:7px; border-radius:2px; }
+  .blog-fullhtml .vis-exec-sub { color: #888; font-size: 0.9em; margin-top: 6px; margin-bottom: 14px; font-style: italic; }
+  .blog-fullhtml .vis-exec-sub a { color: #00807E; }
+  .blog-fullhtml .vis-exec-row { display: flex; gap: 14px; align-items: stretch; }
+  @media (max-width: 700px) { .blog-fullhtml .vis-exec-row { flex-direction: column; } }
+  .blog-fullhtml .vis-warehouse { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .blog-fullhtml .vis-pipeline { flex: 1.1; display: flex; flex-direction: column; min-width: 0; }
+  .blog-fullhtml .vis-exec-label { font-size: 0.68rem; font-weight: 700; color: #6B5B7B; letter-spacing: .1em; text-align: center; margin-bottom: 5px; }
+  .blog-fullhtml .vis-wh-box { background: #FDFCFE; border: 1px solid #D4CDE0; border-radius: 8px; overflow: hidden; padding: 6px; }
+  .blog-fullhtml .vis-wh-box svg { width: 100%; height: auto; }
+  .blog-fullhtml .vis-pl-item { display: flex; align-items: center; gap: 8px; padding: 4px 10px; border-radius: 6px; border: 1.4px solid rgba(39,174,96,.3); background: #fff; margin-bottom: 3px; }
+  .blog-fullhtml .vis-pl-item .pn { width: 19px; height: 19px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: #fff; background: #27AE60; flex-shrink: 0; }
+  .blog-fullhtml .vis-pl-item .pa { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #27AE60; }
+  .blog-fullhtml .vis-pl-item.faded { opacity: 0.18; border-color: #D4CDE0; }
+  .blog-fullhtml .vis-pl-item.faded .pn { background: #D4CDE0; }
+  .blog-fullhtml .vis-pl-item.faded .pa { color: #D4CDE0; }
+  .blog-fullhtml #vis-exec-pipe { background: #F8F6FA; border: 1px solid #E8E4ED; border-radius: 8px; padding: 8px; flex: 1; min-height: 200px; }
+  .blog-fullhtml #vis-exec-pipe svg { width: 100%; height: auto; }
+  .blog-fullhtml .vis-status { margin-top: 8px; padding: 8px 12px; border-radius: 6px; text-align: center; font-size: 0.88rem; font-weight: 600; }
+  .blog-fullhtml .vis-status.go { background: #FFF3E0; color: #E67E22; border: 1px solid rgba(230,126,34,.3); }
+  .blog-fullhtml .vis-status.done { background: #E3F5EC; color: #1E8449; border: 1px solid rgba(30,132,73,.3); }
+  .blog-fullhtml .vis-exec-ctrl { display: flex; gap: 8px; justify-content: center; padding-top: 12px; }
+  .blog-fullhtml .vis-exec-ctrl button {
+  font-family: 'Source Sans 3', sans-serif; padding: 6px 16px; font-size: 0.82rem; font-weight: 600;
+  background: #E5DFE8; color: #2E1A38; border: 1px solid #C0A8CC; border-radius: 5px; cursor: pointer;
+  }
+  .blog-fullhtml .vis-exec-ctrl button:hover:not(:disabled) { background: #D4CDE0; }
+  .blog-fullhtml .vis-exec-ctrl button:disabled { opacity: 0.35; cursor: default; }
+
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+---
+
+<article class="blog-container">
+
+<!-- Series Nav (Learning for Planning · Part 4 of 4) -->
+<div class="series-nav">
+    <strong>Learning for Planning · Part 4 of 4 — the finale</strong>
+    <div class="series-nav-links">
+        ← <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Graph Representations for Planning</a> · This is the series anchor — a deep dive on the GABAR paper.
+    </div>
+</div>
+
+<h1>You Don't Need to Rank All States. Just Rank the Actions in Front of You.</h1>
+
+<p class="subtitle">How a simple shift in learning objective—from global value functions to local action ranking—yields planning policies that generalize 8x beyond training size. A deep dive into GABAR, our NeurIPS 2025 paper.</p>
+
+<hr>
+
+<h2>The Setup: Planning is Hard, and It Gets Harder Fast</h2>
+
+<p>Imagine you're organizing a warehouse. You have 10 packages, a few trucks, and a couple of airplanes. A classical planner can figure out the optimal delivery sequence in seconds. Now scale that to 30 packages across multiple cities. The same planner might run for hours—or never finish at all.</p>
+
+<p>This is the fundamental scaling challenge in classical AI planning. The state space grows exponentially with the number of objects. Planning is NP-hard in most domains. Traditional planners use heuristic search, which works brilliantly on small problems but chokes on large ones.</p>
+
+<p>The natural question: <strong>can we learn planning strategies from small, solvable problems and apply them to large, unsolvable ones?</strong></p>
+
+<p>This is exactly what our paper <em>Graph Neural Network Based Action Ranking for Planning</em> addresses. We present <strong>GABAR</strong>—a system that trains on problems with 6-10 objects and successfully solves problems with 100+ objects, achieving 89% success rate on instances 8x larger than anything it saw during training.</p>
+
+<p style="background:#FDF6E3; border-left:3px solid #C5A55A; padding:10px 14px; font-size:0.9em; color:#5a4400; margin-top:14px; border-radius:0 6px 6px 0;">
+    <strong>Where GABAR sits in the literature.</strong> The two surveys earlier in the series — <a href="/blog/2026/learning-for-planning-what-to-learn/" style="color:#7a5a00;">Part 2 (What to Learn)</a> and <a href="/blog/2026/learning-for-planning-state-as-graph/" style="color:#7a5a00;">Part 3 (Graph Representations)</a> — set up the design space. GABAR is one specific cell: action-ranking objective + grounded-predicate-with-explicit-action-schema-node representation + sequential conditional decoding. Each of the three choices is a response to a specific limitation in prior work. The sections below walk through the technical details of that cell.
+</p>
+
+<hr>
+
+<h2>The Core Insight: Stop Trying to Learn the Hardest Thing</h2>
+
+<p>Most learning-based planning approaches try to learn a <strong>value function</strong> V(s)—an estimate of how far state s is from the goal. The idea is simple: if you know V(s) for every state, you can greedily pick the action that leads to the state with the lowest value.</p>
+
+<p>The problem? This requires <strong>global consistency</strong>. Your value function must correctly rank <em>every reachable state</em> relative to <em>every other reachable state</em>. As the problem grows, the number of states explodes exponentially. Learning a globally consistent function over this space is itself an extremely hard problem—and in domains where optimal planning is NP-hard, there's no reason to believe such a function generalizes to larger instances.</p>
+
+<p>Here's our key realization:</p>
+
+<blockquote>You don't need to rank all states. You only need to rank the actions available <em>right now</em>.</blockquote>
+
+<p>At any given state in a typical planning problem, you might have 5-50 applicable actions. Ranking these is a <em>local</em> problem. You don't need to know anything about states three steps ahead. You just need to identify which of the currently available actions is most promising.</p>
+
+<p>This is a fundamentally simpler learning target:</p>
+<ul>
+    <li><strong>Value function learning</strong>: Learn a function consistent across millions of states</li>
+    <li><strong>Action ranking</strong>: Learn to pick the best among a handful of local options</li>
+</ul>
+
+<p>The difference matters enormously for generalization. Local patterns—"if a block is clear and needs to be somewhere else, pick it up"—tend to transfer across problem sizes. Global value relationships—"this specific state is exactly 17 steps from the goal"—do not.</p>
+
+<h3>What it looks like in action</h3>
+
+<p>Concretely: at every state, GABAR looks at the situation, scores all the applicable actions, and takes the top one. No search tree. No lookahead. The same model weights process the state regardless of how many zones or packages there are. Click through the warehouse example below to see one episode end-to-end.</p>
+
+<div class="vis-container-gabar" id="vis-exec">
+    <div class="vis-exec-title">GABAR Greedy Execution &mdash; warehouse delivery</div>
+    <div class="vis-exec-sub">Same warehouse from <a href="/blog/2026/learning-for-planning-scaling-problem/">Part 1</a>: robot in A, package on C, goal is to deliver to D. Click to step through.</div>
+
+    <div class="vis-exec-row">
+        <div class="vis-warehouse">
+            <div class="vis-exec-label">WAREHOUSE</div>
+            <div class="vis-wh-box">
+                <svg id="vis-exec-wh" viewBox="0 0 320 220" preserveAspectRatio="xMidYMid meet">
+                    <g id="vis-exec-bg"></g>
+                    <g id="vis-exec-robot" style="transition:transform 0.7s ease-in-out"></g>
+                </svg>
+            </div>
+            <div class="vis-exec-label" style="margin-top:8px">PLAN</div>
+            <div id="vis-exec-plan"></div>
+        </div>
+        <div class="vis-pipeline">
+            <div class="vis-exec-label">PIPELINE &mdash; EACH TURN</div>
+            <div id="vis-exec-pipe"></div>
+            <div id="vis-exec-status" class="vis-status"></div>
+        </div>
+    </div>
+
+    <div class="vis-exec-ctrl">
+        <button id="vis-exec-prev" disabled>&larr; Prev step</button>
+        <button id="vis-exec-next">Next step &rarr;</button>
+        <button id="vis-exec-reset">Reset</button>
+    </div>
+</div>
+
+
+
+<script>
+(function(){
+    var C = { purple:'#2D2044', gold:'#C5A55A', blue:'#2471A3', blueBg:'#EAF2FA', violet:'#8E44AD', violetBg:'#F5EDF9', orange:'#E67E22', orangeBg:'#FFF5E6', green:'#27AE60', greenBg:'#EBF9F1', muted:'#6B5B7B', white:'#fff', dim:'#C0A8CC', floor:'#F0EDF3', border:'#D4CDE0', shelf:'#8B7FA0', rob:'#7B5E99', rD:'#4A3360', pkg:'#D68910', pkD:'#B7770A', goal:'#1E8449', gD:'#E3F5EC' };
+
+    var WW = 320, CW = 140, CH = 95, GA = 8;
+    var GW = CW*2 + GA, GH = CH*2 + GA, GX = (WW - GW)/2, GY = 8;
+    var cells = [{id:'a',r:0,c:0},{id:'b',r:0,c:1},{id:'c',r:1,c:0},{id:'d',r:1,c:1}].map(function(c){
+        var x = GX + c.c*(CW+GA), y = GY + c.r*(CH+GA);
+        return { id:c.id, x:x, y:y, cx:x+CW/2, cy:y+CH/2 };
+    });
+    var CM = {}; cells.forEach(function(c){ CM[c.id] = c; });
+    function cc(id){ return { x: CM[id].cx, y: CM[id].cy + 8 }; }
+
+    var TU = [
+        { ra:'a', nx:'c', ac:'move(A, C)',     st:'Bot:A | Pkg:C' },
+        { ra:'c', nx:'c', ac:'pickup(Pkg, C)', st:'Bot:C | Pkg:C' },
+        { ra:'c', nx:'d', ac:'move(C, D)',     st:'Bot:C | Holding' },
+        { ra:'d', nx:'d', ac:'drop(Pkg, D)',   st:'Bot:D | Holding' }
+    ];
+    var STAGES = ['Read state', 'Build graph', 'GNN encode', 'Score actions', 'Execute top'];
+    var turn = -1;
+
+    function renderWarehouse(){
+        var done = (turn >= 4);
+        var rc = done ? 'd' : (turn > 0 ? TU[turn-1].nx : 'a');
+        var holding = (!done) && (turn >= 2 && turn < 4);
+        var pkgOnC = (turn < 2);
+        var pkgOnD = done;
+
+        var s = '<defs><pattern id="tl4" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="' + C.floor + '"/><line x1="0" y1="14" x2="14" y2="14" stroke="' + C.border + '" stroke-width=".2" opacity=".2"/><line x1="14" y1="0" x2="14" y2="14" stroke="' + C.border + '" stroke-width=".2" opacity=".2"/></pattern></defs>';
+        s += '<rect x="' + (GX-2) + '" y="' + (GY-2) + '" width="' + (GW+4) + '" height="' + (GH+4) + '" rx="5" fill="none" stroke="' + C.border + '" stroke-width=".8"/>';
+        cells.forEach(function(c){
+            s += '<rect x="' + c.x + '" y="' + c.y + '" width="' + CW + '" height="' + CH + '" rx="4" fill="url(#tl4)" stroke="' + C.border + '" stroke-width=".4"/>';
+            s += '<text x="' + c.cx + '" y="' + (c.y + CH - 6) + '" text-anchor="middle" fill="' + C.muted + '" font-size="13" font-weight="600">Zone ' + 'ABCD'['abcd'.indexOf(c.id)] + '</text>';
+        });
+
+        if (pkgOnC) {
+            var p = CM.c;
+            s += '<rect x="' + (p.cx-13) + '" y="' + (p.y+18) + '" width="26" height="18" rx="3" fill="' + C.pkg + '" stroke="' + C.pkD + '" stroke-width=".7"/><text x="' + p.cx + '" y="' + (p.y+30) + '" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">PKG</text>';
+        }
+        if (pkgOnD) {
+            var p = CM.d;
+            s += '<rect x="' + (p.cx-13) + '" y="' + (p.y+18) + '" width="26" height="18" rx="3" fill="' + C.pkg + '" stroke="' + C.pkD + '" stroke-width=".7"/><text x="' + p.cx + '" y="' + (p.y+30) + '" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">PKG</text>';
+        }
+        if (!pkgOnD) {
+            var p = CM.d;
+            s += '<rect x="' + (p.cx-13) + '" y="' + (p.y+18) + '" width="26" height="18" rx="3" fill="' + C.gD + '" stroke="' + C.goal + '" stroke-width="1.2" stroke-dasharray="4 3" opacity=".5"/><text x="' + p.cx + '" y="' + (p.y+29) + '" text-anchor="middle" fill="' + C.goal + '" font-size="7" font-weight="700" opacity=".7">GOAL</text>';
+        }
+        document.getElementById('vis-exec-bg').innerHTML = s;
+
+        var rp = cc(rc);
+        var rg = document.getElementById('vis-exec-robot');
+        rg.style.transform = 'translate(' + rp.x + 'px, ' + rp.y + 'px)';
+        var r = '<rect x="-8" y="-10" width="16" height="9" rx="3" fill="' + C.rob + '" stroke="' + C.rD + '" stroke-width=".5"/>';
+        r += '<circle cx="-2.5" cy="-6.5" r="1.6" fill="#E6E0EC"/><circle cx="2.5" cy="-6.5" r="1.6" fill="#E6E0EC"/>';
+        r += '<rect x="-9" y="-1" width="18" height="13" rx="3" fill="' + C.rob + '" stroke="' + C.rD + '" stroke-width=".5"/>';
+        if (holding) r += '<rect x="11" y="-7" width="22" height="14" rx="2" fill="' + C.pkg + '" stroke="' + C.pkD + '" stroke-width=".5"/><text x="22" y="3" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">PKG</text>';
+        rg.innerHTML = r;
+    }
+
+    function renderPipeline(){
+        var done = (turn >= 4);
+        var currentTurn = done ? null : TU[Math.max(0, turn < 0 ? 0 : turn)];
+        var detailLines = [
+            currentTurn ? currentTurn.st : '',
+            'predicates + actions',
+            'L = 3 rounds of GNN',
+            currentTurn ? 'top: ' + currentTurn.ac : '',
+            done ? '✓ goal reached!' : (currentTurn ? 'execute ' + currentTurn.ac : '')
+        ];
+
+        var s = '';
+        var bw = 180, bh = 56, bx = 30, by0 = 14, gap = 10;
+        STAGES.forEach(function(label, i){
+            var y = by0 + i*(bh+gap);
+            var active = (turn === -1 && i === 0) || (turn >= 0 && i === 4) || done;
+            var faded = (turn === -1 && i > 0) || done && i < 4;
+            var bg = active ? C.orangeBg : (faded ? '#F8F6FA' : '#fff');
+            var bd = active ? C.orange : C.muted;
+            s += '<rect x="' + bx + '" y="' + y + '" width="' + bw + '" height="' + bh + '" rx="8" fill="' + bg + '" stroke="' + bd + '" stroke-width="' + (active ? 2 : 1.2) + '" opacity="' + (faded ? 0.45 : 1) + '"/>';
+            s += '<circle cx="' + (bx+18) + '" cy="' + (y+bh/2) + '" r="11" fill="' + bd + '"/>';
+            s += '<text x="' + (bx+18) + '" y="' + (y+bh/2+4) + '" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">' + (i+1) + '</text>';
+            s += '<text x="' + (bx+36) + '" y="' + (y+22) + '" fill="' + (active ? bd : C.muted) + '" font-size="13" font-weight="700" font-family="Playfair Display,Georgia,serif">' + label + '</text>';
+            s += '<text x="' + (bx+36) + '" y="' + (y+40) + '" fill="' + C.muted + '" font-size="11" font-style="italic">' + (detailLines[i] || '') + '</text>';
+            if (i < STAGES.length - 1) {
+                s += '<line x1="' + (bx+bw/2) + '" y1="' + (y+bh+1) + '" x2="' + (bx+bw/2) + '" y2="' + (y+bh+gap-2) + '" stroke="' + C.muted + '" stroke-width="1.5" opacity=".4" marker-end="url(#arr-down)"/>';
+            }
+        });
+
+        s = '<svg viewBox="0 0 240 ' + (by0 + STAGES.length*(bh+gap)) + '" preserveAspectRatio="xMidYMid meet"><defs><marker id="arr-down" markerWidth="8" markerHeight="6" refX="4" refY="5" orient="auto"><path d="M0,0 L4,5 L8,0" fill="none" stroke="' + C.muted + '" stroke-width="1.5"/></marker></defs>' + s + '</svg>';
+
+        document.getElementById('vis-exec-pipe').innerHTML = s;
+
+        var status = document.getElementById('vis-exec-status');
+        if (done) {
+            status.className = 'vis-status done'; status.textContent = '✓ Goal reached after 4 actions';
+        } else if (turn >= 0) {
+            status.className = 'vis-status go'; status.textContent = 'Executed: ' + TU[turn].ac + ' &rarr; loop back';
+            status.innerHTML = 'Executed ' + TU[turn].ac + ' &mdash; goal not met, loop back';
+        } else {
+            status.className = ''; status.textContent = '';
+        }
+    }
+
+    function renderPlan(){
+        var pc = (turn >= 4) ? 4 : Math.max(0, turn);
+        var html = '';
+        for (var i = 0; i < 4; i++) {
+            if (i < pc) html += '<div class="vis-pl-item"><div class="pn">' + (i+1) + '</div><span class="pa">' + TU[i].ac + '</span></div>';
+            else html += '<div class="vis-pl-item faded"><div class="pn">' + (i+1) + '</div><span class="pa">&hellip;</span></div>';
+        }
+        document.getElementById('vis-exec-plan').innerHTML = html;
+    }
+
+    function render(){
+        renderWarehouse();
+        renderPipeline();
+        renderPlan();
+        document.getElementById('vis-exec-prev').disabled = (turn <= -1);
+        document.getElementById('vis-exec-next').disabled = (turn >= 4);
+    }
+
+    document.getElementById('vis-exec-next').addEventListener('click', function(){ if (turn < 4) { turn++; render(); } });
+    document.getElementById('vis-exec-prev').addEventListener('click', function(){ if (turn > -1) { turn--; render(); } });
+    document.getElementById('vis-exec-reset').addEventListener('click', function(){ turn = -1; render(); });
+
+    render();
+})();
+</script>
+
+<hr>
+
+<h2>How GABAR Works: Three Ideas Working Together</h2>
+
+<p>GABAR combines three architectural choices that each address a specific challenge. Let me walk through each one.</p>
+
+<h3>1. Action-Centric Graph Representation</h3>
+
+<p>Most GNN-based planners represent a state as a graph of objects connected by predicates. If block A is on block B, there's an edge between them labeled "on."</p>
+
+<p>We add something new: <strong>action nodes</strong>. Every applicable action in the current state gets its own node in the graph, connected to the objects it involves.</p>
+
+<p>Why does this matter? Consider the action <code>unstack(A, B)</code>—pick up block A from block B. In our graph, this action has explicit edges to both A and B, with edge features encoding:</p>
+<ul>
+    <li>Which parameter position each object fills (A is param 1, B is param 2)</li>
+    <li>Which predicates each object satisfies in this action's context</li>
+</ul>
+
+<p>This gives the GNN direct access to structured action information during message passing. The network doesn't have to <em>infer</em> action applicability from predicate patterns—it's explicitly represented.</p>
+
+<!-- Interactive Graph Visualization -->
+<div class="image-container">
+    <img src="./resources/gabar_framework.png" alt="GABAR Framework showing graph construction">
+    <p class="image-caption">How GABAR converts a planning state to a graph. Object nodes (yellow), predicate nodes (red for current state, green for goals), and action nodes (blue) form a connected graph structure.</p>
+</div>
+
+<h3>2. GNN Encoder with Global Context</h3>
+
+<p>Our GNN processes the graph through 9 rounds of message passing. Each round updates edges, then nodes, then a global summary vector.</p>
+
+<p>The message passing equations (in order):</p>
+
+<div class="equation-note">\mathbf{e}^{l+1}_{ij} = \phi_e([\mathbf{e}^l_{ij}; \mathbf{v}^l_i; \mathbf{v}^l_j; \mathbf{g}^l])</div>
+
+<div class="equation-note">\mathbf{v}^{l+1}_i = \phi_v([\mathbf{v}^l_i; \text{AGG}(\{\mathbf{e}^{l+1}_{ij}\}); \mathbf{g}^l])</div>
+
+<div class="equation-note">\mathbf{g}^{l+1} = \phi_g([\mathbf{g}^l; \text{AGG}(\{\mathbf{v}^{l+1}_i\}); \text{AGG}(\{\mathbf{e}^{l+1}_{ij}\})])</div>
+
+<p>The <strong>global node g</strong> is crucial. As problems scale up, graphs get larger, but the number of GNN rounds stays fixed at 9. Without a global node, information from distant parts of the graph would never reach each other. The global node acts as a communication shortcut—every node reads from it and writes to it at every round, providing global context regardless of graph size.</p>
+
+<h3>3. Conditional GRU Decoder</h3>
+
+<p>Here's a subtlety that matters more than you'd expect. Consider the action <code>drive(truck1, cityA, cityB)</code>. Selecting <code>truck1</code> constrains which cities make sense. Selecting <code>cityA</code> as the origin further constrains <code>cityB</code>. Parameters are <em>interdependent</em>.</p>
+
+<p>Our decoder uses a GRU (Gated Recurrent Unit) that builds actions sequentially:</p>
+<ol>
+    <li>Initialize hidden state from the global graph embedding</li>
+    <li>Score all action schemas, select one (e.g., "drive")</li>
+    <li>Update hidden state with selected action's embedding</li>
+    <li>Score all objects for parameter 1, select one (e.g., "truck1")</li>
+    <li>Update hidden state with selected object's embedding</li>
+    <li>Score all objects for parameter 2, select one (e.g., "cityA")</li>
+    <li>Continue until all parameters are filled</li>
+</ol>
+
+<p>Each selection is conditioned on all previous selections through the GRU's hidden state. We use beam search (width 2) to maintain multiple candidates in parallel, avoiding overly greedy local decisions.</p>
+
+<!-- Architecture Overview -->
+<div class="image-container">
+    <img src="./resources/training_process.png" alt="GABAR Training Pipeline">
+    <p class="image-caption">GABAR's full pipeline: (a) PDDL problem converted to action-centric graph, (b) GNN encoder runs L rounds of message passing, (c) GRU decoder sequentially selects action schema and parameters.</p>
+</div>
+
+<hr>
+
+<h2>Dissecting Each Component: The Ablation Story</h2>
+
+<p>Strong results are nice, but <em>understanding why they work</em> is what makes research useful to others. We ran four ablation experiments, each removing one component of GABAR while keeping everything else intact. The results reveal a clear hierarchy of importance.</p>
+
+<h3>Ablation 1: GABAR-ACT (Remove Action Nodes)</h3>
+
+<p>We strip out all action nodes and action-object edges from the graph, leaving only object and predicate nodes. The network must now infer action quality purely from state features.</p>
+
+<p><strong>Result: Coverage drops from 89.2% to 7.4% on hard problems.</strong></p>
+
+<p>This is the most dramatic drop across all ablations. Without explicit action representation, the network essentially cannot learn to rank actions at all on larger problems. The few problems it solves are likely trivial instances where random action selection might succeed. This confirms that <em>explicitly representing what you're deciding about</em> isn't just helpful—it's essential.</p>
+
+<p>The pattern across difficulties tells the full story:</p>
+<ul>
+    <li>Easy: 95.5% → 33.5% (a 62-point drop)</li>
+    <li>Medium: 92.2% → 18.4% (a 74-point drop)</li>
+    <li>Hard: 89.2% → 7.4% (an 82-point drop)</li>
+</ul>
+
+<p>The gap <em>widens</em> as problems get harder, meaning action nodes become more important, not less, as complexity increases.</p>
+
+<h3>Ablation 2: GABAR-RANK (Replace Ranking with Value Learning)</h3>
+
+<p>This ablation keeps our entire graph representation (including action nodes) and our GRU decoder, but replaces the action ranking objective with a value function learning objective. Instead of learning "which action is best here?", the model now learns "how far is this state from the goal?"</p>
+
+<p><strong>Result: Coverage drops from 89.2% to 12.1% on hard problems.</strong></p>
+
+<p>This is the second-largest drop and arguably the most informative ablation. <em>Same architecture, same graph, same training data</em>—only the learning objective changes. And performance collapses.</p>
+
+<ul>
+    <li>Easy: 95.5% → 40.2%</li>
+    <li>Medium: 92.2% → 27.8%</li>
+    <li>Hard: 89.2% → 12.1%</li>
+</ul>
+
+<p>Plan quality also degrades: the Plan Quality Ratio drops from 0.99 on hard problems to just 0.44 for GABAR-RANK. So even when GABAR-RANK does solve a problem, the plans are significantly worse.</p>
+
+<p>This result directly validates our core thesis. The action-centric graph representation alone isn't enough—you also need the right learning objective. Value functions require global consistency that doesn't generalize; local action ranking requires only local consistency that does.</p>
+
+<p>Interestingly, the GPL baseline (which also learns value functions but uses a simpler graph without action nodes) performs comparably to GABAR-RANK on hard problems (6.5% vs 12.1%). This suggests that adding action nodes to a value-function approach provides only marginal benefit—the fundamental limitation is the value learning objective itself.</p>
+
+<h3>Ablation 3: GABAR-CD (Remove Conditional Decoding)</h3>
+
+<p>Here we replace the sequential GRU decoder with independent parameter selection. Each parameter is chosen independently using only the global embedding, without conditioning on previous selections.</p>
+
+<p><strong>Result: Coverage drops from 89.2% to 60.0% on hard problems.</strong></p>
+
+<ul>
+    <li>Easy: 95.5% → 78.0%</li>
+    <li>Medium: 92.2% → 72.7%</li>
+    <li>Hard: 89.2% → 60.0%</li>
+</ul>
+
+<p>This is a substantial but not catastrophic drop. The model can still solve many problems because the graph representation captures enough information for independent parameter selection to often work. But the 29-point gap on hard problems reveals where conditional decoding matters most: domains with complex inter-parameter dependencies.</p>
+
+<p>The domain-level breakdown is revealing:</p>
+<ul>
+    <li><strong>Logistics</strong> (hard): 71% → 6%. A package being "in a city" and "in a vehicle" simultaneously requires the decoder to understand that vehicle choice constrains city choice.</li>
+    <li><strong>Rovers</strong> (hard): 77% → 19%. Rover capabilities, waypoint accessibility, and experiment requirements create chains of parameter dependencies.</li>
+    <li><strong>Blocks World</strong> (hard): 100% → 81%. Even relatively simple domains benefit from conditional decoding when problems are large.</li>
+    <li><strong>Visitall</strong> (hard): 88% → 83%. Grid navigation has fewer parameter dependencies, so the impact is minimal here.</li>
+</ul>
+
+<p>The takeaway: conditional decoding becomes <em>more critical</em> as the relational complexity of the domain increases.</p>
+
+<h3>Ablation 4: GABAR-G (Remove Global Node)</h3>
+
+<p>We remove the global node from the GNN, forcing all information to flow through local message passing between neighboring nodes.</p>
+
+<p><strong>Result: Coverage drops from 89.2% to 42.5% on hard problems.</strong></p>
+
+<ul>
+    <li>Easy: 95.5% → 80.2%</li>
+    <li>Medium: 92.2% → 69.2%</li>
+    <li>Hard: 89.2% → 42.5%</li>
+</ul>
+
+<p>The performance gap grows with problem difficulty, which makes sense: larger problems have larger graphs, and without the global node, 9 rounds of message passing cannot propagate information across the entire graph. The degradation is especially severe in domains requiring long-range coordination:</p>
+<ul>
+    <li><strong>Logistics</strong> (hard): 71% → 4%. Coordinating trucks and airplanes across cities requires global awareness.</li>
+    <li><strong>Blocks World</strong> (hard): 100% → 32%. Even stacking blocks requires knowing the full tower structure.</li>
+    <li><strong>Visitall</strong> (hard): 88% → 29%. Path planning across a large grid needs global spatial context.</li>
+</ul>
+
+<p>Meanwhile, domains with more local structure are less affected:</p>
+<ul>
+    <li><strong>Gripper</strong> (hard): 100% → 77%. Pick-and-place is relatively local.</li>
+    <li><strong>Rovers</strong> (hard): 77% → 55%. Many rover decisions are locally determined by proximity.</li>
+</ul>
+
+<h3>The Ablation Hierarchy</h3>
+
+<!-- Ablation Study Chart -->
+<div class="results-chart-container">
+    <div class="chart-title">
+        <h4>Ablation Study: Coverage on Hard Problems</h4>
+        <p>Each bar shows coverage when one component is removed</p>
+    </div>
+
+    <div class="chart">
+        <div class="chart-row">
+            <div class="chart-label">Full GABAR</div>
+            <div class="chart-bar-container"><div class="chart-bar" style="width: 89.2%; background: #00A3A1;">89.2%</div></div>
+        </div>
+        <div class="chart-divider" style="margin-left:0"></div>
+        <div class="chart-row">
+            <div class="chart-label" style="color:#c0392b;">- Cond. Decoder</div>
+            <div class="chart-bar-container"><div class="chart-bar" style="width: 60%; background: #e67e22;">60.0%</div></div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-label" style="color:#c0392b;">- Global Node</div>
+            <div class="chart-bar-container"><div class="chart-bar" style="width: 42.5%; background: #e74c3c;">42.5%</div></div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-label" style="color:#c0392b;">- Ranking Obj.</div>
+            <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 12.1%; background: #c0392b;">12.1%</div></div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-label" style="color:#c0392b;">- Action Nodes</div>
+            <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 7.4%; background: #922b21;">7.4%</div></div>
+        </div>
+    </div>
+    <p class="chart-caption">Removing action nodes or the ranking objective causes near-total failure.</p>
+</div>
+
+<p>Summarizing the coverage on hard problems:</p>
+
+<ol>
+    <li><strong>Full GABAR: 89.2%</strong></li>
+    <li>Without conditional decoding (GABAR-CD): 60.0% — a 29-point drop</li>
+    <li>Without global node (GABAR-G): 42.5% — a 47-point drop</li>
+    <li>Without action ranking (GABAR-RANK): 12.1% — a 77-point drop</li>
+    <li>Without action nodes (GABAR-ACT): 7.4% — an 82-point drop</li>
+</ol>
+
+<p>The two most critical components are both about <em>what information is available</em>: the action-centric graph (representing actions explicitly) and the ranking objective (learning the right thing). The decoder and global node are about <em>how that information is processed</em>—important but secondary.</p>
+
+<p>One more revealing data point: <strong>GABAR-ACT_CD</strong> (removing both action nodes AND conditional decoding) achieves only 2% coverage on hard problems and 9% on easy ones. This confirms that these components don't just add independently—they work synergistically. Action nodes provide the information; the conditional decoder exploits the structure of that information.</p>
+
+<hr>
+
+<h2>Results: What the Numbers Actually Mean</h2>
+
+<h3>Generalization That Actually Works</h3>
+
+<p>Coverage (% of problems solved) across difficulty levels, averaged over 8 planning domains:</p>
+
+<p><strong>GABAR:</strong> Easy 95.5% | Medium 92.2% | Hard 89.2%</p>
+<p><strong>GPL (value function):</strong> Easy 79.1% | Medium 28.5% | Hard 6.5%</p>
+<p><strong>ASNets:</strong> Easy 76.0% | Medium 65.4% | Hard 48.5%</p>
+<p><strong>GRAPL (action ranking, no action nodes):</strong> Easy 43.5% | Medium 29.3% | Hard 22.1%</p>
+<p><strong>OpenAI O3:</strong> Easy 33.4% | Medium 11.6% | Hard 0.4%</p>
+<p><strong>Gemini 2.5 Pro:</strong> Easy 44.0% | Medium 17.1% | Hard 1.5%</p>
+
+<!-- Results Coverage Comparison Chart -->
+<div class="results-chart-container">
+    <div class="chart-title">
+        <h4>Coverage (% Problems Solved) by Difficulty</h4>
+        <p>Averaged across 8 planning domains</p>
+    </div>
+
+    <div class="difficulty-section">
+        <div class="difficulty-header">Easy Problems</div>
+        <div class="chart">
+            <div class="chart-row">
+                <div class="chart-label">GABAR (ours)</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 95.5%; background: #00A3A1;">95.5%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">GPL</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 79.1%; background: #7ab8b6;">79.1%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">ASNets</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 76%; background: #9ec5c4;">76.0%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">Gemini 2.5 Pro</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 44%; background: #d4a0e5;">44.0%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">OpenAI O3</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 33.4%; background: #c490d8;">33.4%</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="difficulty-section">
+        <div class="difficulty-header">Medium Problems</div>
+        <div class="chart">
+            <div class="chart-row">
+                <div class="chart-label">GABAR (ours)</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 92.2%; background: #00A3A1;">92.2%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">GPL</div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 28.5%; background: #7ab8b6;">28.5%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">ASNets</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 65.4%; background: #9ec5c4;">65.4%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">Gemini 2.5 Pro</div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 17.1%; background: #d4a0e5;">17.1%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">OpenAI O3</div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 11.6%; background: #c490d8;">11.6%</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="difficulty-section">
+        <div class="difficulty-header">Hard Problems (8x training size)</div>
+        <div class="chart">
+            <div class="chart-row">
+                <div class="chart-label">GABAR (ours)</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 89.2%; background: #00A3A1;">89.2%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">GPL</div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 6.5%; background: #7ab8b6;">6.5%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">ASNets</div>
+                <div class="chart-bar-container"><div class="chart-bar" style="width: 48.5%; background: #9ec5c4;">48.5%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">Gemini 2.5 Pro</div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 3%; background: #d4a0e5;">1.5%</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-label">OpenAI O3</div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 2%; background: #c490d8;">0.4%</div></div>
+            </div>
+        </div>
+    </div>
+    <p class="chart-caption">GABAR maintains ~89% coverage on hard problems while baselines and LLMs collapse below 50%.</p>
+</div>
+
+<p>The coverage drop from easy to hard for GABAR is minimal: 95.5% → 89.2%. Compare this to GPL (79% → 6.5%) or state-of-the-art LLMs (33-44% → 0.4-1.5%).</p>
+
+<p>On Blocks World, Gripper, and Miconic, GABAR achieves <strong>100% success rate at all difficulty levels</strong>—solving 40-block, 100-ball, and 100-passenger problems after training on instances with fewer than 10 objects.</p>
+
+<h3>Plan Quality, Not Just Coverage</h3>
+
+<p>GABAR doesn't just solve more problems—it solves them <em>well</em>. The Plan Quality Ratio (plan length from Fast Downward divided by plan length from GABAR) stays at approximately 1.0 across all difficulties:</p>
+
+<ul>
+    <li>Easy: PQR = 1.04 (GABAR plans are slightly <em>shorter</em> than Fast Downward's)</li>
+    <li>Medium: PQR = 1.01</li>
+    <li>Hard: PQR = 0.99</li>
+</ul>
+
+<p>This means GABAR's plans are comparable in length to those from a state-of-the-art satisficing planner. On several domains, GABAR actually produces <em>shorter</em> plans than Fast Downward's LAMA configuration.</p>
+
+<h3>The LLM Comparison</h3>
+
+<p>We tested OpenAI's O3 and Gemini 2.5 Pro using one-shot prompting. Both essentially collapse on hard problems (0.4% and 1.5% coverage). This isn't surprising—LLMs lack the structural inductive bias needed for systematic relational reasoning over large state spaces. They can pattern-match small planning problems from training data but cannot compose solutions for novel large instances.</p>
+
+<p>The gap is most striking on hard problems: GABAR solves 89% while the best LLM solves 1.5%. This isn't a matter of prompt engineering—it reflects a fundamental architectural mismatch between sequence models and relational reasoning tasks.</p>
+
+<hr>
+
+<h2>The Deeper Lessons: Invariants for Other Research</h2>
+
+<p>Beyond the specific results, GABAR demonstrates several principles that apply broadly.</p>
+
+<h3>1. Local Objectives Can Beat Global Ones</h3>
+
+<p>The most powerful lesson: you often don't need to learn the globally optimal function. If your downstream task only requires <em>local decisions</em>, formulate your learning objective locally.</p>
+
+<p>This applies far beyond planning:</p>
+<ul>
+    <li><strong>Recommendation systems</strong>: Rank the items on <em>this page</em>, don't learn absolute item values</li>
+    <li><strong>Dialogue systems</strong>: Rank the next <em>response candidates</em>, don't model the entire conversation value</li>
+    <li><strong>Compiler optimization</strong>: Rank the transformations applicable <em>now</em>, don't estimate total program quality</li>
+</ul>
+
+<p>The mathematical intuition: a local ranking function needs to be consistent only within each decision point's option set. A global value function needs consistency across <em>all</em> possible inputs. The former is a strictly easier learning problem.</p>
+
+<h3>2. Represent What You're Deciding About</h3>
+
+<p>GABAR's largest performance gain comes from explicitly representing actions in the input. This seems obvious in retrospect: if you want to rank actions, give the network direct access to action structure.</p>
+
+<p>More generally: <strong>your input representation should explicitly encode the entities you're making decisions about</strong>. If you're selecting among candidate programs, represent program structure. If you're choosing among robot trajectories, represent trajectory features. Don't make the network reconstruct this information from indirect signals.</p>
+
+<h3>3. Structure Your Decoder to Match Your Output Structure</h3>
+
+<p>Actions have structure—a schema and ordered parameters with dependencies. Our GRU decoder respects this structure by building actions sequentially, conditioning each choice on previous ones.</p>
+
+<p>The principle: <strong>if your output has compositional structure, decode it compositionally</strong>. This is why autoregressive language models work for text, why graph-to-sequence models work for molecules, and why our conditional decoder works for planning actions.</p>
+
+<h3>4. Global Context Nodes Enable Fixed-Depth Architectures to Scale</h3>
+
+<p>The global node is a simple idea with outsized impact. It lets a fixed-depth GNN (9 layers) process arbitrarily large graphs by providing a "shortcut" for information flow.</p>
+
+<p>This pattern appears in many architectures:</p>
+<ul>
+    <li>[CLS] tokens in transformers</li>
+    <li>Global pooling in graph networks</li>
+    <li>Memory cells in neural Turing machines</li>
+</ul>
+
+<p>If your architecture has fixed depth but variable-size inputs, consider adding an explicit global aggregation mechanism.</p>
+
+<h3>5. Train on Easy, Deploy on Hard</h3>
+
+<p>GABAR is trained exclusively on problems that are trivial for classical planners (solved in milliseconds). The training data is essentially free—no human labeling, no expensive computation, just run a planner on small instances.</p>
+
+<p>This "easy instances as training signal" paradigm works when:</p>
+<ul>
+    <li>The underlying patterns are <strong>compositional</strong> (small-scale structure composes into large-scale behavior)</li>
+    <li>Your architecture has appropriate <strong>inductive biases</strong> (GNNs handle variable-size relational inputs)</li>
+    <li>Your learning objective <strong>doesn't fight scaling</strong> (local ranking vs. global values)</li>
+</ul>
+
+<hr>
+
+<h2>What This Means Going Forward</h2>
+
+<h3>For the Planning Community</h3>
+
+<p>GABAR shows that learned policies can be practical for large planning problems. The 89% success rate on hard instances—combined with plan quality matching classical planners—suggests that learned policies are ready to be taken seriously as planning tools, not just research curiosities.</p>
+
+<p>The approach also complements classical planners rather than replacing them: GABAR uses planners to generate training data, then handles the problems those planners can't solve in reasonable time.</p>
+
+<h3>For the ML Community</h3>
+
+<p>The action ranking vs. value learning comparison (GABAR vs. GABAR-RANK) is a concrete case study in how reformulating the learning objective—without changing the training data or model capacity—can dramatically improve generalization. Same architecture, same graph representation, same training data: 89% vs 12% on hard problems. This is a reminder that the choice of <em>what</em> to learn matters as much as <em>how</em> to learn it.</p>
+
+<h3>For Anyone Building Systems That Generalize</h3>
+
+<p>The combination of structural representation + local objectives + compositional decoding is a recipe that extends beyond planning. Any domain where:</p>
+<ul>
+    <li>Inputs are relational and variable-sized</li>
+    <li>Decisions are local (choosing among current options)</li>
+    <li>Outputs have compositional structure</li>
+</ul>
+
+<p>...is a candidate for this approach. Molecular design, program synthesis, robotic task planning, network optimization—the pattern applies widely.</p>
+
+<hr>
+
+<h2>Technical Details (For Those Who Want Them)</h2>
+
+<ul>
+    <li><strong>Training</strong>: Adam optimizer, lr = 0.0005, batch size 16, hidden dim 64</li>
+    <li><strong>Architecture</strong>: 9 GNN rounds, beam width 2, attention-based aggregation</li>
+    <li><strong>Data</strong>: ~3,000-7,000 training examples per domain, generated by solving random small PDDL instances</li>
+    <li><strong>Training time</strong>: 1-2 hours per domain on a single RTX 3080</li>
+    <li><strong>Evaluation</strong>: 8 standard planning benchmarks (Blocks, Gripper, Miconic, Spanner, Logistics, Rovers, Visitall, Grid)</li>
+    <li><strong>Cycle avoidance</strong>: Maintains visited state history; falls back to next-ranked action if top choice leads to visited state</li>
+    <li><strong>Execution limit</strong>: 1000 steps maximum per problem</li>
+</ul>
+
+<hr>
+
+<h2>Summary</h2>
+
+<p>GABAR demonstrates that a simple conceptual shift—from global value functions to local action ranking—combined with the right structural inductive biases, enables learned planning policies that genuinely generalize. The system trains on toy problems and solves real ones, maintains high plan quality as it scales, and substantially outperforms both classical learning baselines and state-of-the-art LLMs.</p>
+
+<p>The ablation story makes the "why" clear: action nodes provide the right information (82-point impact), the ranking objective asks the right question (77-point impact), the global node enables scaling (47-point impact), and conditional decoding captures output structure (29-point impact). Each component addresses a distinct challenge, and together they enable robust generalization.</p>
+
+<p>The broader takeaway: when you're building a system that needs to generalize, ask yourself—am I trying to learn something harder than I need to? Can I reformulate my objective to be <em>local</em> rather than <em>global</em>? Can I represent my decision space <em>explicitly</em> rather than <em>implicitly</em>? Can I decode my outputs <em>compositionally</em> rather than <em>monolithically</em>?</p>
+
+<p>If the answer to any of these is yes, you might be working harder than necessary.</p>
+
+<hr>
+
+<!-- Series Footer (Learning for Planning) -->
+<div class="series-footer">
+    <strong>Where this fits</strong>
+    <p>You just read the paper deep-dive at the heart of the <em>Learning for Planning</em> series. GABAR closes the classical, fully-observable thread. The series epilogue picks up where this leaves off and bridges to partial observability — beliefs instead of states, observations instead of certainties, MCTS instead of greedy execution.</p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">← <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Graph Representations</a> · <a href="/blog/2026/learning-for-planning-epilogue/">Epilogue: Toward Uncertainty →</a></p>
+</div>
+
+<p><em>This work was presented at NeurIPS 2025. Paper, code, and project page available at the project website.</em></p>
+
+<p><em>Supported by the Army Research Office under grant W911NF2210251.</em></p>
+
+</article>

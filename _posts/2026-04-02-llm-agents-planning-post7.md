@@ -2,7 +2,7 @@
 layout: fullhtml-post
 title: "Training the Conductor"
 date: 2026-04-02
-categories: ["LLMs Automated Planning and Agents"]
+categories: ["LLMs Automated Planning and Agents", "My Research"]
 tags: ["planning", "llm", "orchestrator"]
 description: "Stop prompting the orchestrator at every step. Let the verifier you already trust supervise a small local model — and watch the bill drop by 99%. Part 7 of the Planning in the Era of LLMs series."
 _styles: >

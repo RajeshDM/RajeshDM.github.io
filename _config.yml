@@ -302,7 +302,7 @@ jekyll-archives:
     category: "/blog/category/:name/"
 
 display_tags: ["planning", "reinforcement-learning", "gnn", "llm", "pomdp", "research"] # these tags will be displayed on the front page of your blog
-display_categories: ["My Research", "LLMs Automated Planning and Agents", "Research Life"] # these categories will be displayed on the front page of your blog
+display_categories: ["My Research", "Learning for Planning", "Planning under Uncertainty", "LLMs Automated Planning and Agents", "Research and Life in the Age of AI"] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
