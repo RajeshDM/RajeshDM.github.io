@@ -8,57 +8,57 @@ description: "LLM-Modulo, heuristic generation, and the generate-verify loop tha
 _styles: >
   .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .blog-fullhtml {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      line-height: 1.8;
-      color: #1a1a2e;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.8;
+  color: #1a1a2e;
   }
 
   .blog-fullhtml .hero {
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
-      color: #f0f0f0;
-      padding: 80px 20px 60px;
-      text-align: center;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+  color: #f0f0f0;
+  padding: 80px 20px 60px;
+  text-align: center;
   }
   .blog-fullhtml .hero .series-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #7eb8da;
-      margin-bottom: 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #7eb8da;
+  margin-bottom: 16px;
   }
   .blog-fullhtml .hero h1 {
-      font-size: 2.6rem;
-      font-weight: 700;
-      line-height: 1.25;
-      max-width: 820px;
-      margin: 0 auto 20px;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: 820px;
+  margin: 0 auto 20px;
   }
   .blog-fullhtml .hero .subtitle {
-      font-size: 1.15rem;
-      color: #b0c4de;
-      max-width: 640px;
-      margin: 0 auto 28px;
-      font-style: italic;
+  font-size: 1.15rem;
+  color: #b0c4de;
+  max-width: 640px;
+  margin: 0 auto 28px;
+  font-style: italic;
   }
 
   .blog-fullhtml .blog-container {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
   }
 
   .blog-fullhtml h2 {
-      font-size: 1.85rem;
-      color: #0d1b2a;
-      margin: 56px 0 20px;
-      padding-bottom: 8px;
-      border-bottom: 3px solid #2a4066;
+  font-size: 1.85rem;
+  color: #0d1b2a;
+  margin: 56px 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #2a4066;
   }
   .blog-fullhtml h3 {
-      font-size: 1.35rem;
-      color: #1b2838;
-      margin: 40px 0 14px;
+  font-size: 1.35rem;
+  color: #1b2838;
+  margin: 40px 0 14px;
   }
   .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
   .blog-fullhtml strong { color: #0d1b2a; }
@@ -69,50 +69,50 @@ _styles: >
   .blog-fullhtml li { margin-bottom: 6px; }
 
   .blog-fullhtml .series-nav {
-      background: #f0f4f8;
-      border: 1px solid #d0d8ef;
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-bottom: 32px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.92rem;
-      color: #444;
+  background: #f0f4f8;
+  border: 1px solid #d0d8ef;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.92rem;
+  color: #444;
   }
   .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
   .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
   .blog-fullhtml .series-nav .nav-links {
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: #2a4066;
-      font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: #2a4066;
+  font-weight: 600;
   }
 
   .blog-fullhtml .callout {
-      border-left: 4px solid #2a4066;
-      background: #f0f4f8;
-      padding: 20px 24px;
-      margin: 28px 0;
-      border-radius: 0 6px 6px 0;
+  border-left: 4px solid #2a4066;
+  background: #f0f4f8;
+  padding: 20px 24px;
+  margin: 28px 0;
+  border-radius: 0 6px 6px 0;
   }
   .blog-fullhtml .callout.insight {
-      border-left-color: #228b22;
-      background: #f0faf0;
+  border-left-color: #228b22;
+  background: #f0faf0;
   }
   .blog-fullhtml .callout.warning {
-      border-left-color: #b22222;
-      background: #fdf2f2;
+  border-left-color: #b22222;
+  background: #fdf2f2;
   }
   .blog-fullhtml .callout.question {
-      border-left-color: #d4740e;
-      background: #fef9f0;
+  border-left-color: #d4740e;
+  background: #fef9f0;
   }
   .blog-fullhtml .callout-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
   .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
@@ -120,90 +120,90 @@ _styles: >
   .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
 
   .blog-fullhtml .agentic-sidebar {
-      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
-      border: 1px solid #d4c5f0;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
+  background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+  border: 1px solid #d4c5f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
   }
   .blog-fullhtml .agentic-sidebar .sidebar-title {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #6b3fa0;
-      margin-bottom: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #6b3fa0;
+  margin-bottom: 12px;
   }
   .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
 
   .blog-fullhtml pre {
-      background: #1e1e2e;
-      color: #cdd6f4;
-      padding: 20px 24px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 24px 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 20px 24px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 24px 0;
   }
   .blog-fullhtml code {
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.88em;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.88em;
   }
   .blog-fullhtml p code, .blog-fullhtml li code {
-      background: #e8edf2;
-      padding: 2px 6px;
-      border-radius: 3px;
-      color: #2a4066;
+  background: #e8edf2;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #2a4066;
   }
 
   .blog-fullhtml .vis-container {
-      margin: 2em 0;
-      padding: 1.5em;
-      background: #fafafa;
-      border-radius: 10px;
-      border: 1px solid #eee;
+  margin: 2em 0;
+  padding: 1.5em;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #eee;
   }
   .blog-fullhtml .vis-caption {
-      font-size: 0.85em;
-      color: #666;
-      font-style: italic;
-      margin-top: 10px;
-      text-align: center;
+  font-size: 0.85em;
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
   }
 
   .blog-fullhtml .interactive-container {
-      border: 1px solid #d0d8ef;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
-      background: #fff;
+  border: 1px solid #d0d8ef;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
+  background: #fff;
   }
   .blog-fullhtml .interactive-container .interactive-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      color: #888;
-      margin-bottom: 12px;
-      font-style: italic;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  color: #888;
+  margin-bottom: 12px;
+  font-style: italic;
   }
   .blog-fullhtml .auto-demo-btn {
-      background: #2a9d8f;
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.9em;
-      font-weight: 600;
-      margin-top: 12px;
+  background: #2a9d8f;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-top: 12px;
   }
   .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
 
   .blog-fullhtml .next-post {
-      margin: 56px 0 0; padding: 28px;
-      background: linear-gradient(135deg, #1b2838, #2a4066);
-      border-radius: 10px; color: #e0e8f0;
+  margin: 56px 0 0; padding: 28px;
+  background: linear-gradient(135deg, #1b2838, #2a4066);
+  border-radius: 10px; color: #e0e8f0;
   }
   .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
   .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
@@ -213,182 +213,182 @@ _styles: >
   .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
   .blog-fullhtml .references li { margin-bottom: 8px; }
 
-  .blog-fullhtml footer {
-      text-align: center; padding: 32px 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  .blog-fullhtml .blog-footer {
+  text-align: center; padding: 32px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
   }
 
   .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
 
   .blog-fullhtml .modulo-loop {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      flex-wrap: nowrap;
-      margin: 20px 0;
-      padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  margin: 20px 0;
+  padding: 20px;
   }
   .blog-fullhtml .modulo-node {
-      padding: 16px 22px;
-      border-radius: 10px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: #fff;
-      text-align: center;
-      min-width: 130px;
-      line-height: 1.4;
-      position: relative;
+  padding: 16px 22px;
+  border-radius: 10px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  min-width: 130px;
+  line-height: 1.4;
+  position: relative;
   }
   .blog-fullhtml .modulo-node.llm-gen { background: #6b3fa0; }
   .blog-fullhtml .modulo-node.verifier { background: #228b22; }
   .blog-fullhtml .modulo-node.output { background: #2a9d8f; }
   .blog-fullhtml .modulo-arrow {
-      font-size: 1.6rem;
-      color: #555;
-      padding: 0 12px;
-      font-weight: 700;
-      flex-shrink: 0;
+  font-size: 1.6rem;
+  color: #555;
+  padding: 0 12px;
+  font-weight: 700;
+  flex-shrink: 0;
   }
   .blog-fullhtml .modulo-feedback {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 10px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.8rem;
-      color: #b22222;
-      font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8rem;
+  color: #b22222;
+  font-weight: 600;
   }
   .blog-fullhtml .modulo-feedback-arrow {
-      font-size: 1.8rem;
-      color: #b22222;
-      margin: 0 8px;
+  font-size: 1.8rem;
+  color: #b22222;
+  margin: 0 8px;
   }
 
   .blog-fullhtml .results-chart {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 0;
   }
   .blog-fullhtml .result-row {
-      display: grid;
-      grid-template-columns: 180px 1fr 50px;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
+  display: grid;
+  grid-template-columns: 180px 1fr 50px;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
   }
   .blog-fullhtml .result-label {
-      text-align: right;
-      font-weight: 600;
-      color: #1b2838;
-      font-size: 0.82rem;
+  text-align: right;
+  font-weight: 600;
+  color: #1b2838;
+  font-size: 0.82rem;
   }
   .blog-fullhtml .result-bar-track {
-      height: 28px;
-      background: #e8ecf1;
-      border-radius: 4px;
-      overflow: hidden;
+  height: 28px;
+  background: #e8ecf1;
+  border-radius: 4px;
+  overflow: hidden;
   }
   .blog-fullhtml .result-bar {
-      height: 100%;
-      border-radius: 4px;
+  height: 100%;
+  border-radius: 4px;
   }
   .blog-fullhtml .result-value {
-      font-weight: 700;
-      font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.9rem;
   }
 
   .blog-fullhtml .code-gen-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
   }
   .blog-fullhtml .code-gen-side {
-      border-radius: 10px;
-      overflow: hidden;
+  border-radius: 10px;
+  overflow: hidden;
   }
   .blog-fullhtml .code-gen-header {
-      padding: 10px 16px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+  padding: 10px 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   }
   .blog-fullhtml .code-gen-side.input .code-gen-header {
-      background: #6b3fa0;
-      color: white;
+  background: #6b3fa0;
+  color: white;
   }
   .blog-fullhtml .code-gen-side.output .code-gen-header {
-      background: #228b22;
-      color: white;
+  background: #228b22;
+  color: white;
   }
   .blog-fullhtml .code-gen-side pre {
-      margin: 0;
-      border-radius: 0 0 10px 10px;
-      font-size: 0.78rem;
-      min-height: 200px;
+  margin: 0;
+  border-radius: 0 0 10px 10px;
+  font-size: 0.78rem;
+  min-height: 200px;
   }
 
   .blog-fullhtml .approach-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-      margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
   }
   .blog-fullhtml .approach-card {
-      border-radius: 10px;
-      padding: 18px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  border-radius: 10px;
+  padding: 18px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .approach-card .card-number {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
   }
   .blog-fullhtml .approach-card h4 {
-      font-size: 0.95rem;
-      margin-bottom: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .approach-card p {
-      font-size: 0.82rem;
-      margin-bottom: 8px;
-      line-height: 1.5;
+  font-size: 0.82rem;
+  margin-bottom: 8px;
+  line-height: 1.5;
   }
   .blog-fullhtml .approach-card .card-result {
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 5px 10px;
-      border-radius: 4px;
-      display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
   }
   .blog-fullhtml .approach-card.card-modulo {
-      background: #f0faf0;
-      border: 2px solid #228b22;
+  background: #f0faf0;
+  border: 2px solid #228b22;
   }
   .blog-fullhtml .approach-card.card-modulo .card-number { color: #228b22; }
   .blog-fullhtml .approach-card.card-modulo h4 { color: #1a6b1a; }
   .blog-fullhtml .approach-card.card-modulo p { color: #0a4a0a; }
   .blog-fullhtml .approach-card.card-modulo .card-result { background: #d4edda; color: #155724; }
   .blog-fullhtml .approach-card.card-heuristic {
-      background: #f5f0ff;
-      border: 2px solid #6b3fa0;
+  background: #f5f0ff;
+  border: 2px solid #6b3fa0;
   }
   .blog-fullhtml .approach-card.card-heuristic .card-number { color: #6b3fa0; }
   .blog-fullhtml .approach-card.card-heuristic h4 { color: #5a2d8a; }
   .blog-fullhtml .approach-card.card-heuristic p { color: #3a2060; }
   .blog-fullhtml .approach-card.card-heuristic .card-result { background: #e8ddf5; color: #3a2060; }
   .blog-fullhtml .approach-card.card-tos {
-      background: #fff7ed;
-      border: 2px solid #d4740e;
+  background: #fff7ed;
+  border: 2px solid #d4740e;
   }
   .blog-fullhtml .approach-card.card-tos .card-number { color: #d4740e; }
   .blog-fullhtml .approach-card.card-tos h4 { color: #b35c00; }
@@ -396,161 +396,87 @@ _styles: >
   .blog-fullhtml .approach-card.card-tos .card-result { background: #ffecd0; color: #7a3f00; }
 
   .blog-fullhtml .modulo-demo {
-      width: 960px;
-      max-width: calc(100vw - 40px);
-      margin-left: 50%;
-      transform: translateX(-50%);
-      position: relative;
+  width: 960px;
+  max-width: calc(100vw - 40px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  position: relative;
   }
   .blog-fullhtml .modulo-demo-grid {
-      display: grid;
-      grid-template-columns: 1fr 80px 1fr;
-      gap: 0;
-      align-items: stretch;
-      margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  align-items: stretch;
+  margin-top: 14px;
   }
   .blog-fullhtml .modulo-panel {
-      border-radius: 10px;
-      padding: 18px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
+  border-radius: 10px;
+  padding: 18px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
   }
   .blog-fullhtml .modulo-panel.gen-panel {
-      background: #f5f0ff;
-      border: 2px solid #6b3fa0;
+  background: #f5f0ff;
+  border: 2px solid #6b3fa0;
   }
   .blog-fullhtml .modulo-panel.ver-panel {
-      background: #f0faf0;
-      border: 2px solid #228b22;
+  background: #f0faf0;
+  border: 2px solid #228b22;
   }
   .blog-fullhtml .modulo-panel h4 {
-      font-size: 0.92rem;
-      margin-bottom: 12px;
+  font-size: 0.92rem;
+  margin-bottom: 12px;
   }
   .blog-fullhtml .modulo-panel.gen-panel h4 { color: #6b3fa0; }
   .blog-fullhtml .modulo-panel.ver-panel h4 { color: #228b22; }
   .blog-fullhtml .modulo-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.75rem;
-      color: #888;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.75rem;
+  color: #888;
   }
   .blog-fullhtml .modulo-center .arrow-right { font-size: 2rem; color: #6b3fa0; }
   .blog-fullhtml .modulo-center .arrow-left { font-size: 2rem; color: #b22222; }
   .blog-fullhtml .round-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .round-badge.attempt { background: #e8ddf5; color: #6b3fa0; }
   .blog-fullhtml .round-badge.feedback { background: #fce4e4; color: #b22222; }
   .blog-fullhtml .round-badge.success { background: #d4edda; color: #155724; }
   .blog-fullhtml .step-item {
-      padding: 6px 10px;
-      margin-bottom: 4px;
-      border-radius: 5px;
-      font-size: 0.82rem;
-      line-height: 1.4;
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  line-height: 1.4;
   }
   .blog-fullhtml .step-item.valid { background: #e8f5e9; }
   .blog-fullhtml .step-item.invalid { background: #ffebee; }
   .blog-fullhtml .step-item.corrected { background: #e8f5e9; border-left: 3px solid #228b22; }
-  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   @media (max-width: 700px) {
-      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
-      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
-      .blog-fullhtml .code-gen-panel { grid-template-columns: 1fr; }
-      .blog-fullhtml .approach-cards { grid-template-columns: 1fr; }
-      .blog-fullhtml .modulo-loop { flex-wrap: wrap; gap: 8px; }
-      .blog-fullhtml .modulo-node { min-width: 100px; font-size: 0.82rem; }
-      .blog-fullhtml .modulo-demo-grid { grid-template-columns: 1fr; }
-      .blog-fullhtml .result-row { grid-template-columns: 120px 1fr 40px; }
+  .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+  .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
+  .blog-fullhtml .code-gen-panel { grid-template-columns: 1fr; }
+  .blog-fullhtml .approach-cards { grid-template-columns: 1fr; }
+  .blog-fullhtml .modulo-loop { flex-wrap: wrap; gap: 8px; }
+  .blog-fullhtml .modulo-node { min-width: 100px; font-size: 0.82rem; }
+  .blog-fullhtml .modulo-demo-grid { grid-template-columns: 1fr; }
+  .blog-fullhtml .result-row { grid-template-columns: 120px 1fr 40px; }
   }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
-  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
-  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
-  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; border-left-color: #4682b4; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; border-left-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; border-left-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; border-left-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn:hover { background: #34b8a8; }
-  html[data-theme="dark"] .blog-fullhtml .next-post { background: linear-gradient(135deg, #1b2838, #2a4066); color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .next-post h3 { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .next-post p { color: #b0c4de; }
-  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml footer { color: #6a7888; border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-node.llm-gen { background: #6b3fa0; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-node.verifier { background: #228b22; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-node.output { background: #2a9d8f; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-arrow { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-feedback { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-feedback-arrow { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .result-label { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .result-bar-track { background: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .code-gen-side.input .code-gen-header { background: #6b3fa0; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .code-gen-side.output .code-gen-header { background: #228b22; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-modulo { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-modulo .card-number { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-modulo h4 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-modulo p { color: #a8c8a8; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-modulo .card-result { background: #1a3a1a; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-heuristic { background: #1e142e; border-color: #6b3fa0; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-heuristic .card-number { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-heuristic h4 { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-heuristic p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-heuristic .card-result { background: #2a1e3a; color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-tos { background: #2a2010; border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-tos .card-number { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-tos h4 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-tos p { color: #c8b890; }
-  html[data-theme="dark"] .blog-fullhtml .approach-card.card-tos .card-result { background: #3a2c14; color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-panel.gen-panel { background: #1e142e; border-color: #6b3fa0; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-panel.ver-panel { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-panel.gen-panel h4 { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-panel.ver-panel h4 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-center { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-center .arrow-right { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .modulo-center .arrow-left { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .round-badge.attempt { background: #2a1e3a; color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .round-badge.feedback { background: #2a1414; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .round-badge.success { background: #1a3a1a; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .step-item.valid { background: #1a2a1a; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .step-item.invalid { background: #2a1818; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .step-item.corrected { background: #1a2a1a; color: #5cbf5c; border-left-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 ---
 
 <header class="hero">
@@ -608,7 +534,9 @@ _styles: >
         </div>
         <p class="vis-caption">LLM-Modulo: the LLM generates candidate plans (fast, creative, but unreliable). The formal verifier checks every precondition and effect (slow to build, but mathematically sound). Invalid plans get sent back with specific feedback. This loop converges on valid plans — typically in 2–4 iterations.</p>
     </div>
-<p>Here's why this works. LLMs are excellent at generating <em>plausible</em> plans — plans that look roughly right, with most pieces in approximately the right order. Post 4 showed they get 30% fully correct. But even the 70% that fail are usually <em>close</em> — one or two constraints violated, not total nonsense. The formal verifier catches exactly which constraints fail, and feeds that specific error back to the LLM. The LLM then fixes just that part.</p>
+    
+
+    <p>Here's why this works. LLMs are excellent at generating <em>plausible</em> plans — plans that look roughly right, with most pieces in approximately the right order. Post 4 showed they get 30% fully correct. But even the 70% that fail are usually <em>close</em> — one or two constraints violated, not total nonsense. The formal verifier catches exactly which constraints fail, and feeds that specific error back to the LLM. The LLM then fixes just that part.</p>
 
     <p>This is fundamentally different from self-critique (Post 4), where the LLM tried to verify <em>its own</em> output. Self-critique failed because the LLM couldn't reliably detect violations. LLM-Modulo succeeds because the verifier is a <em>formal tool</em> — a PDDL validator that checks every precondition with mathematical certainty. The feedback isn't "this looks wrong" — it's "step 5 requires <code>(placed beam)</code> to be true, but beam has not been placed."</p>
 
@@ -620,6 +548,55 @@ _styles: >
     <h3>LLM-Modulo on RoboSort</h3>
 
     <p>Let's watch this loop in action on our warehouse robot. The LLM generates a plan for the 5-piece tower assembly. The PDDL verifier (using the domain from Post 2) checks every step.</p>
+
+    <!-- Static RoboSort warehouse panel (shared visual anchor) -->
+    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 16px 0;">
+        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:8px;">RoboSort facility &middot; LLM-Modulo is iterating on this same setup</div>
+        <svg viewBox="0 0 580 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; max-height:220px;">
+            <rect x="10" y="172" width="560" height="18" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+            <rect x="30" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="30" y1="100" x2="140" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="30" y1="135" x2="140" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="85" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf A</text>
+            <rect x="48" y="74" width="34" height="22" rx="3" fill="#e07030" stroke="#a85510" stroke-width=".6"/>
+            <text x="65" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L1</text>
+            <rect x="90" y="74" width="34" height="22" rx="3" fill="#3080c0" stroke="#1c5f8e" stroke-width=".6"/>
+            <text x="107" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L2</text>
+            <rect x="160" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="160" y1="100" x2="270" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="160" y1="135" x2="270" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="215" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf B</text>
+            <rect x="170" y="82" width="90" height="14" rx="3" fill="#d04050" stroke="#a02838" stroke-width=".6"/>
+            <text x="215" y="92" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Beam</text>
+            <rect x="290" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="290" y1="100" x2="400" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="290" y1="135" x2="400" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="345" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf C</text>
+            <rect x="300" y="82" width="56" height="14" rx="3" fill="#30a060" stroke="#1c7040" stroke-width=".6"/>
+            <text x="328" y="92" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">Roof</text>
+            <rect x="364" y="78" width="18" height="22" rx="2" fill="#8050c0" stroke="#5a3580" stroke-width=".6"/>
+            <text x="373" y="92" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">Flag</text>
+            <rect x="430" y="70" width="130" height="100" rx="6" fill="none" stroke="#7a8499" stroke-width="1.2" stroke-dasharray="6 4"/>
+            <line x1="430" y1="170" x2="560" y2="170" stroke="#7a8499" stroke-width="1.5"/>
+            <text x="495" y="120" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700" letter-spacing="1">BUILD ZONE</text>
+            <g transform="translate(38,178)">
+                <line x1="0" y1="-30" x2="0" y2="-26" stroke="#8050c0" stroke-width="1.2"/>
+                <circle cx="0" cy="-32" r="2.5" fill="#8050c0"/>
+                <rect x="-12" y="-25" width="24" height="18" rx="3" fill="#8050c0" stroke="#5a3580" stroke-width=".8"/>
+                <circle cx="-4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <circle cx="4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <rect x="-3" y="-7" width="6" height="3" rx="1" fill="#5a3580"/>
+                <circle cx="-7" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="0" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="7" cy="-1" r="3" fill="#3a4055"/>
+                <text x="0" y="9" text-anchor="middle" fill="#8050c0" font-size="9" font-weight="700">RoboSort</text>
+            </g>
+            <text x="120" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Gripper: empty</text>
+            <text x="270" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">|</text>
+            <text x="370" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Tower: 0/5 pieces</text>
+        </svg>
+        <div style="font-size:.78em; color:#7a8499; text-align:center; margin-top:8px; font-style:italic;">Same warehouse as Posts 1–4 &middot; LLM-Modulo iterates plan-generation with the PDDL verifier until all 5 pieces stack bottom-up</div>
+    </div>
 
     <div class="interactive-container">
         <div class="interactive-label">Interactive — click "▶ Run LLM-Modulo" to watch the generate-verify loop converge on a valid RoboSort plan</div>
@@ -657,6 +634,73 @@ _styles: >
             <div style="text-align: center; margin-top: 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
                 <span id="roundCounter" style="font-size: 0.85rem; color: #888;"></span>
             </div>
+        </div>
+    </div>
+
+    <!-- Success-state visualization: what the warehouse looks like AFTER LLM-Modulo converges -->
+    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 20px 0;">
+        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:8px;">After the loop converges &middot; RoboSort executes the verified plan</div>
+        <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; max-height:220px;">
+            <!-- Floor -->
+            <rect x="10" y="172" width="580" height="18" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+
+            <!-- Empty shelves (pieces have been moved) -->
+            <rect x="30" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="30" y1="100" x2="140" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="30" y1="135" x2="140" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="85" y="32" text-anchor="middle" fill="#5a6075" font-size="11" font-weight="700">Shelf A</text>
+            <text x="85" y="85" text-anchor="middle" fill="#3a4055" font-size="9" font-style="italic" opacity=".7">(empty)</text>
+
+            <rect x="160" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="160" y1="100" x2="270" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="160" y1="135" x2="270" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="215" y="32" text-anchor="middle" fill="#5a6075" font-size="11" font-weight="700">Shelf B</text>
+            <text x="215" y="85" text-anchor="middle" fill="#3a4055" font-size="9" font-style="italic" opacity=".7">(empty)</text>
+
+            <rect x="290" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="290" y1="100" x2="400" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="290" y1="135" x2="400" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="345" y="32" text-anchor="middle" fill="#5a6075" font-size="11" font-weight="700">Shelf C</text>
+            <text x="345" y="85" text-anchor="middle" fill="#3a4055" font-size="9" font-style="italic" opacity=".7">(empty)</text>
+
+            <!-- Build Zone with completed tower -->
+            <rect x="430" y="40" width="150" height="130" rx="6" fill="#0a1a0a" stroke="#2e8b2e" stroke-width="1.5"/>
+            <line x1="430" y1="170" x2="580" y2="170" stroke="#2e8b2e" stroke-width="1.5"/>
+            <text x="505" y="32" text-anchor="middle" fill="#5fcf5f" font-size="11" font-weight="700" letter-spacing="1">BUILD ZONE</text>
+
+            <!-- Completed tower: L1 → L2 → Beam → Roof → Flag -->
+            <rect x="488" y="142" width="34" height="22" rx="3" fill="#e07030" stroke="#a85510" stroke-width=".6"/>
+            <text x="505" y="157" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L1</text>
+            <rect x="488" y="118" width="34" height="22" rx="3" fill="#3080c0" stroke="#1c5f8e" stroke-width=".6"/>
+            <text x="505" y="133" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L2</text>
+            <rect x="465" y="102" width="80" height="14" rx="3" fill="#d04050" stroke="#a02838" stroke-width=".6"/>
+            <text x="505" y="113" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Beam</text>
+            <rect x="475" y="86" width="60" height="14" rx="3" fill="#30a060" stroke="#1c7040" stroke-width=".6"/>
+            <text x="505" y="97" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Roof</text>
+            <rect x="496" y="62" width="18" height="22" rx="2" fill="#8050c0" stroke="#5a3580" stroke-width=".6"/>
+            <text x="505" y="76" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">Flag</text>
+
+            <!-- Robot at home, idle, gripper empty -->
+            <g transform="translate(38,178)">
+                <line x1="0" y1="-30" x2="0" y2="-26" stroke="#8050c0" stroke-width="1.2"/>
+                <circle cx="0" cy="-32" r="2.5" fill="#8050c0"/>
+                <rect x="-12" y="-25" width="24" height="18" rx="3" fill="#8050c0" stroke="#5a3580" stroke-width=".8"/>
+                <circle cx="-4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <circle cx="4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <rect x="-3" y="-7" width="6" height="3" rx="1" fill="#5a3580"/>
+                <circle cx="-7" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="0" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="7" cy="-1" r="3" fill="#3a4055"/>
+                <text x="0" y="9" text-anchor="middle" fill="#8050c0" font-size="9" font-weight="700">RoboSort</text>
+            </g>
+
+            <!-- Success status -->
+            <text x="200" y="14" fill="#5fcf5f" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Gripper: empty</text>
+            <text x="320" y="14" fill="#5fcf5f" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">|</text>
+            <text x="420" y="14" fill="#5fcf5f" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Tower: 5/5 pieces ✓</text>
+        </svg>
+        <div style="margin-top:10px; padding:8px 12px; background:#0d1f0d; border-radius:6px; border-left:3px solid #2e8b2e;">
+            <p style="font-size:0.85em; color:#cdd6f4; line-height:1.5; margin:0;"><strong style="color:#5fcf5f;">Same warehouse, same 5 pieces, same prompt as Post 4.</strong> What changed: the LLM's output was checked by the PDDL verifier, the rejection sent the LLM back for another try with a hint, and the second draft passed every precondition. Two iterations, one tower.</p>
         </div>
     </div>
 
@@ -712,7 +756,9 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">The LLM generates a domain-specific heuristic for RoboSort. The function counts unplaced pieces and estimates ~4 actions per piece (move, pick, move, place). This is crude but effective — it gives the search engine a domain-aware signal that h<sub>FF</sub> alone doesn't have.</p>
     </div>
-<p>Why does this work so well? The LLM understands the <em>domain semantics</em> — it knows that warehouse robots need to travel between shelves, that each piece requires multiple actions, and that holding a piece reduces remaining work. Domain-independent heuristics like h<sub>FF</sub> compute estimates purely from the PDDL structure, ignoring this semantic understanding. The LLM-generated heuristic captures domain knowledge that would take a human expert hours to encode.</p>
+    
+
+    <p>Why does this work so well? The LLM understands the <em>domain semantics</em> — it knows that warehouse robots need to travel between shelves, that each piece requires multiple actions, and that holding a piece reduces remaining work. Domain-independent heuristics like h<sub>FF</sub> compute estimates purely from the PDDL structure, ignoring this semantic understanding. The LLM-generated heuristic captures domain knowledge that would take a human expert hours to encode.</p>
 
     <p>Critically, the heuristic <strong>doesn't need to be correct</strong>. It just needs to be roughly right — pointing the search in the right direction. If the LLM's heuristic overestimates or underestimates, the search engine compensates. A bad heuristic makes search slower but doesn't make the plan wrong — the planner still checks every precondition. This is the beauty of the setup: the LLM contributes <em>guidance</em>, and the formal system contributes <em>guarantees</em>.</p>
 
@@ -776,7 +822,9 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">Three approaches, one principle: the LLM contributes domain understanding and creative generation; the formal system contributes correctness guarantees. The division of labor matches each system's strengths.</p>
     </div>
-<!-- ============================== -->
+    
+
+    <!-- ============================== -->
     <!-- SECTION 6: The Results         -->
     <!-- ============================== -->
 
@@ -833,7 +881,9 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">The dramatic improvement of Paradigm 1 approaches over LLM-only methods. LLM-Modulo achieves ~82% by adding formal verification to the loop. Data patterns from Kambhampati et al. (2024), Katz et al. (2025).</p>
     </div>
-<p>Several things stand out:</p>
+    
+
+    <p>Several things stand out:</p>
 
     <ol>
         <li><strong>The gap from 30% to 82% comes entirely from formal verification.</strong> The LLM is the same. The prompting is similar. The only difference: instead of trusting the LLM's output, you verify it and feed back errors. This simple architectural change nearly triples accuracy.</li>
@@ -880,7 +930,9 @@ shelf-b)", "holding(beam)"}).</code></pre>
         </div>
         <p class="vis-caption">As problem complexity grows, the LLM's accuracy drops sharply (30% → 5%) while LLM-Modulo degrades gracefully (82% → 70%). The formal verifier becomes more valuable as problems get harder.</p>
     </div>
-<p>The scaling pattern is clear. As problems grow, LLMs alone degrade rapidly — their context window fills up, state tracking becomes impossible, and constraint violations multiply. But the formal tools don't degrade. PDDL validators check constraints in polynomial time regardless of problem size. The combination degrades gracefully because the formal backbone provides structural support that scales.</p>
+    
+
+    <p>The scaling pattern is clear. As problems grow, LLMs alone degrade rapidly — their context window fills up, state tracking becomes impossible, and constraint violations multiply. But the formal tools don't degrade. PDDL validators check constraints in polynomial time regardless of problem size. The combination degrades gracefully because the formal backbone provides structural support that scales.</p>
 
     <!-- ============================== -->
     <!-- SECTION 8: The Remaining Gap   -->
@@ -937,6 +989,8 @@ shelf-b)", "holding(beam)"}).</code></pre>
     </div>
 
     <!-- Download All -->
+    
+
 </article>
 
 <div class="blog-footer">

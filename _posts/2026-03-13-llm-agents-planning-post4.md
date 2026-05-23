@@ -8,57 +8,57 @@ description: "PlanBench, Mystery Blocksworld, and the sobering evidence that fro
 _styles: >
   .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .blog-fullhtml {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      line-height: 1.8;
-      color: #1a1a2e;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.8;
+  color: #1a1a2e;
   }
 
   .blog-fullhtml .hero {
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
-      color: #f0f0f0;
-      padding: 80px 20px 60px;
-      text-align: center;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+  color: #f0f0f0;
+  padding: 80px 20px 60px;
+  text-align: center;
   }
   .blog-fullhtml .hero .series-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #7eb8da;
-      margin-bottom: 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #7eb8da;
+  margin-bottom: 16px;
   }
   .blog-fullhtml .hero h1 {
-      font-size: 2.6rem;
-      font-weight: 700;
-      line-height: 1.25;
-      max-width: 820px;
-      margin: 0 auto 20px;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: 820px;
+  margin: 0 auto 20px;
   }
   .blog-fullhtml .hero .subtitle {
-      font-size: 1.15rem;
-      color: #b0c4de;
-      max-width: 640px;
-      margin: 0 auto 28px;
-      font-style: italic;
+  font-size: 1.15rem;
+  color: #b0c4de;
+  max-width: 640px;
+  margin: 0 auto 28px;
+  font-style: italic;
   }
 
   .blog-fullhtml .blog-container {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
   }
 
   .blog-fullhtml h2 {
-      font-size: 1.85rem;
-      color: #0d1b2a;
-      margin: 56px 0 20px;
-      padding-bottom: 8px;
-      border-bottom: 3px solid #2a4066;
+  font-size: 1.85rem;
+  color: #0d1b2a;
+  margin: 56px 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #2a4066;
   }
   .blog-fullhtml h3 {
-      font-size: 1.35rem;
-      color: #1b2838;
-      margin: 40px 0 14px;
+  font-size: 1.35rem;
+  color: #1b2838;
+  margin: 40px 0 14px;
   }
   .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
   .blog-fullhtml strong { color: #0d1b2a; }
@@ -69,50 +69,50 @@ _styles: >
   .blog-fullhtml li { margin-bottom: 6px; }
 
   .blog-fullhtml .series-nav {
-      background: #f0f4f8;
-      border: 1px solid #d0d8ef;
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-bottom: 32px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.92rem;
-      color: #444;
+  background: #f0f4f8;
+  border: 1px solid #d0d8ef;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.92rem;
+  color: #444;
   }
   .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
   .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
   .blog-fullhtml .series-nav .nav-links {
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: #2a4066;
-      font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: #2a4066;
+  font-weight: 600;
   }
 
   .blog-fullhtml .callout {
-      border-left: 4px solid #2a4066;
-      background: #f0f4f8;
-      padding: 20px 24px;
-      margin: 28px 0;
-      border-radius: 0 6px 6px 0;
+  border-left: 4px solid #2a4066;
+  background: #f0f4f8;
+  padding: 20px 24px;
+  margin: 28px 0;
+  border-radius: 0 6px 6px 0;
   }
   .blog-fullhtml .callout.insight {
-      border-left-color: #228b22;
-      background: #f0faf0;
+  border-left-color: #228b22;
+  background: #f0faf0;
   }
   .blog-fullhtml .callout.warning {
-      border-left-color: #b22222;
-      background: #fdf2f2;
+  border-left-color: #b22222;
+  background: #fdf2f2;
   }
   .blog-fullhtml .callout.question {
-      border-left-color: #d4740e;
-      background: #fef9f0;
+  border-left-color: #d4740e;
+  background: #fef9f0;
   }
   .blog-fullhtml .callout-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
   .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
@@ -120,77 +120,77 @@ _styles: >
   .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
 
   .blog-fullhtml .agentic-sidebar {
-      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
-      border: 1px solid #d4c5f0;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
+  background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+  border: 1px solid #d4c5f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
   }
   .blog-fullhtml .agentic-sidebar .sidebar-title {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #6b3fa0;
-      margin-bottom: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #6b3fa0;
+  margin-bottom: 12px;
   }
   .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
 
   .blog-fullhtml pre {
-      background: #1e1e2e;
-      color: #cdd6f4;
-      padding: 20px 24px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 24px 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 20px 24px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 24px 0;
   }
   .blog-fullhtml code {
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.88em;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.88em;
   }
   .blog-fullhtml p code, .blog-fullhtml li code {
-      background: #e8edf2;
-      padding: 2px 6px;
-      border-radius: 3px;
-      color: #2a4066;
+  background: #e8edf2;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #2a4066;
   }
 
   .blog-fullhtml .vis-container {
-      margin: 2em 0;
-      padding: 1.5em;
-      background: #fafafa;
-      border-radius: 10px;
-      border: 1px solid #eee;
+  margin: 2em 0;
+  padding: 1.5em;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #eee;
   }
   .blog-fullhtml .vis-caption {
-      font-size: 0.85em;
-      color: #666;
-      font-style: italic;
-      margin-top: 10px;
-      text-align: center;
+  font-size: 0.85em;
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
   }
 
   .blog-fullhtml .interactive-container {
-      border: 1px solid #d0d8ef;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
-      background: #fff;
+  border: 1px solid #d0d8ef;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
+  background: #fff;
   }
   .blog-fullhtml .interactive-container .interactive-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      color: #888;
-      margin-bottom: 12px;
-      font-style: italic;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  color: #888;
+  margin-bottom: 12px;
+  font-style: italic;
   }
 
   .blog-fullhtml .next-post {
-      margin: 56px 0 0; padding: 28px;
-      background: linear-gradient(135deg, #1b2838, #2a4066);
-      border-radius: 10px; color: #e0e8f0;
+  margin: 56px 0 0; padding: 28px;
+  background: linear-gradient(135deg, #1b2838, #2a4066);
+  border-radius: 10px; color: #e0e8f0;
   }
   .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
   .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
@@ -200,121 +200,121 @@ _styles: >
   .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
   .blog-fullhtml .references li { margin-bottom: 8px; }
 
-  .blog-fullhtml footer {
-      text-align: center; padding: 32px 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  .blog-fullhtml .blog-footer {
+  text-align: center; padding: 32px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
   }
 
   .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
 
   .blog-fullhtml .benchmark-chart {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 0;
   }
   .blog-fullhtml .bench-row {
-      display: grid;
-      grid-template-columns: 140px 1fr 50px;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
+  display: grid;
+  grid-template-columns: 140px 1fr 50px;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
   }
   .blog-fullhtml .bench-label {
-      text-align: right;
-      font-weight: 600;
-      color: #1b2838;
+  text-align: right;
+  font-weight: 600;
+  color: #1b2838;
   }
   .blog-fullhtml .bench-bar-track {
-      height: 28px;
-      background: #e8ecf1;
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
+  height: 28px;
+  background: #e8ecf1;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
   }
   .blog-fullhtml .bench-bar {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 1.5s ease-out;
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.5s ease-out;
   }
   .blog-fullhtml .bench-value {
-      font-weight: 700;
-      color: #1b2838;
-      font-size: 0.9rem;
+  font-weight: 700;
+  color: #1b2838;
+  font-size: 0.9rem;
   }
 
   .blog-fullhtml .mystery-comparison {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
   }
   .blog-fullhtml .mystery-panel {
-      border-radius: 10px;
-      padding: 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  border-radius: 10px;
+  padding: 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .mystery-panel.original {
-      background: #f0faf0;
-      border: 2px solid #228b22;
+  background: #f0faf0;
+  border: 2px solid #228b22;
   }
   .blog-fullhtml .mystery-panel.obfuscated {
-      background: #fdf2f2;
-      border: 2px solid #b22222;
+  background: #fdf2f2;
+  border: 2px solid #b22222;
   }
   .blog-fullhtml .mystery-panel h4 {
-      font-size: 0.95rem;
-      margin-bottom: 12px;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
   }
   .blog-fullhtml .mystery-panel.original h4 { color: #228b22; }
   .blog-fullhtml .mystery-panel.obfuscated h4 { color: #b22222; }
   .blog-fullhtml .mystery-panel pre {
-      font-size: 0.78rem;
-      padding: 14px;
-      margin: 0;
-      background: #1e1e2e;
-      border-radius: 6px;
+  font-size: 0.78rem;
+  padding: 14px;
+  margin: 0;
+  background: #1e1e2e;
+  border-radius: 6px;
   }
   .blog-fullhtml .mystery-result {
-      margin-top: 10px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-align: center;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
   }
   .blog-fullhtml .mystery-result.pass {
-      background: #d4edda;
-      color: #155724;
+  background: #d4edda;
+  color: #155724;
   }
   .blog-fullhtml .mystery-result.fail {
-      background: #f8d7da;
-      color: #721c24;
+  background: #f8d7da;
+  color: #721c24;
   }
 
   .blog-fullhtml .strategy-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.88rem;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.88rem;
   }
   .blog-fullhtml .strategy-table th {
-      background: #1b2838;
-      color: #e0e8f0;
-      padding: 12px 16px;
-      text-align: left;
-      font-weight: 600;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+  background: #1b2838;
+  color: #e0e8f0;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   }
   .blog-fullhtml .strategy-table td {
-      padding: 10px 16px;
-      border-bottom: 1px solid #e0e4ea;
-      vertical-align: top;
+  padding: 10px 16px;
+  border-bottom: 1px solid #e0e4ea;
+  vertical-align: top;
   }
   .blog-fullhtml .strategy-table tr:nth-child(even) { background: #f8fafc; }
   .blog-fullhtml .strategy-table tr:hover { background: #edf2f7; }
@@ -323,124 +323,124 @@ _styles: >
   .blog-fullhtml .strategy-table .score-ok { color: #d4740e; font-weight: 700; }
 
   .blog-fullhtml .taxonomy-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
   }
   .blog-fullhtml .taxonomy-card {
-      border-radius: 10px;
-      padding: 18px 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  border-radius: 10px;
+  padding: 18px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .taxonomy-card .tax-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
   }
   .blog-fullhtml .taxonomy-card h4 {
-      font-size: 1rem;
-      margin-bottom: 8px;
+  font-size: 1rem;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .taxonomy-card p {
-      font-size: 0.85rem;
-      margin-bottom: 0;
+  font-size: 0.85rem;
+  margin-bottom: 0;
   }
   .blog-fullhtml .taxonomy-card.role-direct {
-      background: #fdf2f2;
-      border: 2px solid #b22222;
+  background: #fdf2f2;
+  border: 2px solid #b22222;
   }
   .blog-fullhtml .taxonomy-card.role-direct .tax-label { color: #b22222; }
   .blog-fullhtml .taxonomy-card.role-direct h4 { color: #8b1a1a; }
   .blog-fullhtml .taxonomy-card.role-direct p { color: #5a1010; }
   .blog-fullhtml .taxonomy-card.role-heuristic {
-      background: #f0faf0;
-      border: 2px solid #228b22;
+  background: #f0faf0;
+  border: 2px solid #228b22;
   }
   .blog-fullhtml .taxonomy-card.role-heuristic .tax-label { color: #228b22; }
   .blog-fullhtml .taxonomy-card.role-heuristic h4 { color: #1a6b1a; }
   .blog-fullhtml .taxonomy-card.role-heuristic p { color: #0a4a0a; }
   .blog-fullhtml .taxonomy-card.role-translator {
-      background: #fff7ed;
-      border: 2px solid #d4740e;
+  background: #fff7ed;
+  border: 2px solid #d4740e;
   }
   .blog-fullhtml .taxonomy-card.role-translator .tax-label { color: #d4740e; }
   .blog-fullhtml .taxonomy-card.role-translator h4 { color: #b35c00; }
   .blog-fullhtml .taxonomy-card.role-translator p { color: #7a3f00; }
   .blog-fullhtml .taxonomy-card.role-verifier {
-      background: #f5f0ff;
-      border: 2px solid #6b3fa0;
+  background: #f5f0ff;
+  border: 2px solid #6b3fa0;
   }
   .blog-fullhtml .taxonomy-card.role-verifier .tax-label { color: #6b3fa0; }
   .blog-fullhtml .taxonomy-card.role-verifier h4 { color: #5a2d8a; }
   .blog-fullhtml .taxonomy-card.role-verifier p { color: #3a2060; }
 
   .blog-fullhtml .llm-demo-container {
-      width: 960px;
-      max-width: calc(100vw - 40px);
-      margin-left: 50%;
-      transform: translateX(-50%);
-      position: relative;
+  width: 960px;
+  max-width: calc(100vw - 40px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  position: relative;
   }
   .blog-fullhtml .llm-demo-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 14px;
   }
   .blog-fullhtml .llm-panel {
-      border-radius: 10px;
-      padding: 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      min-height: 400px;
+  border-radius: 10px;
+  padding: 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  min-height: 400px;
   }
   .blog-fullhtml .llm-panel.gpt-panel {
-      background: #fdf8f0;
-      border: 2px solid #d4740e;
+  background: #fdf8f0;
+  border: 2px solid #d4740e;
   }
   .blog-fullhtml .llm-panel.planner-panel {
-      background: #f0faf0;
-      border: 2px solid #228b22;
+  background: #f0faf0;
+  border: 2px solid #228b22;
   }
   .blog-fullhtml .llm-panel h4 {
-      font-size: 0.95rem;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   }
   .blog-fullhtml .llm-panel.gpt-panel h4 { color: #b35c00; }
   .blog-fullhtml .llm-panel.planner-panel h4 { color: #1a6b1a; }
   .blog-fullhtml .step-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      font-size: 0.85rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
   }
   .blog-fullhtml .step-list li {
-      padding: 8px 12px;
-      margin-bottom: 6px;
-      border-radius: 6px;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      line-height: 1.5;
-      transition: all 0.3s ease;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+  transition: all 0.3s ease;
   }
   .blog-fullhtml .step-list li .step-icon {
-      flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: #fff;
-      margin-top: 2px;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2px;
   }
   .blog-fullhtml .step-ok .step-icon { background: #228b22; }
   .blog-fullhtml .step-fail .step-icon { background: #b22222; }
@@ -449,192 +449,106 @@ _styles: >
   .blog-fullhtml .step-neutral { background: #f5f5f5; }
   .blog-fullhtml .step-neutral .step-icon { background: #888; }
   .blog-fullhtml .step-highlight {
-      border: 2px solid #d4740e;
-      background: #fff3e0 !important;
+  border: 2px solid #d4740e;
+  background: #fff3e0 !important;
   }
   .blog-fullhtml .demo-verdict {
-      margin-top: 16px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-align: center;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
   }
   .blog-fullhtml .demo-verdict.fail {
-      background: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f0b8b8;
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f0b8b8;
   }
   .blog-fullhtml .demo-verdict.pass {
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #b5e8b5;
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #b5e8b5;
   }
 
   .blog-fullhtml .failure-counter {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin: 20px 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 20px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .counter-item {
-      text-align: center;
+  text-align: center;
   }
   .blog-fullhtml .counter-value {
-      font-size: 2.5rem;
-      font-weight: 800;
-      line-height: 1;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
   }
   .blog-fullhtml .counter-value.bad { color: #b22222; }
   .blog-fullhtml .counter-value.good { color: #228b22; }
   .blog-fullhtml .counter-label {
-      font-size: 0.75rem;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 4px;
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
   }
 
   .blog-fullhtml .chat-exchange {
-      margin: 20px 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 20px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .chat-bubble {
-      padding: 14px 18px;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      max-width: 92%;
-      position: relative;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 92%;
+  position: relative;
   }
   .blog-fullhtml .chat-bubble.user {
-      background: #2a4066;
-      color: #e8edf5;
-      margin-left: auto;
-      border-bottom-right-radius: 4px;
+  background: #2a4066;
+  color: #e8edf5;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
   }
   .blog-fullhtml .chat-bubble.llm {
-      background: #f0f4f8;
-      color: #1a1a2e;
-      border: 1px solid #d0d8ef;
-      border-bottom-left-radius: 4px;
+  background: #f0f4f8;
+  color: #1a1a2e;
+  border: 1px solid #d0d8ef;
+  border-bottom-left-radius: 4px;
   }
   .blog-fullhtml .chat-bubble .chat-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-      display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  display: block;
   }
   .blog-fullhtml .chat-bubble.user .chat-label { color: #7eb8da; }
   .blog-fullhtml .chat-bubble.llm .chat-label { color: #6b3fa0; }
   .blog-fullhtml .chat-bubble .error-highlight {
-      background: #ffe0e0;
-      color: #8b1a1a;
-      padding: 1px 5px;
-      border-radius: 3px;
-      font-weight: 600;
+  background: #ffe0e0;
+  color: #8b1a1a;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 600;
   }
-  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   @media (max-width: 700px) {
-      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
-      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
-      .blog-fullhtml .mystery-comparison { grid-template-columns: 1fr; }
-      .blog-fullhtml .taxonomy-grid { grid-template-columns: 1fr; }
-      .blog-fullhtml .llm-demo-split { grid-template-columns: 1fr; }
-      .blog-fullhtml .bench-row { grid-template-columns: 100px 1fr 40px; }
+  .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+  .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
+  .blog-fullhtml .mystery-comparison { grid-template-columns: 1fr; }
+  .blog-fullhtml .taxonomy-grid { grid-template-columns: 1fr; }
+  .blog-fullhtml .llm-demo-split { grid-template-columns: 1fr; }
+  .blog-fullhtml .bench-row { grid-template-columns: 100px 1fr 40px; }
   }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
-  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
-  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
-  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .next-post h3 { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .next-post p { color: #b0c4de; }
-  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml footer { color: #6a7888; border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .bench-label { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .bench-bar-track { background: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .bench-value { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .mystery-panel.original { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .mystery-panel.obfuscated { background: #2a1414; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .mystery-panel.original h4 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .mystery-panel.obfuscated h4 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .mystery-result.pass { background: #1a2a1a; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .mystery-result.fail { background: #2a1a1a; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .strategy-table th { background: #1e2a3a; color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .strategy-table td { border-bottom-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .strategy-table tr:nth-child(even) { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .strategy-table tr:hover { background: #25303f; }
-  html[data-theme="dark"] .blog-fullhtml .strategy-table .score-bad { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .strategy-table .score-worse { color: #ff6666; }
-  html[data-theme="dark"] .blog-fullhtml .strategy-table .score-ok { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-direct { background: #2a1414; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-direct .tax-label { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-direct h4 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-direct p { color: #d0a8a8; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-heuristic { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-heuristic .tax-label { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-heuristic h4 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-heuristic p { color: #a8d0a8; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-translator { background: #2a2010; border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-translator .tax-label { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-translator h4 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-translator p { color: #d0bba0; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-verifier { background: #1e142e; border-color: #6b3fa0; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-verifier .tax-label { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-verifier h4 { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .taxonomy-card.role-verifier p { color: #c0a8d8; }
-  html[data-theme="dark"] .blog-fullhtml .llm-panel.gpt-panel { background: #2a2010; border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .llm-panel.planner-panel { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .llm-panel.gpt-panel h4 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .llm-panel.planner-panel h4 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .step-ok { background: #1a2a1a; }
-  html[data-theme="dark"] .blog-fullhtml .step-fail { background: #2a1a1a; }
-  html[data-theme="dark"] .blog-fullhtml .step-neutral { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .step-ok .step-icon { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .step-fail .step-icon { background: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .step-neutral .step-icon { background: #6a7888; }
-  html[data-theme="dark"] .blog-fullhtml .step-highlight { border-color: #d4740e; background: #2a2010 !important; }
-  html[data-theme="dark"] .blog-fullhtml .demo-verdict.fail { background: #2a1a1a; color: #e06060; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .demo-verdict.pass { background: #1a2a1a; color: #5cbf5c; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .counter-value.bad { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .counter-value.good { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .counter-label { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .chat-bubble.user { background: #1e2a3a; color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .chat-bubble.llm { background: #1e2530; color: #c9c9ca; border-color: #2a3a50; }
-  html[data-theme="dark"] .blog-fullhtml .chat-bubble.user .chat-label { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .chat-bubble.llm .chat-label { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .chat-bubble .error-highlight { background: #2a1414; color: #e06060; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 ---
 
 <header class="hero">
@@ -720,7 +634,9 @@ _styles: >
         </div>
         <p class="vis-caption">PlanBench results on Blocksworld plan generation. Classical planners achieve 100% on every instance in under a second. GPT-4 manages ~30% — and that number drops further on harder instances. Data from Valmeekam et al. (2023).</p>
     </div>
-<p>The numbers were stark. GPT-4 — the most capable model at the time — generated valid plans for only about 30% of instances. GPT-3.5 managed around 3%. Open-source models scored near zero. Meanwhile, Fast Downward, a classical planner from 2004, solved 100% of instances in under a second.</p>
+    
+
+    <p>The numbers were stark. GPT-4 — the most capable model at the time — generated valid plans for only about 30% of instances. GPT-3.5 managed around 3%. Open-source models scored near zero. Meanwhile, Fast Downward, a classical planner from 2004, solved 100% of instances in under a second.</p>
 
     <div class="callout warning">
         <div class="callout-label">Critical Finding</div>
@@ -736,6 +652,72 @@ _styles: >
     <h3>RoboSort at the Benchmark</h3>
 
     <p>Let's see what this looks like in our warehouse. We gave a frontier LLM the same RoboSort problem from Posts 1–3: five pieces, three shelves, one build zone, support constraints. Build a tower. Here's what happened.</p>
+
+    <!-- Static RoboSort warehouse panel (matches Post 1 / 7 visual style) -->
+    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 16px 0;">
+        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:8px;">RoboSort facility &middot; initial state (the LLM sees this as text in the prompt)</div>
+        <svg viewBox="0 0 580 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; max-height:220px;">
+            <!-- Floor -->
+            <rect x="10" y="172" width="560" height="18" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+
+            <!-- Shelf A -->
+            <rect x="30" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="30" y1="100" x2="140" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="30" y1="135" x2="140" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="85" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf A</text>
+            <!-- L1 and L2 -->
+            <rect x="48" y="74" width="34" height="22" rx="3" fill="#e07030" stroke="#a85510" stroke-width=".6"/>
+            <text x="65" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L1</text>
+            <rect x="90" y="74" width="34" height="22" rx="3" fill="#3080c0" stroke="#1c5f8e" stroke-width=".6"/>
+            <text x="107" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L2</text>
+
+            <!-- Shelf B -->
+            <rect x="160" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="160" y1="100" x2="270" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="160" y1="135" x2="270" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="215" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf B</text>
+            <!-- Beam (horizontal) -->
+            <rect x="170" y="82" width="90" height="14" rx="3" fill="#d04050" stroke="#a02838" stroke-width=".6"/>
+            <text x="215" y="92" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Beam</text>
+
+            <!-- Shelf C -->
+            <rect x="290" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="290" y1="100" x2="400" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="290" y1="135" x2="400" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="345" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf C</text>
+            <!-- Roof -->
+            <rect x="300" y="82" width="56" height="14" rx="3" fill="#30a060" stroke="#1c7040" stroke-width=".6"/>
+            <text x="328" y="92" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">Roof</text>
+            <!-- Flag -->
+            <rect x="364" y="78" width="18" height="22" rx="2" fill="#8050c0" stroke="#5a3580" stroke-width=".6"/>
+            <text x="373" y="92" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">Flag</text>
+
+            <!-- Build Zone (dashed) -->
+            <rect x="430" y="70" width="130" height="100" rx="6" fill="none" stroke="#7a8499" stroke-width="1.2" stroke-dasharray="6 4"/>
+            <line x1="430" y1="170" x2="560" y2="170" stroke="#7a8499" stroke-width="1.5"/>
+            <text x="495" y="120" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700" letter-spacing="1">BUILD ZONE</text>
+
+            <!-- Robot (RoboSort at home) -->
+            <g transform="translate(38,178)">
+                <line x1="0" y1="-30" x2="0" y2="-26" stroke="#8050c0" stroke-width="1.2"/>
+                <circle cx="0" cy="-32" r="2.5" fill="#8050c0"/>
+                <rect x="-12" y="-25" width="24" height="18" rx="3" fill="#8050c0" stroke="#5a3580" stroke-width=".8"/>
+                <circle cx="-4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <circle cx="4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <rect x="-3" y="-7" width="6" height="3" rx="1" fill="#5a3580"/>
+                <circle cx="-7" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="0" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="7" cy="-1" r="3" fill="#3a4055"/>
+                <text x="0" y="9" text-anchor="middle" fill="#8050c0" font-size="9" font-weight="700">RoboSort</text>
+            </g>
+
+            <!-- Status line -->
+            <text x="120" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Gripper: empty</text>
+            <text x="270" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">|</text>
+            <text x="370" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Tower: 0/5 pieces</text>
+        </svg>
+        <div style="font-size:.78em; color:#7a8499; text-align:center; margin-top:8px; font-style:italic;">L1 + L2 (legs) on Shelf A &middot; Beam on Shelf B &middot; Roof + Flag on Shelf C &middot; build at the dashed zone, support chain bottom-up</div>
+    </div>
 
     <div class="vis-container">
         <div class="chat-exchange">
@@ -762,7 +744,9 @@ _styles: >
         </div>
         <p class="vis-caption">A real LLM attempt at the RoboSort tower assembly. The model gets the legs right but then skips the Beam, placing Roof directly on legs. It "knows" the support constraint — it even states it — but doesn't enforce it during generation.</p>
     </div>
-<p>The model knows what support constraints are — it can explain them eloquently. But knowing a constraint and <em>enforcing</em> it during sequential generation are fundamentally different cognitive operations. The LLM generates step-by-step, each token predicted from context. It doesn't maintain a world model. It doesn't track which pieces are placed. It doesn't verify preconditions before committing to an action.</p>
+    
+
+    <p>The model knows what support constraints are — it can explain them eloquently. But knowing a constraint and <em>enforcing</em> it during sequential generation are fundamentally different cognitive operations. The LLM generates step-by-step, each token predicted from context. It doesn't maintain a world model. It doesn't track which pieces are placed. It doesn't verify preconditions before committing to an action.</p>
 
     <div class="callout insight">
         <div class="callout-label">Key Insight</div>
@@ -814,7 +798,9 @@ _styles: >
         </div>
         <p class="vis-caption">Same logical structure. Different names. Performance collapses to zero. The LLM was matching patterns from training data — "pick-up" evokes block-stacking scripts — not reasoning about preconditions and effects.</p>
     </div>
-<p>The result was devastating: performance collapsed to <strong>zero</strong>. Not "lower." Not "somewhat degraded." Zero.</p>
+    
+
+    <p>The result was devastating: performance collapsed to <strong>zero</strong>. Not "lower." Not "somewhat degraded." Zero.</p>
 
     <p>This is the smoking gun. A system that reasons about state transitions wouldn't care whether the action is called "pick-up" or "florp." The preconditions are the same. The effects are the same. The state space is identical. But the LLM's performance was entirely dependent on recognizing the <em>names</em> — because it wasn't reasoning at all. It was retrieving similar-looking action sequences from its training data.</p>
 
@@ -853,7 +839,9 @@ LLM: "Move to Zone-X, florp Zrint,
         </div>
         <p class="vis-caption">Same RoboSort warehouse. Same five pieces, same support constraints, same goal. Only the labels changed — and the LLM loses all ability to generate even plausible-looking plans. Pattern matching, not planning.</p>
     </div>
-<div class="callout warning">
+    
+
+    <div class="callout warning">
         <div class="callout-label">What This Means</div>
         <p>When an LLM "solves" a planning problem, it's often not solving it at all — it's recognizing it. The training data contains countless examples of "stack blocks bottom-up" and "assemble structures foundation-first." The LLM retrieves and adapts these patterns. Remove the semantic cues, and there's nothing left to retrieve.</p>
     </div>
@@ -904,7 +892,9 @@ LLM: "Move to Zone-X, florp Zrint,
         </div>
         <p class="vis-caption">Self-critique in action on RoboSort. The critic identifies the missing Beam but the revised plan puts Beam before L2. Each revision shuffles errors around rather than eliminating them. Data pattern from Valmeekam et al. (2023).</p>
     </div>
-<h3>Tree of Thoughts (ToT)</h3>
+    
+
+    <h3>Tree of Thoughts (ToT)</h3>
 
     <p>The idea: explore multiple reasoning paths in parallel, evaluate them, and pick the best. Instead of one linear chain of thought, branch out, score each branch, and select the most promising.</p>
 
@@ -955,7 +945,9 @@ LLM: "Move to Zone-X, florp Zrint,
         </table>
         <p class="vis-caption">No prompting strategy brings LLMs close to classical planner accuracy. Self-critique actively degrades performance. Tree of Thoughts is expensive without guarantees. Data patterns from Valmeekam et al. (2023), Kambhampati (2024).</p>
     </div>
-<div class="callout insight">
+    
+
+    <div class="callout insight">
         <div class="callout-label">Key Insight</div>
         <p>The problem isn't the prompt — it's the architecture. Autoregressive generation commits to each token before seeing the consequences. No amount of prompt engineering can add backtracking, constraint propagation, or state tracking to a system that generates left-to-right. You don't fix a calculator by asking it nicely — you use a different tool.</p>
     </div>
@@ -1107,6 +1099,104 @@ LLM: "Move to Zone-X, florp Zrint,
         </div>
     </div>
 
+    <!-- End-state comparison: what each plan actually produces in the warehouse -->
+    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 20px 0;">
+        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:10px;">After executing each plan &middot; what RoboSort actually does on the floor</div>
+        <div style="display:flex; gap:14px; align-items:stretch;">
+            <!-- LLM executed plan: broken tower -->
+            <div style="flex:1; min-width:0; border:1.5px solid rgba(178,34,34,.5); border-radius:7px; padding:10px; background:#1a0a0a;">
+                <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#ff6b6b; text-align:center; margin-bottom:6px;">LLM plan executed &middot; 3 precondition violations</div>
+                <svg viewBox="0 0 260 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
+                    <!-- Floor -->
+                    <rect x="10" y="190" width="240" height="14" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+                    <!-- Build Zone outline -->
+                    <rect x="40" y="80" width="180" height="110" rx="4" fill="none" stroke="#7a8499" stroke-width=".8" stroke-dasharray="4 3" opacity=".5"/>
+                    <text x="130" y="74" text-anchor="middle" fill="#7a8499" font-size="9" font-weight="700" letter-spacing="1">BUILD ZONE</text>
+                    <!-- Platform line -->
+                    <line x1="50" y1="185" x2="210" y2="185" stroke="#7a8499" stroke-width="1.5"/>
+
+                    <!-- L1 on platform (bottom-left) -->
+                    <rect x="60" y="160" width="34" height="22" rx="3" fill="#e07030" stroke="#a85510" stroke-width=".6"/>
+                    <text x="77" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L1</text>
+                    <!-- L2 next to L1 (also on platform) -->
+                    <rect x="100" y="160" width="34" height="22" rx="3" fill="#3080c0" stroke="#1c5f8e" stroke-width=".6"/>
+                    <text x="117" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L2</text>
+
+                    <!-- Roof balanced across L1+L2 (no beam underneath!) -->
+                    <rect x="64" y="142" width="68" height="14" rx="3" fill="#30a060" stroke="#1c7040" stroke-width=".6" transform="rotate(-4 98 149)"/>
+                    <text x="98" y="153" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700" transform="rotate(-4 98 149)">Roof</text>
+
+                    <!-- Beam dropped on floor (executed too late) -->
+                    <rect x="142" y="178" width="80" height="10" rx="2" fill="#d04050" stroke="#a02838" stroke-width=".5" transform="rotate(8 182 183)"/>
+                    <text x="182" y="186" text-anchor="middle" fill="#fff" font-size="8" font-weight="700" transform="rotate(8 182 183)">Beam</text>
+
+                    <!-- Flag missing! Marked as "?" near goal area -->
+                    <text x="225" y="98" text-anchor="middle" fill="#ff6b6b" font-size="22" font-weight="700">?</text>
+                    <text x="225" y="115" text-anchor="middle" fill="#ff6b6b" font-size="8" font-style="italic" font-weight="700">Flag</text>
+                    <text x="225" y="125" text-anchor="middle" fill="#ff6b6b" font-size="8" font-style="italic" font-weight="700">never placed</text>
+
+                    <!-- Violation callouts -->
+                    <line x1="100" y1="148" x2="50" y2="120" stroke="#ff6b6b" stroke-width=".8" stroke-dasharray="3 2"/>
+                    <text x="45" y="118" text-anchor="end" fill="#ff6b6b" font-size="8" font-weight="700">✗ Roof on legs</text>
+                    <text x="45" y="128" text-anchor="end" fill="#ff6b6b" font-size="7.5">no Beam under it</text>
+
+                    <line x1="180" y1="180" x2="220" y2="160" stroke="#ff6b6b" stroke-width=".8" stroke-dasharray="3 2"/>
+                    <text x="240" y="160" text-anchor="end" fill="#ff6b6b" font-size="8" font-weight="700">✗ Beam dropped</text>
+                    <text x="240" y="170" text-anchor="end" fill="#ff6b6b" font-size="7.5">placed too late</text>
+
+                    <!-- Tower status -->
+                    <rect x="40" y="14" width="180" height="32" rx="4" fill="#330d0d" stroke="#b22222" stroke-width="1.2"/>
+                    <text x="130" y="28" text-anchor="middle" fill="#ff6b6b" font-size="9" font-weight="700">Tower: 2/5 placed correctly</text>
+                    <text x="130" y="40" text-anchor="middle" fill="#ff6b6b" font-size="8" font-style="italic">3 preconditions violated &middot; no valid tower</text>
+                </svg>
+            </div>
+
+            <!-- Planner executed plan: clean tower -->
+            <div style="flex:1; min-width:0; border:1.5px solid rgba(46,139,46,.5); border-radius:7px; padding:10px; background:#0a1a0a;">
+                <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#5fcf5f; text-align:center; margin-bottom:6px;">Planner plan executed &middot; 0 violations</div>
+                <svg viewBox="0 0 260 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
+                    <!-- Floor -->
+                    <rect x="10" y="190" width="240" height="14" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+                    <!-- Build Zone -->
+                    <rect x="40" y="56" width="180" height="134" rx="4" fill="none" stroke="#7a8499" stroke-width=".8" stroke-dasharray="4 3" opacity=".5"/>
+                    <text x="130" y="50" text-anchor="middle" fill="#7a8499" font-size="9" font-weight="700" letter-spacing="1">BUILD ZONE</text>
+                    <line x1="50" y1="185" x2="210" y2="185" stroke="#7a8499" stroke-width="1.5"/>
+
+                    <!-- Stack: L1 bottom -->
+                    <rect x="113" y="160" width="34" height="22" rx="3" fill="#e07030" stroke="#a85510" stroke-width=".6"/>
+                    <text x="130" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L1</text>
+                    <!-- L2 on L1 -->
+                    <rect x="113" y="136" width="34" height="22" rx="3" fill="#3080c0" stroke="#1c5f8e" stroke-width=".6"/>
+                    <text x="130" y="151" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L2</text>
+                    <!-- Beam on L2 -->
+                    <rect x="90" y="120" width="80" height="14" rx="3" fill="#d04050" stroke="#a02838" stroke-width=".6"/>
+                    <text x="130" y="131" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Beam</text>
+                    <!-- Roof on Beam -->
+                    <rect x="100" y="102" width="60" height="14" rx="3" fill="#30a060" stroke="#1c7040" stroke-width=".6"/>
+                    <text x="130" y="113" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Roof</text>
+                    <!-- Flag on Roof -->
+                    <rect x="121" y="78" width="18" height="22" rx="2" fill="#8050c0" stroke="#5a3580" stroke-width=".6"/>
+                    <text x="130" y="92" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">Flag</text>
+
+                    <!-- Checkmarks alongside -->
+                    <text x="170" y="175" fill="#5fcf5f" font-size="11" font-weight="700">✓</text>
+                    <text x="170" y="151" fill="#5fcf5f" font-size="11" font-weight="700">✓</text>
+                    <text x="180" y="131" fill="#5fcf5f" font-size="11" font-weight="700">✓</text>
+                    <text x="170" y="113" fill="#5fcf5f" font-size="11" font-weight="700">✓</text>
+                    <text x="148" y="92" fill="#5fcf5f" font-size="11" font-weight="700">✓</text>
+
+                    <!-- Tower status -->
+                    <rect x="40" y="14" width="180" height="32" rx="4" fill="#0d1f0d" stroke="#2e8b2e" stroke-width="1.2"/>
+                    <text x="130" y="28" text-anchor="middle" fill="#5fcf5f" font-size="9" font-weight="700">Tower: 5/5 placed correctly</text>
+                    <text x="130" y="40" text-anchor="middle" fill="#5fcf5f" font-size="8" font-style="italic">support chain intact &middot; goal satisfied</text>
+                </svg>
+            </div>
+        </div>
+        <div style="margin-top:10px; padding:8px 12px; background:#161b2a; border-radius:6px; border-left:3px solid #d4740e;">
+            <p style="font-size:0.85em; color:#cdd6f4; line-height:1.5; margin:0;"><strong style="color:#ffa040;">Same starting state. Same 5 pieces. Same physics.</strong> The LLM's plan reads like a reasonable sequence; executed in the warehouse, it produces a heap. The planner's plan is dryer text and produces a tower. <em>The reader has to be the simulator the LLM never was.</em></p>
+        </div>
+    </div>
+
     <p>The planner's output might look boring — it's just a sequence of formal actions. But every single step has been verified: every precondition checked, every effect applied, every state transition valid. The LLM's output reads better — natural language, confident tone — but it's wrong. This is the fundamental tension: <strong>fluency is not validity</strong>.</p>
 
     <!-- ============================== -->
@@ -1163,7 +1253,9 @@ LLM: "Move to Zone-X, florp Zrint,
         </div>
         <p class="vis-caption">The taxonomy of LLM roles in planning. Role 1 (direct planning) failed. Roles 2–4 leverage LLMs' actual strengths — language understanding, code generation, coordination — while delegating reasoning to formal tools.</p>
     </div>
-<p>The critical shift: <strong>stop asking LLMs to plan. Start asking them to help plan.</strong> The LLM's genuine strengths — understanding natural language, generating code, translating between formats — are exactly the capabilities that formal planners lack. The planner's strengths — state tracking, constraint verification, optimality guarantees — are exactly what LLMs lack. The marriage is natural. The remaining posts in this series explore how it works in practice.</p>
+    
+
+    <p>The critical shift: <strong>stop asking LLMs to plan. Start asking them to help plan.</strong> The LLM's genuine strengths — understanding natural language, generating code, translating between formats — are exactly the capabilities that formal planners lack. The planner's strengths — state tracking, constraint verification, optimality guarantees — are exactly what LLMs lack. The marriage is natural. The remaining posts in this series explore how it works in practice.</p>
 
     <!-- ============================== -->
     <!-- SECTION 9: What's Ahead        -->
@@ -1201,6 +1293,8 @@ LLM: "Move to Zone-X, florp Zrint,
     </div>
 
     <!-- Download All -->
+    
+
 </article>
 
 <div class="blog-footer">

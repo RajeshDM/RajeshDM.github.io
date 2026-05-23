@@ -8,57 +8,57 @@ description: "NL2Plan, agentic PDDL generation, and the orchestrator bottleneck 
 _styles: >
   .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .blog-fullhtml {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      line-height: 1.8;
-      color: #1a1a2e;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.8;
+  color: #1a1a2e;
   }
 
   .blog-fullhtml .hero {
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
-      color: #f0f0f0;
-      padding: 80px 20px 60px;
-      text-align: center;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+  color: #f0f0f0;
+  padding: 80px 20px 60px;
+  text-align: center;
   }
   .blog-fullhtml .hero .series-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #7eb8da;
-      margin-bottom: 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #7eb8da;
+  margin-bottom: 16px;
   }
   .blog-fullhtml .hero h1 {
-      font-size: 2.6rem;
-      font-weight: 700;
-      line-height: 1.25;
-      max-width: 820px;
-      margin: 0 auto 20px;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: 820px;
+  margin: 0 auto 20px;
   }
   .blog-fullhtml .hero .subtitle {
-      font-size: 1.15rem;
-      color: #b0c4de;
-      max-width: 640px;
-      margin: 0 auto 28px;
-      font-style: italic;
+  font-size: 1.15rem;
+  color: #b0c4de;
+  max-width: 640px;
+  margin: 0 auto 28px;
+  font-style: italic;
   }
 
   .blog-fullhtml .blog-container {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
   }
 
   .blog-fullhtml h2 {
-      font-size: 1.85rem;
-      color: #0d1b2a;
-      margin: 56px 0 20px;
-      padding-bottom: 8px;
-      border-bottom: 3px solid #2a4066;
+  font-size: 1.85rem;
+  color: #0d1b2a;
+  margin: 56px 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #2a4066;
   }
   .blog-fullhtml h3 {
-      font-size: 1.35rem;
-      color: #1b2838;
-      margin: 40px 0 14px;
+  font-size: 1.35rem;
+  color: #1b2838;
+  margin: 40px 0 14px;
   }
   .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
   .blog-fullhtml strong { color: #0d1b2a; }
@@ -69,50 +69,50 @@ _styles: >
   .blog-fullhtml li { margin-bottom: 6px; }
 
   .blog-fullhtml .series-nav {
-      background: #f0f4f8;
-      border: 1px solid #d0d8ef;
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-bottom: 32px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.92rem;
-      color: #444;
+  background: #f0f4f8;
+  border: 1px solid #d0d8ef;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.92rem;
+  color: #444;
   }
   .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
   .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
   .blog-fullhtml .series-nav .nav-links {
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: #2a4066;
-      font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: #2a4066;
+  font-weight: 600;
   }
 
   .blog-fullhtml .callout {
-      border-left: 4px solid #2a4066;
-      background: #f0f4f8;
-      padding: 20px 24px;
-      margin: 28px 0;
-      border-radius: 0 6px 6px 0;
+  border-left: 4px solid #2a4066;
+  background: #f0f4f8;
+  padding: 20px 24px;
+  margin: 28px 0;
+  border-radius: 0 6px 6px 0;
   }
   .blog-fullhtml .callout.insight {
-      border-left-color: #228b22;
-      background: #f0faf0;
+  border-left-color: #228b22;
+  background: #f0faf0;
   }
   .blog-fullhtml .callout.warning {
-      border-left-color: #b22222;
-      background: #fdf2f2;
+  border-left-color: #b22222;
+  background: #fdf2f2;
   }
   .blog-fullhtml .callout.question {
-      border-left-color: #d4740e;
-      background: #fef9f0;
+  border-left-color: #d4740e;
+  background: #fef9f0;
   }
   .blog-fullhtml .callout-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
   .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
@@ -120,90 +120,90 @@ _styles: >
   .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
 
   .blog-fullhtml .agentic-sidebar {
-      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
-      border: 1px solid #d4c5f0;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
+  background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+  border: 1px solid #d4c5f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
   }
   .blog-fullhtml .agentic-sidebar .sidebar-title {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #6b3fa0;
-      margin-bottom: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #6b3fa0;
+  margin-bottom: 12px;
   }
   .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
 
   .blog-fullhtml pre {
-      background: #1e1e2e;
-      color: #cdd6f4;
-      padding: 20px 24px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 24px 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 20px 24px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 24px 0;
   }
   .blog-fullhtml code {
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.88em;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.88em;
   }
   .blog-fullhtml p code, .blog-fullhtml li code {
-      background: #e8edf2;
-      padding: 2px 6px;
-      border-radius: 3px;
-      color: #2a4066;
+  background: #e8edf2;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #2a4066;
   }
 
   .blog-fullhtml .vis-container {
-      margin: 2em 0;
-      padding: 1.5em;
-      background: #fafafa;
-      border-radius: 10px;
-      border: 1px solid #eee;
+  margin: 2em 0;
+  padding: 1.5em;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #eee;
   }
   .blog-fullhtml .vis-caption {
-      font-size: 0.85em;
-      color: #666;
-      font-style: italic;
-      margin-top: 10px;
-      text-align: center;
+  font-size: 0.85em;
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
   }
 
   .blog-fullhtml .interactive-container {
-      border: 1px solid #d0d8ef;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
-      background: #fff;
+  border: 1px solid #d0d8ef;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
+  background: #fff;
   }
   .blog-fullhtml .interactive-container .interactive-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      color: #888;
-      margin-bottom: 12px;
-      font-style: italic;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  color: #888;
+  margin-bottom: 12px;
+  font-style: italic;
   }
   .blog-fullhtml .auto-demo-btn {
-      background: #2a9d8f;
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.9em;
-      font-weight: 600;
-      margin-top: 12px;
+  background: #2a9d8f;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-top: 12px;
   }
   .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
 
   .blog-fullhtml .next-post {
-      margin: 56px 0 0; padding: 28px;
-      background: linear-gradient(135deg, #1b2838, #2a4066);
-      border-radius: 10px; color: #e0e8f0;
+  margin: 56px 0 0; padding: 28px;
+  background: linear-gradient(135deg, #1b2838, #2a4066);
+  border-radius: 10px; color: #e0e8f0;
   }
   .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
   .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
@@ -213,49 +213,49 @@ _styles: >
   .blog-fullhtml .references ol { font-size: 0.9rem; color: #444; line-height: 1.7; }
   .blog-fullhtml .references li { margin-bottom: 8px; }
 
-  .blog-fullhtml footer {
-      text-align: center; padding: 32px 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  .blog-fullhtml .blog-footer {
+  text-align: center; padding: 32px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
   }
 
   .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
 
   .blog-fullhtml .pipeline-flow {
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      gap: 0;
-      margin: 20px 0;
-      padding: 10px 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
+  margin: 20px 0;
+  padding: 10px 0;
   }
   .blog-fullhtml .pipeline-stage {
-      padding: 14px 16px;
-      border-radius: 10px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-align: center;
-      min-width: 110px;
-      line-height: 1.4;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 110px;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   }
   .blog-fullhtml .pipeline-stage .stage-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-      opacity: 0.8;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  opacity: 0.8;
   }
   .blog-fullhtml .pipeline-arrow {
-      font-size: 1.4rem;
-      color: #555;
-      padding: 0 8px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
+  font-size: 1.4rem;
+  color: #555;
+  padding: 0 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
   }
   .blog-fullhtml .stage-nl { background: #2a9d8f; color: white; }
   .blog-fullhtml .stage-extract { background: #6b3fa0; color: white; }
@@ -264,317 +264,248 @@ _styles: >
   .blog-fullhtml .stage-solve { background: #228b22; color: white; }
 
   .blog-fullhtml .orchestra-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 20px 0;
   }
   .blog-fullhtml .orchestra-agent {
-      border-radius: 10px;
-      padding: 14px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      text-align: center;
+  border-radius: 10px;
+  padding: 14px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-align: center;
   }
   .blog-fullhtml .orchestra-agent .agent-icon {
-      font-size: 1.8rem;
-      margin-bottom: 6px;
+  font-size: 1.8rem;
+  margin-bottom: 6px;
   }
   .blog-fullhtml .orchestra-agent h5 {
-      font-size: 0.82rem;
-      margin-bottom: 4px;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
   }
   .blog-fullhtml .orchestra-agent p {
-      font-size: 0.72rem;
-      margin-bottom: 0;
-      line-height: 1.4;
+  font-size: 0.72rem;
+  margin-bottom: 0;
+  line-height: 1.4;
   }
   .blog-fullhtml .agent-extractor {
-      background: #f5f0ff;
-      border: 2px solid #6b3fa0;
+  background: #f5f0ff;
+  border: 2px solid #6b3fa0;
   }
   .blog-fullhtml .agent-extractor h5 { color: #6b3fa0; }
   .blog-fullhtml .agent-extractor p { color: #3a2060; }
   .blog-fullhtml .agent-validator {
-      background: #fdf2f2;
-      border: 2px solid #b22222;
+  background: #fdf2f2;
+  border: 2px solid #b22222;
   }
   .blog-fullhtml .agent-validator h5 { color: #b22222; }
   .blog-fullhtml .agent-validator p { color: #5a1010; }
   .blog-fullhtml .agent-fixer {
-      background: #fff7ed;
-      border: 2px solid #d4740e;
+  background: #fff7ed;
+  border: 2px solid #d4740e;
   }
   .blog-fullhtml .agent-fixer h5 { color: #d4740e; }
   .blog-fullhtml .agent-fixer p { color: #7a3f00; }
   .blog-fullhtml .agent-solver {
-      background: #f0faf0;
-      border: 2px solid #228b22;
+  background: #f0faf0;
+  border: 2px solid #228b22;
   }
   .blog-fullhtml .agent-solver h5 { color: #228b22; }
   .blog-fullhtml .agent-solver p { color: #0a4a0a; }
   .blog-fullhtml .orchestrator-bar {
-      background: linear-gradient(90deg, #1b2838, #2a4066);
-      color: #e0e8f0;
-      border-radius: 10px;
-      padding: 12px 20px;
-      margin-top: 12px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+  background: linear-gradient(90deg, #1b2838, #2a4066);
+  color: #e0e8f0;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin-top: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   }
 
   .blog-fullhtml .nl-pddl-transform {
-      display: grid;
-      grid-template-columns: 1fr 40px 1fr;
-      gap: 0;
-      margin: 20px 0;
-      align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 0;
+  margin: 20px 0;
+  align-items: stretch;
   }
   .blog-fullhtml .nl-side, .blog-fullhtml .pddl-side {
-      border-radius: 10px;
-      overflow: hidden;
+  border-radius: 10px;
+  overflow: hidden;
   }
   .blog-fullhtml .nl-side .panel-header {
-      background: #2a9d8f;
-      color: white;
-      padding: 10px 16px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+  background: #2a9d8f;
+  color: white;
+  padding: 10px 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   }
   .blog-fullhtml .pddl-side .panel-header {
-      background: #d4740e;
-      color: white;
-      padding: 10px 16px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+  background: #d4740e;
+  color: white;
+  padding: 10px 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   }
   .blog-fullhtml .nl-side .panel-body {
-      background: #f0fafa;
-      border: 2px solid #2a9d8f;
-      border-top: none;
-      border-radius: 0 0 10px 10px;
-      padding: 16px;
-      font-size: 0.88rem;
-      line-height: 1.7;
-      min-height: 280px;
+  background: #f0fafa;
+  border: 2px solid #2a9d8f;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 16px;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  min-height: 280px;
   }
   .blog-fullhtml .pddl-side .panel-body {
-      border: 2px solid #d4740e;
-      border-top: none;
-      border-radius: 0 0 10px 10px;
+  border: 2px solid #d4740e;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
   }
   .blog-fullhtml .pddl-side .panel-body pre {
-      margin: 0;
-      border-radius: 0 0 8px 8px;
-      font-size: 0.72rem;
-      min-height: 280px;
+  margin: 0;
+  border-radius: 0 0 8px 8px;
+  font-size: 0.72rem;
+  min-height: 280px;
   }
   .blog-fullhtml .transform-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #6b3fa0;
-      font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #6b3fa0;
+  font-weight: 700;
   }
 
   .blog-fullhtml .bottleneck-chart {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 20px 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .bottleneck-row {
-      display: grid;
-      grid-template-columns: 160px 1fr 70px;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.85rem;
+  display: grid;
+  grid-template-columns: 160px 1fr 70px;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
   }
   .blog-fullhtml .bottleneck-label {
-      text-align: right;
-      font-weight: 600;
-      color: #1b2838;
-      font-size: 0.8rem;
+  text-align: right;
+  font-weight: 600;
+  color: #1b2838;
+  font-size: 0.8rem;
   }
   .blog-fullhtml .bottleneck-bar-track {
-      height: 24px;
-      background: #e8ecf1;
-      border-radius: 4px;
-      overflow: hidden;
+  height: 24px;
+  background: #e8ecf1;
+  border-radius: 4px;
+  overflow: hidden;
   }
   .blog-fullhtml .bottleneck-bar {
-      height: 100%;
-      border-radius: 4px;
+  height: 100%;
+  border-radius: 4px;
   }
   .blog-fullhtml .bottleneck-value {
-      font-weight: 700;
-      font-size: 0.85rem;
+  font-weight: 700;
+  font-size: 0.85rem;
   }
 
   .blog-fullhtml .nl-demo-container {
-      width: 960px;
-      max-width: calc(100vw - 40px);
-      margin-left: 50%;
-      transform: translateX(-50%);
-      position: relative;
+  width: 960px;
+  max-width: calc(100vw - 40px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  position: relative;
   }
   .blog-fullhtml .nl-demo-stages {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
   }
   .blog-fullhtml .demo-stage {
-      border-radius: 10px;
-      padding: 16px 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
-      transition: all 0.4s ease;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
+  transition: all 0.4s ease;
   }
   .blog-fullhtml .demo-stage .stage-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .demo-stage .stage-num {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.8rem;
-      color: white;
-      flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: white;
+  flex-shrink: 0;
   }
   .blog-fullhtml .demo-stage .stage-title {
-      font-weight: 700;
-      font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.9rem;
   }
   .blog-fullhtml .demo-stage .stage-content {
-      padding-left: 38px;
-      font-size: 0.82rem;
-      line-height: 1.5;
+  padding-left: 38px;
+  font-size: 0.82rem;
+  line-height: 1.5;
   }
   .blog-fullhtml .demo-stage.waiting {
-      background: #f5f5f5;
-      border: 1px solid #ddd;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
   }
   .blog-fullhtml .demo-stage.waiting .stage-num { background: #ccc; }
   .blog-fullhtml .demo-stage.active {
-      border: 2px solid #2a9d8f;
-      background: #f0fafa;
-      box-shadow: 0 2px 10px rgba(42, 157, 143, 0.2);
+  border: 2px solid #2a9d8f;
+  background: #f0fafa;
+  box-shadow: 0 2px 10px rgba(42, 157, 143, 0.2);
   }
   .blog-fullhtml .demo-stage.active .stage-num { background: #2a9d8f; }
   .blog-fullhtml .demo-stage.done {
-      background: #f0faf0;
-      border: 1px solid #228b22;
+  background: #f0faf0;
+  border: 1px solid #228b22;
   }
   .blog-fullhtml .demo-stage.done .stage-num { background: #228b22; }
   .blog-fullhtml .demo-stage.error {
-      background: #fdf2f2;
-      border: 2px solid #b22222;
+  background: #fdf2f2;
+  border: 2px solid #b22222;
   }
   .blog-fullhtml .demo-stage.error .stage-num { background: #b22222; }
-  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   @media (max-width: 700px) {
-      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
-      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
-      .blog-fullhtml .pipeline-flow { flex-wrap: wrap; gap: 8px; }
-      .blog-fullhtml .pipeline-stage { min-width: 80px; font-size: 0.75rem; }
-      .blog-fullhtml .orchestra-grid { grid-template-columns: 1fr 1fr; }
-      .blog-fullhtml .nl-pddl-transform { grid-template-columns: 1fr; }
-      .blog-fullhtml .transform-arrow { transform: rotate(90deg); padding: 8px 0; }
-      .blog-fullhtml .nl-demo-container { width: 100%; transform: none; margin-left: 0; }
-      .blog-fullhtml .bottleneck-row { grid-template-columns: 100px 1fr 50px; }
+  .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+  .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
+  .blog-fullhtml .pipeline-flow { flex-wrap: wrap; gap: 8px; }
+  .blog-fullhtml .pipeline-stage { min-width: 80px; font-size: 0.75rem; }
+  .blog-fullhtml .orchestra-grid { grid-template-columns: 1fr 1fr; }
+  .blog-fullhtml .nl-pddl-transform { grid-template-columns: 1fr; }
+  .blog-fullhtml .transform-arrow { transform: rotate(90deg); padding: 8px 0; }
+  .blog-fullhtml .nl-demo-container { width: 100%; transform: none; margin-left: 0; }
+  .blog-fullhtml .bottleneck-row { grid-template-columns: 100px 1fr 50px; }
   }
 
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
-  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
-  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
-  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
-  html[data-theme="dark"] .blog-fullhtml .next-post h3 { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .next-post p { color: #b0c4de; }
-  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml footer { color: #6a7888; border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .pipeline-arrow { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .stage-nl { background: #2a9d8f; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .stage-extract { background: #6b3fa0; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .stage-pddl { background: #d4740e; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .stage-validate { background: #b22222; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .stage-solve { background: #228b22; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .agent-extractor { background: #1e142e; border-color: #6b3fa0; }
-  html[data-theme="dark"] .blog-fullhtml .agent-extractor h5 { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agent-extractor p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml .agent-validator { background: #2a1414; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .agent-validator h5 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .agent-validator p { color: #d0a0a0; }
-  html[data-theme="dark"] .blog-fullhtml .agent-fixer { background: #2a2010; border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .agent-fixer h5 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agent-fixer p { color: #d8b888; }
-  html[data-theme="dark"] .blog-fullhtml .agent-solver { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .agent-solver h5 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .agent-solver p { color: #a0c8a0; }
-  html[data-theme="dark"] .blog-fullhtml .orchestrator-bar { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .nl-side .panel-header { background: #2a9d8f; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .pddl-side .panel-header { background: #d4740e; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .nl-side .panel-body { background: #142a2a; border-color: #2a9d8f; }
-  html[data-theme="dark"] .blog-fullhtml .pddl-side .panel-body { border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .transform-arrow { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .bottleneck-label { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .bottleneck-bar-track { background: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.waiting { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.waiting .stage-num { background: #4a5565; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.active { background: #142a2a; border-color: #2a9d8f; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.active .stage-num { background: #2a9d8f; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.done { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.done .stage-num { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.error { background: #2a1414; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .demo-stage.error .stage-num { background: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
+  .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 ---
 
 <header class="hero">
@@ -646,7 +577,58 @@ _styles: >
         </div>
         <p class="vis-caption">Five stages from English to verified plan. Each stage can fail independently. The pipeline's overall accuracy is the product of per-stage accuracies — if each stage is 90% reliable, the pipeline is only 59% end-to-end.</p>
     </div>
-<p>Let's trace the pipeline for our RoboSort warehouse:</p>
+    
+
+    <p>Let's trace the pipeline for our RoboSort warehouse:</p>
+
+    <!-- Static RoboSort warehouse panel (shared visual anchor) -->
+    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 16px 0;">
+        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:8px;">RoboSort facility &middot; the English below describes <em>this</em> warehouse; the pipeline emits PDDL for it</div>
+        <svg viewBox="0 0 580 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; max-height:220px;">
+            <rect x="10" y="172" width="560" height="18" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+            <rect x="30" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="30" y1="100" x2="140" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="30" y1="135" x2="140" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="85" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf A</text>
+            <rect x="48" y="74" width="34" height="22" rx="3" fill="#e07030" stroke="#a85510" stroke-width=".6"/>
+            <text x="65" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L1</text>
+            <rect x="90" y="74" width="34" height="22" rx="3" fill="#3080c0" stroke="#1c5f8e" stroke-width=".6"/>
+            <text x="107" y="89" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">L2</text>
+            <rect x="160" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="160" y1="100" x2="270" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="160" y1="135" x2="270" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="215" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf B</text>
+            <rect x="170" y="82" width="90" height="14" rx="3" fill="#d04050" stroke="#a02838" stroke-width=".6"/>
+            <text x="215" y="92" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">Beam</text>
+            <rect x="290" y="40" width="110" height="130" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+            <line x1="290" y1="100" x2="400" y2="100" stroke="#3a4055" stroke-width=".8"/>
+            <line x1="290" y1="135" x2="400" y2="135" stroke="#3a4055" stroke-width=".8"/>
+            <text x="345" y="32" text-anchor="middle" fill="#cdd6f4" font-size="11" font-weight="700">Shelf C</text>
+            <rect x="300" y="82" width="56" height="14" rx="3" fill="#30a060" stroke="#1c7040" stroke-width=".6"/>
+            <text x="328" y="92" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">Roof</text>
+            <rect x="364" y="78" width="18" height="22" rx="2" fill="#8050c0" stroke="#5a3580" stroke-width=".6"/>
+            <text x="373" y="92" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">Flag</text>
+            <rect x="430" y="70" width="130" height="100" rx="6" fill="none" stroke="#7a8499" stroke-width="1.2" stroke-dasharray="6 4"/>
+            <line x1="430" y1="170" x2="560" y2="170" stroke="#7a8499" stroke-width="1.5"/>
+            <text x="495" y="120" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700" letter-spacing="1">BUILD ZONE</text>
+            <g transform="translate(38,178)">
+                <line x1="0" y1="-30" x2="0" y2="-26" stroke="#8050c0" stroke-width="1.2"/>
+                <circle cx="0" cy="-32" r="2.5" fill="#8050c0"/>
+                <rect x="-12" y="-25" width="24" height="18" rx="3" fill="#8050c0" stroke="#5a3580" stroke-width=".8"/>
+                <circle cx="-4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <circle cx="4" cy="-19" r="2.5" fill="#4fc3f7"/>
+                <rect x="-3" y="-7" width="6" height="3" rx="1" fill="#5a3580"/>
+                <circle cx="-7" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="0" cy="-1" r="3" fill="#3a4055"/>
+                <circle cx="7" cy="-1" r="3" fill="#3a4055"/>
+                <text x="0" y="9" text-anchor="middle" fill="#8050c0" font-size="9" font-weight="700">RoboSort</text>
+            </g>
+            <text x="120" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Gripper: empty</text>
+            <text x="270" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">|</text>
+            <text x="370" y="14" fill="#4fc3f7" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Tower: 0/5 pieces</text>
+        </svg>
+        <div style="font-size:.78em; color:#7a8499; text-align:center; margin-top:8px; font-style:italic;">The English description below corresponds to this exact configuration &middot; the NL-to-PDDL pipeline has to recover all of it from plain text</div>
+    </div>
 
     <ol>
         <li><strong>English Description:</strong> "A robot in a warehouse with three shelves (A, B, C) and a build zone. Shelf A has two legs, Shelf B has a beam, Shelf C has a roof and a flag. The robot starts at home and can carry one piece. Legs support beam, beam supports roof, roof supports flag. Build the tower."</li>
@@ -659,6 +641,52 @@ _styles: >
 
         <li><strong>Solve & Return:</strong> A classical planner (Fast Downward, etc.) solves the validated PDDL and returns the plan.</li>
     </ol>
+
+    <!-- English -> entities mapping visualization for the RoboSort description -->
+    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 18px 0;">
+        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:10px;">Stage 2 made concrete &middot; what the LLM has to extract from the English</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; align-items:start;">
+            <!-- English with annotations -->
+            <div style="background:#161b2a; border-radius:6px; padding:12px;">
+                <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; margin-bottom:8px;">Input: English</div>
+                <div style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.88em; line-height:1.7; color:#cdd6f4;">
+                    "A <span style="background:rgba(128,80,192,.25); padding:1px 4px; border-radius:3px; color:#a78bda;">robot</span> in a warehouse with <span style="background:rgba(122,132,153,.25); padding:1px 4px; border-radius:3px; color:#a8b2c8;">three shelves (A, B, C)</span> and a <span style="background:rgba(122,132,153,.25); padding:1px 4px; border-radius:3px; color:#a8b2c8;">build zone</span>. <span style="background:rgba(122,132,153,.25); padding:1px 4px; border-radius:3px; color:#a8b2c8;">Shelf A</span> has <span style="background:rgba(224,112,48,.25); padding:1px 4px; border-radius:3px; color:#e8a070;">two legs</span>, <span style="background:rgba(122,132,153,.25); padding:1px 4px; border-radius:3px; color:#a8b2c8;">Shelf B</span> has a <span style="background:rgba(208,64,80,.25); padding:1px 4px; border-radius:3px; color:#e08090;">beam</span>, <span style="background:rgba(122,132,153,.25); padding:1px 4px; border-radius:3px; color:#a8b2c8;">Shelf C</span> has a <span style="background:rgba(48,160,96,.25); padding:1px 4px; border-radius:3px; color:#70c090;">roof</span> and a <span style="background:rgba(128,80,192,.25); padding:1px 4px; border-radius:3px; color:#a78bda;">flag</span>. The <span style="background:rgba(128,80,192,.25); padding:1px 4px; border-radius:3px; color:#a78bda;">robot starts at home</span> and <span style="background:rgba(212,116,14,.25); padding:1px 4px; border-radius:3px; color:#e8a040; font-weight:600;">can carry one piece</span>. <span style="background:rgba(212,116,14,.25); padding:1px 4px; border-radius:3px; color:#e8a040; font-weight:600;">Legs support beam, beam supports roof, roof supports flag</span>. <span style="background:rgba(95,207,95,.25); padding:1px 4px; border-radius:3px; color:#80d080; font-weight:600;">Build the tower</span>."
+                </div>
+                <div style="margin-top:14px; font-size:0.72em; color:#7a8499; line-height:1.55;">
+                    <div style="margin:3px 0;"><span style="display:inline-block; width:10px; height:10px; background:rgba(122,132,153,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><strong style="color:#a8b2c8;">locations:</strong> Shelf A/B/C, build zone, home</div>
+                    <div style="margin:3px 0;"><span style="display:inline-block; width:10px; height:10px; background:rgba(224,112,48,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><span style="display:inline-block; width:10px; height:10px; background:rgba(208,64,80,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><span style="display:inline-block; width:10px; height:10px; background:rgba(48,160,96,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><span style="display:inline-block; width:10px; height:10px; background:rgba(128,80,192,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><strong style="color:#cdd6f4;">pieces:</strong> 2 legs, beam, roof, flag</div>
+                    <div style="margin:3px 0;"><span style="display:inline-block; width:10px; height:10px; background:rgba(128,80,192,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><strong style="color:#a78bda;">robot:</strong> at home, one-at-a-time gripper</div>
+                    <div style="margin:3px 0;"><span style="display:inline-block; width:10px; height:10px; background:rgba(212,116,14,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><strong style="color:#e8a040;">constraints:</strong> support chain, gripper capacity</div>
+                    <div style="margin:3px 0;"><span style="display:inline-block; width:10px; height:10px; background:rgba(95,207,95,.5); border-radius:2px; margin-right:6px; vertical-align:middle;"></span><strong style="color:#80d080;">goal:</strong> tower assembled in build zone</div>
+                </div>
+            </div>
+
+            <!-- Extracted PDDL -->
+            <div style="background:#161b2a; border-radius:6px; padding:12px;">
+                <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; margin-bottom:8px;">Output: PDDL (excerpt)</div>
+                <pre style="margin:0; padding:0; background:transparent; border:none; font-family:'JetBrains Mono',monospace; font-size:0.74em; line-height:1.55; color:#cdd6f4; white-space:pre-wrap; overflow-x:auto;"><span style="color:#a8b2c8;">(:objects </span>
+  <span style="color:#a78bda;">robot</span> <span style="color:#7a8499;">- robot</span>
+  <span style="color:#a8b2c8;">shelf-a shelf-b shelf-c home build-zone</span> <span style="color:#7a8499;">- location</span>
+  <span style="color:#e8a070;">L1 L2</span> <span style="color:#e08090;">beam</span> <span style="color:#70c090;">roof</span> <span style="color:#a78bda;">flag</span> <span style="color:#7a8499;">- piece</span><span style="color:#a8b2c8;">)</span>
+
+<span style="color:#a8b2c8;">(:init </span>
+  <span style="color:#a78bda;">(robot-at robot home) (gripper-empty)</span>
+  <span style="color:#e8a070;">(piece-at L1 shelf-a) (piece-at L2 shelf-a)</span>
+  <span style="color:#e08090;">(piece-at beam shelf-b)</span>
+  <span style="color:#70c090;">(piece-at roof shelf-c)</span> <span style="color:#a78bda;">(piece-at flag shelf-c)</span>
+  <span style="color:#e8a040;">(supports L1 beam) (supports L2 beam)
+  (supports beam roof) (supports roof flag)</span><span style="color:#a8b2c8;">)</span>
+
+<span style="color:#a8b2c8;">(:goal </span>
+  <span style="color:#80d080;">(and (placed L1) (placed L2) (placed beam)
+       (placed roof) (placed flag))</span><span style="color:#a8b2c8;">)</span></pre>
+                <div style="margin-top:10px; font-size:0.7em; color:#7a8499; font-style:italic;">Each color above traces back to a phrase in the English on the left. The LLM has to do this color-matching itself &mdash; from grammar and world knowledge alone.</div>
+            </div>
+        </div>
+        <div style="margin-top:10px; padding:8px 12px; background:#1a1422; border-radius:6px; border-left:3px solid #8050c0;">
+            <p style="font-size:0.85em; color:#cdd6f4; line-height:1.5; margin:0;"><strong style="color:#a78bda;">The extraction is not naming, it's structuring.</strong> "Can carry one piece" doesn't mention <code>gripper-empty</code>, but the predicate is what the planner needs. "Legs support beam" must become four facts: <code>supports(L1, beam)</code>, <code>supports(L2, beam)</code>, and the chain into roof and flag. Every missed predicate becomes a missed precondition; every missed precondition becomes a broken plan.</p>
+        </div>
+    </div>
 
     <p>Each stage is a point of failure. The LLM might miss a predicate (stage 2), generate syntactically invalid PDDL (stage 3), or produce semantically correct PDDL that doesn't match the user's intent (stages 2–3). This is why the field converged on <strong>multi-agent systems</strong> — specialized agents for each stage, coordinated by an orchestrator.</p>
 
@@ -699,7 +727,9 @@ _styles: >
         </div>
         <p class="vis-caption">NL2Plan uses specialized agents for each extraction task. The orchestrator coordinates the pipeline — and, as we'll see, is the weakest link.</p>
     </div>
-<p>The key innovation is the decomposition. Instead of one massive prompt ("convert this English to PDDL"), NL2Plan breaks the task into focused queries: "What types of objects exist in this description?" then "Given these types, what predicates describe their relationships?" then "Given these types and predicates, what actions can the robot perform?" Each agent can use few-shot examples and targeted prompts for its specific subtask.</p>
+    
+
+    <p>The key innovation is the decomposition. Instead of one massive prompt ("convert this English to PDDL"), NL2Plan breaks the task into focused queries: "What types of objects exist in this description?" then "Given these types, what predicates describe their relationships?" then "Given these types and predicates, what actions can the robot perform?" Each agent can use few-shot examples and targeted prompts for its specific subtask.</p>
 
     <h3>RoboSort Through NL2Plan</h3>
 
@@ -754,7 +784,9 @@ _styles: >
         </div>
         <p class="vis-caption">NL2Plan transforms natural language into the same PDDL domain we manually wrote in Post 2. The LLM correctly extracts types (location, piece), predicates (robot-at, supports, holding), and actions (move, pick, place) — including the critical support constraint.</p>
     </div>
-<div class="callout insight">
+    
+
+    <div class="callout insight">
         <div class="callout-label">Key Insight</div>
         <p>NL2Plan achieves 100% accuracy on several standard domains — the generated PDDL is functionally identical to expert-written PDDL. The breakthrough is decomposition: by splitting the hard problem ("English → PDDL") into focused subproblems ("English → types," "types → predicates," etc.), each step becomes tractable for current LLMs.</p>
     </div>
@@ -822,7 +854,9 @@ _styles: >
         </div>
         <p class="vis-caption">The orchestrator passes syntactically valid PDDL to the solver — but the PDDL is missing the support constraint. The resulting plan is "valid" according to the broken model but physically impossible. This is the subtlest and most dangerous failure mode.</p>
     </div>
-<!-- ============================== -->
+    
+
+    <!-- ============================== -->
     <!-- SECTION 5: Agentic PDDL       -->
     <!-- ============================== -->
 
@@ -851,7 +885,9 @@ _styles: >
         </div>
         <p class="vis-caption">Agentic PDDL keeps the user in the loop. When the system detects ambiguity in support constraints, it asks — rather than guessing. This catches the exact failure mode NL2Plan misses.</p>
     </div>
-<div class="callout insight">
+    
+
+    <div class="callout insight">
         <div class="callout-label">Key Insight</div>
         <p>The orchestration problem is fundamentally a <em>communication</em> problem, not just a planning problem. Natural language is ambiguous. Formal models require precision. The gap between the two is where errors hide. Agentic PDDL bridges this gap through dialogue — asking users to resolve ambiguities rather than guessing. This human-in-the-loop approach trades automation for accuracy.</p>
     </div>
@@ -962,7 +998,9 @@ _styles: >
         </div>
         <p class="vis-caption">NL-to-Plan accuracy varies dramatically by domain familiarity. Standard domains the LLM has seen in training (like Blocksworld) achieve near-perfect results. Novel domains with ambiguous constraints remain hard. Data patterns from Gestrin et al. (2025), La Malfa et al. (2025).</p>
     </div>
-<p>The pattern tells a familiar story. When the domain is well-known — Blocksworld, logistics, standard problems from planning competitions — the LLM effectively has the PDDL in its training data and can reproduce it. When the domain is novel, accuracy drops sharply. This is the same pattern-matching vs. reasoning distinction from Post 4's Mystery Blocksworld, now appearing at the model generation level.</p>
+    
+
+    <p>The pattern tells a familiar story. When the domain is well-known — Blocksworld, logistics, standard problems from planning competitions — the LLM effectively has the PDDL in its training data and can reproduce it. When the domain is novel, accuracy drops sharply. This is the same pattern-matching vs. reasoning distinction from Post 4's Mystery Blocksworld, now appearing at the model generation level.</p>
 
     <p>Three open challenges define the frontier:</p>
 
@@ -1018,7 +1056,9 @@ _styles: >
         </div>
         <p class="vis-caption">The two paradigms complement each other. Paradigm 1 is mature and reliable where PDDL exists. Paradigm 2 extends the reach to domains described only in English — but the orchestrator bottleneck limits its reliability on novel problems.</p>
     </div>
-<p>The RoboSort warehouse has been our constant through all six posts. We watched it crash under a naive LLM plan (Post 1). We formalized it in PDDL (Post 2). We watched A* find the optimal path through its warehouse floor (Post 3). We watched GPT-4 fail and Mystery Blocksworld expose why (Post 4). We watched LLM-Modulo fix the plan in two iterations (Post 5). And now we've seen NL2Plan generate the PDDL from English (Post 6).</p>
+    
+
+    <p>The RoboSort warehouse has been our constant through all six posts. We watched it crash under a naive LLM plan (Post 1). We formalized it in PDDL (Post 2). We watched A* find the optimal path through its warehouse floor (Post 3). We watched GPT-4 fail and Mystery Blocksworld expose why (Post 4). We watched LLM-Modulo fix the plan in two iterations (Post 5). And now we've seen NL2Plan generate the PDDL from English (Post 6).</p>
 
     <p>One question remains: can we build systems that <em>learn</em> to orchestrate better — that adapt their coordination strategies, handle novel domains more reliably, and close the gap between familiar and unfamiliar? That's the subject of the final post.</p>
 
@@ -1056,6 +1096,8 @@ _styles: >
     </div>
 
     <!-- Download All -->
+    
+
 </article>
 
 <div class="blog-footer">

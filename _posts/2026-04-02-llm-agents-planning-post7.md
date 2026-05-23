@@ -8,57 +8,57 @@ description: "Stop prompting the orchestrator at every step. Let the verifier yo
 _styles: >
   .blog-fullhtml *, .blog-fullhtml *::before, .blog-fullhtml *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .blog-fullhtml {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      line-height: 1.8;
-      color: #1a1a2e;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.8;
+  color: #1a1a2e;
   }
 
   .blog-fullhtml .hero {
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
-      color: #f0f0f0;
-      padding: 80px 20px 60px;
-      text-align: center;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #2a4066 100%);
+  color: #f0f0f0;
+  padding: 80px 20px 60px;
+  text-align: center;
   }
   .blog-fullhtml .hero .series-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #7eb8da;
-      margin-bottom: 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #7eb8da;
+  margin-bottom: 16px;
   }
   .blog-fullhtml .hero h1 {
-      font-size: 2.6rem;
-      font-weight: 700;
-      line-height: 1.25;
-      max-width: 820px;
-      margin: 0 auto 20px;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: 820px;
+  margin: 0 auto 20px;
   }
   .blog-fullhtml .hero .subtitle {
-      font-size: 1.15rem;
-      color: #b0c4de;
-      max-width: 640px;
-      margin: 0 auto 28px;
-      font-style: italic;
+  font-size: 1.15rem;
+  color: #b0c4de;
+  max-width: 640px;
+  margin: 0 auto 28px;
+  font-style: italic;
   }
 
   .blog-fullhtml .blog-container {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
   }
 
   .blog-fullhtml h2 {
-      font-size: 1.85rem;
-      color: #0d1b2a;
-      margin: 56px 0 20px;
-      padding-bottom: 8px;
-      border-bottom: 3px solid #2a4066;
+  font-size: 1.85rem;
+  color: #0d1b2a;
+  margin: 56px 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #2a4066;
   }
   .blog-fullhtml h3 {
-      font-size: 1.35rem;
-      color: #1b2838;
-      margin: 40px 0 14px;
+  font-size: 1.35rem;
+  color: #1b2838;
+  margin: 40px 0 14px;
   }
   .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
   .blog-fullhtml strong { color: #0d1b2a; }
@@ -69,50 +69,50 @@ _styles: >
   .blog-fullhtml li { margin-bottom: 6px; }
 
   .blog-fullhtml .series-nav {
-      background: #f0f4f8;
-      border: 1px solid #d0d8ef;
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-bottom: 32px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.92rem;
-      color: #444;
+  background: #f0f4f8;
+  border: 1px solid #d0d8ef;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.92rem;
+  color: #444;
   }
   .blog-fullhtml .series-nav strong { color: #2a4066; font-size: 1rem; }
   .blog-fullhtml .series-nav .nav-desc { margin: 8px 0; color: #555; line-height: 1.6; }
   .blog-fullhtml .series-nav .nav-links {
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: #2a4066;
-      font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: #2a4066;
+  font-weight: 600;
   }
 
   .blog-fullhtml .callout {
-      border-left: 4px solid #2a4066;
-      background: #f0f4f8;
-      padding: 20px 24px;
-      margin: 28px 0;
-      border-radius: 0 6px 6px 0;
+  border-left: 4px solid #2a4066;
+  background: #f0f4f8;
+  padding: 20px 24px;
+  margin: 28px 0;
+  border-radius: 0 6px 6px 0;
   }
   .blog-fullhtml .callout.insight {
-      border-left-color: #228b22;
-      background: #f0faf0;
+  border-left-color: #228b22;
+  background: #f0faf0;
   }
   .blog-fullhtml .callout.warning {
-      border-left-color: #b22222;
-      background: #fdf2f2;
+  border-left-color: #b22222;
+  background: #fdf2f2;
   }
   .blog-fullhtml .callout.question {
-      border-left-color: #d4740e;
-      background: #fef9f0;
+  border-left-color: #d4740e;
+  background: #fef9f0;
   }
   .blog-fullhtml .callout-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
   }
   .blog-fullhtml .callout.insight .callout-label { color: #228b22; }
   .blog-fullhtml .callout.warning .callout-label { color: #b22222; }
@@ -120,108 +120,108 @@ _styles: >
   .blog-fullhtml .callout p:last-child { margin-bottom: 0; }
 
   .blog-fullhtml .agentic-sidebar {
-      background: linear-gradient(135deg, #f5f0ff, #ede4ff);
-      border: 1px solid #d4c5f0;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
+  background: linear-gradient(135deg, #f5f0ff, #ede4ff);
+  border: 1px solid #d4c5f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
   }
   .blog-fullhtml .agentic-sidebar .sidebar-title {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #6b3fa0;
-      margin-bottom: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #6b3fa0;
+  margin-bottom: 12px;
   }
   .blog-fullhtml .agentic-sidebar p { font-size: 0.95rem; color: #3a2a5a; }
 
   .blog-fullhtml pre {
-      background: #1e1e2e;
-      color: #cdd6f4;
-      padding: 20px 24px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 24px 0;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 20px 24px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 24px 0;
   }
   .blog-fullhtml code {
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 0.88em;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.88em;
   }
   .blog-fullhtml p code, .blog-fullhtml li code {
-      background: #e8edf2;
-      padding: 2px 6px;
-      border-radius: 3px;
-      color: #2a4066;
+  background: #e8edf2;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #2a4066;
   }
 
   .blog-fullhtml .image-container { margin: 2em 0; text-align: center; }
   .blog-fullhtml .image-placeholder {
-      background: #f0f0f0;
-      border: 2px dashed #ccc;
-      border-radius: 8px;
-      padding: 40px 20px;
-      color: #888;
-      font-style: italic;
-      font-size: 0.9em;
-      line-height: 1.6;
+  background: #f0f0f0;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px 20px;
+  color: #888;
+  font-style: italic;
+  font-size: 0.9em;
+  line-height: 1.6;
   }
   .blog-fullhtml .image-caption {
-      font-size: 0.85em;
-      color: #666;
-      margin-top: 8px;
-      font-style: italic;
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
   }
 
   .blog-fullhtml .vis-container {
-      margin: 2em 0;
-      padding: 1.5em;
-      background: #fafafa;
-      border-radius: 10px;
-      border: 1px solid #eee;
+  margin: 2em 0;
+  padding: 1.5em;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #eee;
   }
   .blog-fullhtml .vis-caption {
-      font-size: 0.85em;
-      color: #666;
-      font-style: italic;
-      margin-top: 10px;
-      text-align: center;
+  font-size: 0.85em;
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
   }
 
   .blog-fullhtml .interactive-container {
-      border: 1px solid #d0d8ef;
-      border-radius: 10px;
-      padding: 24px;
-      margin: 36px 0;
-      background: #fff;
+  border: 1px solid #d0d8ef;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 36px 0;
+  background: #fff;
   }
   .blog-fullhtml .interactive-container .interactive-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      color: #888;
-      margin-bottom: 12px;
-      font-style: italic;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  color: #888;
+  margin-bottom: 12px;
+  font-style: italic;
   }
   .blog-fullhtml .auto-demo-btn {
-      background: #2a9d8f;
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.9em;
-      font-weight: 600;
-      margin-top: 12px;
+  background: #2a9d8f;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-top: 12px;
   }
   .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
 
   .blog-fullhtml .next-post {
-      margin: 56px 0 0; padding: 28px;
-      background: linear-gradient(135deg, #1b2838, #2a4066);
-      border-radius: 10px; color: #e0e8f0;
+  margin: 56px 0 0; padding: 28px;
+  background: linear-gradient(135deg, #1b2838, #2a4066);
+  border-radius: 10px; color: #e0e8f0;
   }
   .blog-fullhtml .next-post h3 { color: #7eb8da; margin-top: 0; font-size: 1.15rem; }
   .blog-fullhtml .next-post p { font-size: 0.95rem; color: #b0c4de; }
@@ -233,292 +233,292 @@ _styles: >
   .blog-fullhtml .references li { margin-bottom: 8px; }
 
   .blog-fullhtml .blog-footer {
-      text-align: center; padding: 32px 20px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
+  text-align: center; padding: 32px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem; color: #888; border-top: 1px solid #eee;
   }
 
   .blog-fullhtml .math { font-family: 'Cambria Math', 'Georgia', serif; font-style: italic; color: #2a4066; }
   .blog-fullhtml .math-block {
-      text-align: center; padding: 16px 0; margin: 20px 0;
-      font-size: 1.1rem; background: #f8f9fb; border-radius: 6px;
+  text-align: center; padding: 16px 0; margin: 20px 0;
+  font-size: 1.1rem; background: #f8f9fb; border-radius: 6px;
   }
 
   .blog-fullhtml .credit-flow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin: 18px 0 8px;
-      flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0 8px;
+  flex-wrap: wrap;
   }
   .blog-fullhtml .credit-step {
-      border: 2px solid;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.78rem;
-      text-align: center;
-      min-width: 95px;
-      font-weight: 600;
-      background: #fff;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.78rem;
+  text-align: center;
+  min-width: 95px;
+  font-weight: 600;
+  background: #fff;
   }
   .blog-fullhtml .credit-step.ok { border-color: #228b22; color: #228b22; background: #f0faf0; }
   .blog-fullhtml .credit-step.bad { border-color: #b22222; color: #b22222; background: #fdf2f2; }
   .blog-fullhtml .credit-step.unknown { border-color: #888; color: #555; background: #f5f5f5; }
   .blog-fullhtml .credit-arrow {
-      font-size: 1.2rem;
-      color: #888;
-      font-weight: 700;
+  font-size: 1.2rem;
+  color: #888;
+  font-weight: 700;
   }
   .blog-fullhtml .credit-reward {
-      background: linear-gradient(90deg, #1b2838, #2a4066);
-      color: #e0e8f0;
-      border-radius: 8px;
-      padding: 8px 14px;
-      margin-top: 6px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-align: center;
+  background: linear-gradient(90deg, #1b2838, #2a4066);
+  color: #e0e8f0;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-top: 6px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
   }
 
   .blog-fullhtml .orch-compare {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin: 24px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 24px 0;
   }
   .blog-fullhtml .orch-compare > * { min-width: 0; }
   .blog-fullhtml .orch-card {
-      padding: 22px;
-      border-radius: 10px;
-      border: 2px solid;
-      background: #fff;
+  padding: 22px;
+  border-radius: 10px;
+  border: 2px solid;
+  background: #fff;
   }
   .blog-fullhtml .orch-card.prompted {
-      border-color: #b22222;
-      background: #fdf2f2;
+  border-color: #b22222;
+  background: #fdf2f2;
   }
   .blog-fullhtml .orch-card.trained {
-      border-color: #228b22;
-      background: #f0faf0;
+  border-color: #228b22;
+  background: #f0faf0;
   }
   .blog-fullhtml .orch-card .orch-tag {
-      display: inline-block;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      margin-bottom: 12px;
-      color: white;
+  display: inline-block;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  color: white;
   }
   .blog-fullhtml .orch-card.prompted .orch-tag { background: #b22222; }
   .blog-fullhtml .orch-card.trained .orch-tag { background: #228b22; }
   .blog-fullhtml .orch-card h4 {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.02rem;
-      margin-bottom: 10px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.02rem;
+  margin-bottom: 10px;
   }
   .blog-fullhtml .orch-card.prompted h4 { color: #7a1a1a; }
   .blog-fullhtml .orch-card.trained h4 { color: #0a4a0a; }
   .blog-fullhtml .orch-card ul {
-      margin-left: 18px;
-      font-size: 0.92rem;
+  margin-left: 18px;
+  font-size: 0.92rem;
   }
   .blog-fullhtml .orch-card.prompted ul { color: #5a1010; }
   .blog-fullhtml .orch-card.trained ul { color: #0a4a0a; }
   .blog-fullhtml .orch-card .cost {
-      margin-top: 12px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
   }
   .blog-fullhtml .orch-card.prompted .cost {
-      background: #f3c8c8;
-      color: #7a1a1a;
+  background: #f3c8c8;
+  color: #7a1a1a;
   }
   .blog-fullhtml .orch-card.trained .cost {
-      background: #c8e8c8;
-      color: #0a4a0a;
+  background: #c8e8c8;
+  color: #0a4a0a;
   }
 
   .blog-fullhtml .agent-pool {
-      margin: 22px 0 8px;
+  margin: 22px 0 8px;
   }
   .blog-fullhtml .agent-group {
-      margin-bottom: 16px;
+  margin-bottom: 16px;
   }
   .blog-fullhtml .agent-group-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #1b2838;
-      margin-bottom: 8px;
-      padding-left: 4px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #1b2838;
+  margin-bottom: 8px;
+  padding-left: 4px;
   }
   .blog-fullhtml .agent-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
   }
   .blog-fullhtml .agent-grid > * { min-width: 0; }
   .blog-fullhtml .agent-chip {
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.72rem;
-      line-height: 1.35;
-      color: #fff;
-      font-weight: 600;
-      text-align: center;
-      min-height: 56px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   }
   .blog-fullhtml .agent-chip .agent-id {
-      display: inline-block;
-      font-size: 0.6rem;
-      font-weight: 700;
-      background: rgba(255,255,255,0.25);
-      border-radius: 3px;
-      padding: 1px 5px;
-      margin-bottom: 3px;
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.25);
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-bottom: 3px;
   }
   .blog-fullhtml .agent-chip.baseline { background: #4682b4; }
   .blog-fullhtml .agent-chip.deterministic { background: #228b22; }
   .blog-fullhtml .agent-chip.pddl-aware { background: #6b3fa0; }
   .blog-fullhtml .agent-chip.added { box-shadow: 0 0 0 2px #d4740e inset, 0 0 0 4px #d4740e; }
   .blog-fullhtml .agent-legend {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 12px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.78rem;
-      color: #444;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.78rem;
+  color: #444;
   }
   .blog-fullhtml .agent-legend .swatch {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border-radius: 3px;
-      margin-right: 6px;
-      vertical-align: middle;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-right: 6px;
+  vertical-align: middle;
   }
 
   .blog-fullhtml .hybrid-diagram {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin: 20px 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 20px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .hybrid-layer {
-      border-radius: 10px;
-      padding: 16px 20px;
+  border-radius: 10px;
+  padding: 16px 20px;
   }
   .blog-fullhtml .hybrid-layer.layer1 {
-      background: linear-gradient(135deg, #fff7ed, #ffe9d0);
-      border: 2px solid #d4740e;
+  background: linear-gradient(135deg, #fff7ed, #ffe9d0);
+  border: 2px solid #d4740e;
   }
   .blog-fullhtml .hybrid-layer.layer2 {
-      background: linear-gradient(135deg, #f0faf0, #d0eed0);
-      border: 2px solid #228b22;
+  background: linear-gradient(135deg, #f0faf0, #d0eed0);
+  border: 2px solid #228b22;
   }
   .blog-fullhtml .hybrid-layer h5 {
-      font-size: 0.92rem;
-      margin-bottom: 8px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.92rem;
+  margin-bottom: 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .hybrid-layer.layer1 h5 { color: #b35c00; }
   .blog-fullhtml .hybrid-layer.layer2 h5 { color: #0a4a0a; }
   .blog-fullhtml .hybrid-rules {
-      margin: 8px 0 0 22px;
-      font-size: 0.82rem;
+  margin: 8px 0 0 22px;
+  font-size: 0.82rem;
   }
   .blog-fullhtml .hybrid-rules code {
-      background: rgba(0,0,0,0.07);
-      padding: 1px 5px;
-      border-radius: 3px;
-      color: #1b2838;
-      font-size: 0.78rem;
+  background: rgba(0,0,0,0.07);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #1b2838;
+  font-size: 0.78rem;
   }
   .blog-fullhtml .hybrid-layer .layer-tag {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 3px 8px;
-      border-radius: 3px;
-      color: white;
-      margin-bottom: 6px;
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: white;
+  margin-bottom: 6px;
   }
   .blog-fullhtml .hybrid-layer.layer1 .layer-tag { background: #d4740e; }
   .blog-fullhtml .hybrid-layer.layer2 .layer-tag { background: #228b22; }
   .blog-fullhtml .hybrid-arrow {
-      text-align: center;
-      font-size: 1.4rem;
-      color: #888;
-      font-weight: 700;
+  text-align: center;
+  font-size: 1.4rem;
+  color: #888;
+  font-weight: 700;
   }
 
   .blog-fullhtml .train-pipeline {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin: 20px 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 20px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .train-stage {
-      border-radius: 10px;
-      padding: 14px 18px;
-      background: #fff;
-      border: 2px solid #d0d8ef;
-      position: relative;
+  border-radius: 10px;
+  padding: 14px 18px;
+  background: #fff;
+  border: 2px solid #d0d8ef;
+  position: relative;
   }
   .blog-fullhtml .train-stage .train-counter {
-      position: absolute;
-      top: -10px;
-      left: 16px;
-      background: #2a4066;
-      color: white;
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 0.7rem;
-      font-weight: 700;
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  background: #2a4066;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
   }
   .blog-fullhtml .train-stage h5 {
-      font-size: 0.92rem;
-      margin: 4px 0 6px;
-      color: #1b2838;
+  font-size: 0.92rem;
+  margin: 4px 0 6px;
+  color: #1b2838;
   }
   .blog-fullhtml .train-stage p {
-      font-size: 0.85rem;
-      color: #444;
-      line-height: 1.55;
-      margin-bottom: 0;
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.55;
+  margin-bottom: 0;
   }
   .blog-fullhtml .train-stage .count-pill {
-      display: inline-block;
-      background: #f0f4f8;
-      color: #2a4066;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      margin-left: 6px;
+  display: inline-block;
+  background: #f0f4f8;
+  color: #2a4066;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: 6px;
   }
   .blog-fullhtml .train-stage.hard { border-color: #b22222; background: #fdf2f2; }
   .blog-fullhtml .train-stage.hard h5 { color: #7a1a1a; }
@@ -530,314 +530,212 @@ _styles: >
   .blog-fullhtml .train-stage.train h5 { color: #0a4a0a; }
 
   .blog-fullhtml .results-chart {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 8px 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .results-row {
-      display: grid;
-      grid-template-columns: 170px 1fr 80px;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.85rem;
+  display: grid;
+  grid-template-columns: 170px 1fr 80px;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
   }
   .blog-fullhtml .results-label {
-      text-align: right;
-      font-weight: 600;
-      color: #1b2838;
-      font-size: 0.82rem;
-      line-height: 1.3;
+  text-align: right;
+  font-weight: 600;
+  color: #1b2838;
+  font-size: 0.82rem;
+  line-height: 1.3;
   }
   .blog-fullhtml .results-bar-track {
-      height: 22px;
-      background: #ececec;
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
+  height: 22px;
+  background: #ececec;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
   }
   .blog-fullhtml .results-bar {
-      height: 100%;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-right: 8px;
-      color: white;
-      font-size: 0.72rem;
-      font-weight: 700;
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
   }
   .blog-fullhtml .results-value {
-      font-weight: 700;
-      font-size: 0.85rem;
+  font-weight: 700;
+  font-size: 0.85rem;
   }
   .blog-fullhtml .results-section-label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #1b2838;
-      margin: 10px 0 6px;
-      padding-left: 4px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1b2838;
+  margin: 10px 0 6px;
+  padding-left: 4px;
   }
 
   .blog-fullhtml .demo-board {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
   }
   .blog-fullhtml .demo-board > * { min-width: 0; }
   .blog-fullhtml .demo-col {
-      border: 2px solid;
-      border-radius: 10px;
-      background: #fff;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 480px;
+  border: 2px solid;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
   }
   .blog-fullhtml .demo-col.prompted-col { border-color: #b22222; }
   .blog-fullhtml .demo-col.trained-col { border-color: #228b22; }
   .blog-fullhtml .demo-col .demo-header {
-      padding: 10px 16px;
-      color: white;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+  padding: 10px 16px;
+  color: white;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   }
   .blog-fullhtml .demo-col.prompted-col .demo-header { background: #b22222; }
   .blog-fullhtml .demo-col.trained-col .demo-header { background: #228b22; }
   .blog-fullhtml .demo-steps {
-      flex: 1;
-      padding: 14px 14px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+  flex: 1;
+  padding: 14px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   }
   .blog-fullhtml .demo-step {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #fafafa;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      opacity: 0.45;
-      transition: all 0.4s ease;
-      min-height: 64px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fafafa;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  opacity: 0.45;
+  transition: all 0.4s ease;
+  min-height: 64px;
   }
   .blog-fullhtml .demo-step.active {
-      opacity: 1;
-      background: #fff8e6;
-      border-color: #d4740e;
-      box-shadow: 0 2px 8px rgba(212, 116, 14, 0.18);
+  opacity: 1;
+  background: #fff8e6;
+  border-color: #d4740e;
+  box-shadow: 0 2px 8px rgba(212, 116, 14, 0.18);
   }
   .blog-fullhtml .demo-step.done.prompted {
-      opacity: 1;
-      background: #fdf2f2;
-      border-color: #b22222;
+  opacity: 1;
+  background: #fdf2f2;
+  border-color: #b22222;
   }
   .blog-fullhtml .demo-step.done.trained {
-      opacity: 1;
-      background: #f0faf0;
-      border-color: #228b22;
+  opacity: 1;
+  background: #f0faf0;
+  border-color: #228b22;
   }
   .blog-fullhtml .demo-step .step-head {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
   }
   .blog-fullhtml .demo-step .step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: white;
-      background: #888;
-      flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: white;
+  background: #888;
+  flex-shrink: 0;
   }
   .blog-fullhtml .demo-step.active .step-num { background: #d4740e; }
   .blog-fullhtml .demo-step.done.prompted .step-num { background: #b22222; }
   .blog-fullhtml .demo-step.done.trained .step-num { background: #228b22; }
   .blog-fullhtml .demo-step .step-label {
-      font-size: 0.78rem;
-      color: #555;
-      font-weight: 600;
+  font-size: 0.78rem;
+  color: #555;
+  font-weight: 600;
   }
   .blog-fullhtml .demo-step .step-agent {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.78rem;
-      color: #1b2838;
-      font-weight: 700;
-      margin-top: 2px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  color: #1b2838;
+  font-weight: 700;
+  margin-top: 2px;
   }
   .blog-fullhtml .demo-step .step-note {
-      font-size: 0.72rem;
-      color: #666;
-      margin-top: 2px;
-      font-style: italic;
+  font-size: 0.72rem;
+  color: #666;
+  margin-top: 2px;
+  font-style: italic;
   }
   .blog-fullhtml .demo-tally {
-      padding: 10px 14px;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      border-top: 1px solid #ddd;
-      visibility: hidden;
+  padding: 10px 14px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  border-top: 1px solid #ddd;
+  visibility: hidden;
   }
   .blog-fullhtml .demo-tally.visible { visibility: visible; }
   .blog-fullhtml .demo-tally.prompted { background: #fdf2f2; color: #7a1a1a; }
   .blog-fullhtml .demo-tally.trained { background: #f0faf0; color: #0a4a0a; }
   .blog-fullhtml .demo-controls {
-      margin-top: 16px;
-      text-align: center;
+  margin-top: 16px;
+  text-align: center;
   }
   .blog-fullhtml .demo-controls button {
-      margin: 0 4px;
+  margin: 0 4px;
   }
   .blog-fullhtml .demo-controls .reset-btn {
-      background: #888;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.9em;
-      font-weight: 600;
+  background: #888;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.9em;
+  font-weight: 600;
   }
   .blog-fullhtml .demo-controls .reset-btn:hover { background: #666; }
   .blog-fullhtml .demo-status {
-      text-align: center;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.82rem;
-      color: #666;
-      margin-top: 12px;
-      min-height: 1.2em;
+  text-align: center;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: 12px;
+  min-height: 1.2em;
   }
 
   @media (max-width: 700px) {
-      .blog-fullhtml .hero h1 { font-size: 1.8rem; }
-      .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
-      .blog-fullhtml .credit-flow { gap: 6px; }
-      .blog-fullhtml .credit-step { font-size: 0.7rem; min-width: 70px; padding: 8px 10px; }
-      .blog-fullhtml .orch-compare { grid-template-columns: 1fr; }
-      .blog-fullhtml .agent-grid { grid-template-columns: repeat(2, 1fr); }
-      .blog-fullhtml .results-row { grid-template-columns: 110px 1fr 60px; }
-      .blog-fullhtml .demo-board { grid-template-columns: 1fr; }
+  .blog-fullhtml .hero h1 { font-size: 1.8rem; }
+  .blog-fullhtml .blog-container { padding: 32px 16px 60px; }
+  .blog-fullhtml .credit-flow { gap: 6px; }
+  .blog-fullhtml .credit-step { font-size: 0.7rem; min-width: 70px; padding: 8px 10px; }
+  .blog-fullhtml .orch-compare { grid-template-columns: 1fr; }
+  .blog-fullhtml .agent-grid { grid-template-columns: repeat(2, 1fr); }
+  .blog-fullhtml .results-row { grid-template-columns: 110px 1fr 60px; }
+  .blog-fullhtml .demo-board { grid-template-columns: 1fr; }
   }
+
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
-  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
-  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
-  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
-  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
-  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
-  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; }
-  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
-  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
-  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .image-placeholder { background: #1e2530; border-color: #2a3545; color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .image-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
-  html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .auto-demo-btn:hover { background: #4dc9b0; }
-  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .math-block { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step.ok { background: #142a14; border-color: #228b22; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step.bad { background: #2a1414; border-color: #b22222; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .credit-step.unknown { background: #1e2530; border-color: #6a7888; color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .credit-arrow { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted { background: #2a1414; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted .orch-tag { background: #b22222; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained .orch-tag { background: #228b22; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted h4 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained h4 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted ul { color: #e0a8a8; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained ul { color: #a8d8a8; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.prompted .cost { background: #3a1a1a; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .orch-card.trained .cost { background: #1a3a1a; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .agent-group-label { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.baseline { background: #4682b4; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.deterministic { background: #228b22; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.pddl-aware { background: #6b3fa0; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .agent-chip.added { box-shadow: 0 0 0 2px #e8a040 inset, 0 0 0 4px #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .agent-legend { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer1 { background: linear-gradient(135deg, #2a2010, #3a2818); border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer2 { background: linear-gradient(135deg, #142a14, #1a3a1a); border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer1 h5 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer2 h5 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-rules code { background: rgba(255,255,255,0.07); color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer1 .layer-tag { background: #d4740e; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-layer.layer2 .layer-tag { background: #228b22; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .hybrid-arrow { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage { background: #1e2530; border-color: #2a3a50; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage .train-counter { background: #4a7ab5; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage h5 { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage p { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage .count-pill { background: #1e2a3a; color: #7eb8da; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.hard { background: #2a1414; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.hard h5 { color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.augment { background: #2a2010; border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.augment h5 { color: #e8a040; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.soft { background: #142a2a; border-color: #2a9d8f; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.soft h5 { color: #4dc9b0; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.train { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .train-stage.train h5 { color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .results-bar-track { background: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .results-label { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .results-section-label { color: #b0b8c8; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col { background: #1e2530; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.prompted-col { border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.trained-col { border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.prompted-col .demo-header { background: #b22222; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .demo-col.trained-col .demo-header { background: #228b22; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step { background: #1a2030; border-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.active { background: #2a2010; border-color: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.prompted { background: #2a1414; border-color: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.trained { background: #142a14; border-color: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-num { background: #6a7888; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.active .step-num { background: #d4740e; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.prompted .step-num { background: #b22222; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step.done.trained .step-num { background: #228b22; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-label { color: #9aa8b8; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-agent { color: #e0e8f0; }
-  html[data-theme="dark"] .blog-fullhtml .demo-step .step-note { color: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .demo-tally { border-top-color: #2a3545; }
-  html[data-theme="dark"] .blog-fullhtml .demo-tally.prompted { background: #2a1414; color: #e06060; }
-  html[data-theme="dark"] .blog-fullhtml .demo-tally.trained { background: #142a14; color: #5cbf5c; }
-  html[data-theme="dark"] .blog-fullhtml .demo-controls .reset-btn { background: #6a7888; color: #fff; }
-  html[data-theme="dark"] .blog-fullhtml .demo-controls .reset-btn:hover { background: #8899aa; }
-  html[data-theme="dark"] .blog-fullhtml .demo-status { color: #8899aa; }
 ---
 
 <header class="hero">
@@ -1471,6 +1369,68 @@ _styles: >
         <h3 style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; color: #1b2838; margin-bottom: 4px;">RoboSort, Post 7: Two Orchestrators, One Refinement Loop</h3>
         <p style="text-align:center; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: #888; margin-bottom: 12px;"><em>Specification:</em> "RoboSort works in a new facility. Three shelves (A, B, C), one dock. Five packages — two small, two medium, one fragile. Fragile must be picked last and placed first at the dock. Gripper carries one at a time. Goal: all packages at dock with fragile on top."</p>
 
+        <!-- RoboSort warehouse visualization (matches the spec above) -->
+        <div style="background:#0f1117; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin-bottom:14px;">
+            <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:8px;">The RoboSort facility · what both orchestrators are trying to plan for</div>
+            <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; max-height:200px;">
+                <!-- Floor -->
+                <rect x="20" y="170" width="560" height="20" fill="#1a1f2e" stroke="#2a2f3f" stroke-width=".5"/>
+
+                <!-- Shelf A -->
+                <rect x="40" y="60" width="110" height="100" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+                <line x1="40" y1="110" x2="150" y2="110" stroke="#3a4055" stroke-width=".8"/>
+                <text x="95" y="76" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700">SHELF A</text>
+                <!-- Package: small on top -->
+                <rect x="60" y="84" width="30" height="22" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
+                <text x="75" y="98" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">SMALL</text>
+                <!-- Package: medium below -->
+                <rect x="100" y="130" width="40" height="28" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
+                <text x="120" y="147" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">MEDIUM</text>
+
+                <!-- Shelf B -->
+                <rect x="170" y="60" width="110" height="100" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+                <line x1="170" y1="110" x2="280" y2="110" stroke="#3a4055" stroke-width=".8"/>
+                <text x="225" y="76" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700">SHELF B</text>
+                <!-- Package: small -->
+                <rect x="185" y="84" width="30" height="22" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
+                <text x="200" y="98" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">SMALL</text>
+                <!-- Package: medium -->
+                <rect x="230" y="130" width="40" height="28" rx="3" fill="#d4740e" stroke="#a85800" stroke-width=".6"/>
+                <text x="250" y="147" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">MEDIUM</text>
+
+                <!-- Shelf C -->
+                <rect x="300" y="60" width="110" height="100" rx="6" fill="#1a1f2e" stroke="#3a4055" stroke-width="1.2"/>
+                <line x1="300" y1="110" x2="410" y2="110" stroke="#3a4055" stroke-width=".8"/>
+                <text x="355" y="76" text-anchor="middle" fill="#7a8499" font-size="11" font-weight="700">SHELF C</text>
+                <!-- Package: FRAGILE -->
+                <rect x="320" y="84" width="70" height="22" rx="3" fill="#c2185b" stroke="#8a0f3e" stroke-width="1"/>
+                <text x="355" y="98" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="700">⚠ FRAGILE</text>
+                <text x="355" y="120" text-anchor="middle" fill="#c2185b" font-size="7.5" font-style="italic">picked last · placed first</text>
+
+                <!-- Dock -->
+                <rect x="450" y="80" width="120" height="80" rx="6" fill="#0a4a0a" fill-opacity=".35" stroke="#228b22" stroke-width="1.5" stroke-dasharray="6 4"/>
+                <text x="510" y="100" text-anchor="middle" fill="#5fcf5f" font-size="11" font-weight="700">DOCK</text>
+                <text x="510" y="118" text-anchor="middle" fill="#7a8499" font-size="8" font-style="italic">(empty · goal target)</text>
+                <text x="510" y="138" text-anchor="middle" fill="#7a8499" font-size="7.5" font-style="italic">5 packages here</text>
+                <text x="510" y="150" text-anchor="middle" fill="#7a8499" font-size="7.5" font-style="italic">FRAGILE on top</text>
+
+                <!-- Robot -->
+                <g transform="translate(38,178)">
+                    <line x1="0" y1="-26" x2="0" y2="-22" stroke="#7a8499" stroke-width="1"/>
+                    <circle cx="0" cy="-28" r="2" fill="#7a8499"/>
+                    <rect x="-8" y="-22" width="16" height="9" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
+                    <circle cx="-2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
+                    <circle cx="2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
+                    <rect x="-9" y="-12" width="18" height="14" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
+                    <text x="20" y="-10" fill="#7a8499" font-size="9" font-weight="700">RoboSort</text>
+                    <text x="20" y="0" fill="#7a8499" font-size="7.5" font-style="italic">at HOME · empty gripper</text>
+                </g>
+
+                <!-- Constraint reminder -->
+                <text x="300" y="20" text-anchor="middle" fill="#c2185b" font-size="9.5" font-weight="700">CONSTRAINT: gripper carries 1 · fragile picked LAST, placed FIRST · all to DOCK</text>
+            </svg>
+        </div>
+
         <div class="interactive-container" style="margin: 0; border: none; padding: 0; background: transparent;">
             <div class="interactive-label" style="text-align: center;">Interactive — click "▶ Auto Demo" to watch both orchestrators run the same refinement loop, step by step</div>
 
@@ -1581,6 +1541,119 @@ _styles: >
             <div class="demo-controls">
                 <button class="auto-demo-btn" id="demoRunBtn" onclick="runDemo()">▶ Auto Demo</button>
                 <button class="reset-btn" id="demoResetBtn" onclick="resetDemo()" style="display:none;">↺ Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Outcome panel: same warehouse end-state, different orchestration cost -->
+    <div style="background:#0a0e1a; border:1px solid #2a2f3f; border-radius:8px; padding:14px 16px; margin: 20px 0;">
+        <div style="font-size:.65rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#7a8499; text-align:center; margin-bottom:10px;">Both orchestrators arrive at the same valid plan &middot; here is the dock after RoboSort executes it</div>
+        <div style="display:flex; gap:14px; align-items:stretch;">
+            <!-- Warehouse end-state: dock with all 5 packages, fragile on top -->
+            <div style="flex:1.1; min-width:0;">
+                <svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
+                    <!-- Floor -->
+                    <rect x="10" y="172" width="340" height="18" fill="#161b2a" stroke="#2a2f3f" stroke-width=".5"/>
+
+                    <!-- Empty shelves -->
+                    <rect x="20" y="60" width="60" height="110" rx="5" fill="#1a1f2e" stroke="#3a4055" stroke-width="1"/>
+                    <text x="50" y="50" text-anchor="middle" fill="#5a6075" font-size="9" font-weight="700">SHELF A</text>
+                    <text x="50" y="118" text-anchor="middle" fill="#3a4055" font-size="8" font-style="italic" opacity=".6">(empty)</text>
+
+                    <rect x="90" y="60" width="60" height="110" rx="5" fill="#1a1f2e" stroke="#3a4055" stroke-width="1"/>
+                    <text x="120" y="50" text-anchor="middle" fill="#5a6075" font-size="9" font-weight="700">SHELF B</text>
+                    <text x="120" y="118" text-anchor="middle" fill="#3a4055" font-size="8" font-style="italic" opacity=".6">(empty)</text>
+
+                    <rect x="160" y="60" width="60" height="110" rx="5" fill="#1a1f2e" stroke="#3a4055" stroke-width="1"/>
+                    <text x="190" y="50" text-anchor="middle" fill="#5a6075" font-size="9" font-weight="700">SHELF C</text>
+                    <text x="190" y="118" text-anchor="middle" fill="#3a4055" font-size="8" font-style="italic" opacity=".6">(empty)</text>
+
+                    <!-- Dock with stacked packages (fragile on top) -->
+                    <rect x="240" y="60" width="100" height="110" rx="6" fill="#0a1a0a" stroke="#2e8b2e" stroke-width="1.5"/>
+                    <text x="290" y="50" text-anchor="middle" fill="#5fcf5f" font-size="9" font-weight="700" letter-spacing="1">DOCK</text>
+
+                    <!-- Packages stacked: medium, medium, small, small, fragile on top -->
+                    <rect x="252" y="148" width="76" height="20" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
+                    <text x="290" y="161" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">MEDIUM</text>
+                    <rect x="252" y="126" width="76" height="20" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
+                    <text x="290" y="139" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">MEDIUM</text>
+                    <rect x="262" y="108" width="56" height="16" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
+                    <text x="290" y="119" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">SMALL</text>
+                    <rect x="262" y="90" width="56" height="16" rx="2" fill="#d4740e" stroke="#a85800" stroke-width=".5"/>
+                    <text x="290" y="101" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">SMALL</text>
+                    <rect x="256" y="68" width="68" height="20" rx="2" fill="#c2185b" stroke="#8a0f3e" stroke-width=".8"/>
+                    <text x="290" y="81" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">⚠ FRAGILE</text>
+
+                    <!-- Robot at home -->
+                    <g transform="translate(28,178)">
+                        <line x1="0" y1="-26" x2="0" y2="-22" stroke="#7a8499" stroke-width="1"/>
+                        <circle cx="0" cy="-28" r="2" fill="#7a8499"/>
+                        <rect x="-8" y="-22" width="16" height="9" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
+                        <circle cx="-2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
+                        <circle cx="2.5" cy="-19" r="1.5" fill="#cdd6f4"/>
+                        <rect x="-9" y="-12" width="18" height="14" rx="2.5" fill="#3a4055" stroke="#5a6075" stroke-width=".8"/>
+                    </g>
+
+                    <!-- Status -->
+                    <text x="130" y="14" fill="#5fcf5f" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">Gripper: empty &middot; Dock: 5/5 &middot; FRAGILE on top ✓</text>
+                </svg>
+                <div style="font-size:.74em; color:#7a8499; text-align:center; margin-top:6px; font-style:italic;">Identical end state from both orchestrators &middot; same valid PDDL plan</div>
+            </div>
+
+            <!-- Cost comparison bars -->
+            <div style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:14px; padding: 0 8px;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.78em; margin-bottom:4px;">
+                        <span style="color:#a8b2c8; font-weight:600;">Iterations to valid plan</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
+                        <span style="font-size:0.7em; color:#ff6b6b; min-width:90px;">Prompted GPT-5</span>
+                        <div style="flex:1; height:14px; background:#1a0a0a; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
+                        <span style="font-size:0.78em; color:#ff6b6b; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">6</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.7em; color:#5fcf5f; min-width:90px;">HALO</span>
+                        <div style="flex:1; height:14px; background:#0a1a0a; border-radius:3px; overflow:hidden;"><div style="width:66%; height:100%; background:#2e8b2e;"></div></div>
+                        <span style="font-size:0.78em; color:#5fcf5f; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">4</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.78em; margin-bottom:4px;">
+                        <span style="color:#a8b2c8; font-weight:600;">Orchestrator model calls</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
+                        <span style="font-size:0.7em; color:#ff6b6b; min-width:90px;">Prompted GPT-5</span>
+                        <div style="flex:1; height:14px; background:#1a0a0a; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
+                        <span style="font-size:0.78em; color:#ff6b6b; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">6</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.7em; color:#5fcf5f; min-width:90px;">HALO</span>
+                        <div style="flex:1; height:14px; background:#0a1a0a; border-radius:3px; overflow:hidden;"><div style="width:17%; height:100%; background:#2e8b2e;"></div></div>
+                        <span style="font-size:0.78em; color:#5fcf5f; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:18px; text-align:right;">1</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.78em; margin-bottom:4px;">
+                        <span style="color:#a8b2c8; font-weight:600;">Cost per task</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
+                        <span style="font-size:0.7em; color:#ff6b6b; min-width:90px;">Prompted GPT-5</span>
+                        <div style="flex:1; height:14px; background:#1a0a0a; border-radius:3px; overflow:hidden;"><div style="width:100%; height:100%; background:#b22222;"></div></div>
+                        <span style="font-size:0.74em; color:#ff6b6b; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:50px; text-align:right;">$0.18</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.7em; color:#5fcf5f; min-width:90px;">HALO</span>
+                        <div style="flex:1; height:14px; background:#0a1a0a; border-radius:3px; overflow:hidden;"><div style="width:2.2%; height:100%; background:#2e8b2e;"></div></div>
+                        <span style="font-size:0.74em; color:#5fcf5f; font-family:'JetBrains Mono',monospace; font-weight:700; min-width:50px; text-align:right;">$0.004</span>
+                    </div>
+                </div>
+
+                <div style="text-align:center; padding:8px 12px; background:#0d1f0d; border-radius:6px; border:1px solid #2e8b2e; margin-top:4px;">
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:1.05rem; font-weight:700; color:#5fcf5f;">≈ 45× cheaper</div>
+                    <div style="font-size:0.7em; color:#a8b2c8; margin-top:2px; font-style:italic;">same plan, far less compute</div>
+                </div>
             </div>
         </div>
     </div>
@@ -1706,7 +1779,10 @@ _styles: >
     <!-- ============================== -->
     <!-- DOWNLOAD ALL + REFERENCES      -->
     <!-- ============================== -->
-<div class="references">
+
+    
+
+    <div class="references">
         <h2>References</h2>
         <ol>
             <li>Mangannavar, R., Coalson, Z., Dugar, P., &amp; Tadepalli, P. (2026). <em>Training the Orchestrator: A Supervised Approach to End-to-End PDDL Planning with LLM Agents</em>. Oregon State University. Under review (introduces HALO).</li>
