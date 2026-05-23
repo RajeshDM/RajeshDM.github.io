@@ -64,6 +64,51 @@ _styles: >
 
   .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml em { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml a { color: #4dd0ce; border-bottom-color: rgba(77,208,206,0.3); }
+  html[data-theme="dark"] .blog-fullhtml a:hover { color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .subtitle { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml hr { border-top-color: #2a3a3a; }
+  html[data-theme="dark"] .blog-fullhtml code { background: #2c3237; color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml blockquote { background: #142a2a; border-left-color: #4dd0ce; color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .paper-tag { background: #2a2410; color: #d4b870; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #0f2625; border-left-color: #1e4a48; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .series-nav-links { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a { color: #4dd0ce; border-bottom-color: rgba(77,208,206,0.3); }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a:hover { color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer { background: #142a2a; border-color: #1e4a48; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer strong { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer p { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer a { color: #4dd0ce; border-bottom-color: rgba(77,208,206,0.3); }
+  html[data-theme="dark"] .blog-fullhtml .family-callout.heuristic { background: #2a2010; border-left-color: #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .family-callout.value { background: #141e2e; border-left-color: #4682b4; }
+  html[data-theme="dark"] .blog-fullhtml .family-callout.ranking { background: #0f2625; border-left-color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .family-callout.heuristic .label { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .family-callout.value .label { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .family-callout.ranking .label { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .family-callout h3 { color: #c5aae8; }
+  html[data-theme="dark"] .blog-fullhtml .family-callout p { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .insight { background: #1e1a30; color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .insight .label { color: #d4b870; }
+  html[data-theme="dark"] .blog-fullhtml .insight strong { color: #d4b870; }
+  html[data-theme="dark"] .blog-fullhtml .insight p { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e1a30; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-title { color: #c5aae8; }
+  html[data-theme="dark"] .blog-fullhtml .vis-title::after { background: #d4b870; }
+  html[data-theme="dark"] .blog-fullhtml .vis-subtitle { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table th { background: #15101e; color: #c5aae8; border-bottom-color: #d4b870; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table td { border-bottom-color: #2a2540; color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table .yes { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table .no { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .compare-table .partial { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #9888a8; border-top-color: #2a2540; }
 ---
 
 <article class="blog-container">

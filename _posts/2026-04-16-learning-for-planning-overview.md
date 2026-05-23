@@ -64,6 +64,40 @@ _styles: >
 
   .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml em { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .subtitle { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml hr { border-top-color: #2a3a3a; }
+  html[data-theme="dark"] .blog-fullhtml code { background: #2c3237; color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #0f2625; border-left-color: #1e4a48; color: #b0c8c6; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .series-nav-links { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a { color: #4dd0ce; border-bottom-color: rgba(77,208,206,0.3); }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a:hover { color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer { background: #142a2a; border-color: #1e4a48; color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer strong { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer p { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer a { color: #4dd0ce; border-bottom-color: rgba(77,208,206,0.3); }
+  html[data-theme="dark"] .blog-fullhtml .roadmap { background: #1a2530; border-color: #2a4545; }
+  html[data-theme="dark"] .blog-fullhtml .roadmap h3 { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .rm-item { border-bottom-color: #2a3a3a; }
+  html[data-theme="dark"] .blog-fullhtml .rm-num { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .rm-title { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml .rm-title a { color: #4dd0ce; border-bottom-color: rgba(77,208,206,0.3); }
+  html[data-theme="dark"] .blog-fullhtml .rm-title a:hover { color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .rm-desc { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .rm-tag { background: #1e3a3a; color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .rm-tag.anchor { background: #4dd0ce; color: #0a1818; }
+  html[data-theme="dark"] .blog-fullhtml .pull { background: #1e4a48; color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml .pull strong { color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .aud-card { background: #142a2a; border-color: #1e4a48; }
+  html[data-theme="dark"] .blog-fullhtml .aud-card h4 { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .aud-card p { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
 ---
 
 <article class="blog-container">
