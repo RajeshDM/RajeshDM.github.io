@@ -240,6 +240,62 @@ _styles: >
 
   .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml em { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml a { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml a:hover { color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml blockquote { border-left-color: #3a3f45; color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .equation-note { background: #1a1f3a; border-color: #3a4a6a; color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .equation-note::before { color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml hr { border-top-color: #2a3a3a; }
+  html[data-theme="dark"] .blog-fullhtml .subtitle { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .results-block { background: #1a2a2a; border-left-color: #4dd0ce; color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .results-block strong { color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml code { background: #2c3237; color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .results-chart-container { background: #1a1530; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .chart-label { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-bar-container { background: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .chart-bar.small-text { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml .difficulty-header { background: #2a2540; color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-title h4 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-title p { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-caption { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-divider { border-top-color: #2a3a3a; }
+  html[data-theme="dark"] .blog-fullhtml .image-container img { border-color: #2a3a3a; }
+  html[data-theme="dark"] .blog-fullhtml .image-caption { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #0f2625; border-left-color: #1e4a48; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .series-nav-links { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a { color: #4dd0ce; border-bottom-color: #1e4a48; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav a:hover { color: #80e0de; border-bottom-color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer { background: #142a2a; border-color: #1e4a48; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer strong { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer p { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer a { color: #4dd0ce; border-bottom-color: #1e4a48; }
+  html[data-theme="dark"] .blog-fullhtml .series-footer a:hover { color: #80e0de; border-bottom-color: #80e0de; }
+  html[data-theme="dark"] .blog-fullhtml .vis-container-gabar { background: #1e1a30; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-exec-title { color: #c5aae8; }
+  html[data-theme="dark"] .blog-fullhtml .vis-exec-sub { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .vis-exec-sub a { color: #4dd0ce; }
+  html[data-theme="dark"] .blog-fullhtml .vis-exec-label { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .vis-wh-box { background: #15101e; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-pl-item { background: #1a1530; border-color: rgba(92,191,92,.4); }
+  html[data-theme="dark"] .blog-fullhtml .vis-pl-item .pn { background: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .vis-pl-item .pa { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .vis-pl-item.faded { border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-pl-item.faded .pn { background: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-pl-item.faded .pa { color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml #vis-exec-pipe { background: #15101e; border-color: #2a2540; }
+  html[data-theme="dark"] .blog-fullhtml .vis-status.go { background: #2a2010; color: #e8a040; border-color: rgba(232,160,64,.4); }
+  html[data-theme="dark"] .blog-fullhtml .vis-status.done { background: #142a14; color: #5cbf5c; border-color: rgba(92,191,92,.4); }
+  html[data-theme="dark"] .blog-fullhtml .vis-exec-ctrl button { background: #2a2540; color: #c5aae8; border-color: #4a4060; }
+  html[data-theme="dark"] .blog-fullhtml .vis-exec-ctrl button:hover:not(:disabled) { background: #3a3550; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #9888a8; border-top-color: #2a3a3a; }
 ---
 
 <article class="blog-container">
