@@ -535,6 +535,83 @@ _styles: >
   @media (max-width: 700px) { .blog-fullhtml .warehouse-scene { height: 350px; } }
 
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
+
+  html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
+  html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml strong { color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml a { color: #6aafe6; border-bottom-color: rgba(106,175,230,0.3); }
+  html[data-theme="dark"] .blog-fullhtml a:hover { color: #8ec5f0; border-bottom-color: #8ec5f0; }
+  html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav { background: #1e2a3a; border-color: #2a3a50; color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav strong { color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-desc { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .series-nav .nav-links { color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .callout { background: #1a2535; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight { background: #1a2a1a; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning { background: #2a1a1a; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question { background: #2a2418; }
+  html[data-theme="dark"] .blog-fullhtml .callout.insight .callout-label { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .callout.warning .callout-label { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .callout.question .callout-label { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar { background: linear-gradient(135deg, #1e1a2e, #251e3a); border-color: #3a2e55; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar .sidebar-title { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .agentic-sidebar p { color: #b0a8c8; }
+  html[data-theme="dark"] .blog-fullhtml p code, html[data-theme="dark"] .blog-fullhtml li code { background: #2c3237; color: #7eb8da; }
+  html[data-theme="dark"] .blog-fullhtml .vis-container { background: #1e2530; border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .vis-caption { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .interactive-container { background: #1e2530; border-color: #2a3a50; }
+  html[data-theme="dark"] .blog-fullhtml .interactive-container .interactive-label { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .math { color: #6aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .references { border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .references ol { color: #9aa8b8; }
+  html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .pipeline-arrow { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .stage-nl { background: #142a2a; color: #5ccfcf; border: 1px solid #2a9d8f; }
+  html[data-theme="dark"] .blog-fullhtml .stage-extract { background: #1e142e; color: #b088e0; border: 1px solid #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .stage-pddl { background: #2a2010; color: #e8a040; border: 1px solid #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .stage-validate { background: #2a1414; color: #e06060; border: 1px solid #b22222; }
+  html[data-theme="dark"] .blog-fullhtml .stage-solve { background: #142a14; color: #5cbf5c; border: 1px solid #228b22; }
+  html[data-theme="dark"] .blog-fullhtml .agent-extractor { background: #1e142e; border-color: #6b3fa0; }
+  html[data-theme="dark"] .blog-fullhtml .agent-extractor h5 { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .agent-extractor p { color: #b0a8c8; }
+  html[data-theme="dark"] .blog-fullhtml .agent-validator { background: #2a1414; border-color: #b22222; }
+  html[data-theme="dark"] .blog-fullhtml .agent-validator h5 { color: #e06060; }
+  html[data-theme="dark"] .blog-fullhtml .agent-validator p { color: #d0a8a8; }
+  html[data-theme="dark"] .blog-fullhtml .agent-fixer { background: #2a2010; border-color: #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .agent-fixer h5 { color: #e8a040; }
+  html[data-theme="dark"] .blog-fullhtml .agent-fixer p { color: #d0b890; }
+  html[data-theme="dark"] .blog-fullhtml .agent-solver { background: #142a14; border-color: #228b22; }
+  html[data-theme="dark"] .blog-fullhtml .agent-solver h5 { color: #5cbf5c; }
+  html[data-theme="dark"] .blog-fullhtml .agent-solver p { color: #a8d0a8; }
+  html[data-theme="dark"] .blog-fullhtml .orchestrator-bar { background: linear-gradient(90deg, #1e2a3a, #2a3a55); color: #e0e8f0; }
+  html[data-theme="dark"] .blog-fullhtml .nl-side .panel-header { background: #1f6e63; color: #e0f0ee; }
+  html[data-theme="dark"] .blog-fullhtml .pddl-side .panel-header { background: #a05810; color: #f0e0c8; }
+  html[data-theme="dark"] .blog-fullhtml .nl-side .panel-body { background: #142a2a; border-color: #2a9d8f; color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .pddl-side .panel-body { border-color: #d4740e; }
+  html[data-theme="dark"] .blog-fullhtml .transform-arrow { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .bottleneck-label { color: #b0b8c8; }
+  html[data-theme="dark"] .blog-fullhtml .bottleneck-bar-track { background: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .bottleneck-value { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.waiting { background: #1e2530; border-color: #2a3545; color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.waiting .stage-num { background: #3a4555; }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.active { background: #142a2a; border-color: #2a9d8f; box-shadow: 0 2px 10px rgba(92, 207, 207, 0.2); }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.active .stage-num { background: #2a9d8f; }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.done { background: #142a14; border-color: #228b22; }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.done .stage-num { background: #228b22; }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.error { background: #2a1414; border-color: #b22222; }
+  html[data-theme="dark"] .blog-fullhtml .demo-stage.error .stage-num { background: #b22222; }
+  html[data-theme="dark"] .blog-fullhtml .warehouse-scene { background: linear-gradient(180deg, #1a2030, #141a24); border-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml .wh-floor { background: repeating-linear-gradient(90deg, #2a3040 0px, #2a3040 1px, transparent 1px, transparent 80px), repeating-linear-gradient(0deg, #2a3040 0px, #2a3040 1px, transparent 1px, transparent 80px), #1a2030; }
+  html[data-theme="dark"] .blog-fullhtml .wh-ceiling { background: #0d1520; }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf { background: linear-gradient(180deg, #3a4555 0%, #2a3545 100%); }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf-label { color: #c0c8d0; background: #1a2030; }
+  html[data-theme="dark"] .blog-fullhtml .wh-shelf-row { background: #4a5565; }
+  html[data-theme="dark"] .blog-fullhtml .build-zone { border-color: rgba(100,120,140,0.6); background: rgba(30,37,48,0.25); }
+  html[data-theme="dark"] .blog-fullhtml .build-zone-label { color: #8899aa; }
+  html[data-theme="dark"] .blog-fullhtml .wh-robot-label { color: #b088e0; }
+  html[data-theme="dark"] .blog-fullhtml .wh-status { background: rgba(13, 21, 32, 0.92); }
+  html[data-theme="dark"] .blog-fullhtml .wh-status.status-ok { background: rgba(20, 70, 20, 0.92); }
 ---
 
 <header class="hero">
