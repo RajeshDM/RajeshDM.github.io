@@ -12,6 +12,8 @@ _styles: >
   color: #1a1a1a;
   font-size: 18px;
   }
+  .blog-fullhtml p { margin: 0 0 1.3em; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 1.3em; }
   .blog-fullhtml h1 { font-size: 2em; line-height: 1.2; margin-top: 1.5em; }
   .blog-fullhtml h2 { font-size: 1.5em; margin-top: 2em; }
   .blog-fullhtml h3 { font-size: 1.2em; margin-top: 1.5em; }
@@ -104,9 +106,13 @@ _styles: >
   color: white;
   }
   .blog-fullhtml .chart-bar.small-text {
-  justify-content: flex-start;
-  padding-left: 8px;
+  display: block;
+  padding: 0;
+  line-height: 24px;
+  text-indent: calc(100% + 8px);
   color: #333;
+  overflow: visible;
+  white-space: nowrap;
   }
   .blog-fullhtml .difficulty-section {
   margin-bottom: 15px;
@@ -248,7 +254,7 @@ _styles: >
   .blog-fullhtml .vis-exec-ctrl button:hover:not(:disabled) { background: #D4CDE0; }
   .blog-fullhtml .vis-exec-ctrl button:disabled { opacity: 0.35; cursor: default; }
 
-  .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
 
   .blog-fullhtml .refs { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
   .blog-fullhtml .refs ol { padding-left: 1.3em; margin: 0; }
