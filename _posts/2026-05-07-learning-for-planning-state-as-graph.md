@@ -744,7 +744,7 @@ _styles: >
                 <td>N/A (heuristic)</td>
             </tr>
             <tr style="background: #FDF6E3;">
-                <td><strong>GABAR (this thesis)</strong></td>
+                <td><strong>GABAR (ours)</strong></td>
                 <td>Predicates grounded, schemas ungrounded</td>
                 <td class="yes">Action as graph node (explicit)</td>
                 <td class="yes">Sequential (GRU decoder)</td>

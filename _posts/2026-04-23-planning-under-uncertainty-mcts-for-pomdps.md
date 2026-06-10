@@ -130,7 +130,7 @@ _styles: >
 
 <div class="vis-container">
     <h3 class="vis-title">POMCP &mdash; the four-phase loop</h3>
-    <div class="vis-subtitle">Same warehouse as Part 1, now foggy. Root is the current belief; tree branches over (action, observation) pairs.</div>
+    <div class="vis-subtitle">Same foggy warehouse as Part 1. Root is the current belief; tree branches over (action, observation) pairs.</div>
 
     <div class="phase-row" id="phase-row">
         <div class="phase-pill active" data-p="0">1 &middot; Selection</div>
@@ -261,13 +261,13 @@ _styles: >
 
 <p>All four methods above need a way to assign a value to a leaf node. None of them computes that value exactly &mdash; the whole point of online planning is to avoid the exponential cost of exact computation. So they substitute. Random rollouts simulate forward from the leaf with a default policy until reaching a terminal or a horizon, and use the discounted return as the value estimate. Or they use hand-crafted bounds (AdaOPS) or hand-crafted heuristics (everything else when random rollouts aren't enough).</p>
 
-<p>This is the crucial bottleneck. Random rollouts are unbiased but extremely high-variance &mdash; a single sample of the future barely tells you anything about a hard problem, so the planner needs many simulations per decision before the estimates stabilize. The HOO-POMDP experiments in Chapter~3 of the thesis make this concrete: at 20 objects, the planner spends nearly half an hour per task, and most of that cost is rollout variance. The state abstraction in HOO-POMDP reduces the effective state space but does not remove the rollout dependency. POMCP still runs at every decision, still needs many particles, still rolls out from leaves.</p>
+<p>This is the crucial bottleneck. Random rollouts are unbiased but extremely high-variance &mdash; a single sample of the future barely tells you anything about a hard problem, so the planner needs many simulations per decision before the estimates stabilize. The HOO-POMDP experiments (Part 3) make this concrete: at 20 objects, the planner spends nearly half an hour per task, and most of that cost is rollout variance. The state abstraction in HOO-POMDP reduces the effective state space but does not remove the rollout dependency. POMCP still runs at every decision, still needs many particles, still rolls out from leaves.</p>
 
 <p>The alternative is to learn what the rollouts are trying to estimate. Train a value network that predicts the leaf value directly from the belief, in a single forward pass. Train an action prior that biases the search toward promising actions. Both replace the noisy, expensive rollout estimate with a deterministic, cheap network call. This is exactly the AlphaZero recipe for board games &mdash; and exactly what GammaZero (Part 4) ports to POMDPs.</p>
 
 <div class="vis-container">
     <h3 style="font-family:'Playfair Display',Georgia,serif; font-size:1.2rem; color:#2D2044; font-weight:700; margin:0;">Back to the foggy warehouse &mdash; what the rollout bottleneck looks like</h3>
-    <p style="color:#888; font-size:0.92em; margin-top:6px; margin-bottom:14px; font-style:italic;">Same foggy warehouse from Part 1. At every decision step, POMCP grows a tree from the current belief, then random-rolls every leaf to estimate its value. The leaves are where time goes.</p>
+    <p style="color:#888; font-size:0.92em; margin-top:6px; margin-bottom:14px; font-style:italic;">Part 1's foggy warehouse, shrunk back to 4 zones for legibility. At every decision step, POMCP grows a tree from the current belief, then random-rolls every leaf to estimate its value. The leaves are where time goes.</p>
 
     <div style="display:flex; gap:14px; align-items:stretch;">
         <div style="flex:1; min-width:0;">
@@ -365,7 +365,7 @@ _styles: >
 
 <ul>
     <li><strong>Abstraction (HOO-POMDP, Part 3)</strong> reduces the effective state space the planner has to reason over. It scales the problem to tractable sizes by collapsing irrelevant detail. But once the abstraction is in place, the inner loop is still POMCP &mdash; with random rollouts. Abstraction alone hits a wall: the rollouts become the dominant cost.</li>
-    <li><strong>Learning (GammaZero, Part 4)</strong> attacks the bottleneck directly. The rollouts are replaced by a learned value network; the search is biased by a learned policy. Crucially, the network is graph-based, so it generalizes across instance sizes &mdash; the same network can guide search on a 4-zone warehouse and a 50-zone warehouse without retraining.</li>
+    <li><strong>Learning (GammaZero, Part 4)</strong> attacks the bottleneck directly. The rollouts are replaced by a learned value network; the search is biased by a learned policy. Crucially, the network is graph-based, so it generalizes across instance sizes &mdash; the same network can guide search on a small warehouse and on instances several times larger without retraining.</li>
 </ul>
 
 <p>HOO-POMDP (Part 3) shows how far principled abstraction gets us. It scales to 20 objects, solves complex multi-room rearrangement under partial observability &mdash; but slowly. GammaZero (Part 4) takes the next step: same kind of problem, but with the rollout bottleneck removed, scaling improves significantly and per-decision cost drops by orders of magnitude. The story is sequential, not parallel.</p>
@@ -379,7 +379,7 @@ _styles: >
 <div class="series-footer">
     <strong>Where this fits</strong>
     <p>This is the toolkit. POMCP, DESPOT, POMCPOW, and AdaOPS are the non-learning baselines GammaZero (Part 4) competes against. HOO-POMDP (Part 3) wraps these solvers with an abstraction layer to scale; GammaZero replaces the rollouts inside the solver with learned guidance.</p>
-    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&larr; <a href="/blog/2026/planning-under-uncertainty-belief-states/">Part 1: POMDP Setup</a> &middot; <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">Part 3: HOO-POMDP (abstraction) &rarr;</a></p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&larr; <a href="/blog/2026/planning-under-uncertainty-belief-states/">Part 1: Planning When You Can't See the Whole World</a> &middot; <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">Part 3: HOO-POMDP (abstraction) &rarr;</a></p>
 </div>
 
 </article>

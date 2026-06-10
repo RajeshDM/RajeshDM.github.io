@@ -135,7 +135,7 @@ _styles: >
 <div class="series-nav">
     <strong>Planning Under Uncertainty &middot; Part 1 of 4 &mdash; the setup</strong>
     <div class="series-nav-links">
-        <a href="/blog/2026/learning-for-planning-overview/">Overview</a> &middot; Next: <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a>
+        <a href="/blog/2026/planning-under-uncertainty-overview/">Overview</a> &middot; Next: <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a>
     </div>
 </div>
 
@@ -194,7 +194,7 @@ _styles: >
             <div class="ss">
                 <div class="st w"><div class="n">~1.2M</div><div class="l">Reachable states</div></div>
                 <div class="st w"><div class="n">12+</div><div class="l">Plan length</div></div>
-                <div class="st w"><div class="n">Hours</div><div class="l">to timeout</div></div>
+                <div class="st w"><div class="n">&#x2717;</div><div class="l">Times out at scale</div></div>
             </div>
         </div>
 
@@ -263,7 +263,7 @@ _styles: >
             <div class="ss">
                 <div class="st ex"><div class="n" id="vis1-belief-counter">0</div><div class="l">Belief states</div></div>
                 <div class="st ex"><div class="n">&infin;</div><div class="l">Obs. branching</div></div>
-                <div class="st ex"><div class="n">&#x2717;</div><div class="l">Timeout</div></div>
+                <div class="st ex"><div class="n">&#x2717;</div><div class="l">Intractable</div></div>
             </div>
         </div>
     </div>
@@ -338,7 +338,7 @@ If PDDL and classical planning are new to you, the <a href="/blog/category/llms-
 <div class="series-footer">
     <strong>Where this fits</strong>
     <p>This is the on-ramp. The next post covers POMCP, DESPOT, and the online tree-search family that <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">Part 3 (HOO-POMDP)</a> and <a href="/blog/2026/planning-under-uncertainty-gammazero/">Part 4 (GammaZero)</a> both build on or replace.</p>
-    <p style="margin-top: 10px; font-size: 0.85em; color: #666;"><a href="/blog/2026/learning-for-planning-overview/">Overview</a> &middot; <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a></p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;"><a href="/blog/2026/planning-under-uncertainty-overview/">Overview</a> &middot; <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a></p>
 </div>
 
 </article>

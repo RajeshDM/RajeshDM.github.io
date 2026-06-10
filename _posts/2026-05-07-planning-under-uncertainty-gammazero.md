@@ -90,7 +90,7 @@ _styles: >
   .blog-fullhtml .chart-label { width: 130px; font-size: 0.8em; font-weight: 600; color: #444; text-align: right; font-family: -apple-system, sans-serif; }
   .blog-fullhtml .chart-bar-container { flex: 1; height: 24px; background: #eee; border-radius: 4px; overflow: hidden; }
   .blog-fullhtml .chart-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 0.7em; font-weight: 700; color: white; font-family: -apple-system, sans-serif; }
-  .blog-fullhtml .chart-bar.small-text { justify-content: flex-start; padding-left: 6px; color: #333; }
+  .blog-fullhtml .chart-bar.small-text { display: block; padding: 0; line-height: 24px; text-indent: calc(100% + 8px); color: #333; overflow: visible; white-space: nowrap; }
   .blog-fullhtml .chart-title { text-align: center; font-size: 0.9em; font-weight: 700; color: #333; margin-bottom: 12px; font-family: -apple-system, sans-serif; }
   .blog-fullhtml .chart-subtitle { text-align: center; font-size: 0.75em; color: #888; margin-top: -8px; margin-bottom: 12px; font-family: -apple-system, sans-serif; }
   .blog-fullhtml .difficulty-header { font-weight: 700; font-size: 0.8em; color: #555; margin: 10px 0 6px; padding: 3px 8px; background: #f0f0f0; border-radius: 3px; display: inline-block; font-family: -apple-system, sans-serif; }
@@ -214,7 +214,7 @@ _styles: >
 <div class="series-nav">
     <strong>Planning Under Uncertainty · Part 4 of 4 — the finale</strong>
     <div class="series-nav-links">
-        ← <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">Part 3: HOO-POMDP</a> · This is the series anchor — a deep dive on the GammaZero paper. <em>(Also readable standalone as a paper deep-dive.)</em>
+        ← <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">Part 3: HOO-POMDP</a> · Next: <a href="/blog/2026/planning-under-uncertainty-epilogue/">Epilogue: Open Questions →</a> · This is the series anchor — a deep dive on the GammaZero paper. <em>(Also readable standalone.)</em>
     </div>
 </div>
 
@@ -227,7 +227,7 @@ _styles: >
 </p>
 
 <p style="background:#FDF6E3; border-left:3px solid #C5A55A; padding:10px 14px; font-size:0.9em; color:#5a4400; margin-top:10px; border-radius:0 6px 6px 0;">
-    <strong>Running example:</strong> The series uses warehouse-delivery as its running example end-to-end &mdash; robot, packages, zones, with the robot only seeing its current zone. GammaZero scales up to <em>UncertainBlocksWorld</em> and other relational POMDPs in the paper, but the core mental model is the same warehouse: take an unknown configuration, build a belief graph, score actions, act, observe, repeat. The <a href="/blog/2026/learning-for-planning-gabar/" style="color:#3d4a9e;">GABAR exec-loop visualization</a> from the LFP series shows the structure; GammaZero's version operates over a belief graph instead.
+    <strong>Running example:</strong> The series uses warehouse-delivery as its running example end-to-end &mdash; robot, packages, zones, with the robot only seeing its current zone. GammaZero's experiments use <em>RockSample</em>, <em>MultiObjectSearch</em>, and other relational POMDPs, but the core mental model is the same warehouse: take an unknown configuration, build a belief graph, score actions, act, observe, repeat. The <a href="/blog/2026/learning-for-planning-gabar/" style="color:#3d4a9e;">GABAR exec-loop visualization</a> from the LFP series shows the structure; GammaZero's version operates over a belief graph instead.
 </p>
 
 <hr>
@@ -304,7 +304,7 @@ _styles: >
 
 <h3>GABAR &mdash; the fully-observable cousin</h3>
 
-<p>If BetaZero is the obvious POMDP precursor, <a href="/blog/2026/learning-for-planning-gabar/">GABAR</a> from the sibling series is the obvious representational precursor. GABAR demonstrated that a graph neural network over a relational planning state generalizes across instance sizes &mdash; the same trained network solves 4-zone and 100-zone warehouses without retraining. The graph topology grows with the problem; the network's weights are shared across nodes; size generalization comes for free.</p>
+<p>If BetaZero is the obvious POMDP precursor, <a href="/blog/2026/learning-for-planning-gabar/">GABAR</a> from the sibling series is the obvious representational precursor. GABAR demonstrated that a graph neural network over a relational planning state generalizes across instance sizes &mdash; the same trained network solves instances 8&times; larger than anything it trained on, without retraining. The graph topology grows with the problem; the network's weights are shared across nodes; size generalization comes for free.</p>
 
 <p>GABAR is fully observable. The mapping from state to graph is immediate: each ground atom either holds or does not. There is no notion of probability over nodes. To carry the recipe into the partially observable setting, the graph construction itself has to change to encode uncertainty.</p>
 
@@ -524,6 +524,7 @@ _styles: >
     <p class="vis-caption">GammaZero's belief-to-graph pipeline. Particles are aggregated into attribute probabilities, then selectively instantiated as graph nodes based on threshold tau. The resulting graph encodes both structure and uncertainty.</p>
 </div>
 
+<!-- TODO: re-enable once the demo recording is ready
 <div class="video-container">
     <p style="font-size:0.9em;color:#444;font-weight:600;margin-bottom:8px;">Interactive Graph Construction Demo</p>
     <div class="video-placeholder">
@@ -533,6 +534,8 @@ _styles: >
     </div>
     <p style="font-size:0.78em;color:#888;margin-top:8px;">Watch how hovering over belief state elements reveals the corresponding graph nodes and edges. Each rock's uncertainty level determines which attribute nodes exist and their connection strengths.</p>
 </div>
+-->
+
 
 <p>The graph has four types of nodes:</p>
 
@@ -744,7 +747,7 @@ _styles: >
         </tr>
         <tr>
             <td><strong>POMCPOW/DESPOT</strong></td>
-            <td class="no">No (model-based)</td>
+            <td class="yes">No (model-based)</td>
             <td class="yes">Yes</td>
             <td class="no">No (per-instance)</td>
             <td class="yes">Yes</td>
@@ -886,7 +889,7 @@ _styles: >
 </div>
 
 <p><em>Paper: "GammaZero: Learning to Guide Belief-Space Search for Long-Horizon POMDPs with Generalizable Graph Representations"</em></p>
-<p><em>Code and project page: <a href="https://arxiv.org/abs/2510.14035">arXiv:2510.14035</a></em></p>
+<p><em>arXiv: <a href="https://arxiv.org/abs/2510.14035">2510.14035</a></em></p>
 
 <hr>
 

@@ -83,7 +83,7 @@ _styles: >
   .blog-fullhtml .chart-label { width: 100px; font-size: 0.8em; font-weight: 600; color: #444; text-align: right; font-family: -apple-system, sans-serif; }
   .blog-fullhtml .chart-bar-container { flex: 1; height: 24px; background: #eee; border-radius: 4px; overflow: hidden; }
   .blog-fullhtml .chart-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 0.7em; font-weight: 700; color: white; font-family: -apple-system, sans-serif; }
-  .blog-fullhtml .chart-bar.small-text { justify-content: flex-start; padding-left: 6px; color: #333; }
+  .blog-fullhtml .chart-bar.small-text { display: block; padding: 0; line-height: 24px; text-indent: calc(100% + 8px); color: #333; overflow: visible; white-space: nowrap; }
   .blog-fullhtml .chart-title { text-align: center; font-size: 0.9em; font-weight: 700; color: #333; margin-bottom: 12px; font-family: -apple-system, sans-serif; }
   .blog-fullhtml .chart-subtitle { text-align: center; font-size: 0.75em; color: #888; margin-top: -8px; margin-bottom: 12px; font-family: -apple-system, sans-serif; }
   .blog-fullhtml .difficulty-header { font-weight: 700; font-size: 0.8em; color: #555; margin: 10px 0 6px; padding: 3px 8px; background: #f0f0f0; border-radius: 3px; display: inline-block; font-family: -apple-system, sans-serif; }
@@ -664,7 +664,7 @@ _styles: >
 
 <div class="vis-container">
     <div style="text-align:center;">
-        <img src="../resources/hoo_pomdp_example.png" alt="HOO-POMDP Example Scenario" style="max-width:100%; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1);">
+        <img src="/assets/img/hoo_pomdp_example.png" alt="HOO-POMDP Example Scenario" style="max-width:100%; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1);">
     </div>
     <div style="background:#fff8e1; padding:15px; border-radius:8px; margin-top:15px; border-left:4px solid #ff9800;">
         <strong style="color:#e65100;">Spatial Reasoning Example:</strong>
