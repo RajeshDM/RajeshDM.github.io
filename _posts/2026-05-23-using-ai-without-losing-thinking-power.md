@@ -73,7 +73,7 @@ _styles: >
   font-weight: 300;
   }
 
-  .blog-fullhtml .content { max-width: 800px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+  .blog-fullhtml .content { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 6rem; }
 
   .blog-fullhtml .section-label {
   font-family: 'JetBrains Mono', monospace;

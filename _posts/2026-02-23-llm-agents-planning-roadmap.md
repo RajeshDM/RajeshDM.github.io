@@ -44,7 +44,7 @@ _styles: >
       font-style: italic;
   }
   .blog-fullhtml .blog-container {
-      max-width: 780px;
+      max-width: 680px;
       margin: 0 auto;
       padding: 48px 24px 80px;
   }

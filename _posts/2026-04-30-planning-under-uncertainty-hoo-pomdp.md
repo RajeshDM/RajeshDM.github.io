@@ -12,6 +12,8 @@ _styles: >
   color: #1a1a1a;
   font-size: 18px;
   }
+  .blog-fullhtml p { margin: 0 0 1.3em; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 1.3em; }
   .blog-fullhtml h1 { font-size: 2em; line-height: 1.2; margin-top: 1.5em; }
   .blog-fullhtml h2 { font-size: 1.5em; margin-top: 2em; color: #222; }
   .blog-fullhtml h3 { font-size: 1.2em; margin-top: 1.5em; }
@@ -156,7 +158,7 @@ _styles: >
   .blog-fullhtml .series-footer a { color: #3d4a9e; text-decoration: none; border-bottom: 1px solid #5b6abf55; }
   .blog-fullhtml .series-footer a:hover { color: #28327a; border-bottom-color: #28327a; }
 
-  .blog-fullhtml .blog-container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
