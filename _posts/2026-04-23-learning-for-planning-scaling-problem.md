@@ -136,7 +136,7 @@ _styles: >
 <div class="series-nav">
     <strong>Learning for Planning · Part 1 of 4 — the problem</strong>
     <div class="series-nav-links">
-        <a href="/blog/2026/learning-for-planning-overview/">Overview</a> · Next: <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: What to Learn — Objectives Survey →</a>
+        <a href="/blog/2026/learning-for-planning-overview/">Overview</a> · Next: <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: What to Learn →</a>
     </div>
 </div>
 
@@ -149,7 +149,7 @@ _styles: >
 
 <p>Consider a tiny warehouse. Four zones — A, B, C, D — arranged in a grid. A robot starts in zone A. A package sits in zone C. We want the package delivered to zone D. The robot can <code>move</code> between zones, <code>pickup</code> a package in the zone it's in, and <code>drop</code> the package wherever it stops.</p>
 
-<p>This is a classical planning problem. Three action types, a handful of objects, four locations. A planner like A* with a good heuristic — or even a domain-independent system like Fast-Downward — solves it in milliseconds. The plan has three steps: <code>move(A→C)</code>, <code>pickup(pkg, C)</code>, <code>move(C→D)</code>. Done.</p>
+<p>This is a classical planning problem. Three action types, a handful of objects, four locations. A planner like A* with a good heuristic — or even a domain-independent system like Fast-Downward — solves it in milliseconds. The plan has four steps: <code>move(A→C)</code>, <code>pickup(pkg, C)</code>, <code>move(C→D)</code>, <code>drop(pkg, D)</code>. Done.</p>
 
 <p>Now scale it up. Same actions, same rules. Just more zones and more packages.</p>
 
@@ -162,7 +162,7 @@ _styles: >
         <div class="sd">
             <div class="sh"><span class="bg bg-ok">Tractable</span><h3>4 Zones · 1 Package</h3></div>
             <div class="sv">
-                <svg viewBox="0 0 260 210" preserveAspectRatio="xMidYMid meet">
+                <svg viewBox="0 0 260 232" preserveAspectRatio="xMidYMid meet">
                     <defs><pattern id="t1a" width="13" height="13" patternUnits="userSpaceOnUse"><rect width="13" height="13" fill="#F0EDF3"/><line x1="0" y1="13" x2="13" y2="13" stroke="#D4CDE0" stroke-width=".15" opacity=".25"/><line x1="13" y1="0" x2="13" y2="13" stroke="#D4CDE0" stroke-width=".15" opacity=".25"/></pattern></defs>
                     <rect x="10" y="4" width="240" height="96" rx="5" fill="none" stroke="#D4CDE0" stroke-width=".8"/>
                     <rect x="12" y="6" width="116" height="44" rx="3" fill="url(#t1a)" stroke="#D4CDE0" stroke-width=".3"/><text x="70" y="36" text-anchor="middle" fill="#B0A8C0" font-size="13" font-weight="600">Zone A</text>
@@ -173,28 +173,30 @@ _styles: >
                     <rect x="62" y="61" width="16" height="12" rx="2" fill="#D68910" stroke="#B7770A" stroke-width=".6"/><text x="70" y="70" text-anchor="middle" fill="#fff" font-size="6" font-weight="700">PKG</text>
                     <rect x="182" y="61" width="16" height="12" rx="2" fill="#E3F5EC" stroke="#1E8449" stroke-width="1" stroke-dasharray="3 2" opacity=".55"/><text x="190" y="69" text-anchor="middle" fill="#1E8449" font-size="5" font-weight="700" opacity=".7">GOAL</text>
 
-                    <g transform="translate(130,112)">
-                        <line x1="0" y1="6" x2="-48" y2="30" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
-                        <line x1="0" y1="6" x2="0" y2="30" stroke="#D4CDE0" stroke-width="1.2"/>
-                        <line x1="0" y1="6" x2="48" y2="30" stroke="#D4CDE0" stroke-width="1.2"/>
-                        <line x1="-48" y1="36" x2="-65" y2="56" stroke="#D4CDE0" stroke-width="1"/>
-                        <line x1="-48" y1="36" x2="-31" y2="56" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
-                        <line x1="-31" y1="62" x2="-31" y2="80" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
+                    <g transform="translate(130,110)">
+                        <line x1="0" y1="6" x2="-48" y2="26" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
+                        <line x1="0" y1="6" x2="0" y2="26" stroke="#D4CDE0" stroke-width="1.2"/>
+                        <line x1="0" y1="6" x2="48" y2="26" stroke="#D4CDE0" stroke-width="1.2"/>
+                        <line x1="-48" y1="32" x2="-65" y2="50" stroke="#D4CDE0" stroke-width="1"/>
+                        <line x1="-48" y1="32" x2="-31" y2="50" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
+                        <line x1="-31" y1="56" x2="-31" y2="73" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
+                        <line x1="-31" y1="79" x2="-31" y2="96" stroke="#C5A55A" stroke-width="2.5" opacity=".5"/>
                         <circle cx="0" cy="4" r="9" fill="#fff" stroke="#2D2044" stroke-width="1.2"/><text x="0" y="7.5" text-anchor="middle" fill="#2D2044" font-size="7.5" font-weight="700">s&#x2080;</text>
-                        <circle cx="-48" cy="33" r="7.5" fill="#fff" stroke="#2D2044" stroke-width="1"/>
-                        <circle cx="0" cy="33" r="7.5" fill="#fff" stroke="#D4CDE0" stroke-width=".8" opacity=".4"/>
-                        <circle cx="48" cy="33" r="7.5" fill="#fff" stroke="#D4CDE0" stroke-width=".8" opacity=".4"/>
-                        <circle cx="-65" cy="59" r="6.5" fill="#fff" stroke="#D4CDE0" stroke-width=".7" opacity=".3"/>
-                        <circle cx="-31" cy="59" r="6.5" fill="#fff" stroke="#2D2044" stroke-width=".8"/>
-                        <circle cx="-31" cy="83" r="7.5" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.3"/><text x="-31" y="86" text-anchor="middle" fill="#1E8449" font-size="6.5" font-weight="700">GOAL</text>
-                        <text x="0" y="48" text-anchor="middle" fill="#D4CDE0" font-size="11">&#x22EF;</text>
-                        <text x="48" y="48" text-anchor="middle" fill="#D4CDE0" font-size="11">&#x22EF;</text>
+                        <circle cx="-48" cy="29" r="7.5" fill="#fff" stroke="#2D2044" stroke-width="1"/>
+                        <circle cx="0" cy="29" r="7.5" fill="#fff" stroke="#D4CDE0" stroke-width=".8" opacity=".4"/>
+                        <circle cx="48" cy="29" r="7.5" fill="#fff" stroke="#D4CDE0" stroke-width=".8" opacity=".4"/>
+                        <circle cx="-65" cy="53" r="6.5" fill="#fff" stroke="#D4CDE0" stroke-width=".7" opacity=".3"/>
+                        <circle cx="-31" cy="53" r="6.5" fill="#fff" stroke="#2D2044" stroke-width=".8"/>
+                        <circle cx="-31" cy="76" r="6.5" fill="#fff" stroke="#2D2044" stroke-width=".8"/>
+                        <circle cx="-31" cy="99" r="7.5" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.3"/><text x="-31" y="102" text-anchor="middle" fill="#1E8449" font-size="6.5" font-weight="700">GOAL</text>
+                        <text x="0" y="44" text-anchor="middle" fill="#D4CDE0" font-size="11">&#x22EF;</text>
+                        <text x="48" y="44" text-anchor="middle" fill="#D4CDE0" font-size="11">&#x22EF;</text>
                     </g>
                 </svg>
             </div>
             <div class="ss">
                 <div class="st"><div class="n">~20</div><div class="l">Reachable states</div></div>
-                <div class="st"><div class="n">3</div><div class="l">Plan length</div></div>
+                <div class="st"><div class="n">4</div><div class="l">Plan length</div></div>
                 <div class="st"><div class="n" style="color:#1E8449">&#x2713;</div><div class="l">Milliseconds</div></div>
             </div>
         </div>
@@ -243,7 +245,7 @@ _styles: >
             <div class="ss">
                 <div class="st ex"><div class="n" id="vis1-counter">0</div><div class="l">Reachable states</div></div>
                 <div class="st ex"><div class="n">12+</div><div class="l">Plan length</div></div>
-                <div class="st ex"><div class="n">&#x2717;</div><div class="l">Hours / Timeout</div></div>
+                <div class="st ex"><div class="n">&#x2717;</div><div class="l">Times out at scale</div></div>
             </div>
         </div>
     </div>
@@ -291,7 +293,7 @@ _styles: >
 
 <p>That counter on the right is not artistic license. With 16 zones and 3 packages, accounting for which package is where and whether the robot is carrying one of them, the reachable state space is on the order of a million configurations. The search tree the planner has to explore &mdash; branching at roughly 18 actions per state, plan length 12+ &mdash; is many orders of magnitude larger.</p>
 
-<p>Classical planning is known to be PSPACE-complete. In practical terms: the algorithm doesn't care whether you used a smart heuristic or a domain expert hand-tuned the search order. The worst-case scaling is exponential in the size of the problem description. Tiny instances solve in milliseconds. Modestly larger instances take seconds. Realistic instances time out.</p>
+<p>Classical planning is known to be PSPACE-complete. In practical terms: the algorithm doesn't care whether you used a smart heuristic or a domain expert hand-tuned the search order. The worst-case scaling is exponential in the size of the problem description. Tiny instances solve in milliseconds. Modestly larger instances take seconds. Realistic instances time out. (To be fair to the planners: a good one still cracks this particular 16-zone instance &mdash; the point of the animation is the curve it sits on. Every zone and package you add multiplies the space, and a few more doublings put you past any time budget.)</p>
 
 <p>This is not a quirk. It's the central reason classical planning, despite being a beautifully principled framework, struggles to deliver on tasks people actually want &mdash; household robotics, multi-step manipulation, logistics at scale.</p>
 
@@ -322,10 +324,10 @@ _styles: >
     <li><strong>Part 2</strong> takes the first axis seriously and surveys the three learning-objective families with the papers that defined each.</li>
     <li><strong>Part 3</strong> takes the second axis seriously and surveys the graph-representation choices, with concrete contrasts between encodings.</li>
     <li><strong>Part 4</strong> reads GABAR &mdash; one specific cell in the design space &mdash; with a full understanding of why each choice was the right one given the literature.</li>
-    <li><strong>Part 5</strong> closes the series and bridges to the partially-observable cousin.</li>
+    <li><strong>The epilogue</strong> closes the series and bridges to the partially-observable cousin.</li>
 </ul>
 
-<p>The payoff at Part 4: GABAR trains on warehouses with 4 zones and 1 package, and solves warehouses with hundreds of zones and dozens of packages without retraining. The path to that result runs through both axes.</p>
+<p>The payoff at Part 4: GABAR trains on instances with 6-10 objects &mdash; the scale of the small warehouse on the left &mdash; and solves instances with 100+ objects, 8&times; larger than anything it saw during training, without retraining. The path to that result runs through both axes.</p>
 
 <p>For now, the only thing to internalize is the visualization above. The left card is what classical planning is good at. The right card is what classical planning will never be good at. Everything that follows is about closing that gap.</p>
 
@@ -334,7 +336,7 @@ _styles: >
 <div class="series-footer">
     <strong>Where this fits</strong>
     <p>This is the problem statement and the framing for the whole series. The two surveys (Parts 2 and 3) walk the learning-objective axis and the representation axis with the literature. Part 4 is GABAR. The sibling series, <a href="/blog/category/planning-under-uncertainty/">Planning Under Uncertainty</a>, picks up the same warehouse but with the robot's view fogged out.</p>
-    <p style="margin-top: 10px; font-size: 0.85em; color: #666;"><a href="/blog/2026/learning-for-planning-overview/">Overview</a> &middot; <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: What to Learn &mdash; Objectives Survey &rarr;</a></p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;"><a href="/blog/2026/learning-for-planning-overview/">Overview</a> &middot; <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: What to Learn &rarr;</a></p>
 </div>
 
 </article>

@@ -108,7 +108,7 @@ _styles: >
 
 <hr>
 
-<p>If you read Posts 1-4 in order, you watched a tractable warehouse-delivery instance (4 zones, 1 package, solved in milliseconds by a classical planner) grow into an intractable one (100+ zones, dozens of packages, solved in seconds by GABAR but timing out for everyone else). The transition was smooth because we assumed one thing: <em>the robot can see everything</em>.</p>
+<p>If you read Posts 1-4 in order, you watched a tractable warehouse-delivery instance (4 zones, 1 package, solved in milliseconds by a classical planner) grow into ones that overwhelm classical search &mdash; and, in the paper's experiments, instances 8&times; larger than anything in training, with 100+ objects, solved in seconds by GABAR while the baselines collapse. The transition was smooth because we assumed one thing: <em>the robot can see everything</em>.</p>
 
 <p>That's an unusual assumption. Most domains people actually want robots to operate in &mdash; warehouses included &mdash; don't grant that view. This epilogue is about what changes when you remove it, and what doesn't.</p>
 

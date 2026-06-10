@@ -62,10 +62,17 @@ _styles: >
   .blog-fullhtml .compare-table .no { color: #C0392B; font-weight: 700; }
   .blog-fullhtml .compare-table .partial { color: #E67E22; font-weight: 700; }
 
+  .blog-fullhtml .refs { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+  .blog-fullhtml .refs ol { padding-left: 1.3em; margin: 0; }
+  .blog-fullhtml .refs li { font-size: 0.85em; color: #444; line-height: 1.55; margin-bottom: 8px; }
+  .blog-fullhtml .refs li em { color: #444; }
+
   .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .refs li { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .refs li em { color: #a8b8b8; }
   html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
   html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; }
   html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
@@ -116,7 +123,7 @@ _styles: >
 <div class="series-nav">
     <strong>Learning for Planning &middot; Part 2 of 4 &mdash; survey: what to learn</strong>
     <div class="series-nav-links">
-        &larr; <a href="/blog/2026/learning-for-planning-scaling-problem/">Part 1: The Scaling Problem + Two Axes</a> &middot; Next: <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Graph Representations Survey &rarr;</a>
+        &larr; <a href="/blog/2026/learning-for-planning-scaling-problem/">Part 1: The Scaling Problem</a> &middot; Next: <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Your Planning State Is a Graph &rarr;</a>
     </div>
 </div>
 
@@ -194,54 +201,61 @@ _styles: >
         </div>
         <div style="flex:1.1; min-width:0;">
             <div style="font-size:.62rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#8b6914; margin-bottom:6px;">A* search tree (guided by learned h)</div>
-            <svg viewBox="0 0 320 230" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;">
+            <svg viewBox="0 0 320 252" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;">
                 <!-- Tree edges -->
-                <line x1="160" y1="28" x2="60" y2="78" stroke="#d4a017" stroke-width="2.5" opacity=".55"/>
-                <line x1="160" y1="28" x2="160" y2="78" stroke="#D4CDE0" stroke-width="1.2"/>
-                <line x1="160" y1="28" x2="260" y2="78" stroke="#D4CDE0" stroke-width="1.2"/>
-                <line x1="60" y1="92" x2="30" y2="132" stroke="#D4CDE0" stroke-width="1"/>
-                <line x1="60" y1="92" x2="90" y2="132" stroke="#d4a017" stroke-width="2.5" opacity=".55"/>
-                <line x1="90" y1="146" x2="90" y2="190" stroke="#d4a017" stroke-width="2.5" opacity=".55"/>
+                <line x1="160" y1="28" x2="60" y2="74" stroke="#d4a017" stroke-width="2.5" opacity=".55"/>
+                <line x1="160" y1="28" x2="160" y2="74" stroke="#D4CDE0" stroke-width="1.2"/>
+                <line x1="160" y1="28" x2="260" y2="74" stroke="#D4CDE0" stroke-width="1.2"/>
+                <line x1="60" y1="86" x2="30" y2="120" stroke="#D4CDE0" stroke-width="1"/>
+                <line x1="60" y1="86" x2="90" y2="120" stroke="#d4a017" stroke-width="2.5" opacity=".55"/>
+                <line x1="90" y1="142" x2="90" y2="170" stroke="#d4a017" stroke-width="2.5" opacity=".55"/>
+                <line x1="90" y1="194" x2="90" y2="218" stroke="#d4a017" stroke-width="2.5" opacity=".55"/>
 
                 <!-- Root -->
                 <circle cx="160" cy="24" r="20" fill="#fff" stroke="#2D2044" stroke-width="1.5"/>
                 <text x="160" y="22" text-anchor="middle" fill="#2D2044" font-size="11" font-weight="700">s₀</text>
-                <text x="160" y="33" text-anchor="middle" fill="#d4a017" font-size="9" font-weight="700" font-family="JetBrains Mono,monospace">h=3</text>
+                <text x="160" y="33" text-anchor="middle" fill="#d4a017" font-size="9" font-weight="700" font-family="JetBrains Mono,monospace">h=4</text>
                 <text x="160" y="11" text-anchor="middle" fill="#888" font-size="7" font-style="italic">Bot:A, Pkg:C</text>
 
                 <!-- Level 1 -->
-                <circle cx="60" cy="86" r="18" fill="#fef5e7" stroke="#d4a017" stroke-width="1.7"/>
-                <text x="60" y="84" text-anchor="middle" fill="#2D2044" font-size="10" font-weight="700">s₁</text>
-                <text x="60" y="95" text-anchor="middle" fill="#d4a017" font-size="9" font-weight="700" font-family="JetBrains Mono,monospace">h=2</text>
-                <text x="60" y="65" text-anchor="middle" fill="#888" font-size="7" font-style="italic">move(A,C)</text>
+                <circle cx="60" cy="80" r="17" fill="#fef5e7" stroke="#d4a017" stroke-width="1.7"/>
+                <text x="60" y="78" text-anchor="middle" fill="#2D2044" font-size="10" font-weight="700">s₁</text>
+                <text x="60" y="89" text-anchor="middle" fill="#d4a017" font-size="9" font-weight="700" font-family="JetBrains Mono,monospace">h=3</text>
+                <text x="60" y="58" text-anchor="middle" fill="#888" font-size="7" font-style="italic">move(A,C)</text>
 
-                <circle cx="160" cy="86" r="16" fill="#fff" stroke="#D4CDE0" stroke-width="1.2"/>
-                <text x="160" y="84" text-anchor="middle" fill="#888" font-size="10" font-weight="600">s₂</text>
-                <text x="160" y="95" text-anchor="middle" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">h=4</text>
+                <circle cx="160" cy="80" r="15" fill="#fff" stroke="#D4CDE0" stroke-width="1.2"/>
+                <text x="160" y="78" text-anchor="middle" fill="#888" font-size="10" font-weight="600">s₂</text>
+                <text x="160" y="89" text-anchor="middle" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">h=5</text>
 
-                <circle cx="260" cy="86" r="16" fill="#fff" stroke="#D4CDE0" stroke-width="1.2"/>
-                <text x="260" y="84" text-anchor="middle" fill="#888" font-size="10" font-weight="600">s₃</text>
-                <text x="260" y="95" text-anchor="middle" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">h=4</text>
+                <circle cx="260" cy="80" r="15" fill="#fff" stroke="#D4CDE0" stroke-width="1.2"/>
+                <text x="260" y="78" text-anchor="middle" fill="#888" font-size="10" font-weight="600">s₃</text>
+                <text x="260" y="89" text-anchor="middle" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">h=5</text>
 
                 <!-- Level 2 -->
-                <circle cx="30" cy="140" r="14" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".5"/>
-                <text x="30" y="138" text-anchor="middle" fill="#888" font-size="9">s₄</text>
-                <text x="30" y="148" text-anchor="middle" fill="#888" font-size="8" font-family="JetBrains Mono,monospace">h=3</text>
+                <circle cx="30" cy="128" r="13" fill="#fff" stroke="#D4CDE0" stroke-width="1" opacity=".5"/>
+                <text x="30" y="126" text-anchor="middle" fill="#888" font-size="9">s₄</text>
+                <text x="30" y="136" text-anchor="middle" fill="#888" font-size="8" font-family="JetBrains Mono,monospace">h=4</text>
 
-                <circle cx="90" cy="140" r="16" fill="#fef5e7" stroke="#d4a017" stroke-width="1.5"/>
-                <text x="90" y="138" text-anchor="middle" fill="#2D2044" font-size="9" font-weight="700">s₅</text>
-                <text x="90" y="148" text-anchor="middle" fill="#d4a017" font-size="8.5" font-weight="700" font-family="JetBrains Mono,monospace">h=1</text>
-                <text x="123" y="135" text-anchor="middle" fill="#888" font-size="7" font-style="italic">pickup</text>
+                <circle cx="90" cy="128" r="14" fill="#fef5e7" stroke="#d4a017" stroke-width="1.5"/>
+                <text x="90" y="126" text-anchor="middle" fill="#2D2044" font-size="9" font-weight="700">s₅</text>
+                <text x="90" y="136" text-anchor="middle" fill="#d4a017" font-size="8.5" font-weight="700" font-family="JetBrains Mono,monospace">h=2</text>
+                <text x="124" y="123" text-anchor="middle" fill="#888" font-size="7" font-style="italic">pickup</text>
+
+                <!-- Level 3 -->
+                <circle cx="90" cy="182" r="12" fill="#fef5e7" stroke="#d4a017" stroke-width="1.5"/>
+                <text x="90" y="180" text-anchor="middle" fill="#2D2044" font-size="9" font-weight="700">s₆</text>
+                <text x="90" y="189" text-anchor="middle" fill="#d4a017" font-size="8" font-weight="700" font-family="JetBrains Mono,monospace">h=1</text>
+                <text x="132" y="162" text-anchor="middle" fill="#888" font-size="7" font-style="italic">move(C,D)</text>
 
                 <!-- Goal -->
-                <circle cx="90" cy="200" r="16" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.7"/>
-                <text x="90" y="204" text-anchor="middle" fill="#1E8449" font-size="9" font-weight="700">GOAL</text>
-                <text x="135" y="178" text-anchor="middle" fill="#888" font-size="7" font-style="italic">move(C,D)</text>
+                <circle cx="90" cy="232" r="15" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.7"/>
+                <text x="90" y="236" text-anchor="middle" fill="#1E8449" font-size="9" font-weight="700">GOAL</text>
+                <text x="134" y="210" text-anchor="middle" fill="#888" font-size="7" font-style="italic">drop(Pkg,D)</text>
 
                 <!-- Legend bar -->
-                <rect x="195" y="195" width="115" height="28" rx="4" fill="#fef5e7" stroke="rgba(212,160,23,.4)" stroke-width="1"/>
-                <text x="252" y="208" text-anchor="middle" fill="#8b6914" font-size="8" font-weight="700">A* picks lowest-h</text>
-                <text x="252" y="218" text-anchor="middle" fill="#8b6914" font-size="7.5" font-style="italic">at every step</text>
+                <rect x="195" y="216" width="115" height="28" rx="4" fill="#fef5e7" stroke="rgba(212,160,23,.4)" stroke-width="1"/>
+                <text x="252" y="229" text-anchor="middle" fill="#8b6914" font-size="8" font-weight="700">A* picks lowest-h</text>
+                <text x="252" y="239" text-anchor="middle" fill="#8b6914" font-size="7.5" font-style="italic">at every step</text>
             </svg>
         </div>
     </div>
@@ -305,8 +319,8 @@ _styles: >
                 <rect x="182" y="58" width="16" height="12" rx="2" fill="#E3F5EC" stroke="#1E8449" stroke-width="1" stroke-dasharray="3 2" opacity=".55"/>
 
                 <!-- V() values for current state -->
-                <text x="130" y="116" text-anchor="middle" fill="#3d4a9e" font-size="11" font-weight="700">V(s₀) = 3</text>
-                <text x="130" y="132" text-anchor="middle" fill="#888" font-size="9" font-style="italic">optimal plan ≈ 3 steps from here</text>
+                <text x="130" y="116" text-anchor="middle" fill="#3d4a9e" font-size="11" font-weight="700">V(s₀) = 4</text>
+                <text x="130" y="132" text-anchor="middle" fill="#888" font-size="9" font-style="italic">optimal plan ≈ 4 steps from here</text>
 
                 <!-- Successor enumeration -->
                 <line x1="130" y1="142" x2="40" y2="170" stroke="#5b6abf" stroke-width="1.2" opacity=".5"/>
@@ -315,13 +329,13 @@ _styles: >
 
                 <rect x="8" y="175" width="64" height="34" rx="4" fill="#ecedfa" stroke="#5b6abf" stroke-width="1.6"/>
                 <text x="40" y="187" text-anchor="middle" fill="#2D2044" font-size="8" font-weight="700">move(A,C)</text>
-                <text x="40" y="200" text-anchor="middle" fill="#3d4a9e" font-size="10" font-weight="700" font-family="JetBrains Mono,monospace">V'=2 ✓</text>
+                <text x="40" y="200" text-anchor="middle" fill="#3d4a9e" font-size="10" font-weight="700" font-family="JetBrains Mono,monospace">V'=3 ✓</text>
                 <rect x="98" y="175" width="64" height="34" rx="4" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
                 <text x="130" y="187" text-anchor="middle" fill="#888" font-size="8">move(A,B)</text>
-                <text x="130" y="200" text-anchor="middle" fill="#888" font-size="10" font-family="JetBrains Mono,monospace">V'=4</text>
+                <text x="130" y="200" text-anchor="middle" fill="#888" font-size="10" font-family="JetBrains Mono,monospace">V'=5</text>
                 <rect x="188" y="175" width="64" height="34" rx="4" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
                 <text x="220" y="187" text-anchor="middle" fill="#888" font-size="8">move(A,D)</text>
-                <text x="220" y="200" text-anchor="middle" fill="#888" font-size="10" font-family="JetBrains Mono,monospace">V'=4</text>
+                <text x="220" y="200" text-anchor="middle" fill="#888" font-size="10" font-family="JetBrains Mono,monospace">V'=5</text>
             </svg>
         </div>
         <div style="flex:1; min-width:0;">
@@ -393,7 +407,7 @@ _styles: >
 
 <p><span class="paper-tag">Garrett, Kaelbling, Lozano-Pérez 2016</span> introduced the idea of <strong>learning to rank states for planning</strong>, using RankSVM over hand-crafted features. Pairs of states (one closer to goal, one further) form the training data; the learned ranker decides which to expand first in GBFS. This relaxes the requirement of learning an accurate distance — only the pairwise ordering needs to be correct.</p>
 
-<p>The idea sat for several years before recent revisitation. <span class="paper-tag">Chrestien, Edelkamp, Komenda, Pevný 2024</span> sharpened it: their paper's title is <em>"Optimize planning heuristics to rank, not to estimate cost-to-goal."</em> They show that for guiding GBFS, the loss function should directly target ranking accuracy rather than cost-to-goal regression. Models trained this way produce strictly better search guidance than the same models trained with mean-squared-error loss against ground-truth costs.</p>
+<p>The idea sat for several years before recent revisitation. <span class="paper-tag">Chrestien, Edelkamp, Komenda, Pevný 2023</span> sharpened it: their paper's title is <em>"Optimize planning heuristics to rank, not to estimate cost-to-goal."</em> They show that for guiding GBFS, the loss function should directly target ranking accuracy rather than cost-to-goal regression. Models trained this way produce strictly better search guidance than the same models trained with mean-squared-error loss against ground-truth costs.</p>
 
 <p><span class="paper-tag">Hao, Trevizan, Thiébaux, Ferber, Hoffmann 2024</span> extends this to <strong>pairwise rankings for GBFS</strong>, in two variants (one is a workshop paper, the other an IJCAI extension). They train networks to predict, given two states, which is closer to the goal. GBFS expands using the predicted pairwise ordering as the priority. The empirical result is consistent: ranking-trained heuristics beat regression-trained heuristics on the same architecture and data, often by large margins on hard instances.</p>
 
@@ -411,9 +425,9 @@ _styles: >
 
 <p><span class="paper-tag">Karia, Srivastava 2021</span> (<strong>GRAPL</strong> — Generalized Relational Action Policy Learning) deserves its own treatment because it is the most direct precursor to GABAR. GRAPL ranks actions using <em>canonical abstractions</em>: objects with identical properties are grouped into equivalence classes, and the network reasons about classes rather than individual objects. The output is a ranking over action <em>parameters</em>, used to construct a complete grounded action.</p>
 
-<p>The critical limitation that distinguishes GABAR from GRAPL: GRAPL selects each action parameter <em>independently</em>. A two-parameter action like <code>transport(package, vehicle)</code> is decomposed into "pick the best package" and "pick the best vehicle" as two separate decisions. The choice of vehicle does not condition on the choice of package.</p>
+<p>The critical limitation that distinguishes GABAR from GRAPL: GRAPL selects each action parameter <em>independently</em>. A multi-parameter action like <code>transport(?pkg, ?source, ?dest)</code> in the running warehouse is decomposed into "pick the best package," "pick the best source zone," and "pick the best destination" as separate decisions. The choice of source zone does not condition on the choice of package.</p>
 
-<p>This breaks on domains where parameters are coupled. In Logistics, the correct vehicle for a transport action depends on which package was selected — they need to be in the same city. GRAPL has no mechanism to express this dependency; the package and vehicle decisions are made in parallel. GABAR's GRU-based decoder (Post 4) fixes this by making parameter selection sequential: the action schema is chosen first, then parameters are picked one at a time, each conditioning on what came before.</p>
+<p>This breaks on domains where parameters are coupled. In the warehouse, the correct source zone for a transport action depends on which package was selected — it has to be the zone that package is actually in. (The same coupling shows up in IPC Logistics between packages and the vehicles that must share their city.) GRAPL has no mechanism to express this dependency; the parameter decisions are made in parallel. GABAR's GRU-based decoder (Post 4) fixes this by making parameter selection sequential: the action schema is chosen first, then parameters are picked one at a time, each conditioning on what came before. Post 3's decoding figure walks this exact example.</p>
 
 <div class="vis-container">
     <h3 class="vis-title">Family 3 on the warehouse &mdash; rank, don't estimate</h3>
@@ -581,7 +595,7 @@ _styles: >
                 <div style="font-size:.78rem; color:#7a5e1f; margin-top:2px; font-style:italic;">Predict cost-to-goal; A* uses it to order the queue</div>
             </div>
             <div style="padding:10px; flex:1;">
-                <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;">
+                <svg viewBox="0 0 200 252" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;">
                     <!-- Mini warehouse at top -->
                     <rect x="10" y="6" width="80" height="36" rx="3" fill="#F0EDF3" stroke="#D4CDE0" stroke-width=".5"/>
                     <text x="22" y="22" fill="#B0A8C0" font-size="8" font-weight="600">A</text>
@@ -593,30 +607,34 @@ _styles: >
                     <text x="145" y="32" text-anchor="middle" fill="#7a5e1f" font-size="6.5" font-style="italic">guided by h</text>
 
                     <!-- Search tree -->
-                    <line x1="100" y1="74" x2="50" y2="110" stroke="#d4a017" stroke-width="2" opacity=".7"/>
-                    <line x1="100" y1="74" x2="100" y2="110" stroke="#D4CDE0" stroke-width="1"/>
-                    <line x1="100" y1="74" x2="150" y2="110" stroke="#D4CDE0" stroke-width="1"/>
-                    <line x1="50" y1="124" x2="50" y2="160" stroke="#d4a017" stroke-width="2" opacity=".7"/>
-                    <line x1="50" y1="174" x2="50" y2="210" stroke="#d4a017" stroke-width="2" opacity=".7"/>
-                    <circle cx="100" cy="70" r="14" fill="#fff" stroke="#2D2044" stroke-width="1.2"/>
-                    <text x="100" y="68" text-anchor="middle" fill="#2D2044" font-size="8" font-weight="700">s₀</text>
-                    <text x="100" y="78" text-anchor="middle" fill="#d4a017" font-size="7" font-weight="700">h=3</text>
-                    <circle cx="50" cy="120" r="12" fill="#fef5e7" stroke="#d4a017" stroke-width="1.4"/>
-                    <text x="50" y="118" text-anchor="middle" fill="#2D2044" font-size="7" font-weight="700">s₁</text>
-                    <text x="50" y="127" text-anchor="middle" fill="#d4a017" font-size="6.5" font-weight="700">h=2</text>
-                    <circle cx="100" cy="120" r="11" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
-                    <text x="100" y="119" text-anchor="middle" fill="#888" font-size="7">s₂</text>
-                    <text x="100" y="127" text-anchor="middle" fill="#888" font-size="6.5">h=4</text>
-                    <circle cx="150" cy="120" r="11" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
-                    <text x="150" y="119" text-anchor="middle" fill="#888" font-size="7">s₃</text>
-                    <text x="150" y="127" text-anchor="middle" fill="#888" font-size="6.5">h=4</text>
-                    <circle cx="50" cy="170" r="11" fill="#fef5e7" stroke="#d4a017" stroke-width="1.3"/>
-                    <text x="50" y="169" text-anchor="middle" fill="#2D2044" font-size="7" font-weight="700">s₅</text>
-                    <text x="50" y="177" text-anchor="middle" fill="#d4a017" font-size="6.5" font-weight="700">h=1</text>
-                    <circle cx="50" cy="216" r="11" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.3"/>
-                    <text x="50" y="220" text-anchor="middle" fill="#1E8449" font-size="6.5" font-weight="700">GOAL</text>
+                    <line x1="100" y1="76" x2="50" y2="96" stroke="#d4a017" stroke-width="2" opacity=".7"/>
+                    <line x1="100" y1="76" x2="100" y2="96" stroke="#D4CDE0" stroke-width="1"/>
+                    <line x1="100" y1="76" x2="150" y2="96" stroke="#D4CDE0" stroke-width="1"/>
+                    <line x1="50" y1="117" x2="50" y2="136" stroke="#d4a017" stroke-width="2" opacity=".7"/>
+                    <line x1="50" y1="156" x2="50" y2="176" stroke="#d4a017" stroke-width="2" opacity=".7"/>
+                    <line x1="50" y1="196" x2="50" y2="215" stroke="#d4a017" stroke-width="2" opacity=".7"/>
+                    <circle cx="100" cy="64" r="13" fill="#fff" stroke="#2D2044" stroke-width="1.2"/>
+                    <text x="100" y="62" text-anchor="middle" fill="#2D2044" font-size="8" font-weight="700">s₀</text>
+                    <text x="100" y="72" text-anchor="middle" fill="#d4a017" font-size="7" font-weight="700">h=4</text>
+                    <circle cx="50" cy="106" r="11" fill="#fef5e7" stroke="#d4a017" stroke-width="1.4"/>
+                    <text x="50" y="104" text-anchor="middle" fill="#2D2044" font-size="7" font-weight="700">s₁</text>
+                    <text x="50" y="113" text-anchor="middle" fill="#d4a017" font-size="6.5" font-weight="700">h=3</text>
+                    <circle cx="100" cy="106" r="10" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
+                    <text x="100" y="105" text-anchor="middle" fill="#888" font-size="7">s₂</text>
+                    <text x="100" y="113" text-anchor="middle" fill="#888" font-size="6.5">h=5</text>
+                    <circle cx="150" cy="106" r="10" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
+                    <text x="150" y="105" text-anchor="middle" fill="#888" font-size="7">s₃</text>
+                    <text x="150" y="113" text-anchor="middle" fill="#888" font-size="6.5">h=5</text>
+                    <circle cx="50" cy="146" r="10" fill="#fef5e7" stroke="#d4a017" stroke-width="1.3"/>
+                    <text x="50" y="145" text-anchor="middle" fill="#2D2044" font-size="7" font-weight="700">s₅</text>
+                    <text x="50" y="153" text-anchor="middle" fill="#d4a017" font-size="6.5" font-weight="700">h=2</text>
+                    <circle cx="50" cy="186" r="10" fill="#fef5e7" stroke="#d4a017" stroke-width="1.3"/>
+                    <text x="50" y="185" text-anchor="middle" fill="#2D2044" font-size="7" font-weight="700">s₆</text>
+                    <text x="50" y="193" text-anchor="middle" fill="#d4a017" font-size="6.5" font-weight="700">h=1</text>
+                    <circle cx="50" cy="226" r="11" fill="#E3F5EC" stroke="#1E8449" stroke-width="1.3"/>
+                    <text x="50" y="230" text-anchor="middle" fill="#1E8449" font-size="6.5" font-weight="700">GOAL</text>
 
-                    <text x="100" y="237" text-anchor="middle" fill="#7a5e1f" font-size="7" font-style="italic">A* picks lowest h() at every step</text>
+                    <text x="100" y="249" text-anchor="middle" fill="#7a5e1f" font-size="7" font-style="italic">A* picks lowest h() at every step</text>
                 </svg>
             </div>
         </div>
@@ -646,15 +664,15 @@ _styles: >
                     <!-- Three successor rows -->
                     <rect x="20" y="103" width="160" height="22" rx="4" fill="#ecedfa" stroke="#5b6abf" stroke-width="1.4"/>
                     <text x="28" y="118" fill="#2D2044" font-size="8" font-weight="600">→ Bot:C, Pkg:C</text>
-                    <text x="172" y="118" text-anchor="end" fill="#3d4a9e" font-size="9" font-weight="700" font-family="JetBrains Mono,monospace">V=2 ✓</text>
+                    <text x="172" y="118" text-anchor="end" fill="#3d4a9e" font-size="9" font-weight="700" font-family="JetBrains Mono,monospace">V=3 ✓</text>
 
                     <rect x="20" y="132" width="160" height="22" rx="4" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
                     <text x="28" y="147" fill="#888" font-size="8">→ Bot:B, Pkg:C</text>
-                    <text x="172" y="147" text-anchor="end" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">V=4</text>
+                    <text x="172" y="147" text-anchor="end" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">V=5</text>
 
                     <rect x="20" y="161" width="160" height="22" rx="4" fill="#fff" stroke="#D4CDE0" stroke-width="1"/>
                     <text x="28" y="176" fill="#888" font-size="8">→ Bot:D, Pkg:C</text>
-                    <text x="172" y="176" text-anchor="end" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">V=4</text>
+                    <text x="172" y="176" text-anchor="end" fill="#888" font-size="9" font-family="JetBrains Mono,monospace">V=5</text>
 
                     <rect x="20" y="195" width="160" height="24" rx="4" fill="#F0FFF4" stroke="#1E8449" stroke-width="1.2"/>
                     <text x="100" y="210" text-anchor="middle" fill="#1E8449" font-size="8" font-weight="700">→ take move(A,C)</text>
@@ -740,12 +758,35 @@ _styles: >
 
 <p>Each of those choices is a response to a specific limitation in prior work. GABAR is not "yet another GNN for planning" — it's a recipe that picks the right cell in the two-axis design space and adds the one missing piece (sequential decoding) that prior action-ranking methods lacked.</p>
 
+<h2>References</h2>
+
+<div class="refs">
+<ol>
+    <li>Toyer, S., Thi&eacute;baux, S., Trevizan, F., &amp; Xie, F. (2020). <em>ASNets: Deep Learning for Generalised Planning.</em> Journal of Artificial Intelligence Research, 68.</li>
+    <li>Shen, W., Trevizan, F., &amp; Thi&eacute;baux, S. (2020). <em>Learning Domain-Independent Planning Heuristics with Hypergraph Networks.</em> ICAPS 2020.</li>
+    <li>Chen, D. Z., Thi&eacute;baux, S., &amp; Trevizan, F. (2024). <em>Learning Domain-Independent Heuristics for Grounded and Lifted Planning</em> (GOOSE). AAAI 2024.</li>
+    <li>St&aring;hlberg, S., Bonet, B., &amp; Geffner, H. (2022a). <em>Learning Generalized Policies Without Supervision Using GNNs.</em> KR 2022.</li>
+    <li>St&aring;hlberg, S., Bonet, B., &amp; Geffner, H. (2022b). <em>Learning General Optimal Policies with Graph Neural Networks: Expressive Power, Transparency, and Limits.</em> ICAPS 2022.</li>
+    <li>Barcel&oacute;, P., Kostylev, E., Monet, M., P&eacute;rez, J., Reutter, J., &amp; Silva, J. P. (2020). <em>The Logical Expressiveness of Graph Neural Networks.</em> ICLR 2020.</li>
+    <li>St&aring;hlberg, S., Bonet, B., &amp; Geffner, H. (2024). <em>Learning General Policies for Classical Planning Domains: Getting Beyond C&#8322;.</em></li>
+    <li>Garrett, C. R., Kaelbling, L. P., &amp; Lozano-P&eacute;rez, T. (2016). <em>Learning to Rank for Synthesizing Planning Heuristics.</em> IJCAI 2016.</li>
+    <li>Chrestien, L., Edelkamp, S., Komenda, A., &amp; Pevn&yacute;, T. (2023). <em>Optimize Planning Heuristics to Rank, not to Estimate Cost-to-Goal.</em> NeurIPS 2023.</li>
+    <li>Hao, M., Trevizan, F., Thi&eacute;baux, S., Ferber, P., &amp; Hoffmann, J. (2024). <em>Guiding GBFS through Learned Pairwise Rankings.</em> IJCAI 2024.</li>
+    <li>Garg, S., Bajpai, A., &amp; Mausam (2019). <em>Size Independent Neural Transfer for RDDL Planning.</em> ICAPS 2019.</li>
+    <li>Janisch, J., Pevn&yacute;, T., &amp; Lis&yacute;, V. (2020). <em>Symbolic Relational Deep Reinforcement Learning Based on Graph Neural Networks</em> (SR-DRL).</li>
+    <li>St&aring;hlberg, S., Bonet, B., &amp; Geffner, H. (2023). <em>Learning General Policies with Policy Gradient Methods.</em> KR 2023.</li>
+    <li>Rivlin, O., Hazan, T., &amp; Karpas, E. (2020). <em>Generalized Planning with Deep Reinforcement Learning.</em></li>
+    <li>Karia, R., &amp; Srivastava, S. (2021). <em>GRAPL: Generalized Relational Action Policy Learning.</em></li>
+    <li><em>Graph Neural Network Based Action Ranking for Planning</em> (GABAR). NeurIPS 2025.</li>
+</ol>
+</div>
+
 <hr>
 
 <div class="series-footer">
     <strong>Where this fits</strong>
     <p>This is the first of the two survey posts. Part 3 surveys the representation axis (Axis 2): how to encode a planning state as a graph the network can read. The two surveys together set up everything you need to read the GABAR paper deep-dive (Part 4) and understand why each of GABAR's design choices was the right one.</p>
-    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&larr; <a href="/blog/2026/learning-for-planning-scaling-problem/">Part 1: The Scaling Problem + Two Axes</a> &middot; <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Graph Representations Survey &rarr;</a></p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&larr; <a href="/blog/2026/learning-for-planning-scaling-problem/">Part 1: The Scaling Problem</a> &middot; <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Your Planning State Is a Graph &rarr;</a></p>
 </div>
 
 </article>

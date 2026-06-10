@@ -8,7 +8,7 @@ description: "How a simple shift in learning objective — from global value fun
 _styles: >
   .blog-fullhtml {
   font-family: 'Charter', 'Georgia', serif;
-  line-height: 1.7;
+  line-height: 1.75;
   color: #1a1a1a;
   font-size: 18px;
   }
@@ -23,19 +23,14 @@ _styles: >
   font-style: italic;
   }
   .blog-fullhtml .equation-note {
-  background: #f0f4ff;
-  border: 1px dashed #aac;
-  padding: 10px 15px;
+  background: #F8F6FA;
+  border: 1px solid #E8E4ED;
+  padding: 8px 15px;
   margin: 1em 0;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.85em;
-  color: #336;
-  }
-  .blog-fullhtml .equation-note::before {
-  content: "EQUATION (use Substack's equation button): ";
-  font-weight: bold;
-  color: #558;
+  border-radius: 8px;
+  font-size: 0.95em;
+  color: #2D2044;
+  text-align: center;
   }
   .blog-fullhtml hr {
   border: none;
@@ -63,10 +58,13 @@ _styles: >
   }
 
   .blog-fullhtml .results-chart-container {
-  margin: 25px 0;
-  padding: 20px;
-  background: #fafafa;
-  border-radius: 10px;
+  margin: 28px 0;
+  padding: 22px 24px 18px;
+  background: #fff;
+  border: 1px solid #E8E4ED;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(45,32,68,0.06);
+  font-family: 'Source Sans 3', -apple-system, 'Helvetica Neue', Arial, sans-serif;
   }
   .blog-fullhtml .chart {
   display: flex;
@@ -124,19 +122,31 @@ _styles: >
   display: inline-block;
   }
   .blog-fullhtml .chart-title {
-  text-align: center;
-  margin-bottom: 15px;
+  text-align: left;
+  margin-bottom: 16px;
   }
   .blog-fullhtml .chart-title h4 {
-  font-size: 1em;
-  color: #333;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  color: #2D2044;
+  font-weight: 700;
   margin: 0;
   font-style: normal;
   }
+  .blog-fullhtml .chart-title h4::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #C5A55A;
+  margin-top: 7px;
+  border-radius: 2px;
+  }
   .blog-fullhtml .chart-title p {
-  font-size: 0.75em;
+  font-size: 0.82em;
   color: #888;
-  margin: 3px 0 0;
+  margin: 6px 0 0;
+  font-style: italic;
   }
   .blog-fullhtml .chart-caption {
   font-size: 0.75em;
@@ -166,40 +176,40 @@ _styles: >
   }
 
   .blog-fullhtml .series-nav {
-  background: #e0f5f4;
+  background: #e0f5f5;
   border-left: 4px solid #00A3A1;
   border-radius: 0 8px 8px 0;
   padding: 14px 18px;
-  margin: 0 0 32px;
+  margin: 0 0 24px;
   font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.92em;
   }
-  .blog-fullhtml .series-nav strong { color: #006e6c; }
+  .blog-fullhtml .series-nav strong { color: #00807E; }
   .blog-fullhtml .series-nav .series-nav-links {
   margin-top: 6px;
   font-size: 0.85em;
   color: #555;
   }
-  .blog-fullhtml .series-nav a { color: #006e6c; text-decoration: none; border-bottom: 1px solid #00A3A155; }
-  .blog-fullhtml .series-nav a:hover { color: #004a48; border-bottom-color: #004a48; }
+  .blog-fullhtml .series-nav a { color: #00807E; text-decoration: none; border-bottom: 1px solid #00A3A155; }
+  .blog-fullhtml .series-nav a:hover { color: #005856; border-bottom-color: #005856; }
 
   .blog-fullhtml .series-footer {
   margin: 3em 0 2em;
   padding: 20px 22px;
-  background: #f4fbfa;
-  border: 1px solid #c8e8e6;
+  background: #f0fafa;
+  border: 1px solid #c2e4e3;
   border-radius: 10px;
   font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
   }
-  .blog-fullhtml .series-footer strong { color: #006e6c; }
+  .blog-fullhtml .series-footer strong { color: #00807E; }
   .blog-fullhtml .series-footer p {
   font-size: 0.9em;
   color: #444;
   margin: 8px 0 0;
   line-height: 1.6;
   }
-  .blog-fullhtml .series-footer a { color: #006e6c; text-decoration: none; border-bottom: 1px solid #00A3A155; }
-  .blog-fullhtml .series-footer a:hover { color: #004a48; border-bottom-color: #004a48; }
+  .blog-fullhtml .series-footer a { color: #00807E; text-decoration: none; border-bottom: 1px solid #00A3A155; }
+  .blog-fullhtml .series-footer a:hover { color: #005856; border-bottom-color: #005856; }
 
   .blog-fullhtml .vis-container-gabar {
   margin: 28px -40px; padding: 22px 24px 16px;
@@ -238,7 +248,12 @@ _styles: >
   .blog-fullhtml .vis-exec-ctrl button:hover:not(:disabled) { background: #D4CDE0; }
   .blog-fullhtml .vis-exec-ctrl button:disabled { opacity: 0.35; cursor: default; }
 
-  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+
+  .blog-fullhtml .refs { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+  .blog-fullhtml .refs ol { padding-left: 1.3em; margin: 0; }
+  .blog-fullhtml .refs li { font-size: 0.85em; color: #444; line-height: 1.55; margin-bottom: 8px; }
+  .blog-fullhtml .refs li em { color: #444; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
   html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
@@ -249,8 +264,7 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml a { color: #4dd0ce; }
   html[data-theme="dark"] .blog-fullhtml a:hover { color: #80e0de; }
   html[data-theme="dark"] .blog-fullhtml blockquote { border-left-color: #3a3f45; color: #a8b8b8; }
-  html[data-theme="dark"] .blog-fullhtml .equation-note { background: #1a1f3a; border-color: #3a4a6a; color: #9aafe6; }
-  html[data-theme="dark"] .blog-fullhtml .equation-note::before { color: #9aafe6; }
+  html[data-theme="dark"] .blog-fullhtml .equation-note { background: #15101e; border-color: #2a2540; color: #c5aae8; }
   html[data-theme="dark"] .blog-fullhtml hr { border-top-color: #2a3a3a; }
   html[data-theme="dark"] .blog-fullhtml .subtitle { color: #b0b8c8; }
   html[data-theme="dark"] .blog-fullhtml .lead { color: #b0b8c8; }
@@ -262,8 +276,11 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .chart-bar-container { background: #2a2540; }
   html[data-theme="dark"] .blog-fullhtml .chart-bar.small-text { color: #d0d8e8; }
   html[data-theme="dark"] .blog-fullhtml .difficulty-header { background: #2a2540; color: #a8b8b8; }
-  html[data-theme="dark"] .blog-fullhtml .chart-title h4 { color: #d0d8e8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-title h4 { color: #c5aae8; }
+  html[data-theme="dark"] .blog-fullhtml .chart-title h4::after { background: #d4b870; }
   html[data-theme="dark"] .blog-fullhtml .chart-title p { color: #9888a8; }
+  html[data-theme="dark"] .blog-fullhtml .refs li { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .refs li em { color: #a8b8b8; }
   html[data-theme="dark"] .blog-fullhtml .chart-caption { color: #9888a8; }
   html[data-theme="dark"] .blog-fullhtml .chart-divider { border-top-color: #2a3a3a; }
   html[data-theme="dark"] .blog-fullhtml .image-container img { border-color: #2a3a3a; }
@@ -304,7 +321,7 @@ _styles: >
 <div class="series-nav">
     <strong>Learning for Planning · Part 4 of 4 — the finale</strong>
     <div class="series-nav-links">
-        ← <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Graph Representations for Planning</a> · This is the series anchor — a deep dive on the GABAR paper.
+        ← <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Your Planning State Is a Graph</a> · Next: <a href="/blog/2026/learning-for-planning-epilogue/">Epilogue: Toward Uncertainty →</a> · This is the series anchor — a deep dive on the GABAR paper.
     </div>
 </div>
 
@@ -316,9 +333,9 @@ _styles: >
 
 <h2>The Setup: Planning is Hard, and It Gets Harder Fast</h2>
 
-<p>Imagine you're organizing a warehouse. You have 10 packages, a few trucks, and a couple of airplanes. A classical planner can figure out the optimal delivery sequence in seconds. Now scale that to 30 packages across multiple cities. The same planner might run for hours—or never finish at all.</p>
+<p>Take the warehouse that has run through this whole series: a robot shuttling packages between zones. With 4 zones and 1 package, a classical planner finds the delivery plan in milliseconds. Scale to dozens of zones and packages — <a href="/blog/2026/learning-for-planning-scaling-problem/">Part 1</a>'s animated counter — and the same planner might run for hours, or never finish at all.</p>
 
-<p>This is the fundamental scaling challenge in classical AI planning. The state space grows exponentially with the number of objects. Planning is NP-hard in most domains. Traditional planners use heuristic search, which works brilliantly on small problems but chokes on large ones.</p>
+<p>This is the fundamental scaling challenge in classical AI planning. The state space grows exponentially with the number of objects, and plan existence is PSPACE-complete. Traditional planners use heuristic search, which works brilliantly on small problems but chokes on large ones.</p>
 
 <p>The natural question: <strong>can we learn planning strategies from small, solvable problems and apply them to large, unsolvable ones?</strong></p>
 
@@ -452,7 +469,7 @@ _styles: >
         var detailLines = [
             currentTurn ? currentTurn.st : '',
             'predicates + actions',
-            'L = 3 rounds of GNN',
+            'L = 9 rounds of GNN',
             currentTurn ? 'top: ' + currentTurn.ac : '',
             done ? '✓ goal reached!' : (currentTurn ? 'execute ' + currentTurn.ac : '')
         ];
@@ -548,26 +565,26 @@ _styles: >
 
 <p>The message passing equations (in order):</p>
 
-<div class="equation-note">\mathbf{e}^{l+1}_{ij} = \phi_e([\mathbf{e}^l_{ij}; \mathbf{v}^l_i; \mathbf{v}^l_j; \mathbf{g}^l])</div>
+<div class="equation-note">$$\mathbf{e}^{l+1}_{ij} = \phi_e([\mathbf{e}^l_{ij}; \mathbf{v}^l_i; \mathbf{v}^l_j; \mathbf{g}^l])$$</div>
 
-<div class="equation-note">\mathbf{v}^{l+1}_i = \phi_v([\mathbf{v}^l_i; \text{AGG}(\{\mathbf{e}^{l+1}_{ij}\}); \mathbf{g}^l])</div>
+<div class="equation-note">$$\mathbf{v}^{l+1}_i = \phi_v([\mathbf{v}^l_i; \text{AGG}(\{\mathbf{e}^{l+1}_{ij}\}); \mathbf{g}^l])$$</div>
 
-<div class="equation-note">\mathbf{g}^{l+1} = \phi_g([\mathbf{g}^l; \text{AGG}(\{\mathbf{v}^{l+1}_i\}); \text{AGG}(\{\mathbf{e}^{l+1}_{ij}\})])</div>
+<div class="equation-note">$$\mathbf{g}^{l+1} = \phi_g([\mathbf{g}^l; \text{AGG}(\{\mathbf{v}^{l+1}_i\}); \text{AGG}(\{\mathbf{e}^{l+1}_{ij}\})])$$</div>
 
 <p>The <strong>global node g</strong> is crucial. As problems scale up, graphs get larger, but the number of GNN rounds stays fixed at 9. Without a global node, information from distant parts of the graph would never reach each other. The global node acts as a communication shortcut—every node reads from it and writes to it at every round, providing global context regardless of graph size.</p>
 
 <h3>3. Conditional GRU Decoder</h3>
 
-<p>Here's a subtlety that matters more than you'd expect. Consider the action <code>drive(truck1, cityA, cityB)</code>. Selecting <code>truck1</code> constrains which cities make sense. Selecting <code>cityA</code> as the origin further constrains <code>cityB</code>. Parameters are <em>interdependent</em>.</p>
+<p>Here's a subtlety that matters more than you'd expect. Consider the action <code>transport(pkg3, zoneO, zoneD)</code> from the warehouse — the same example <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3</a>'s decoding figure walks through. Selecting <code>pkg3</code> constrains which source zones make sense (the source has to be wherever <code>pkg3</code> actually sits). Selecting <code>zoneO</code> as the source further constrains the destination. Parameters are <em>interdependent</em>.</p>
 
 <p>Our decoder uses a GRU (Gated Recurrent Unit) that builds actions sequentially:</p>
 <ol>
     <li>Initialize hidden state from the global graph embedding</li>
-    <li>Score all action schemas, select one (e.g., "drive")</li>
+    <li>Score all action schemas, select one (e.g., "transport")</li>
     <li>Update hidden state with selected action's embedding</li>
-    <li>Score all objects for parameter 1, select one (e.g., "truck1")</li>
+    <li>Score all objects for parameter 1, select one (e.g., "pkg3")</li>
     <li>Update hidden state with selected object's embedding</li>
-    <li>Score all objects for parameter 2, select one (e.g., "cityA")</li>
+    <li>Score all objects for parameter 2, select one (e.g., "zoneO")</li>
     <li>Continue until all parameters are filled</li>
 </ol>
 
@@ -811,11 +828,11 @@ _styles: >
             </div>
             <div class="chart-row">
                 <div class="chart-label">Gemini 2.5 Pro</div>
-                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 3%; background: #d4a0e5;">1.5%</div></div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 1.5%; background: #d4a0e5;">1.5%</div></div>
             </div>
             <div class="chart-row">
                 <div class="chart-label">OpenAI O3</div>
-                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 2%; background: #c490d8;">0.4%</div></div>
+                <div class="chart-bar-container"><div class="chart-bar small-text" style="width: 0.4%; background: #c490d8;">0.4%</div></div>
             </div>
         </div>
     </div>
@@ -950,13 +967,25 @@ _styles: >
 
 <p>If the answer to any of these is yes, you might be working harder than necessary.</p>
 
+<h2>References</h2>
+
+<div class="refs">
+<ol>
+    <li><em>Graph Neural Network Based Action Ranking for Planning</em> (GABAR). NeurIPS 2025. Paper, code, and project page available at the project website.</li>
+    <li>St&aring;hlberg, S., Bonet, B., &amp; Geffner, H. (2022). <em>Learning Generalized Policies Without Supervision Using GNNs</em> (GPL). KR 2022.</li>
+    <li>Toyer, S., Thi&eacute;baux, S., Trevizan, F., &amp; Xie, F. (2020). <em>ASNets: Deep Learning for Generalised Planning.</em> Journal of Artificial Intelligence Research, 68.</li>
+    <li>Karia, R., &amp; Srivastava, S. (2021). <em>GRAPL: Generalized Relational Action Policy Learning.</em></li>
+    <li>Helmert, M. (2006). <em>The Fast Downward Planning System.</em> Journal of Artificial Intelligence Research, 26.</li>
+</ol>
+</div>
+
 <hr>
 
 <!-- Series Footer (Learning for Planning) -->
 <div class="series-footer">
     <strong>Where this fits</strong>
     <p>You just read the paper deep-dive at the heart of the <em>Learning for Planning</em> series. GABAR closes the classical, fully-observable thread. The series epilogue picks up where this leaves off and bridges to partial observability — beliefs instead of states, observations instead of certainties, MCTS instead of greedy execution.</p>
-    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">← <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Graph Representations</a> · <a href="/blog/2026/learning-for-planning-epilogue/">Epilogue: Toward Uncertainty →</a></p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">← <a href="/blog/2026/learning-for-planning-state-as-graph/">Part 3: Your Planning State Is a Graph</a> · <a href="/blog/2026/learning-for-planning-epilogue/">Epilogue: Toward Uncertainty →</a></p>
 </div>
 
 <p><em>This work was presented at NeurIPS 2025. Paper, code, and project page available at the project website.</em></p>
