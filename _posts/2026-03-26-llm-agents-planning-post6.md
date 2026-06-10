@@ -628,7 +628,7 @@ _styles: >
             <strong>📚 Planning in the Era of LLMs — Part 6 of 7</strong>
             <div class="nav-desc">Paradigm 2: no PDDL exists. The system must create the formal model from natural language, validate it, solve it, and return a verified plan. The most ambitious — and most fragile — frontier in LLM-planning research.</div>
             <div class="nav-links">
-                ← Part 5: "The Modern Playbook: LLMs That Help Planners" | Next: Part 7 — "Agentic AI for Planning" →
+                ← <a href="/blog/2026/llm-agents-planning-post5/" style="color:inherit; text-decoration:underline;">Part 5: "The Modern Playbook: LLMs That Help Planners"</a> | Next: <a href="/blog/2026/llm-agents-planning-post7/" style="color:inherit; text-decoration:underline;">Part 7 — "Training the Conductor" →</a>
             </div>
         </div>
     </div>
@@ -1153,8 +1153,8 @@ _styles: >
 
     <!-- Next Post Teaser -->
     <div class="next-post">
-        <h3>Up Next: Part 7 — Agentic AI for Planning</h3>
-        <p>The future of LLM-powered planning — systems that learn to coordinate, adapt to novel domains, and improve their own planning processes. Meta-learning, self-improving orchestrators, and the convergence of planning with reinforcement learning. Where the field goes next.</p>
+        <h3><a href="/blog/2026/llm-agents-planning-post7/" style="color:inherit; text-decoration:underline;">Up Next: Part 7 — Training the Conductor</a></h3>
+        <p>What if the orchestrator didn't have to be a frontier model at all? HALO: train a small local model on verifier-filtered trajectories to run the whole agentic PDDL loop. The research edge — and the close of the series.</p>
     </div>
 
     <!-- ============================== -->

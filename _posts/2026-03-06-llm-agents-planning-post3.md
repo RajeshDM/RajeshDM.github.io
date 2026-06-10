@@ -359,7 +359,7 @@ _styles: >
         <div class="series-nav">
             <strong>📚 Planning in the Era of LLMs — Part 3 of 7</strong>
             <div class="nav-desc">Classical planning algorithms: heuristic search, the relaxation trick, and the solvers that handle billion-state problems. The machinery your LLM agent should integrate with.</div>
-            <div class="nav-links">← Part 2: "The Formal Planning Primer" | Next: Part 4 — "LLMs Try to Plan (It Goes Badly)" →</div>
+            <div class="nav-links">← <a href="/blog/2026/llm-agents-planning-post2/" style="color:inherit; text-decoration:underline;">Part 2: "The Formal Planning Primer"</a> | Next: <a href="/blog/2026/llm-agents-planning-post4/" style="color:inherit; text-decoration:underline;">Part 4 — "LLMs Try to Plan (It Goes Badly)" →</a></div>
         </div>
     </div>
 
@@ -582,7 +582,7 @@ _styles: >
     <p>The answer, as rigorously tested by the planning community, is no. But the <em>right</em> question turned out to be different — and the answers are spectacular.</p>
 
     <div class="next-post">
-        <h3>Up Next: Part 4 — LLMs Try to Plan (It Goes Badly)</h3>
+        <h3><a href="/blog/2026/llm-agents-planning-post4/" style="color:inherit; text-decoration:underline;">Up Next: Part 4 — LLMs Try to Plan (It Goes Badly)</a></h3>
         <p>PlanBench, Mystery Blocksworld, and the sobering evidence that frontier models can't reliably sequence three actions. Why some early claims were misleading, and the taxonomy of LLM roles that emerged from the wreckage.</p>
     </div>
 

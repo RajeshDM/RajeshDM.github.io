@@ -687,7 +687,7 @@ _styles: >
             <strong>📚 Planning in the Era of LLMs — Part 4 of 7</strong>
             <div class="nav-desc">The reality check: rigorous benchmarks reveal that LLMs — even frontier models — fail catastrophically at planning. Self-critique and chain-of-thought don't fix it.</div>
             <div class="nav-links">
-                ← Part 3: "50 Years of Planning Algorithms" | Next: Part 5 — "The Modern Playbook: LLMs That Help Planners" →
+                ← <a href="/blog/2026/llm-agents-planning-post3/" style="color:inherit; text-decoration:underline;">Part 3: "50 Years of Planning Algorithms"</a> | Next: <a href="/blog/2026/llm-agents-planning-post5/" style="color:inherit; text-decoration:underline;">Part 5 — "The Modern Playbook: LLMs That Help Planners" →</a>
             </div>
         </div>
     </div>
@@ -1307,7 +1307,7 @@ LLM: "Move to Zone-X, florp Zrint,
 
     <!-- Next Post Teaser -->
     <div class="next-post">
-        <h3>Up Next: Part 5 — The Modern Playbook: LLMs That Help Planners</h3>
+        <h3><a href="/blog/2026/llm-agents-planning-post5/" style="color:inherit; text-decoration:underline;">Up Next: Part 5 — The Modern Playbook: LLMs That Help Planners</a></h3>
         <p>LLM-Modulo, code generation for heuristics, Thought of Search, and the generate-verify loop that turned LLM planning from a failure into a breakthrough. The LLM proposes, the planner verifies — and together they achieve what neither could alone.</p>
     </div>
 

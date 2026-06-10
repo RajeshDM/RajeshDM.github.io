@@ -496,7 +496,7 @@ _styles: >
             <strong>📚 Planning in the Era of LLMs — Epilogue</strong>
             <div class="nav-desc">A bonus piece sitting outside the canonical seven posts. The series itself ended at Post 7 with HALO and a Series Conclusion. This epilogue is the forward-looking companion — what HALO <em>doesn't</em> do, and where the research goes from here.</div>
             <div class="nav-links">
-                ← Part 7: "Training the Conductor" | Series complete · this is bonus material
+                ← <a href="/blog/2026/llm-agents-planning-post7/" style="color:inherit; text-decoration:underline;">Part 7: "Training the Conductor"</a> | Series complete · this is bonus material
             </div>
         </div>
     </div>

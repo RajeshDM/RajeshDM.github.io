@@ -599,7 +599,7 @@ _styles: >
             <strong>📚 Planning in the Era of LLMs — Part 5 of 7</strong>
             <div class="nav-desc">Paradigm 1 in action: when PDDL is given, LLMs amplify planners through code generation, heuristic design, and generate-verify loops. The combination achieves what neither could alone.</div>
             <div class="nav-links">
-                ← Part 4: "LLMs Try to Plan (It Goes Badly)" | Next: Part 6 — "From English to Plans: The NL-to-PDDL Frontier" →
+                ← <a href="/blog/2026/llm-agents-planning-post4/" style="color:inherit; text-decoration:underline;">Part 4: "LLMs Try to Plan (It Goes Badly)"</a> | Next: <a href="/blog/2026/llm-agents-planning-post6/" style="color:inherit; text-decoration:underline;">Part 6 — "From English to Plans: The NL-to-PDDL Frontier" →</a>
             </div>
         </div>
     </div>
@@ -1004,7 +1004,7 @@ shelf-b)", "holding(beam)"}).</code></pre>
 
     <!-- Next Post Teaser -->
     <div class="next-post">
-        <h3>Up Next: Part 6 — From English to Plans: The NL-to-PDDL Frontier</h3>
+        <h3><a href="/blog/2026/llm-agents-planning-post6/" style="color:inherit; text-decoration:underline;">Up Next: Part 6 — From English to Plans: The NL-to-PDDL Frontier</a></h3>
         <p>NL2Plan, agentic PDDL generation, and the orchestrator bottleneck. Describe a task in English, get a verified plan — and discover why the conductor can't keep up with the orchestra. The frontier of automated planning meets the frontier of language understanding.</p>
     </div>
 

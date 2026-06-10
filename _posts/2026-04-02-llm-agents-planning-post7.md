@@ -884,7 +884,7 @@ _styles: >
             <strong>📚 Planning in the Era of LLMs — Part 7 of 7</strong>
             <div class="nav-desc">The series finale. Post 6 left us with a working NL-to-PDDL pipeline whose weakest link was the orchestrator — a prompted frontier LLM called at every refinement step. This post is the author's research direction: train a small local model to take the orchestrator's place, using the verifier that's already in the loop as the supervisor.</div>
             <div class="nav-links">
-                ← Part 6: "From English to Plans" | Series conclusion 🎉
+                ← <a href="/blog/2026/llm-agents-planning-post6/" style="color:inherit; text-decoration:underline;">Part 6: "From English to Plans"</a> | Series conclusion 🎉 | Bonus: <a href="/blog/2026/llm-agents-planning-epilogue/" style="color:inherit; text-decoration:underline;">Epilogue: Where the Field Goes Next →</a>
             </div>
         </div>
     </div>
