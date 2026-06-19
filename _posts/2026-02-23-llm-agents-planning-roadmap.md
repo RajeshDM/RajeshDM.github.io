@@ -44,7 +44,7 @@ _styles: >
       font-style: italic;
   }
   .blog-fullhtml .blog-container {
-      max-width: 780px;
+      max-width: 680px;
       margin: 0 auto;
       padding: 48px 24px 80px;
   }
@@ -810,7 +810,7 @@ _styles: >
             <strong>📚 Planning in the Era of LLMs — Part 1 of 7</strong>
             <div class="nav-desc">A high-level overview of the series: why LLM agents fail at planning, and how the formal planning community is fixing it.</div>
             <div class="nav-links">
-                Next: Part 2 — "The Formal Planning Primer" →
+                Next: <a href="/blog/2026/llm-agents-planning-post2/" style="color:inherit; text-decoration:underline;">Part 2 — "The Formal Planning Primer" →</a>
             </div>
         </div>
     </div>
@@ -979,8 +979,8 @@ _styles: >
             </li>
             <li>
                 <span class="post-num">Post 7 — The Research Edge</span>
-                <span class="post-title">Agentic AI for Planning</span><br>
-                The future of LLM-powered planning systems — building agents that learn to coordinate, adapt, and improve. Where the field goes next.
+                <span class="post-title">Training the Conductor</span><br>
+                Training the orchestrator instead of prompting it — HALO, verifier-filtered trajectories, and a small local model that runs the whole agentic PDDL loop. The research edge.
             </li>
         </ul>
         <p class="vis-caption">The full series arc: from foundations through failures to the systems that actually work — and the open problems at the frontier.</p>
@@ -1116,7 +1116,7 @@ _styles: >
     <p>Let's get started.</p>
 
     <div class="next-post">
-        <h3>Up Next: Part 2 — The Formal Planning Primer</h3>
+        <h3><a href="/blog/2026/llm-agents-planning-post2/" style="color:inherit; text-decoration:underline;">Up Next: Part 2 — The Formal Planning Primer</a></h3>
         <p>States, actions, goals, and the language that makes them precise. We'll formalize the warehouse robot problem in PDDL, understand why planning is computationally hard, and build the vocabulary you need for the rest of the series. If you already know PDDL, skip straight to Post 3.</p>
     </div>
 

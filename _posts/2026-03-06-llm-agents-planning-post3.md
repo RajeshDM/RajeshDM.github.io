@@ -35,7 +35,7 @@ _styles: >
       font-size: 1.15rem; color: #b0c4de; max-width: 640px;
       margin: 0 auto 28px; font-style: italic;
   }
-  .blog-fullhtml .blog-container { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 0 auto; padding: 48px 24px 80px; }
   .blog-fullhtml h2 { font-size: 1.85rem; color: #0d1b2a; margin: 56px 0 20px; padding-bottom: 8px; border-bottom: 3px solid #2a4066; }
   .blog-fullhtml h3 { font-size: 1.35rem; color: #1b2838; margin: 40px 0 14px; }
   .blog-fullhtml p { margin-bottom: 18px; font-size: 1.05rem; }
@@ -359,7 +359,7 @@ _styles: >
         <div class="series-nav">
             <strong>📚 Planning in the Era of LLMs — Part 3 of 7</strong>
             <div class="nav-desc">Classical planning algorithms: heuristic search, the relaxation trick, and the solvers that handle billion-state problems. The machinery your LLM agent should integrate with.</div>
-            <div class="nav-links">← Part 2: "The Formal Planning Primer" | Next: Part 4 — "LLMs Try to Plan (It Goes Badly)" →</div>
+            <div class="nav-links">← <a href="/blog/2026/llm-agents-planning-post2/" style="color:inherit; text-decoration:underline;">Part 2: "The Formal Planning Primer"</a> | Next: <a href="/blog/2026/llm-agents-planning-post4/" style="color:inherit; text-decoration:underline;">Part 4 — "LLMs Try to Plan (It Goes Badly)" →</a></div>
         </div>
     </div>
 
@@ -582,7 +582,7 @@ _styles: >
     <p>The answer, as rigorously tested by the planning community, is no. But the <em>right</em> question turned out to be different — and the answers are spectacular.</p>
 
     <div class="next-post">
-        <h3>Up Next: Part 4 — LLMs Try to Plan (It Goes Badly)</h3>
+        <h3><a href="/blog/2026/llm-agents-planning-post4/" style="color:inherit; text-decoration:underline;">Up Next: Part 4 — LLMs Try to Plan (It Goes Badly)</a></h3>
         <p>PlanBench, Mystery Blocksworld, and the sobering evidence that frontier models can't reliably sequence three actions. Why some early claims were misleading, and the taxonomy of LLM roles that emerged from the wreckage.</p>
     </div>
 

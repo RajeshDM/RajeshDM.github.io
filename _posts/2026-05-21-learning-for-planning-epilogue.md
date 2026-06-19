@@ -12,6 +12,8 @@ _styles: >
   color: #1a1a1a;
   font-size: 18px;
   }
+  .blog-fullhtml p { margin: 0 0 1.3em; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 1.3em; }
   .blog-fullhtml h1 { font-size: 2em; line-height: 1.2; margin-top: 1em; }
   .blog-fullhtml h2 { font-size: 1.45em; margin-top: 2em; color: #222; }
   .blog-fullhtml h3 { font-size: 1.15em; margin-top: 1.4em; }
@@ -62,7 +64,7 @@ _styles: >
   .blog-fullhtml .open-q p { font-size: 0.92em; color: #2D2044; line-height: 1.55; margin: 5px 0; }
   .blog-fullhtml .open-q .label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; color: #C5A55A; margin-bottom: 4px; }
 
-  .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
   html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
@@ -108,7 +110,7 @@ _styles: >
 
 <hr>
 
-<p>If you read Posts 1-4 in order, you watched a tractable warehouse-delivery instance (4 zones, 1 package, solved in milliseconds by a classical planner) grow into an intractable one (100+ zones, dozens of packages, solved in seconds by GABAR but timing out for everyone else). The transition was smooth because we assumed one thing: <em>the robot can see everything</em>.</p>
+<p>If you read Posts 1-4 in order, you watched a tractable warehouse-delivery instance (4 zones, 1 package, solved in milliseconds by a classical planner) grow into ones that overwhelm classical search &mdash; and, in the paper's experiments, instances 8&times; larger than anything in training, with 100+ objects, solved in seconds by GABAR while the baselines collapse. The transition was smooth because we assumed one thing: <em>the robot can see everything</em>.</p>
 
 <p>That's an unusual assumption. Most domains people actually want robots to operate in &mdash; warehouses included &mdash; don't grant that view. This epilogue is about what changes when you remove it, and what doesn't.</p>
 

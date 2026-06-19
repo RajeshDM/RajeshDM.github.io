@@ -12,6 +12,8 @@ _styles: >
   color: #1a1a1a;
   font-size: 18px;
   }
+  .blog-fullhtml p { margin: 0 0 1.3em; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 1.3em; }
   .blog-fullhtml h1 { font-size: 2em; line-height: 1.2; margin-top: 1.2em; }
   .blog-fullhtml h2 { font-size: 1.5em; margin-top: 2em; color: #222; }
   .blog-fullhtml h3 { font-size: 1.2em; margin-top: 1.5em; }
@@ -97,10 +99,17 @@ _styles: >
   .blog-fullhtml .compare-table .yes { color: #1E8449; font-weight: 700; }
   .blog-fullhtml .compare-table .no { color: #C0392B; font-weight: 700; }
 
-  .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .refs { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+  .blog-fullhtml .refs ol { padding-left: 1.3em; margin: 0; }
+  .blog-fullhtml .refs li { font-size: 0.85em; color: #444; line-height: 1.55; margin-bottom: 8px; }
+  .blog-fullhtml .refs li em { color: #444; }
+
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
+  html[data-theme="dark"] .blog-fullhtml .refs li { color: #a8b8b8; }
+  html[data-theme="dark"] .blog-fullhtml .refs li em { color: #a8b8b8; }
   html[data-theme="dark"] .blog-fullhtml h1 { color: #e0e8f0; }
   html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; }
   html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
@@ -151,7 +160,7 @@ _styles: >
 <div class="series-nav">
     <strong>Learning for Planning &middot; Part 3 of 4 &mdash; the representation</strong>
     <div class="series-nav-links">
-        &larr; <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: Value Functions vs Action Ranking</a> &middot; Next: <a href="/blog/2026/learning-for-planning-gabar/">Part 4: GABAR &rarr;</a>
+        &larr; <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: What to Learn</a> &middot; Next: <a href="/blog/2026/learning-for-planning-gabar/">Part 4: GABAR &rarr;</a>
     </div>
 </div>
 
@@ -217,9 +226,9 @@ _styles: >
     var STAGES = [
         {t:'Stage 0 &middot; Problem', s:'A robot in Zone A must deliver a package from Zone C to Zone D. Click through to see how this state becomes a graph the GNN can read.'},
         {t:'Stage 1 &middot; Objects', s:'<strong>Every entity becomes an object node.</strong> The robot, the package, and the four zones are all object nodes. The network treats them all the same way at this stage &mdash; they are just typed identifiers.'},
-        {t:'Stage 2 &middot; Predicates', s:'<strong>Current-state facts become predicate nodes,</strong> each connected to the objects it mentions. <code>At(Bot, A)</code>, <code>HandEmpty</code>, and <code>On(Pkg, C)</code> say what is true right now.'},
-        {t:'Stage 3 &middot; Goal Predicates', s:'<strong>The goal becomes a special node too</strong> &mdash; <code>On(Pkg, D)</code>, drawn with a dashed border. It is connected to the same object nodes, so the network can compare "where the package is" with "where it should be."'},
-        {t:'Stage 4 &middot; Action Schemas', s:'<strong>Ungrounded action types are added as schema nodes.</strong> <code>Move</code> connects to whatever can move (the robot) and to locations; <code>Pick</code> connects to the robot and to objects that can be picked up. The same schemas appear in every warehouse instance &mdash; only the bindings change.'}
+        {t:'Stage 2 &middot; Predicates', s:'<strong>Current-state facts become predicate nodes,</strong> each connected to the objects it mentions. <code>at(Bot, A)</code>, <code>handempty</code>, and <code>on(Pkg, C)</code> say what is true right now.'},
+        {t:'Stage 3 &middot; Goal Predicates', s:'<strong>The goal becomes a special node too</strong> &mdash; <code>on(Pkg, D)</code>, drawn with a dashed border. It is connected to the same object nodes, so the network can compare "where the package is" with "where it should be."'},
+        {t:'Stage 4 &middot; Action Schemas', s:'<strong>Ungrounded action types are added as schema nodes.</strong> <code>move</code> connects to whatever can move (the robot) and to locations; <code>pickup</code> connects to the robot and to objects that can be picked up. The same schemas appear in every warehouse instance &mdash; only the bindings change.'}
     ];
 
     var NODES = [
@@ -229,12 +238,12 @@ _styles: >
         {id:'rm_c',  x:395, y:170, l:'Zone C', t:'object', s:1},
         {id:'pkg',   x:500, y:170, l:'Pkg', t:'object', s:1},
         {id:'rm_d',  x:610, y:170, l:'Zone D', t:'object', s:1},
-        {id:'at_bot',  x:120, y:265, l:'At(Bot,A)', t:'pred', s:2},
-        {id:'hand_e',  x:270, y:265, l:'HandEmpty', t:'pred', s:2},
-        {id:'on_pkg',  x:445, y:265, l:'On(Pkg,C)', t:'pred', s:2},
-        {id:'goal_pkg', x:615, y:265, l:'On(Pkg,D)', t:'goal', s:3},
-        {id:'move',  x:185, y:60, l:'Move', t:'action', s:4},
-        {id:'pick',  x:395, y:60, l:'Pick', t:'action', s:4}
+        {id:'at_bot',  x:120, y:265, l:'at(Bot,A)', t:'pred', s:2},
+        {id:'hand_e',  x:270, y:265, l:'handempty', t:'pred', s:2},
+        {id:'on_pkg',  x:445, y:265, l:'on(Pkg,C)', t:'pred', s:2},
+        {id:'goal_pkg', x:615, y:265, l:'on(Pkg,D)', t:'goal', s:3},
+        {id:'move',  x:185, y:60, l:'move', t:'action', s:4},
+        {id:'pick',  x:395, y:60, l:'pickup', t:'action', s:4}
     ];
 
     var EDGES = [
@@ -318,7 +327,7 @@ _styles: >
     <li><strong>Objects</strong> &mdash; the things in the problem (robot, packages, zones).</li>
     <li><strong>Predicates</strong> &mdash; the facts that hold right now, each connected to the objects it concerns.</li>
     <li><strong>Goal predicates</strong> &mdash; the facts that should hold at the end, drawn separately.</li>
-    <li><strong>Action schemas</strong> &mdash; ungrounded actions (<code>Move</code>, <code>Pick</code>, <code>Drop</code>), each connected to the objects that fit their parameter types.</li>
+    <li><strong>Action schemas</strong> &mdash; ungrounded actions (<code>move</code>, <code>pickup</code>, <code>drop</code>), each connected to the objects that fit their parameter types.</li>
 </ul>
 
 <p>Crucially, the <em>structure</em> of this graph is determined by the PDDL domain, not by the instance. A 4-zone warehouse and a 4000-zone warehouse have the same node types, the same edge types, the same action schemas. The graphs differ only in size &mdash; the 4000-zone version has more <code>Zone</code> object nodes, more <code>At</code> predicates, more <code>Move</code> schemas grounded over more parameters.</p>
@@ -587,9 +596,9 @@ _styles: >
 
 <h3>Independent parameter selection</h3>
 
-<p>GRAPL (<span class="paper-tag">Karia, Srivastava 2021</span>) decomposes a multi-parameter action into independent decisions: "pick the best package," "pick the best vehicle," "pick the best city" — three separate scorings whose results are concatenated to form the grounded action. Each parameter is selected without conditioning on the others.</p>
+<p>GRAPL (<span class="paper-tag">Karia, Srivastava 2021</span>) decomposes a multi-parameter action into independent decisions: "pick the best package," "pick the best source zone," "pick the best destination" — three separate scorings whose results are concatenated to form the grounded action. Each parameter is selected without conditioning on the others.</p>
 
-<p>This is computationally simple but loses parameter dependencies. In Logistics, the correct vehicle for a transport action depends on which package was selected (they need to be in the same city). Under independent decoding, the model has no way to express this: the package and vehicle decisions happen in parallel and can be inconsistent.</p>
+<p>This is computationally simple but loses parameter dependencies. In the warehouse, the correct source zone for a transport action depends on which package was selected (it has to be the zone that package is actually in). Under independent decoding, the model has no way to express this: the package and source-zone decisions happen in parallel and can be inconsistent.</p>
 
 <h3>Sequential conditional decoding</h3>
 
@@ -735,7 +744,7 @@ _styles: >
                 <td>N/A (heuristic)</td>
             </tr>
             <tr style="background: #FDF6E3;">
-                <td><strong>GABAR (this thesis)</strong></td>
+                <td><strong>GABAR (ours)</strong></td>
                 <td>Predicates grounded, schemas ungrounded</td>
                 <td class="yes">Action as graph node (explicit)</td>
                 <td class="yes">Sequential (GRU decoder)</td>
@@ -754,12 +763,29 @@ _styles: >
 
 <p>For now, GNNs remain the dominant choice for L4P because the relational structure of planning problems is exactly what they were designed for. Transformers may eventually catch up, particularly as architectures evolve to incorporate relational inductive biases, but as of 2025 the strongest L4P systems all use GNNs.</p>
 
+<h2>References</h2>
+
+<div class="refs">
+<ol>
+    <li>Chen, D. Z., Thi&eacute;baux, S., &amp; Trevizan, F. (2024). <em>Learning Domain-Independent Heuristics for Grounded and Lifted Planning</em> (GOOSE). AAAI 2024.</li>
+    <li>Chen, D. Z., Hao, M., Thi&eacute;baux, S., &amp; Trevizan, F. (2024). On the expressiveness of grounded vs lifted graph encodings for learning to plan.</li>
+    <li>Barcel&oacute;, P., Kostylev, E., Monet, M., P&eacute;rez, J., Reutter, J., &amp; Silva, J. P. (2020). <em>The Logical Expressiveness of Graph Neural Networks.</em> ICLR 2020.</li>
+    <li>St&aring;hlberg, S., Bonet, B., &amp; Geffner, H. (2024). <em>Learning General Policies for Classical Planning Domains: Getting Beyond C&#8322;.</em></li>
+    <li>Toyer, S., Thi&eacute;baux, S., Trevizan, F., &amp; Xie, F. (2020). <em>ASNets: Deep Learning for Generalised Planning.</em> Journal of Artificial Intelligence Research, 68.</li>
+    <li>St&aring;hlberg, S., Bonet, B., &amp; Geffner, H. (2022). <em>Learning Generalized Policies Without Supervision Using GNNs</em> (GPL). KR 2022.</li>
+    <li>Karia, R., &amp; Srivastava, S. (2021). <em>GRAPL: Generalized Relational Action Policy Learning.</em></li>
+    <li>Shen, W., Trevizan, F., &amp; Thi&eacute;baux, S. (2020). <em>Learning Domain-Independent Planning Heuristics with Hypergraph Networks</em> (STRIPS-HGN). ICAPS 2020.</li>
+    <li>M&uuml;ller, F., S&aacute;nchez, P., Hoffmann, J., Wolf, V., &amp; Gros, T. P. (2024). Comparing off-the-shelf GNNs and transformers for generalized policy learning.</li>
+    <li><em>Graph Neural Network Based Action Ranking for Planning</em> (GABAR). NeurIPS 2025.</li>
+</ol>
+</div>
+
 <hr>
 
 <div class="series-footer">
     <strong>Where this fits</strong>
     <p>You now have both axes covered: <em>what to learn</em> (Part 2's three families) and <em>how to represent the input</em> (this post's three sub-decisions). Part 4 reads GABAR &mdash; one specific cell in the design space &mdash; with a full understanding of why each choice was the right one given the literature.</p>
-    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&larr; <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: What to Learn &mdash; Objectives Survey</a> &middot; <a href="/blog/2026/learning-for-planning-gabar/">Part 4: GABAR &rarr;</a></p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&larr; <a href="/blog/2026/learning-for-planning-what-to-learn/">Part 2: What to Learn</a> &middot; <a href="/blog/2026/learning-for-planning-gabar/">Part 4: GABAR &rarr;</a></p>
 </div>
 
 </article>

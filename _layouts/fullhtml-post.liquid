@@ -2,6 +2,13 @@
 <html lang="{{ site.lang }}">
   <head>
     {% include head.liquid %}
+    <!-- Webfonts used by the fullhtml blog design (figures, labels, tags) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap"
+    >
     {% if page._styles %}
     <style type="text/css">
       {{ page._styles }}
@@ -16,6 +23,7 @@
     {% include footer.liquid %}
     {% include scripts/jquery.liquid %}
     {% include scripts/bootstrap.liquid %}
+    {% include scripts/mathjax.liquid %}
     {% include scripts/misc.liquid %}
     {% include scripts/analytics.liquid %}
     {% include scripts/back_to_top.liquid %}

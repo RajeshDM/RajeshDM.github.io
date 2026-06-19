@@ -44,7 +44,7 @@ _styles: >
       font-style: italic;
   }
   .blog-fullhtml .blog-container {
-      max-width: 780px;
+      max-width: 680px;
       margin: 0 auto;
       padding: 48px 24px 80px;
   }
@@ -795,7 +795,7 @@ _styles: >
             <strong>📚 Planning in the Era of LLMs — Part 2 of 7</strong>
             <div class="nav-desc">The formal planning foundations: states, actions, PDDL, and computational complexity. Everything an ML engineer needs to understand the rest of this series.</div>
             <div class="nav-links">
-                ← Part 1: "Making LLM Agents Actually Plan" | Next: Part 3 — "50 Years of Planning Algorithms" →
+                ← <a href="/blog/2026/llm-agents-planning-roadmap/" style="color:inherit; text-decoration:underline;">Part 1: "Making LLM Agents Actually Plan"</a> | Next: <a href="/blog/2026/llm-agents-planning-post3/" style="color:inherit; text-decoration:underline;">Part 3 — "50 Years of Planning Algorithms" →</a>
             </div>
         </div>
     </div>
@@ -1274,7 +1274,7 @@ _styles: >
     <p>Next, we'll see how.</p>
 
     <div class="next-post">
-        <h3>Up Next: Part 3 — 50 Years of Planning Algorithms</h3>
+        <h3><a href="/blog/2026/llm-agents-planning-post3/" style="color:inherit; text-decoration:underline;">Up Next: Part 3 — 50 Years of Planning Algorithms</a></h3>
         <p>Heuristic search, the relaxation trick, Fast Downward, and the International Planning Competition. How the planning community learned to navigate astronomical state spaces — and why these algorithms are what we're integrating with, not replacing. The machinery behind the guarantees.</p>
     </div>
 

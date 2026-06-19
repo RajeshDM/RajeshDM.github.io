@@ -4,7 +4,7 @@ title: "Planning Under Uncertainty — Series Overview"
 date: 2026-04-09
 categories: ["Planning under Uncertainty"]
 tags: ["planning", "pomdp", "mcts"]
-description: "A four-part series on planning when the agent can't see the full state — POMDPs, belief tracking, online tree search, and the two strategies (abstraction and learning) that make large partially-observable problems tractable."
+description: "A four-part series (plus epilogue) on planning when the agent can't see the full state — POMDPs, belief tracking, online tree search, and the two strategies (abstraction and learning) that make large partially-observable problems tractable."
 _styles: >
   .blog-fullhtml {
   font-family: 'Charter', 'Georgia', serif;
@@ -12,6 +12,8 @@ _styles: >
   color: #1a1a1a;
   font-size: 18px;
   }
+  .blog-fullhtml p { margin: 0 0 1.3em; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 1.3em; }
   .blog-fullhtml h1 { font-size: 2.1em; line-height: 1.2; margin-top: 1em; }
   .blog-fullhtml h2 { font-size: 1.5em; margin-top: 2em; color: #222; }
   .blog-fullhtml h3 { font-size: 1.15em; margin-top: 1.4em; }
@@ -63,7 +65,7 @@ _styles: >
   .blog-fullhtml .aud-card h4 { font-family: 'Playfair Display', Georgia, serif; font-size: 0.98rem; color: #3d4a9e; margin: 0 0 6px; }
   .blog-fullhtml .aud-card p { font-size: 0.86em; color: #444; line-height: 1.5; margin: 0; }
 
-  .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
@@ -115,7 +117,7 @@ _styles: >
 </div>
 
 <h1>Planning Under Uncertainty</h1>
-<p class="subtitle">A four-part series on planning when the agent can't see the full state &mdash; POMDPs, belief tracking, online tree search, and the two strategies (abstraction and learning) that make large partially-observable problems tractable.</p>
+<p class="subtitle">A four-part series (plus epilogue) on planning when the agent can't see the full state &mdash; POMDPs, belief tracking, online tree search, and the two strategies (abstraction and learning) that make large partially-observable problems tractable.</p>
 
 <hr>
 
@@ -134,7 +136,7 @@ _styles: >
 <h2>The roadmap</h2>
 
 <div class="roadmap">
-    <h3>Four posts, two paper anchors, one foggy warehouse</h3>
+    <h3>Four parts + an epilogue, two paper anchors, one foggy warehouse</h3>
 
     <div class="rm-item">
         <div class="rm-num">01</div>
@@ -147,7 +149,7 @@ _styles: >
     <div class="rm-item">
         <div class="rm-num">02</div>
         <div class="rm-body">
-            <div class="rm-title"><a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Online POMDP Solvers &mdash; A Survey</a> <span class="rm-tag">survey</span></div>
+            <div class="rm-title"><a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">MCTS for POMDPs</a> <span class="rm-tag">survey</span></div>
             <div class="rm-desc">The non-learning baselines GammaZero competes against: POMCP, DESPOT, POMCPOW, AdaOPS. Particle beliefs, the 4-phase MCTS loop, and the rollout-evaluation bottleneck that every one of them inherits. This is where the "we need learning" argument originates.</div>
         </div>
     </div>
@@ -155,7 +157,7 @@ _styles: >
     <div class="rm-item">
         <div class="rm-num">03</div>
         <div class="rm-body">
-            <div class="rm-title"><a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">HOO-POMDP &mdash; abstraction's ceiling</a> <span class="rm-tag anchor">paper deep-dive</span></div>
+            <div class="rm-title"><a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">Teaching Robots to Tidy Up (HOO-POMDP)</a> <span class="rm-tag anchor">paper deep-dive</span></div>
             <div class="rm-desc">Paper deep-dive. Hierarchical Object-Oriented POMDP for multi-object rearrangement scales to 20 objects via principled object-oriented belief factorization. But each decision still runs POMCP with random rollouts &mdash; nearly half an hour per task at 20 objects. This is the ceiling principled abstraction can reach with classical search inside, and the motivation for GammaZero.</div>
         </div>
     </div>
@@ -163,15 +165,15 @@ _styles: >
     <div class="rm-item">
         <div class="rm-num">04</div>
         <div class="rm-body">
-            <div class="rm-title"><a href="/blog/2026/planning-under-uncertainty-gammazero/">GammaZero &mdash; learning past the ceiling</a> <span class="rm-tag anchor">paper deep-dive</span></div>
+            <div class="rm-title"><a href="/blog/2026/planning-under-uncertainty-gammazero/">GammaZero &mdash; Your Belief About the World Is a Graph</a> <span class="rm-tag anchor">paper deep-dive</span></div>
             <div class="rm-desc">Series finale and main paper deep-dive. Replaces POMCP's random rollouts with a learned value+policy network (the AlphaZero recipe for POMDPs). Crucially, the network is a GNN over a belief graph, so the same trained network handles POMDPs of any size &mdash; fixing BetaZero's fixed-dimensional bottleneck. Full lineage covered: AlphaZero, MuZero, BetaZero, ConstrainedZero, LeTS-Drive, GABAR.</div>
         </div>
     </div>
 
     <div class="rm-item">
-        <div class="rm-num">05</div>
+        <div class="rm-num">EP</div>
         <div class="rm-body">
-            <div class="rm-title"><a href="/blog/2026/learning-for-planning-epilogue/">Epilogue &mdash; Open Questions</a> <span class="rm-tag">looking forward</span></div>
+            <div class="rm-title"><a href="/blog/2026/planning-under-uncertainty-epilogue/">Epilogue &mdash; Open Questions</a> <span class="rm-tag">looking forward</span></div>
             <div class="rm-desc">What HOO-POMDP and GammaZero don't yet do, where the next decade of partially-observable planning is heading, and how this all eventually connects to LLM agents, foundation models, and large-scale robotics deployments.</div>
         </div>
     </div>
@@ -208,7 +210,7 @@ _styles: >
 <h2>Reading paths</h2>
 
 <ul>
-    <li><strong>Linear (recommended for first read):</strong> 01 &rarr; 02 &rarr; 03 &rarr; 04 &rarr; 05. About 2 hours including time spent on visualizations and side notes.</li>
+    <li><strong>Linear (recommended for first read):</strong> 01 &rarr; 02 &rarr; 03 &rarr; 04 &rarr; Epilogue. About 2 hours including time spent on visualizations and side notes.</li>
     <li><strong>Papers only:</strong> Skip to Post 3 (HOO-POMDP) or Post 4 (GammaZero). Each works standalone with a small "Series context" sidebar to orient you.</li>
     <li><strong>Bridge from LFP:</strong> If you came from <a href="/blog/2026/learning-for-planning-epilogue/">LFP's epilogue</a>, start at Post 1 here &mdash; it intentionally references the warehouse you've been reading about. Then jump to Post 4 (GammaZero) for the direct GABAR cousin.</li>
 </ul>

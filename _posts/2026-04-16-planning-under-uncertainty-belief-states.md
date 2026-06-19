@@ -12,6 +12,8 @@ _styles: >
   color: #1a1a1a;
   font-size: 18px;
   }
+  .blog-fullhtml p { margin: 0 0 1.3em; }
+  .blog-fullhtml ul, .blog-fullhtml ol { margin: 0 0 1.3em; }
   .blog-fullhtml h1 { font-size: 2em; line-height: 1.2; margin-top: 1.2em; }
   .blog-fullhtml h2 { font-size: 1.5em; margin-top: 2em; color: #222; }
   .blog-fullhtml h3 { font-size: 1.2em; margin-top: 1.5em; }
@@ -81,7 +83,7 @@ _styles: >
   .blog-fullhtml .vis-banner p { font-size: 0.95em; color: rgba(255,255,255,.88); line-height: 1.5; margin: 0; }
   .blog-fullhtml .vis-banner strong { color: #C5A55A; }
 
-  .blog-fullhtml .blog-container { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .blog-fullhtml .blog-container { max-width: 680px; margin: 40px auto; padding: 0 20px; }
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
@@ -133,7 +135,7 @@ _styles: >
 <div class="series-nav">
     <strong>Planning Under Uncertainty &middot; Part 1 of 4 &mdash; the setup</strong>
     <div class="series-nav-links">
-        <a href="/blog/2026/learning-for-planning-overview/">Overview</a> &middot; Next: <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a>
+        <a href="/blog/2026/planning-under-uncertainty-overview/">Overview</a> &middot; Next: <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a>
     </div>
 </div>
 
@@ -192,7 +194,7 @@ _styles: >
             <div class="ss">
                 <div class="st w"><div class="n">~1.2M</div><div class="l">Reachable states</div></div>
                 <div class="st w"><div class="n">12+</div><div class="l">Plan length</div></div>
-                <div class="st w"><div class="n">Hours</div><div class="l">to timeout</div></div>
+                <div class="st w"><div class="n">&#x2717;</div><div class="l">Times out at scale</div></div>
             </div>
         </div>
 
@@ -261,7 +263,7 @@ _styles: >
             <div class="ss">
                 <div class="st ex"><div class="n" id="vis1-belief-counter">0</div><div class="l">Belief states</div></div>
                 <div class="st ex"><div class="n">&infin;</div><div class="l">Obs. branching</div></div>
-                <div class="st ex"><div class="n">&#x2717;</div><div class="l">Timeout</div></div>
+                <div class="st ex"><div class="n">&#x2717;</div><div class="l">Intractable</div></div>
             </div>
         </div>
     </div>
@@ -336,7 +338,7 @@ If PDDL and classical planning are new to you, the <a href="/blog/category/llms-
 <div class="series-footer">
     <strong>Where this fits</strong>
     <p>This is the on-ramp. The next post covers POMCP, DESPOT, and the online tree-search family that <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/">Part 3 (HOO-POMDP)</a> and <a href="/blog/2026/planning-under-uncertainty-gammazero/">Part 4 (GammaZero)</a> both build on or replace.</p>
-    <p style="margin-top: 10px; font-size: 0.85em; color: #666;"><a href="/blog/2026/learning-for-planning-overview/">Overview</a> &middot; <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a></p>
+    <p style="margin-top: 10px; font-size: 0.85em; color: #666;"><a href="/blog/2026/planning-under-uncertainty-overview/">Overview</a> &middot; <a href="/blog/2026/planning-under-uncertainty-mcts-for-pomdps/">Part 2: MCTS for POMDPs &rarr;</a></p>
 </div>
 
 </article>
