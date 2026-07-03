@@ -9,4 +9,6 @@ children:
     permalink: /publications/
   - title: defense
     permalink: /assets/html/defense/
+  - title: icaps 2026 talk
+    permalink: /assets/html/icaps2026/
 ---
