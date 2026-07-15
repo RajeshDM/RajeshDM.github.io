@@ -520,17 +520,103 @@ _styles: >
     <p class="vis-caption">GammaZero's belief-to-graph pipeline. Particles are aggregated into attribute probabilities, then selectively instantiated as graph nodes based on threshold tau. The resulting graph encodes both structure and uncertainty.</p>
 </div>
 
-<!-- TODO: re-enable once the demo recording is ready
-<div class="video-container">
-    <p style="font-size:0.9em;color:#444;font-weight:600;margin-bottom:8px;">Interactive Graph Construction Demo</p>
-    <div class="video-placeholder">
-        <div class="play-icon">&#9654;</div>
-        <p>Video: Belief-to-Graph Construction Walkthrough</p>
-        <p style="font-size:0.75em;">[Upload your screen recording of the interactive demo here]</p>
+<div class="vis-container" id="wt-demo" style="font-family:'Source Sans 3',-apple-system,'Helvetica Neue',Arial,sans-serif;">
+    <h3 style="font-family:'Playfair Display',Georgia,serif; font-size:1.2rem; color:#2D2044; font-weight:700; margin:0;">Watch the task play out &mdash; under fog</h3>
+    <p style="color:#888; font-size:0.92em; margin-top:6px; margin-bottom:14px; font-style:italic;">The robot sees only its current zone. Press <strong>Watch Task</strong> to see it search the foggy warehouse, rule out empty zones, find the package, and deliver it &mdash; the episode a GammaZero policy has to produce from its belief graph.</p>
+
+    <div style="display:flex; gap:14px; align-items:stretch; flex-wrap:wrap;">
+        <div style="flex:1; min-width:230px; display:flex; flex-direction:column;">
+            <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#6B5B7B; margin-bottom:5px; text-align:center;">Start state &middot; walls block visibility</div>
+            <div style="background:#FDFCFE; border:1px solid #D4CDE0; border-radius:9px; overflow:hidden;">
+                <svg id="wt-startSvg" viewBox="0 0 270 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; display:block;">
+                    <g id="wt-startBg"></g><g id="wt-robotG" style="transition:transform 0.9s ease-in-out"></g>
+                </svg>
+            </div>
+        </div>
+        <div style="flex:1; min-width:230px; display:flex; flex-direction:column;">
+            <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#1E8449; margin-bottom:5px; text-align:center;">Goal state</div>
+            <div style="background:#FDFCFE; border:1px solid #D4CDE0; border-radius:9px; overflow:hidden;">
+                <svg id="wt-goalSvg" viewBox="0 0 270 200" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; display:block;"></svg>
+            </div>
+        </div>
     </div>
-    <p style="font-size:0.78em;color:#888;margin-top:8px;">Watch how hovering over belief state elements reveals the corresponding graph nodes and edges. Each rock's uncertainty level determines which attribute nodes exist and their connection strengths.</p>
+
+    <div id="wt-info" style="margin-top:12px; padding:9px 12px; background:#ecedfa; border-radius:6px; text-align:center; font-size:0.9rem; font-weight:600; color:#3d4a9e;">Press &ldquo;Watch Task&rdquo; to run the episode</div>
+
+    <div style="display:flex; gap:10px; justify-content:center; align-items:center; padding-top:12px;">
+        <button id="wt-demoB" style="font-family:inherit; padding:7px 18px; font-size:0.85rem; font-weight:700; background:#5b6abf; color:#fff; border:none; border-radius:6px; cursor:pointer;">&#9654; Watch Task</button>
+        <button id="wt-resetB" style="font-family:inherit; padding:7px 16px; font-size:0.85rem; font-weight:600; background:#E5DFE8; color:#2E1A38; border:1px solid #C0A8CC; border-radius:6px; cursor:pointer;">Reset</button>
+    </div>
+    <p class="vis-caption">Partial observability in action: the robot cannot see through walls, so it must gather information (Look, Move) before it can act on the package. This is the episode GammaZero's learned value and policy guide &mdash; over the belief graph, not the true state.</p>
 </div>
--->
+
+<script>
+(function(){
+    var co={object:'#B08E2A',pred:'#C0392B',goal:'#1E8449',gD:'#E3F5EC',text:'#2E1A38',muted:'#6B5B7B',dim:'#C0A8CC',robot:'#7B5E99',rD:'#4A3360',pkg:'#D68910',pkD:'#B7770A',floor:'#F0EDF3',border:'#D4CDE0',wall:'#5C4A6E',fog:'#2E1A38',shelf:'#8B7FA0',shB:'#6B5B7B'};
+    var CW=125,CH=80,GA=6,VW=270,GW=CW*2+GA,GH=CH*2+GA,GX=(VW-GW)/2,GY=6,DH=9;
+    var ShW=28,ShH=3,PkW=22,PkH=15;
+    var cls=[{id:'a',r:0,c:0},{id:'b',r:0,c:1},{id:'c',r:1,c:0},{id:'d',r:1,c:1}].map(function(c){var x=GX+c.c*(CW+GA),y=GY+c.r*(CH+GA);return{id:c.id,x:x,y:y,cx:x+CW/2,cy:y+CH/2,ri:x+CW,bo:y+CH};});
+    var CM={};cls.forEach(function(c){CM[c.id]=c;});
+    function sfp(c){return{x:c.cx-ShW/2,y:c.y+10};}
+    function pkp(c){var s=sfp(c);return{x:c.cx-PkW/2,y:s.y+ShH+2};}
+    function cc(id){return{x:CM[id].cx,y:CM[id].cy+5};}
+    var PP=pkp(CM.c),GP=pkp(CM.d),probs={b:.40,c:.35,d:.25};
+
+    function drawBase(withWalls){
+        var s='<defs><pattern id="wtl'+(withWalls?'w':'')+'" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="'+co.floor+'"/><line x1="0" y1="12" x2="12" y2="12" stroke="'+co.border+'" stroke-width=".2" opacity=".2"/><line x1="12" y1="0" x2="12" y2="12" stroke="'+co.border+'" stroke-width=".2" opacity=".2"/></pattern>'+(withWalls?'<radialGradient id="wtfog" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="'+co.fog+'" stop-opacity=".45"/><stop offset="100%" stop-color="'+co.fog+'" stop-opacity=".75"/></radialGradient>':'')+'</defs>';
+        s+='<rect x="'+(GX-1)+'" y="'+(GY-1)+'" width="'+(GW+2)+'" height="'+(GH+2)+'" rx="3" fill="none" stroke="'+co.border+'" stroke-width=".7"/>';
+        cls.forEach(function(c){s+='<rect x="'+c.x+'" y="'+c.y+'" width="'+CW+'" height="'+CH+'" rx="2" fill="url(#wtl'+(withWalls?'w':'')+')" stroke="'+co.border+'" stroke-width=".3"/>';s+='<text x="'+c.cx+'" y="'+(c.bo-3)+'" text-anchor="middle" fill="'+co.muted+'" font-size="9" font-weight="600">Zone '+'ABCD'['abcd'.indexOf(c.id)]+'</text>';if(c.id==='c'||c.id==='d'){var sp=sfp(c);s+='<g opacity=".4"><rect x="'+sp.x+'" y="'+sp.y+'" width="'+ShW+'" height="'+ShH+'" rx="1" fill="'+co.shelf+'" stroke="'+co.shB+'" stroke-width=".3"/></g>';}});
+        if(withWalls){[{f:'a',t:'b',d:'h'},{f:'a',t:'c',d:'v'},{f:'b',t:'d',d:'v'},{f:'c',t:'d',d:'h'}].forEach(function(adj){var a=CM[adj.f];if(adj.d==='h'){var wx=a.ri,wy=a.y,wh=a.bo-a.y,dcy=wy+wh/2;s+='<rect x="'+wx+'" y="'+wy+'" width="'+GA+'" height="'+(dcy-DH-wy)+'" fill="'+co.wall+'" rx="1"/><rect x="'+wx+'" y="'+(dcy+DH)+'" width="'+GA+'" height="'+(wy+wh-dcy-DH)+'" fill="'+co.wall+'" rx="1"/>';}else{var wy2=a.bo,wx2=a.x,ww=a.ri-a.x,dcx=wx2+ww/2;s+='<rect x="'+wx2+'" y="'+wy2+'" width="'+(dcx-DH-wx2)+'" height="'+GA+'" fill="'+co.wall+'" rx="1"/><rect x="'+(dcx+DH)+'" y="'+wy2+'" width="'+(wx2+ww-dcx-DH)+'" height="'+GA+'" fill="'+co.wall+'" rx="1"/>';}});s+='<rect x="'+cls[0].ri+'" y="'+cls[0].bo+'" width="'+GA+'" height="'+GA+'" fill="'+co.wall+'" rx="1"/>';}
+        else{[{f:'a',d:'h'},{f:'a',d:'v'},{f:'b',d:'v'},{f:'c',d:'h'}].forEach(function(j){var a=CM[j.f];if(j.d==='h')s+='<line x1="'+(a.ri+GA/2)+'" y1="'+(a.y+2)+'" x2="'+(a.ri+GA/2)+'" y2="'+(a.bo-2)+'" stroke="'+co.dim+'" stroke-width=".3" stroke-dasharray="3 2" opacity=".25"/>';else s+='<line x1="'+(a.x+2)+'" y1="'+(a.bo+GA/2)+'" x2="'+(a.ri-2)+'" y2="'+(a.bo+GA/2)+'" stroke="'+co.dim+'" stroke-width=".3" stroke-dasharray="3 2" opacity=".25"/>';});}
+        return s;
+    }
+
+    var demoActive=false,demoTimers=[],demoState=null,visited=new Set(['a']);
+    function clearT(){demoTimers.forEach(function(t){clearTimeout(t);});demoTimers=[];}
+    function reset(){clearT();demoActive=false;demoState=null;visited=new Set(['a']);ren();}
+    function runDemo(){
+        if(demoActive)return;demoActive=true;visited=new Set(['a']);
+        var pA=cc('a'),pB=cc('b'),pC=cc('c'),pD=cc('d');
+        var init={rx:pA.x,ry:pA.y,facing:1,held:false,placed:false,phase:'start',done:false};
+        demoState=init;
+        var steps=[[0,init],[300,{phase:'searching'}],[400,{rx:pB.x,ry:pB.y,visit:'b'}],[1400,{phase:'empty_b'}],[1900,{rx:pA.x,ry:pA.y,facing:-1,phase:'searching'}],[2500,{rx:pC.x,ry:pC.y,visit:'c',facing:1,phase:'found'}],[3200,{phase:'reaching',facing:0}],[3600,{held:true,phase:'grabbing'}],[3900,{phase:'holding',facing:1}],[4200,{rx:pD.x,ry:pD.y,visit:'d',phase:'moving'}],[5100,{phase:'placing',facing:0}],[5500,{held:false,placed:true}],[5800,{done:true,phase:'done',facing:1}],[7600,null]];
+        demoTimers=steps.map(function(st){return setTimeout(function(){if(!st[1]){demoActive=false;demoState=null;visited=new Set(['a']);ren();return;}demoState=Object.assign({},demoState||init,st[1]);if(st[1].visit)visited.add(st[1].visit);ren();},st[0]);});
+    }
+
+    function ren(){
+        var da=demoActive,ds=demoState;
+        var robX=da?ds.rx:cc('a').x,robY=da?ds.ry:cc('a').y,facing=da?(ds.facing||1):1,held=da&&ds.held,placed=da&&ds.placed;
+        var showPkgD=da&&placed&&!held;
+        var s=drawBase(true);
+        cls.forEach(function(c){var seen=c.id==='a'||(da&&visited.has(c.id));if(seen)return;s+='<rect x="'+(c.x+1)+'" y="'+(c.y+1)+'" width="'+(CW-2)+'" height="'+(CH-2)+'" fill="url(#wtfog)" rx="2"/>';s+='<text x="'+c.cx+'" y="'+(c.cy-1)+'" text-anchor="middle" fill="#fff" font-size="16" font-weight="700" opacity=".5">?</text>';s+='<text x="'+c.cx+'" y="'+(c.cy+10)+'" text-anchor="middle" fill="#fff" font-size="9" opacity=".5">p = '+probs[c.id]+'</text>';});
+        if(da&&ds&&ds.phase==='empty_b'&&visited.has('b'))s+='<rect x="'+(CM.b.cx-18)+'" y="'+(CM.b.y+8)+'" width="36" height="13" rx="3" fill="#fff" stroke="'+co.pred+'" stroke-width=".8"/><text x="'+CM.b.cx+'" y="'+(CM.b.y+18)+'" text-anchor="middle" fill="'+co.pred+'" font-size="8" font-weight="700">Empty!</text>';
+        if(da&&ds&&ds.phase==='found'&&visited.has('c'))s+='<rect x="'+(CM.c.cx+PkW/2+4)+'" y="'+(PP.y)+'" width="36" height="13" rx="3" fill="#fff" stroke="'+co.goal+'" stroke-width=".8"/><text x="'+(CM.c.cx+PkW/2+22)+'" y="'+(PP.y+10)+'" text-anchor="middle" fill="'+co.goal+'" font-size="8" font-weight="700">Found!</text>';
+        if(da&&!held&&!placed&&visited.has('c'))s+='<rect x="'+PP.x+'" y="'+PP.y+'" width="'+PkW+'" height="'+PkH+'" rx="2" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".6"/><text x="'+(PP.x+PkW/2)+'" y="'+(PP.y+PkH/2+3)+'" text-anchor="middle" fill="#fff" font-size="6" font-weight="700">PKG</text>';
+        if(showPkgD)s+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="2" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".6"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+3)+'" text-anchor="middle" fill="#fff" font-size="6" font-weight="700">PKG</text>';
+        if(!showPkgD)s+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="2" fill="'+co.gD+'" stroke="'+co.goal+'" stroke-width="1.2" stroke-dasharray="3 2" opacity=".5"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+2)+'" text-anchor="middle" fill="'+co.goal+'" font-size="5" font-weight="700" opacity=".6">GOAL</text>';
+        if(da&&ds&&ds.done)s+='<circle cx="'+CM.d.cx+'" cy="'+(GP.y+PkH+8)+'" r="5" fill="'+co.goal+'" opacity=".9"/>';
+        s+='<text x="'+(VW/2)+'" y="195" text-anchor="middle" fill="'+co.dim+'" font-size="9.5" font-weight="600">Robot in A, package location unknown</text>';
+        document.getElementById('wt-startBg').innerHTML=s;
+        var rg=document.getElementById('wt-robotG');rg.style.transform='translate('+robX+'px,'+robY+'px)';
+        var r='<line x1="0" y1="-12" x2="0" y2="-9" stroke="'+co.rD+'" stroke-width="1"/><circle cx="0" cy="-13" r="1.2" fill="'+co.rD+'"/><rect x="-6" y="-9" width="12" height="7" rx="2.5" fill="'+co.robot+'" stroke="'+co.rD+'" stroke-width=".5"/><circle cx="'+(facing>=0?-1.5:-3)+'" cy="-6" r="1.2" fill="#E6E0EC"/><circle cx="'+(facing>=0?3:1.5)+'" cy="-6" r="1.2" fill="#E6E0EC"/><rect x="-7" y="-2" width="14" height="11" rx="2" fill="'+co.robot+'" stroke="'+co.rD+'" stroke-width=".5"/><rect x="-9" y="-1" width="2" height="6" rx="1" fill="'+co.rD+'" opacity=".7"/><rect x="7" y="-1" width="2" height="6" rx="1" fill="'+co.rD+'" opacity=".7"/><rect x="-4" y="9" width="2" height="4" rx=".8" fill="'+co.rD+'" opacity=".6"/><rect x="2" y="9" width="2" height="4" rx=".8" fill="'+co.rD+'" opacity=".6"/>';
+        if(held)r+='<rect x="'+(facing>=0?9:-9-PkW+4)+'" y="'+(-PkH/2)+'" width="'+(PkW-3)+'" height="'+(PkH-2)+'" rx="1.5" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".3"/>';
+        rg.innerHTML=r;
+        var gs=drawBase(false);
+        gs+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="2" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".6"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+3)+'" text-anchor="middle" fill="#fff" font-size="6" font-weight="700">PKG</text>';
+        gs+='<rect x="'+(CM.d.cx-16)+'" y="'+(GP.y+PkH+2)+'" width="32" height="10" rx="3" fill="'+co.gD+'" stroke="'+co.goal+'" stroke-width=".5"/><text x="'+CM.d.cx+'" y="'+(GP.y+PkH+9)+'" text-anchor="middle" fill="'+co.goal+'" font-size="5.5" font-weight="700">&#x2713; DELIVERED</text>';
+        var rp2=cc('a');gs+='<g transform="translate('+rp2.x+','+rp2.y+')" opacity=".2"><line x1="0" y1="-12" x2="0" y2="-9" stroke="'+co.robot+'" stroke-width=".8"/><circle cx="0" cy="-13" r="1" fill="'+co.robot+'"/><rect x="-5" y="-9" width="10" height="6" rx="2" fill="'+co.robot+'"/><circle cx="-1.5" cy="-6.5" r="1" fill="#E6E0EC"/><circle cx="1.5" cy="-6.5" r="1" fill="#E6E0EC"/><rect x="-6" y="-3" width="12" height="9" rx="1.5" fill="'+co.robot+'"/></g>';
+        gs+='<text x="'+(VW/2)+'" y="195" text-anchor="middle" fill="'+co.dim+'" font-size="9.5" font-weight="600">Package delivered to Zone D</text>';
+        document.getElementById('wt-goalSvg').innerHTML=gs;
+        var info=document.getElementById('wt-info');
+        if(da){var ph=ds?ds.phase:'',msg=ds&&ds.done?'✓ Delivered!':ph==='searching'?'Searching…':ph==='empty_b'?'Zone B empty — belief updates':ph==='found'?'Found the package in C!':ph==='reaching'?'Reaching…':ph==='grabbing'?'Picking up…':ph==='placing'?'Placing…':ph==='moving'?'Carrying to D…':'Starting…';info.textContent=msg;}
+        else info.textContent='Press “Watch Task” to run the episode';
+        var b=document.getElementById('wt-demoB');b.disabled=da;b.style.opacity=da?'.5':'1';b.style.cursor=da?'default':'pointer';
+    }
+    document.getElementById('wt-demoB').onclick=runDemo;
+    document.getElementById('wt-resetB').onclick=reset;
+    ren();
+})();
+</script>
 
 
 <p>The graph has four types of nodes:</p>
