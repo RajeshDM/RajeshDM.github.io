@@ -183,7 +183,101 @@ _styles: >
 
 <h2>Building the graph, one piece at a time</h2>
 
-<p>The construction below is the one used in GABAR (the next post's subject). Each stage adds one type of node or edge. Click through to watch the warehouse state turn into its graph form.</p>
+<p>The construction below is the one used in GABAR (the next post's subject). Each stage adds one type of node or edge. But first &mdash; here is the task itself. Press <strong>Watch Task</strong> to see the robot carry out the delivery; then, below, watch that same state turn into its graph form.</p>
+
+<div class="vis-container" id="gw-demo" style="font-family:'Source Sans 3',-apple-system,'Helvetica Neue',Arial,sans-serif;">
+    <h3 class="vis-title">Watch the task play out &mdash; warehouse delivery</h3>
+    <div class="vis-subtitle">Fully observable: the robot knows where the package is. Robot in Zone A, package in Zone C, deliver to Zone D.</div>
+
+    <div style="display:flex; gap:14px; align-items:stretch; flex-wrap:wrap;">
+        <div style="flex:1; min-width:230px; display:flex; flex-direction:column;">
+            <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#6B5B7B; margin-bottom:5px; text-align:center;">Start state</div>
+            <div style="background:#FDFCFE; border:1px solid #D4CDE0; border-radius:9px; overflow:hidden;">
+                <svg id="gw-startSvg" viewBox="0 0 280 205" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; display:block;">
+                    <g id="gw-startBg"></g><g id="gw-robotG" style="transition:transform 0.85s ease-in-out"></g>
+                </svg>
+            </div>
+        </div>
+        <div style="flex:1; min-width:230px; display:flex; flex-direction:column;">
+            <div style="font-size:.6rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#1E8449; margin-bottom:5px; text-align:center;">Goal state</div>
+            <div style="background:#FDFCFE; border:1px solid #D4CDE0; border-radius:9px; overflow:hidden;">
+                <svg id="gw-goalSvg" viewBox="0 0 280 205" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; display:block;"></svg>
+            </div>
+        </div>
+    </div>
+
+    <div id="gw-info" style="margin-top:12px; padding:9px 12px; background:#e0f5f5; border-radius:6px; text-align:center; font-size:0.9rem; font-weight:600; color:#00807E;">Press &ldquo;Watch Task&rdquo; to run the episode</div>
+
+    <div style="display:flex; gap:10px; justify-content:center; align-items:center; padding-top:12px;">
+        <button id="gw-demoB" style="font-family:inherit; padding:7px 18px; font-size:0.85rem; font-weight:700; background:#00807E; color:#fff; border:none; border-radius:6px; cursor:pointer;">&#9654; Watch Task</button>
+        <button id="gw-resetB" style="font-family:inherit; padding:7px 16px; font-size:0.85rem; font-weight:600; background:#E5DFE8; color:#2E1A38; border:1px solid #C0A8CC; border-radius:6px; cursor:pointer;">Reset</button>
+    </div>
+    <p style="font-size:0.85em; color:#666; font-style:italic; margin-top:10px; text-align:center;">The four-step plan &mdash; <code style="font-style:normal;">move(A,C)</code>, <code style="font-style:normal;">pickup(Pkg,C)</code>, <code style="font-style:normal;">move(C,D)</code>, <code style="font-style:normal;">drop(Pkg,D)</code> &mdash; is exactly what the graph below is built to help a network produce.</p>
+</div>
+
+<script>
+(function(){
+    var co={muted:'#6B5B7B',dim:'#C0A8CC',robot:'#7B5E99',rD:'#4A3360',pkg:'#D68910',pkD:'#B7770A',goal:'#1E8449',gD:'#E3F5EC',floor:'#F0EDF3',border:'#D4CDE0',shelf:'#8B7FA0',shB:'#6B5B7B'};
+    var CW=120,CH=80,GA=6,WW=280,GW=CW*2+GA,GH=CH*2+GA,GX=(WW-GW)/2,GY=6;
+    var ShW=30,ShH=3,PkW=24,PkH=16;
+    var cls=[{id:'a',r:0,c:0},{id:'b',r:0,c:1},{id:'c',r:1,c:0},{id:'d',r:1,c:1}].map(function(c){var x=GX+c.c*(CW+GA),y=GY+c.r*(CH+GA);return{id:c.id,x:x,y:y,cx:x+CW/2,cy:y+CH/2,ri:x+CW,bo:y+CH};});
+    var CM={};cls.forEach(function(c){CM[c.id]=c;});
+    function sfp(c){return{x:c.cx-ShW/2,y:c.y+12};}
+    function pkp(c){var s=sfp(c);return{x:c.cx-PkW/2,y:s.y+ShH+2};}
+    function cc(id){return{x:CM[id].cx,y:CM[id].cy+6};}
+    var PP=pkp(CM.c),GP=pkp(CM.d);
+
+    function drawBase(){
+        var s='<defs><pattern id="gwl" width="13" height="13" patternUnits="userSpaceOnUse"><rect width="13" height="13" fill="'+co.floor+'"/><line x1="0" y1="13" x2="13" y2="13" stroke="'+co.border+'" stroke-width=".2" opacity=".2"/><line x1="13" y1="0" x2="13" y2="13" stroke="'+co.border+'" stroke-width=".2" opacity=".2"/></pattern></defs>';
+        s+='<rect x="'+(GX-2)+'" y="'+(GY-2)+'" width="'+(GW+4)+'" height="'+(GH+4)+'" rx="4" fill="none" stroke="'+co.border+'" stroke-width=".8"/>';
+        cls.forEach(function(c){var hs=c.id==='c'||c.id==='d';s+='<rect x="'+c.x+'" y="'+c.y+'" width="'+CW+'" height="'+CH+'" rx="2" fill="url(#gwl)" stroke="'+co.border+'" stroke-width=".4"/>';s+='<text x="'+c.cx+'" y="'+(c.bo-4)+'" text-anchor="middle" fill="'+co.muted+'" font-size="13" font-weight="600">Zone '+'ABCD'['abcd'.indexOf(c.id)]+'</text>';if(hs){var sp=sfp(c);s+='<g opacity=".45"><rect x="'+sp.x+'" y="'+sp.y+'" width="'+ShW+'" height="'+ShH+'" rx="1" fill="'+co.shelf+'" stroke="'+co.shB+'" stroke-width=".3"/></g>';}});
+        [{f:'a',d:'h'},{f:'a',d:'v'},{f:'b',d:'v'},{f:'c',d:'h'}].forEach(function(j){var a=CM[j.f];if(j.d==='h')s+='<line x1="'+(a.ri+GA/2)+'" y1="'+(a.y+3)+'" x2="'+(a.ri+GA/2)+'" y2="'+(a.bo-3)+'" stroke="'+co.dim+'" stroke-width=".4" stroke-dasharray="4 3" opacity=".25"/>';else s+='<line x1="'+(a.x+3)+'" y1="'+(a.bo+GA/2)+'" x2="'+(a.ri-3)+'" y2="'+(a.bo+GA/2)+'" stroke="'+co.dim+'" stroke-width=".4" stroke-dasharray="4 3" opacity=".25"/>';});
+        return s;
+    }
+
+    var demoActive=false,demoTimers=[],demoState=null;
+    function clearT(){demoTimers.forEach(function(t){clearTimeout(t);});demoTimers=[];}
+    function reset(){clearT();demoActive=false;demoState=null;ren();}
+    function runDemo(){
+        if(demoActive)return;demoActive=true;
+        var pA=cc('a'),pC=cc('c'),pD=cc('d');
+        var init={rx:pA.x,ry:pA.y,facing:1,held:false,placed:false,phase:'start',done:false};
+        demoState=init;
+        var steps=[[0,init],[300,{phase:'moving'}],[400,{rx:pC.x,ry:pC.y}],[1400,{phase:'reaching',facing:0}],[1800,{held:true,phase:'grabbing'}],[2100,{phase:'holding',facing:1}],[2400,{rx:pD.x,ry:pD.y,phase:'moving'}],[3300,{phase:'placing',facing:0}],[3700,{held:false,placed:true,phase:'placed'}],[4000,{done:true,phase:'done',facing:1}],[5600,null]];
+        demoTimers=steps.map(function(st){return setTimeout(function(){if(!st[1]){demoActive=false;demoState=null;ren();return;}demoState=Object.assign({},demoState||init,st[1]);ren();},st[0]);});
+    }
+
+    function ren(){
+        var da=demoActive,ds=demoState;
+        var robX=da?ds.rx:cc('a').x,robY=da?ds.ry:cc('a').y,facing=da?(ds.facing||1):1,held=da&&ds.held,placed=da&&ds.placed;
+        var showPkgC=!held&&!placed,showPkgD=da&&placed&&!held;
+        var s=drawBase();
+        if(showPkgC)s+='<rect x="'+PP.x+'" y="'+PP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".7"/><text x="'+(PP.x+PkW/2)+'" y="'+(PP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">PKG</text>';
+        if(showPkgD)s+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".7"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">PKG</text>';
+        if(!showPkgD)s+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.gD+'" stroke="'+co.goal+'" stroke-width="1.5" stroke-dasharray="4 3" opacity=".6"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+3)+'" text-anchor="middle" fill="'+co.goal+'" font-size="7" font-weight="700" opacity=".7">GOAL</text>';
+        if(da&&ds&&ds.done)s+='<circle cx="'+CM.d.cx+'" cy="'+(GP.y+PkH+9)+'" r="6" fill="'+co.goal+'" opacity=".9"/><polyline points="'+(CM.d.cx-2.5)+','+(GP.y+PkH+9)+' '+(CM.d.cx-.3)+','+(GP.y+PkH+11.5)+' '+(CM.d.cx+3)+','+(GP.y+PkH+6)+'" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/>';
+        s+='<text x="'+(WW/2)+'" y="200" text-anchor="middle" fill="'+co.dim+'" font-size="11" font-weight="600">Robot in A, package on C</text>';
+        document.getElementById('gw-startBg').innerHTML=s;
+        var rg=document.getElementById('gw-robotG');rg.style.transform='translate('+robX+'px,'+robY+'px)';
+        var r='<line x1="0" y1="-13" x2="0" y2="-10" stroke="'+co.rD+'" stroke-width="1"/><circle cx="0" cy="-14" r="1.3" fill="'+co.rD+'"/><rect x="-7" y="-10" width="14" height="8" rx="2.8" fill="'+co.robot+'" stroke="'+co.rD+'" stroke-width=".5"/><circle cx="'+(facing>=0?-1.7:-3.3)+'" cy="-6.5" r="1.4" fill="#E6E0EC"/><circle cx="'+(facing>=0?3.3:1.7)+'" cy="-6.5" r="1.4" fill="#E6E0EC"/><rect x="-8" y="-2" width="16" height="12" rx="2.2" fill="'+co.robot+'" stroke="'+co.rD+'" stroke-width=".5"/><rect x="-10" y="-1" width="2" height="7" rx="1" fill="'+co.rD+'" opacity=".7"/><rect x="8" y="-1" width="2" height="7" rx="1" fill="'+co.rD+'" opacity=".7"/><rect x="-4.5" y="10" width="2.2" height="4.5" rx=".8" fill="'+co.rD+'" opacity=".6"/><rect x="2.3" y="10" width="2.2" height="4.5" rx=".8" fill="'+co.rD+'" opacity=".6"/>';
+        if(held)r+='<rect x="'+(facing>=0?10:-10-PkW+5)+'" y="'+(-PkH/2)+'" width="'+(PkW-4)+'" height="'+(PkH-3)+'" rx="2" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".4"/><text x="'+(facing>=0?10+(PkW-4)/2:-10-(PkW-4)/2+5)+'" y="2" text-anchor="middle" fill="#fff" font-size="7" font-weight="700">PKG</text>';
+        rg.innerHTML=r;
+        var gs=drawBase();
+        gs+='<rect x="'+GP.x+'" y="'+GP.y+'" width="'+PkW+'" height="'+PkH+'" rx="3" fill="'+co.pkg+'" stroke="'+co.pkD+'" stroke-width=".7"/><text x="'+(GP.x+PkW/2)+'" y="'+(GP.y+PkH/2+4)+'" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">PKG</text>';
+        gs+='<rect x="'+(CM.d.cx-28)+'" y="'+(GP.y+PkH+3)+'" width="56" height="15" rx="4" fill="'+co.gD+'" stroke="'+co.goal+'" stroke-width=".6"/><text x="'+CM.d.cx+'" y="'+(GP.y+PkH+13)+'" text-anchor="middle" fill="'+co.goal+'" font-size="9" font-weight="700">&#x2713; DELIVERED</text>';
+        var rp2=cc('a');gs+='<g transform="translate('+rp2.x+','+rp2.y+')" opacity=".22"><line x1="0" y1="-13" x2="0" y2="-10" stroke="'+co.robot+'" stroke-width=".8"/><circle cx="0" cy="-14" r="1.1" fill="'+co.robot+'"/><rect x="-6" y="-10" width="12" height="7" rx="2.5" fill="'+co.robot+'"/><circle cx="-1.7" cy="-6.5" r="1.2" fill="#E6E0EC"/><circle cx="1.7" cy="-6.5" r="1.2" fill="#E6E0EC"/><rect x="-7" y="-2" width="14" height="11" rx="2" fill="'+co.robot+'"/></g>';
+        gs+='<text x="'+(WW/2)+'" y="200" text-anchor="middle" fill="'+co.dim+'" font-size="11" font-weight="600">Package delivered to Zone D</text>';
+        document.getElementById('gw-goalSvg').innerHTML=gs;
+        var info=document.getElementById('gw-info');
+        if(da){var ph=ds?ds.phase:'',msg=ds&&ds.done?'✓ Delivered!':ph==='moving'?'Moving…':ph==='reaching'?'Reaching for the package…':ph==='grabbing'?'Picking up…':ph==='holding'?'Holding the package…':ph==='placing'?'Placing…':ph==='placed'?'Placed':'Starting…';info.textContent=msg;}
+        else info.textContent='Press “Watch Task” to run the episode';
+        var b=document.getElementById('gw-demoB');b.disabled=da;b.style.opacity=da?'.5':'1';b.style.cursor=da?'default':'pointer';
+    }
+    document.getElementById('gw-demoB').onclick=runDemo;
+    document.getElementById('gw-resetB').onclick=reset;
+    ren();
+})();
+</script>
 
 <div class="vis-container" id="vis-graph">
     <h3 class="vis-title">State &rarr; Graph &mdash; warehouse delivery</h3>
