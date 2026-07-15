@@ -229,12 +229,8 @@ _styles: >
 
 <p class="subtitle">How hierarchical planning with object-oriented beliefs enables robots to rearrange objects when they can't see everything at once.</p>
 
-<p style="background:#f5f6fc; border-left:3px solid #5b6abf; padding:10px 14px; font-size:0.92em; color:#3a4475; margin-top:14px; border-radius:0 6px 6px 0;">
-    <strong>Also part of a series.</strong> This paper deep-dive reads on its own. For context: within the <em>Planning Under Uncertainty</em> series, HOO-POMDP is the <em>abstraction</em> strategy — shrink a large POMDP through factorization and hierarchy until a principled planner can handle it. The companion post (<a href="/blog/2026/planning-under-uncertainty-gammazero/" style="color:#3d4a9e;">Part 4: GammaZero</a>) takes the complementary <em>learning</em> strategy.
-</p>
-
-<p style="background:#FDF6E3; border-left:3px solid #C5A55A; padding:10px 14px; font-size:0.9em; color:#5a4400; margin-top:10px; border-radius:0 6px 6px 0;">
-    <strong>Running example:</strong> The series uses a warehouse-delivery domain throughout &mdash; a robot moving packages across zones, with partial observability. HOO-POMDP was developed for the <em>MultiRoomR</em> benchmark (described later in this post), which is the same idea at robotics scale: object-oriented states, partial observability across rooms instead of warehouse zones. The reasoning here transfers directly back to the warehouse from <a href="/blog/2026/planning-under-uncertainty-belief-states/" style="color:#3d4a9e;">Part 1</a>.
+<p style="background:#FDF6E3; border-left:3px solid #C5A55A; padding:10px 14px; font-size:0.9em; color:#5a4400; margin-top:14px; border-radius:0 6px 6px 0;">
+    <strong>Series context &amp; running example.</strong> Within the <em>Planning Under Uncertainty</em> series, HOO-POMDP is the <em>abstraction</em> strategy &mdash; shrink a large POMDP through factorization and hierarchy until a principled planner can handle it; the companion post (<a href="/blog/2026/planning-under-uncertainty-gammazero/" style="color:#7a5a00;">Part 4: GammaZero</a>) takes the complementary <em>learning</em> strategy. The series' running example is warehouse-delivery under partial observability; HOO-POMDP was developed for the <em>MultiRoomR</em> benchmark (described later), the same idea at robotics scale &mdash; object-oriented states, partial observability across rooms instead of zones &mdash; and the reasoning transfers directly back to the warehouse from <a href="/blog/2026/planning-under-uncertainty-belief-states/" style="color:#7a5a00;">Part 1</a>.
 </p>
 
 <hr>
@@ -260,7 +256,8 @@ _styles: >
 <p>Existing approaches fall into two camps, and both struggle:</p>
 
 <div class="vis-container">
-    <table class="compare-table">
+    <div class="tbl-scroll">
+<table class="compare-table">
         <tr>
             <th>Approach</th>
             <th>Handles Uncertainty</th>
@@ -290,6 +287,7 @@ _styles: >
             <td class="yes">Yes</td>
         </tr>
     </table>
+</div>
     <p class="vis-caption">Comparison of approaches to multi-object rearrangement. Only HOO-POMDP handles all challenges in a principled, unified framework.</p>
 </div>
 
@@ -552,7 +550,8 @@ _styles: >
 <p>Existing benchmarks don't test the hard cases. RoomR has single rooms with most objects visible. We introduce MultiRoomR:</p>
 
 <div class="vis-container">
-    <table class="compare-table">
+    <div class="tbl-scroll">
+<table class="compare-table">
         <tr>
             <th>Feature</th>
             <th>RoomR</th>
@@ -590,6 +589,7 @@ _styles: >
             <td>400</td>
         </tr>
     </table>
+</div>
     <p class="vis-caption">MultiRoomR benchmark: designed to test severe partial observability, large object counts, and complex spatial dependencies.</p>
 </div>
 

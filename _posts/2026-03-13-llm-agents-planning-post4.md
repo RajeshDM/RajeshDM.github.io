@@ -980,7 +980,8 @@ LLM: "Move to Zone-X, florp Zrint,
     <p>The result: <strong>expensive and unsound</strong>. ToT can marginally improve results on some instances, but it multiplies computational cost by 10–100x without providing any guarantee. You're searching a tree of LLM-generated candidates — but the evaluation function is also an LLM, which can't reliably distinguish valid from invalid plans. It's search without a sound heuristic. Post 3 showed why that doesn't work: you need a heuristic that actually correlates with distance to goal. An LLM's confidence score doesn't.</p>
 
     <div class="vis-container">
-        <table class="strategy-table">
+        <div class="tbl-scroll">
+<table class="strategy-table">
             <thead>
                 <tr>
                     <th>Strategy</th>
@@ -1022,6 +1023,7 @@ LLM: "Move to Zone-X, florp Zrint,
                 </tr>
             </tbody>
         </table>
+</div>
         <p class="vis-caption">No prompting strategy brings LLMs close to classical planner accuracy. Self-critique actively degrades performance. Tree of Thoughts is expensive without guarantees. Data patterns from Valmeekam et al. (2023), Kambhampati (2024).</p>
     </div>
     

@@ -526,7 +526,8 @@ _styles: >
     <h3 class="vis-title">The three families at a glance</h3>
     <div class="vis-subtitle">Same planning problem, different prediction target, different inherited limitations.</div>
 
-    <table class="compare-table">
+    <div class="tbl-scroll">
+<table class="compare-table">
         <thead>
             <tr>
                 <th>Property</th>
@@ -574,6 +575,7 @@ _styles: >
             </tr>
         </tbody>
     </table>
+</div>
 </div>
 
 <p>The progression across families is a progressive relaxation of what the learner is responsible for. Family 1 hands almost everything to the search engine and only learns guidance. Family 2 takes everything: search disappears, but global accuracy becomes mandatory. Family 3 hits a sweet spot — no search overhead, no global accuracy requirement, just "rank what's in front of you."</p>
