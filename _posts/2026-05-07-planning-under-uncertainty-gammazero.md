@@ -222,12 +222,8 @@ _styles: >
 
 <p class="subtitle">How encoding uncertainty as graph structure enables POMDP planners to generalize far beyond their training size. A deep dive into GammaZero.</p>
 
-<p style="background:#f5f6fc; border-left:3px solid #5b6abf; padding:10px 14px; font-size:0.92em; color:#3a4475; margin-top:14px; border-radius:0 6px 6px 0;">
-    <strong>Also part of a series.</strong> This paper deep-dive stands on its own — read it as one. If you want more context: it is the finale of the <em>Planning Under Uncertainty</em> series. Where <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/" style="color:#3d4a9e;">Part 3 (HOO-POMDP)</a> took the <em>abstraction</em> strategy, GammaZero takes the <em>learning</em> strategy. It is also the partially-observable cousin of <a href="/blog/2026/learning-for-planning-gabar/" style="color:#3d4a9e;">GABAR</a> from the sibling <em>Learning for Planning</em> series: same idea, now extended to belief states.
-</p>
-
-<p style="background:#FDF6E3; border-left:3px solid #C5A55A; padding:10px 14px; font-size:0.9em; color:#5a4400; margin-top:10px; border-radius:0 6px 6px 0;">
-    <strong>Running example:</strong> The series uses warehouse-delivery as its running example end-to-end &mdash; robot, packages, zones, with the robot only seeing its current zone. GammaZero's experiments use <em>RockSample</em>, <em>MultiObjectSearch</em>, and other relational POMDPs, but the core mental model is the same warehouse: take an unknown configuration, build a belief graph, score actions, act, observe, repeat. The <a href="/blog/2026/learning-for-planning-gabar/" style="color:#3d4a9e;">GABAR exec-loop visualization</a> from the LFP series shows the structure; GammaZero's version operates over a belief graph instead.
+<p style="background:#FDF6E3; border-left:3px solid #C5A55A; padding:10px 14px; font-size:0.9em; color:#5a4400; margin-top:14px; border-radius:0 6px 6px 0;">
+    <strong>Series context &amp; running example.</strong> Within the <em>Planning Under Uncertainty</em> series, GammaZero is the <em>learning</em> strategy to <a href="/blog/2026/planning-under-uncertainty-hoo-pomdp/" style="color:#7a5a00;">Part 3 (HOO-POMDP)</a>'s <em>abstraction</em> &mdash; and the partially-observable cousin of <a href="/blog/2026/learning-for-planning-gabar/" style="color:#7a5a00;">GABAR</a> from the sibling <em>Learning for Planning</em> series. The running example throughout is warehouse-delivery &mdash; robot, packages, zones, the robot seeing only its current zone. GammaZero's experiments use <em>RockSample</em>, <em>MultiObjectSearch</em>, and other relational POMDPs, but the mental model stays the same warehouse: build a belief graph, score actions, act, observe, repeat.
 </p>
 
 <hr>
@@ -319,7 +315,7 @@ _styles: >
     <div style="display:flex; gap:14px; align-items:stretch;">
         <div style="flex:1; min-width:0; border:1.5px solid #D4CDE0; border-radius:9px; padding:10px; background:#fff;">
             <div style="font-size:.62rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#C0392B; margin-bottom:6px;">BetaZero · fixed-dimensional belief vector</div>
-            <svg viewBox="0 0 280 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
+            <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
                 <!-- Foggy warehouse mini -->
                 <defs>
                     <radialGradient id="fogLB" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#2E1A38" stop-opacity=".25"/><stop offset="100%" stop-color="#2E1A38" stop-opacity=".55"/></radialGradient>
@@ -378,7 +374,7 @@ _styles: >
         </div>
         <div style="flex:1; min-width:0; border:1.5px solid rgba(91,106,191,.4); border-radius:9px; padding:10px; background:#fafcff;">
             <div style="font-size:.62rem; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; color:#3d4a9e; margin-bottom:6px;">GammaZero · belief graph (variable size)</div>
-            <svg viewBox="0 0 280 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
+            <svg viewBox="0 0 300 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
                 <defs>
                     <radialGradient id="fogLG" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#2E1A38" stop-opacity=".25"/><stop offset="100%" stop-color="#2E1A38" stop-opacity=".55"/></radialGradient>
                 </defs>
@@ -697,7 +693,8 @@ _styles: >
 <p>The complete system combines three learned components with online search. Each plays a distinct role:</p>
 
 <div class="vis-container">
-    <table class="compare-table">
+    <div class="tbl-scroll">
+<table class="compare-table">
         <tr>
             <th>Component</th>
             <th>Role in Planning</th>
@@ -723,6 +720,7 @@ _styles: >
             <td>Corrects network errors</td>
         </tr>
     </table>
+</div>
     <p class="vis-caption">Each component provides complementary value. The policy is the strongest individual signal, but MCTS combining all three consistently produces the best results.</p>
 </div>
 
@@ -737,7 +735,8 @@ _styles: >
 <p>To understand where GammaZero sits in the landscape, here's how it compares to existing approaches:</p>
 
 <div class="vis-container">
-    <table class="compare-table">
+    <div class="tbl-scroll">
+<table class="compare-table">
         <tr>
             <th></th>
             <th>Fixed-Size Input</th>
@@ -774,6 +773,7 @@ _styles: >
             <td class="yes">Yes</td>
         </tr>
     </table>
+</div>
     <p class="vis-caption">GammaZero uniquely combines variable-size graph inputs, uncertainty handling, zero-shot generalization, and online search.</p>
 </div>
 

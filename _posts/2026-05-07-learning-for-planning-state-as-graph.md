@@ -703,7 +703,8 @@ _styles: >
     <h3 class="vis-title">Graph representation choices across the literature</h3>
     <div class="vis-subtitle">Same three sub-decisions, different choices. GABAR is the cell at the intersection.</div>
 
-    <table class="compare-table">
+    <div class="tbl-scroll">
+<table class="compare-table">
         <thead>
             <tr>
                 <th>Method</th>
@@ -751,6 +752,7 @@ _styles: >
             </tr>
         </tbody>
     </table>
+</div>
 </div>
 
 <p>Looking down the columns: GABAR's cell is a genuinely new combination. No prior method combined explicit action-schema nodes with sequential conditional decoding. ASNets has actions explicit (via alternation) but does not condition parameter selection. GRAPL is closer in spirit (also action-ranking) but uses canonical abstraction with independent decoding. STRIPS-HGN has actions explicit (via hyperedges) but is a heuristic, not a policy.</p>

@@ -14,6 +14,14 @@
       {{ page._styles }}
     </style>
     {% endif %}
+    <!-- Cross-cutting responsive fixes for fullhtml blog posts (loaded after page styles so they win) -->
+    <style type="text/css">
+      /* Wide tables scroll within their own box instead of pushing the page sideways */
+      .blog-fullhtml .tbl-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      /* Fixed-pixel interactive stages (e.g. the RoboSort warehouse) are laid out on a 700px
+         design canvas; give them that intrinsic width and let the fit script zoom them to fit. */
+      .blog-fullhtml .warehouse-scene { width: 700px; max-width: none; }
+    </style>
   </head>
   <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
     {% include header.liquid %}
@@ -28,5 +36,22 @@
     {% include scripts/analytics.liquid %}
     {% include scripts/back_to_top.liquid %}
     {% include scripts/search.liquid %}
+    <!-- Fit fixed-pixel interactive stages (700px design canvas) to their container width -->
+    <script>
+      (function () {
+        function fitScenes() {
+          document.querySelectorAll('.blog-fullhtml .warehouse-scene').forEach(function (sc) {
+            var host = sc.parentElement;
+            if (!host) return;
+            var cs = getComputedStyle(host);
+            var avail = host.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+            if (avail > 0) sc.style.zoom = Math.min(1, avail / 700);
+          });
+        }
+        if (document.readyState !== 'loading') fitScenes();
+        else document.addEventListener('DOMContentLoaded', fitScenes);
+        window.addEventListener('resize', fitScenes);
+      })();
+    </script>
   </body>
 </html>
