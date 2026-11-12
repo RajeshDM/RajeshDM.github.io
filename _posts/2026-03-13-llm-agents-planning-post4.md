@@ -584,6 +584,9 @@ _styles: >
 
   .blog-fullhtml .blog-footer { text-align: center; padding: 32px 20px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; color: #888; border-top: 1px solid #eee; }
 
+  .blog-fullhtml .auto-demo-btn { background: #2a9d8f; color: white; border: none; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.9em; font-weight: 600; margin-top: 12px; }
+  .blog-fullhtml .auto-demo-btn:hover { background: #238577; }
+  .blog-fullhtml .auto-demo-btn:disabled { opacity: 0.6; cursor: not-allowed; }
   html[data-theme="dark"] .blog-fullhtml { color: #c9c9ca; }
   html[data-theme="dark"] .blog-fullhtml h2 { color: #e0e8f0; border-bottom-color: #4a7ab5; }
   html[data-theme="dark"] .blog-fullhtml h3 { color: #d0d8e8; }
@@ -671,6 +674,17 @@ _styles: >
   html[data-theme="dark"] .blog-fullhtml .build-zone { border-color: rgba(100,120,140,0.6); background: rgba(30,37,48,0.25); }
   html[data-theme="dark"] .blog-fullhtml .build-zone-label { color: #8899aa; }
   html[data-theme="dark"] .blog-fullhtml .blog-footer { color: #6a7888; border-top-color: #2a3545; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #1b2838"], html[data-theme="dark"] .blog-fullhtml [style^="color:#1b2838"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #1b2838"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#1b2838"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#1b2838"] { color: #e0e8f0 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #5a6a7a"], html[data-theme="dark"] .blog-fullhtml [style^="color:#5a6a7a"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #5a6a7a"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#5a6a7a"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#5a6a7a"] { color: #8899aa !important; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #b22222"], html[data-theme="dark"] .blog-fullhtml [style^="color:#b22222"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #b22222"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#b22222"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#b22222"] { color: #e06060 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #228b22"], html[data-theme="dark"] .blog-fullhtml [style^="color:#228b22"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #228b22"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#228b22"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#228b22"] { color: #5cbf5c !important; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #6b3fa0"], html[data-theme="dark"] .blog-fullhtml [style^="color:#6b3fa0"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #6b3fa0"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#6b3fa0"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#6b3fa0"] { color: #b088e0 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #a85800"], html[data-theme="dark"] .blog-fullhtml [style^="color:#a85800"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #a85800"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#a85800"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#a85800"] { color: #e8a040 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #3a2a1a"], html[data-theme="dark"] .blog-fullhtml [style^="color:#3a2a1a"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #3a2a1a"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#3a2a1a"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#3a2a1a"] { color: #c8b8a0 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style^="color: #d4740e"], html[data-theme="dark"] .blog-fullhtml [style^="color:#d4740e"], html[data-theme="dark"] .blog-fullhtml [style*="; color: #d4740e"], html[data-theme="dark"] .blog-fullhtml [style*=";color:#d4740e"], html[data-theme="dark"] .blog-fullhtml [style*="; color:#d4740e"] { color: #e8a040 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style*="background: #fff8e1"], html[data-theme="dark"] .blog-fullhtml [style*="background:#fff8e1"] { background: #2a2418 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style*="background: #f5f0ff"], html[data-theme="dark"] .blog-fullhtml [style*="background:#f5f0ff"] { background: #251e3a !important; border-color: #3a2e55 !important; }
+  html[data-theme="dark"] .blog-fullhtml [style*="background: #e8f5e9"], html[data-theme="dark"] .blog-fullhtml [style*="background:#e8f5e9"] { background: #1a2a1a !important; }
 ---
 
 <header class="hero">
